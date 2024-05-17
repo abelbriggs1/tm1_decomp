@@ -1,7 +1,21 @@
 # Original Dockerfile taken from `decomp.me`'s `gcc2.6.0-mipsel` template.
 # https://github.com/decompme/compilers/blob/main/platforms/ps1/gcc2.6.0-mipsel/Dockerfile
 
-FROM alpine:latest
+FROM debian:bookworm
+
+# Add some extra dependencies for use in a devcontainer context.
+RUN apt-get update
+RUN apt-get install -y \
+    gcc-mipsel-linux-gnu                   \
+    binutils-mipsel-linux-gnu              \
+    clang-format                           \
+    python3 python3-pip python3-virtualenv \
+    nano                                   \
+    curl wget                              \
+    unzip                                  \
+    git make patch                         \
+    cmake ninja-build                      \
+    && rm -rf /var/lib/apt/lists/*
 
 # Get the GCC 2.6.0 toolchain and MASPSX for building.
 RUN mkdir -p /compilers/ps1/gcc2.6.0-mipsel
@@ -22,9 +36,12 @@ RUN cp as /compilers/ps1/gcc2.6.0-mipsel/
 RUN chown -R root:root /compilers/ps1/gcc2.6.0-mipsel/
 RUN chmod +x /compilers/ps1/gcc2.6.0-mipsel/*
 
-# Add some extra dependencies for use in a devcontainer context.
-RUN apk add --no-cache             \
-    bash git make patch            \
-    cmake python3 py3-pip mpc1-dev \
-    mpfr freetype libpng ninja     \
-    clang-extra-tools
+# Add a default non-root user.
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+
+USER $USERNAME

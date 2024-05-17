@@ -23,9 +23,11 @@
                     "clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling"
                 ],
                 "C_Cpp.default.compileCommands": "build/compile_commands.json",
+                "python.defaultInterpreterPath": ".venv/bin/python3",
                 "files.associations": {
                     "*.h": "c"
-                }
+                },
+                "extensions.ignoreRecommendations": true
             },
             "extensions": [
                 "ms-python.python",
