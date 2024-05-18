@@ -44,8 +44,35 @@ segments:
     subsegments:
       # Hand-coded MIPS ASM `geomProc()`
       - [0x800, asm, tm1/geom] # 0x800F78B8
+      # ------------------------------------------------
       # .rodata segment
-      - [0x10FC, rodata]   # 0x800F81B4
+      # ------------------------------------------------
+      - [0x10FC, rodata, tm1/hier]          # 0x800F81B4
+      - [0x112C, rodata, tm1/cs]            # 0x800F81E4
+      - [0x1160, rodata, tm1/ctlpad]        # 0x800F8218
+      - [0x11B0, rodata, tm1/db]            # 0x800F8268
+      - [0x2778, rodata, tm1/hd]            # 0x800F9830
+      - [0x27A8, rodata, tm1/hdp]           # 0x800F9860
+      - [0x27D8, rodata, tm1/sound]         # 0x800F9890
+      - [0x2824, rodata, tm1/ua_sound]      # 0x800F98DC
+      - [0x387C, rodata, tm1/view]          # 0x800FA934
+      - [0x38E4, rodata, tm1/font]          # 0x800FA99C
+      - [0x3948, rodata, tm1/car]           # 0x800FAA00
+      - [0x39EC, rodata, tm1/car_update]    # 0x800FAAA4
+      - [0x3A00, rodata, tm1/car_init]      # 0x800FAAB8
+      - [0x4000, rodata, tm1/ai_car_init]   # 0x800FB0B8
+      - [0x41E4, rodata, tm1/launcher]      # 0x800FB29C
+      - [0x4604, rodata, tm1/pickup]        # 0x800FB6BC
+      - [0x46CC, rodata, tm1/explode]       # 0x800FB784
+      - [0x46F0, rodata, tm1/screen]        # 0x800FB7A8
+      - [0x4F60, rodata, tm1/ai_car_update] # 0x800FC018
+      - [0x5144, rodata, tm1/ua_dash]       # 0x800FC1FC
+      - [0x52D8, rodata, tm1/targets]       # 0x800FC390
+      - [0x5474, rodata, tm1/ua]            # 0x800FC52C
+      - [0x56D8, rodata, tm1/shell]         # 0x800FC790
+      - [0x5970, rodata, tm1/movie]         # 0x800FCA28
+      # Start of SDK rodata - TODO
+      - [0x59B0, rodata, sdk/sdk]           # 0x800FCA68
       # ------------------------------------------------
       # .text segment (C code)
       # ------------------------------------------------
@@ -92,19 +119,14 @@ segments:
       - [0x4E650, asm, tm1/ua_effect]       # 0x801462F0
       - [0x4EF34, asm, tm1/hud]             # 0x80146BD4
       - [0x4FEAC, asm, tm1/targets]         # 0x80147B4C
-      - [0x53568, asm, tm1/ua_init]         # 0x8014B208
-      - [0x55614, asm, tm1/ua_update]       # 0x8014D2B4
-      - [0x577C0, asm, tm1/ua_status]       # 0x8014F460
-      - [0x585D4, asm, tm1/ua_pad]          # 0x80150274
-      - [0x58894, asm, tm1/ua_util]         # 0x80150534
+      - [0x53568, asm, tm1/ua]              # 0x8014B208
       - [0x59140, asm, tm1/smooth]          # 0x80150DE0
       - [0x595F0, asm, tm1/vehicle]         # 0x80151290
-      - [0x59DA4, asm, tm1/main]            # 0x80151A44
-      - [0x5A6B0, asm, tm1/shell]           # 0x80152350
+      - [0x59DA4, asm, tm1/shell]           # 0x80151A44
       - [0x5BA48, asm, tm1/fileio]          # 0x801536E8
       - [0x5BD84, asm, tm1/movie]           # 0x80153A24
       # Start of SDK code. TODO
-      - [0x5CAD4, asm]                      # 0x80154774
+      - [0x5CAD4, asm, sdk/sdk]             # 0x80154774
       # .data segment
       - [0x78DF4, data]    # 0x8016FEAC
       # There are two labels in the debug symbol list, `fovNorms1` and `fovNorms2`.
