@@ -1,2 +1,5 @@
 pre-commit
 ruff
+splat64[mips] >= 0.24.1, <1.0.0
+m2c @ git+https://github.com/matt-kempster/m2c@cdc8cddc
+asm-differ @ git+https://github.com/simonlindholm/asm-differ@f5fc9026

@@ -1,0 +1,59 @@
+name: SIPS_600.07
+sha1: d176f71e6962f02b531942e80718906d42f31799
+options:
+  basename: TM1
+  target_path: disks/SIPS_600.07
+  base_path: .
+  platform: psx
+  compiler: GCC
+  asm_path: asm
+  src_path: src
+  nonmatchings_path: nonmatchings
+  build_path: BUILD_PATH
+  ld_script_path: TM1.ld
+  find_file_boundaries: False
+  gp_value: 0x8018BF04
+  use_legacy_include_asm: False
+  section_order: [".rodata", ".text", ".data", ".bss"]
+  auto_all_sections: []
+  # symbol_addrs_path:
+  #   - symbol_addrs.txt
+  # reloc_addrs_path:
+  #   - reloc_addrs.txt
+  create_undefined_funcs_auto: False
+  create_undefined_syms_auto: False
+  extensions_path: tools/splat_ext
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+  ld_bss_is_noload: True
+  subalign: 4
+  migrate_rodata_to_functions: False
+
+segments:
+  - name: header
+    type: header
+    start: 0x0
+
+  - name: main
+    type: code
+    start: 0x800
+    vram: 0x800F78B8
+    align: 4
+    subsegments:
+      - [0x800, asm, geom] # 0x800F78B8 - hand-coded MIPS ASM `geomProc()`
+      - [0x10FC, rodata]   # 0x800F81B4 - .rodata segment
+      - [0x6724, asm]      # 0x800FD7DC - .text segment (C code)
+      - [0x78DF4, data]    # 0x8016FEAC - .data segment
+      # There are two labels in the debug symbol list, `fovNorms1` and `fovNorms2`.
+      # `fovNorms2` is likely a structure of length `0x8C0`, and judging from its
+      # distance to `fovNorms1`, they are the same structure.
+      #
+      # `fovNorms2` is definitely in BSS.
+      # However, `fovNorms1`'s start position is still inside of the binary itself,
+      # yet its length is not filled out fully, and it extends into RAM.
+      #
+      # For now, assume BSS starts at `fovNorms1`. Hopefully nothing breaks.
+      - {start: 0x9562C, type: bss, vram: 0x8018C6E4} # .bss segment
+  - [0x95800] # End of file

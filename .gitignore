@@ -1,4 +1,7 @@
 build/
+asm/
+TM1.ld
 .vscode/
 .ruff_cache
 .venv
+__pycache__/
