@@ -42,10 +42,71 @@ segments:
     vram: 0x800F78B8
     align: 4
     subsegments:
-      - [0x800, asm, geom] # 0x800F78B8 - hand-coded MIPS ASM `geomProc()`
-      - [0x10FC, rodata]   # 0x800F81B4 - .rodata segment
-      - [0x6724, asm]      # 0x800FD7DC - .text segment (C code)
-      - [0x78DF4, data]    # 0x8016FEAC - .data segment
+      # Hand-coded MIPS ASM `geomProc()`
+      - [0x800, asm, tm1/geom] # 0x800F78B8
+      # .rodata segment
+      - [0x10FC, rodata]   # 0x800F81B4
+      # ------------------------------------------------
+      # .text segment (C code)
+      # ------------------------------------------------
+      - [0x6724,  asm, tm1/hier]            # 0x800FD7DC
+      - [0x790C,  asm, tm1/math]            # 0x800FE9C4
+      - [0x7F84,  asm, tm1/wdcopy]          # 0x800FF03C
+      - [0x7FB8,  asm, tm1/cs]              # 0x800FF070
+      - [0x82E4,  asm, tm1/rt]              # 0x800FF39C
+      - [0x8A34,  asm, tm1/ctlpad]          # 0x800FFAEC
+      - [0x8F90,  asm, tm1/db]              # 0x80100048
+      - [0x9C38,  asm, tm1/hd]              # 0x80100CF0
+      - [0xBA9C,  asm, tm1/hdp]             # 0x80102B54
+      - [0xC9A0,  asm, tm1/light]           # 0x80103A58
+      - [0xD33C,  asm, tm1/sound]           # 0x801043F4
+      - [0x10314, asm, tm1/ua_sound]        # 0x801073CC
+      - [0x118C4, asm, tm1/sound_req]       # 0x8010897C
+      - [0x11A2C, asm, tm1/hier_sub]        # 0x80108AE4
+      - [0x12A50, asm, tm1/timer]           # 0x80109B08
+      - [0x12D4C, asm, tm1/view]            # 0x80109E04
+      - [0x13F00, asm, tm1/font]            # 0x8010AFB8
+      - [0x14FA4, asm, tm1/weapon]          # 0x8010C05C
+      - [0x1A1A4, asm, tm1/car]             # 0x8011125C
+      - [0x22454, asm, tm1/ai_car]          # 0x8011950C
+      - [0x25218, asm, tm1/car_update]      # 0x8011C2D0
+      - [0x2B7C4, asm, tm1/car_init]        # 0x8012287C
+      - [0x2DC7C, asm, tm1/ai_car_init]     # 0x80124D34
+      - [0x2EB08, asm, tm1/trigger_pts]     # 0x80125BC0
+      - [0x35CC0, asm, tm1/bridges]         # 0x8012CD78
+      - [0x395B0, asm, tm1/potholes]        # 0x80130668
+      - [0x399D4, asm, tm1/curbs]           # 0x80130A8C
+      - [0x3A240, asm, tm1/slick_spots]     # 0x801312F8
+      - [0x3A2BC, asm, tm1/launcher]        # 0x80131374
+      - [0x3E614, asm, tm1/pickup]          # 0x801356CC
+      - [0x3EBBC, asm, tm1/health_stand]    # 0x80135C74
+      - [0x3EECC, asm, tm1/monster]         # 0x80135F84
+      - [0x3EED8, asm, tm1/explosion]       # 0x80135F90
+      - [0x40204, asm, tm1/stars]           # 0x801372BC
+      - [0x40690, asm, tm1/explode]         # 0x80137748
+      - [0x41344, asm, tm1/grutils]         # 0x801383FC
+      - [0x4188C, asm, tm1/screen]          # 0x80138944
+      - [0x49E9C, asm, tm1/ua_sw]           # 0x80141B3C
+      - [0x4A058, asm, tm1/ai_car_update]   # 0x80141CF8
+      - [0x4A974, asm, tm1/ua_dash]         # 0x80142614
+      - [0x4E650, asm, tm1/ua_effect]       # 0x801462F0
+      - [0x4EF34, asm, tm1/hud]             # 0x80146BD4
+      - [0x4FEAC, asm, tm1/targets]         # 0x80147B4C
+      - [0x53568, asm, tm1/ua_init]         # 0x8014B208
+      - [0x55614, asm, tm1/ua_update]       # 0x8014D2B4
+      - [0x577C0, asm, tm1/ua_status]       # 0x8014F460
+      - [0x585D4, asm, tm1/ua_pad]          # 0x80150274
+      - [0x58894, asm, tm1/ua_util]         # 0x80150534
+      - [0x59140, asm, tm1/smooth]          # 0x80150DE0
+      - [0x595F0, asm, tm1/vehicle]         # 0x80151290
+      - [0x59DA4, asm, tm1/main]            # 0x80151A44
+      - [0x5A6B0, asm, tm1/shell]           # 0x80152350
+      - [0x5BA48, asm, tm1/fileio]          # 0x801536E8
+      - [0x5BD84, asm, tm1/movie]           # 0x80153A24
+      # Start of SDK code. TODO
+      - [0x5CAD4, asm]                      # 0x80154774
+      # .data segment
+      - [0x78DF4, data]    # 0x8016FEAC
       # There are two labels in the debug symbol list, `fovNorms1` and `fovNorms2`.
       # `fovNorms2` is likely a structure of length `0x8C0`, and judging from its
       # distance to `fovNorms1`, they are the same structure.
