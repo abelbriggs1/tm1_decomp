@@ -126,7 +126,25 @@ segments:
       # ------------------------------------------------
       # .data segment
       # ------------------------------------------------
-      - [0x78DF4, data]    # 0x8016FEAC
+      - [0x78DF4, data, tm1/cs]             # 0x8016FEAC
+      - [0x78E14, data, tm1/sound]          # 0x8016FECC
+      - [0x78E44, data, tm1/ua_sound]       # 0x8016FEFC
+      - [0x79180, data, tm1/timer]          # 0x80170238
+      - [0x79198, data, tm1/view]           # 0x80170250
+      - [0x796F8, data, tm1/font]           # 0x801707B0
+      - [0x79CDC, data, tm1/car_init]       # 0x80170D94
+      - [0x79CFC, data, tm1/pickup]         # 0x80170DB4
+      - [0x79D4C, data, tm1/stars]          # 0x80170E04
+      - [0x79D6C, data, tm1/screen]         # 0x80170E24
+      - [0x79FC8, data, tm1/ai_car_update]  # 0x80171080
+      - [0x7A1F8, data, tm1/ua_dash]        # 0x801712B0
+      - [0x7A25C, data, tm1/ua_effect]      # 0x80171314
+      - [0x7A454, data, tm1/targets]        # 0x8017150C
+      - [0x7A6B0, data, tm1/ua]             # 0x80171768
+      - [0x7A7A4, data, tm1/vehicle]        # 0x8017185C
+      - [0x7A7C4, data, tm1/shell]          # 0x8017187C
+      # Start of SDK data. TODO
+      - [0x7A82C, data, sdk/sdk]            # 0x801718E4
       # ------------------------------------------------
       # .bss segment
       # ------------------------------------------------
