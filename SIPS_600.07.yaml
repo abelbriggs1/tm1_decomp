@@ -13,7 +13,7 @@ options:
   find_file_boundaries: False
   gp_value: 0x8018BF04
   use_legacy_include_asm: False
-  section_order: [".asm", ".rodata", ".text", ".data", ".bss"]
+  section_order: [".asm", ".rodata", ".text", ".data", ".sdata", ".sbss", ".bss"]
   auto_all_sections: []
   create_undefined_funcs_auto: False
   create_undefined_syms_auto: True
@@ -102,7 +102,6 @@ segments:
       - [0x3A240, asm, tm1/slick_spots]     # 0x801312F8
       - [0x3A2BC, asm, tm1/launcher]        # 0x80131374
       - [0x3E614, asm, tm1/pickup]          # 0x801356CC
-      - [0x3EBBC, asm, tm1/health_stand]    # 0x80135C74
       - [0x3EECC, asm, tm1/monster]         # 0x80135F84
       - [0x3EED8, asm, tm1/explosion]       # 0x80135F90
       - [0x40204, asm, tm1/stars]           # 0x801372BC
@@ -145,6 +144,40 @@ segments:
       - [0x7A7C4, data, tm1/shell]          # 0x8017187C
       # Start of SDK data. TODO
       - [0x7A82C, data, sdk/sdk]            # 0x801718E4
+      # ------------------------------------------------
+      # .sdata segment
+      # ------------------------------------------------
+      - [0x94E4C, sdata, tm1/hier]          # 0x8018BF04
+      - [0x94E5C, sdata, tm1/cs]            # 0x8018BF14
+      - [0x94E60, sdata, tm1/rt]            # 0x8018BF18
+      - [0x94E7C, sdata, tm1/ctlpad]        # 0x8018BF34
+      - [0x94E80, sdata, tm1/db]            # 0x8018BF38
+      - [0x94E8C, sdata, tm1/hd]            # 0x8018BF4C
+      - [0x94E9C, sdata, tm1/hdp]           # 0x8018BF5C
+      - [0x94EA0, sdata, tm1/sound]         # 0x8018BF60
+      - [0x94EC8, sdata, tm1/ua_sound]      # 0x8018BF88
+      - [0x94ED0, sdata, tm1/view]          # 0x8018BF90
+      - [0x94EE0, sdata, tm1/font]          # 0x8018BFA0
+      - [0x94EE8, sdata, tm1/weapon]        # 0x8018BFA8
+      - [0x94F10, sdata, tm1/ai_car]        # 0x8018BFD0
+      - [0x94F14, sdata, tm1/car_update]    # 0x8018BFD4
+      - [0x94F28, sdata, tm1/launcher]      # 0x8018BFE8
+      - [0x94FC4, sdata, tm1/pickup]        # 0x8018C084
+      - [0x94FDC, sdata, tm1/explosion]     # 0x8018C09C
+      - [0x94FE0, sdata, tm1/screen]        # 0x8018C0A0
+      - [0x9514C, sdata, tm1/ai_car_update] # 0x8018C20C
+      - [0x951E8, sdata, tm1/ua_dash]       # 0x8018C2A8
+      - [0x9520C, sdata, tm1/ua_effect]     # 0x8018C2CC
+      - [0x9524C, sdata, tm1/hud]           # 0x8018C30C
+      - [0x95250, sdata, tm1/targets]       # 0x8018C310
+      - [0x95274, sdata, tm1/ua]            # 0x8018C334
+      - [0x952F0, sdata, tm1/shell]         # 0x8018C3B0
+      - [0x953AC, sdata, tm1/fileio]        # 0x8018C46C
+      - [0x953B4, sdata, tm1/movie]         # 0x8018C474
+      # ------------------------------------------------
+      # .sbss segment (TODO)
+      # ------------------------------------------------
+      - [0x953C0, sbss]                     # 0x8018C480
       # ------------------------------------------------
       # .bss segment
       # ------------------------------------------------
