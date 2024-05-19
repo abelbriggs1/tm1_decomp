@@ -13,12 +13,8 @@ options:
   find_file_boundaries: False
   gp_value: 0x8018BF04
   use_legacy_include_asm: False
-  section_order: [".rodata", ".text", ".data", ".bss"]
+  section_order: [".asm", ".rodata", ".text", ".data", ".bss"]
   auto_all_sections: []
-  # symbol_addrs_path:
-  #   - symbol_addrs.txt
-  # reloc_addrs_path:
-  #   - reloc_addrs.txt
   create_undefined_funcs_auto: False
   create_undefined_syms_auto: True
   extensions_path: tools/splat_ext
@@ -40,9 +36,10 @@ segments:
     start: 0x800
     vram: 0x800F78B8
     align: 4
+    bss_size: 0x6BC6C
     subsegments:
       # Hand-coded MIPS ASM `geomProc()`
-      - {start: 0x800, type: hasm, name: tm1/geom, linker_section_order: .rodata} # 0x800F78B8
+      - {start: 0x800, type: asm, name: tm1/geom, linker_section: .asm, linker_section_order: .rodata} # 0x800F78B8
       # ------------------------------------------------
       # .rodata segment
       # ------------------------------------------------
@@ -126,14 +123,12 @@ segments:
       - [0x5C96C, asm, tm1/movie]           # 0x80153A24
       # Start of SDK code. TODO
       - [0x5D6BC, asm, sdk/sdk]             # 0x80154774
+      # ------------------------------------------------
       # .data segment
+      # ------------------------------------------------
       - [0x78DF4, data]    # 0x8016FEAC
-      # There are two labels in the debug symbol list, `fovNorms1` and `fovNorms2`.
-      # `fovNorms2` is likely a structure of length `0x8C0`, and judging from its
-      # distance to `fovNorms1`, they are the same structure.
-      #
-      # `fovNorms2` is definitely in BSS.
-      # However, `fovNorms1`'s start position is still inside of the binary itself,
-      # yet its length is not filled out fully, and it extends into RAM.
-      # - {start: 0x9562C, type: bss, vram: 0x8018C6E4} # .bss segment
+      # ------------------------------------------------
+      # .bss segment
+      # ------------------------------------------------
+      - {start: 0x95800, type: bss, vram: 0x8018C8B8}
   - [0x95800] # End of file

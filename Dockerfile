@@ -30,7 +30,7 @@ RUN unzip maspsx.zip
 RUN cp -r maspsx-${MASPSX_HASH} /compilers/ps1/gcc2.6.0-mipsel/maspsx
 
 RUN echo '#!/bin/bash' >> as
-RUN echo 'python3 $(dirname -- $0)/maspsx/maspsx.py --run-assembler --aspsx-version=2.21 --gnu-as-path=mipsel-linux-gnu-as -I${COMPILER_DIR} -- $@' >> as
+RUN echo 'python3 $(dirname -- $0)/maspsx/maspsx.py --run-assembler --aspsx-version=2.34 --gnu-as-path=mipsel-linux-gnu-as -I${COMPILER_DIR} -- $@' >> as
 RUN cp as /compilers/ps1/gcc2.6.0-mipsel/
 
 RUN chown -R root:root /compilers/ps1/gcc2.6.0-mipsel/

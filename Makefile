@@ -41,7 +41,7 @@ endif
 EXE          := $(BUILD_DIR)/$(TARGET).EXE
 ELF          := $(BUILD_DIR)/$(TARGET).elf
 LD_SCRIPT    := $(TARGET).ld
-LD_MAP       := $(TARGET).map
+LD_MAP       := $(BUILD_DIR)/$(TARGET).map
 
 ### Tools ###
 
@@ -83,7 +83,7 @@ ASFLAGS        := -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections
 CFLAGS         := -O2 -G65536 -fpeephole -ffunction-cse -fkeep-static-consts -fpcc-struct-return \
                   -fcommon -fgnu-linker -msplit-addresses -mgas -mgpOPT -mgpopt -msoft-float -gcoff -quiet
 CPPFLAGS       := -Iinclude
-LDFLAGS        := -T undefined_syms_auto.txt -T undefined_funcs.txt -T $(LD_SCRIPT) -Map $(LD_MAP) --no-check-sections -nostdlib
+LDFLAGS        := -T undefined_syms_auto.txt -T undefined_funcs.txt -T $(BUILD_DIR)/$(LD_SCRIPT) -Map $(LD_MAP) --no-check-sections -nostdlib
 
 ifeq ($(NON_MATCHING),1)
 CPPFLAGS += -DNON_MATCHING
@@ -133,8 +133,14 @@ $(BUILD_DIR)/%.bin.o: %.bin
 	@mkdir -p $(shell dirname $@)
 	$(V)$(LD) -r -b binary -o $@ $<
 
+$(BUILD_DIR)/$(LD_SCRIPT): $(LD_SCRIPT)
+	@$(PRINT)$(GREEN)Preprocessing linker script: $(ENDGREEN)$(BLUE)$<$(ENDBLUE)$(ENDLINE)
+	$(V)$(CPP) -P -DBUILD_PATH=$(BUILD_DIR) $< -o $@
+#Temporary hack for noload segment wrong alignment
+	@sed -r -i 's/\.main_bss \(NOLOAD\) : SUBALIGN\(4\)/.main_bss main_DATA_END (NOLOAD) : SUBALIGN(4)/g' $@
+
 # Link the .o files into the .elf
-$(BUILD_DIR)/$(TARGET).elf: $(OBJECTS)
+$(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) $(BUILD_DIR)/$(LD_SCRIPT)
 	@$(PRINT)$(GREEN)Linking elf file: $(ENDGREEN)$(BLUE)$@$(ENDBLUE)$(ENDLINE)
 	$(V)$(LD) $(LDFLAGS) -o $@
 
@@ -142,7 +148,7 @@ $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS)
 $(EXE): $(BUILD_DIR)/$(TARGET).elf
 	@$(PRINT)$(GREEN)Creating EXE: $(ENDGREEN)$(BLUE)$@$(ENDBLUE)$(ENDLINE)
 	$(V)$(OBJCOPY) $< $@ -O binary
-	$(V)$(OBJCOPY) -O binary --gap-fill 0x00 --pad-to 0x0C3000 $< $@
+	$(V)$(OBJCOPY) -O binary --gap-fill 0x00 $< $@
 ifeq ($(COMPARE),1)
 	@$(DIFF) $(EXEPATH)/$(BASEEXE) $(EXE) && printf "OK\n" || (echo 'The build succeeded, but did not match the base EXE. This is expected if you are making changes to the game. To skip this check, use "make COMPARE=0".' && false)
 endif
