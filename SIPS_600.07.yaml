@@ -9,7 +9,6 @@ options:
   asm_path: asm
   src_path: src
   nonmatchings_path: nonmatchings
-  build_path: BUILD_PATH
   ld_script_path: TM1.ld
   find_file_boundaries: False
   gp_value: 0x8018BF04
@@ -21,7 +20,7 @@ options:
   # reloc_addrs_path:
   #   - reloc_addrs.txt
   create_undefined_funcs_auto: False
-  create_undefined_syms_auto: False
+  create_undefined_syms_auto: True
   extensions_path: tools/splat_ext
   string_encoding: ASCII
   data_string_encoding: ASCII
@@ -43,7 +42,7 @@ segments:
     align: 4
     subsegments:
       # Hand-coded MIPS ASM `geomProc()`
-      - [0x800, asm, tm1/geom] # 0x800F78B8
+      - {start: 0x800, type: hasm, name: tm1/geom, linker_section_order: .rodata} # 0x800F78B8
       # ------------------------------------------------
       # .rodata segment
       # ------------------------------------------------
@@ -113,20 +112,20 @@ segments:
       - [0x40690, asm, tm1/explode]         # 0x80137748
       - [0x41344, asm, tm1/grutils]         # 0x801383FC
       - [0x4188C, asm, tm1/screen]          # 0x80138944
-      - [0x49E9C, asm, tm1/ua_sw]           # 0x80141B3C
-      - [0x4A058, asm, tm1/ai_car_update]   # 0x80141CF8
-      - [0x4A974, asm, tm1/ua_dash]         # 0x80142614
-      - [0x4E650, asm, tm1/ua_effect]       # 0x801462F0
-      - [0x4EF34, asm, tm1/hud]             # 0x80146BD4
-      - [0x4FEAC, asm, tm1/targets]         # 0x80147B4C
-      - [0x53568, asm, tm1/ua]              # 0x8014B208
-      - [0x59140, asm, tm1/smooth]          # 0x80150DE0
-      - [0x595F0, asm, tm1/vehicle]         # 0x80151290
-      - [0x59DA4, asm, tm1/shell]           # 0x80151A44
-      - [0x5BA48, asm, tm1/fileio]          # 0x801536E8
-      - [0x5BD84, asm, tm1/movie]           # 0x80153A24
+      - [0x49E9C, asm, tm1/ua_sw]           # 0x80140F54
+      - [0x4AC40, asm, tm1/ai_car_update]   # 0x80141CF8
+      - [0x4B55C, asm, tm1/ua_dash]         # 0x80142614
+      - [0x4F238, asm, tm1/ua_effect]       # 0x801462F0
+      - [0x4FB1C, asm, tm1/hud]             # 0x80146BD4
+      - [0x50A94, asm, tm1/targets]         # 0x80147B4C
+      - [0x54150, asm, tm1/ua]              # 0x8014B208
+      - [0x59D28, asm, tm1/smooth]          # 0x80150DE0
+      - [0x5A1D8, asm, tm1/vehicle]         # 0x80151290
+      - [0x5A98C, asm, tm1/shell]           # 0x80151A44
+      - [0x5C630, asm, tm1/fileio]          # 0x801536E8
+      - [0x5C96C, asm, tm1/movie]           # 0x80153A24
       # Start of SDK code. TODO
-      - [0x5CAD4, asm, sdk/sdk]             # 0x80154774
+      - [0x5D6BC, asm, sdk/sdk]             # 0x80154774
       # .data segment
       - [0x78DF4, data]    # 0x8016FEAC
       # There are two labels in the debug symbol list, `fovNorms1` and `fovNorms2`.
@@ -136,7 +135,5 @@ segments:
       # `fovNorms2` is definitely in BSS.
       # However, `fovNorms1`'s start position is still inside of the binary itself,
       # yet its length is not filled out fully, and it extends into RAM.
-      #
-      # For now, assume BSS starts at `fovNorms1`. Hopefully nothing breaks.
-      - {start: 0x9562C, type: bss, vram: 0x8018C6E4} # .bss segment
+      # - {start: 0x9562C, type: bss, vram: 0x8018C6E4} # .bss segment
   - [0x95800] # End of file

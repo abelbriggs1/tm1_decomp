@@ -12,8 +12,7 @@
 .endm
 
 .macro jlabel label
-    .global \label
-    \label:
+    glabel \label
 .endm
 
 .macro move a, b

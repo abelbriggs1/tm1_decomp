@@ -5,3 +5,6 @@ TM1.ld
 .ruff_cache
 .venv
 __pycache__/
+TM1.map
+undefined_syms_auto.txt
+undefined_funcs_auto.txt

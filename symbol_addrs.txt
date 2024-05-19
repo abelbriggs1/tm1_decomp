@@ -1054,13 +1054,15 @@ __main = 0x80154774; // type:func
 start = 0x8015477c; // type:func
 stup1 = 0x801547a0; // type:func
 stup0 = 0x8015481c; // type:func
-2MBYTE_OBJ_B4 = 0x80154828; // type:func
+MBYTE_OBJ_B4 = 0x80154828; // type:func
 exit = 0x80154838; // type:func
 strcmp = 0x80154848; // type:func
 strncmp = 0x80154858; // type:func
 strlen = 0x80154868; // type:func
-memcpy = 0x80154878; // type:func allow_duplicated:True
-memset = 0x80154888; // type:func allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+sdk_memcpy = 0x80154878; // type:func
+// TODO: resolve dupe without renaming symbol
+sdk_memset = 0x80154888; // type:func
 rand = 0x80154898; // type:func
 srand = 0x801548a8; // type:func
 printf = 0x801548b8; // type:func
@@ -1212,7 +1214,8 @@ ISO9660_OBJ_82C = 0x80159b08; // type:func
 ISO9660_OBJ_848 = 0x80159b24; // type:func
 ISO9660_OBJ_93C = 0x80159c18; // type:func
 cd_read = 0x80159c44; // type:func
-memcpy = 0x80159cb0; // type:func allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+memcpy = 0x80159cb0; // type:func
 CdRead2 = 0x80159ce4; // type:func
 CDREAD2_OBJ_50 = 0x80159d34; // type:func
 StClearRing = 0x80159d78; // type:func
@@ -1442,7 +1445,8 @@ get_alarm = 0x801608a8; // type:func
 SYS_OBJ_2B08 = 0x80160a04; // type:func
 _version = 0x80160a14; // type:func
 SYS_OBJ_2BF0 = 0x80160aec; // type:func
-memset = 0x80160af4; // type:func allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+memset = 0x80160af4; // type:func
 LoadTPage = 0x80160b20; // type:func
 EXT_OBJ_A8 = 0x80160bc8; // type:func
 EXT_OBJ_AC = 0x80160bcc; // type:func
@@ -1538,17 +1542,20 @@ INTR_OBJ_514 = 0x80162764; // type:func
 stopIntr = 0x80162800; // type:func
 restartIntr = 0x801628b0; // type:func
 INTR_OBJ_6D4 = 0x80162924; // type:func
-memclr = 0x80162938; // type:func allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+sdk_memclr = 0x80162938; // type:func
 setjmp = 0x80162964; // type:func
 startIntrVSync = 0x80162974; // type:func
 trapIntrVSync = 0x801629cc; // type:func
 setIntrVSync = 0x80162a48; // type:func
-memclr = 0x80162a74; // type:func allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+sdk2_memclr = 0x80162a74; // type:func
 startIntrDMA = 0x80162aa0; // type:func
 trapIntrDMA = 0x80162af0; // type:func
 setIntrDMA = 0x80162c74; // type:func
 INTR_DMA_OBJ_274 = 0x80162d14; // type:func
-memclr = 0x80162d1c; // type:func allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+memclr = 0x80162d1c; // type:func
 SetVideoMode = 0x80162d48; // type:func
 GetVideoMode = 0x80162d60; // type:func
 InitHeap = 0x80162d70; // type:func
@@ -2143,11 +2150,13 @@ curSdb = 0x8018c4c0;
 curRdb = 0x8018c4c4;
 hdStack = 0x8018c4c8;
 // hd `stackIdx`
-stackIdx = 0x8018c4cc; // allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+hd_stackIdx = 0x8018c4cc;
 matCnt = 0x8018c4d0;
 hdpStack = 0x8018c4d4;
 // hdp `stackIdx`
-stackIdx = 0x8018c4d8; // allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+hdp_stackIdx = 0x8018c4d8;
 gSoundRange = 0x8018c4dc;
 gSoundWorldCs = 0x8018c4e0;
 StartPos = 0x8018c4e4;
@@ -2182,9 +2191,11 @@ gFaceObject = 0x8018c57c;
 InLeft = 0x8018c580;
 gHeading = 0x8018c584;
 // `screenDrawCard()`
-whichOT = 0x8018c588; // allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+screen_whichOT = 0x8018c588;
 // `screenDrawCard()`
-ot = 0x8018c58c; // allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+screen_ot = 0x8018c58c;
 whichLevel = 0x8018c590;
 x0 = 0x8018c594;
 y0 = 0x8018c598;
@@ -2207,9 +2218,11 @@ gBulletHoles = 0x8018c5e4;
 gListRemainingCars = 0x8018c5e8;
 gMaxCarryCapacity = 0x8018c5ec;
 // `uAdashDrawInstruments()`
-whichOT = 0x8018c5f0; // allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+whichOT = 0x8018c5f0;
 // `UAdashDrawInstruments()`
-ot = 0x8018c5f4; // allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+ot = 0x8018c5f4;
 gTVsTPage = 0x8018c5f8;
 gLightningUoffset = 0x8018c5fc;
 gLightningVoffset = 0x8018c600;
@@ -2323,9 +2336,11 @@ gScreenDisplayEnv = 0x8019cab0;
 gCards = 0x8019cac4;
 displays = 0x8019cc04;
 // `screenDrawCard()`
-sw = 0x8019cc2c; // allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+screen_sw = 0x8019cc2c;
 // ??
-OT = 0x8019cc54; // allow_duplicated:True
+// TODO: resolve dupe without renaming symbol
+screen_OT = 0x8019cc54;
 gCursorImageBuf = 0x8019cc64;
 gEyePoint = 0x8019cd24;
 gDeltaTrans = 0x8019cd30;
@@ -2347,9 +2362,9 @@ gSeperator = 0x8019e344;
 gMaxCarryDrawMode = 0x8019e35c;
 gMaxCarrySprites = 0x8019e368;
 // ??
-OT = 0x8019e534; // allow_duplicated:True
+OT = 0x8019e534;
 // `uadashInitSteeringWheel()`
-sw = 0x8019e544; // allow_duplicated:True
+sw = 0x8019e544;
 hb1 = 0x8019e56c;
 hb2 = 0x8019e594;
 gTruckWheel = 0x8019e5bc;
