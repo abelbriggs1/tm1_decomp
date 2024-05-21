@@ -57,8 +57,7 @@ segments:
       - [0x39EC, rodata, tm1/car_update]    # 0x800FAAA4
       - [0x3A00, rodata, tm1/car_init]      # 0x800FAAB8
       - [0x4000, rodata, tm1/ai_car_init]   # 0x800FB0B8
-      - [0x41E4, rodata, tm1/launcher]      # 0x800FB29C
-      - [0x4604, rodata, tm1/pickup]        # 0x800FB6BC
+      - [0x41E4, rodata, tm1/interactives]  # 0x800FB29C
       - [0x46CC, rodata, tm1/explode]       # 0x800FB784
       - [0x46F0, rodata, tm1/screen]        # 0x800FB7A8
       - [0x4F60, rodata, tm1/ai_car_update] # 0x800FC018
@@ -100,9 +99,7 @@ segments:
       - [0x395B0, asm, tm1/potholes]        # 0x80130668
       - [0x399D4, asm, tm1/curbs]           # 0x80130A8C
       - [0x3A240, asm, tm1/slick_spots]     # 0x801312F8
-      - [0x3A2BC, asm, tm1/launcher]        # 0x80131374
-      - [0x3E614, asm, tm1/pickup]          # 0x801356CC
-      - [0x3EECC, asm, tm1/monster]         # 0x80135F84
+      - [0x3A2BC, asm, tm1/interactives]    # 0x80131374
       - [0x3EED8, asm, tm1/explosion]       # 0x80135F90
       - [0x40204, asm, tm1/stars]           # 0x801372BC
       - [0x40690, asm, tm1/explode]         # 0x80137748
@@ -132,7 +129,7 @@ segments:
       - [0x79198, data, tm1/view]           # 0x80170250
       - [0x796F8, data, tm1/font]           # 0x801707B0
       - [0x79CDC, data, tm1/car_init]       # 0x80170D94
-      - [0x79CFC, data, tm1/pickup]         # 0x80170DB4
+      - [0x79CFC, data, tm1/interactives]   # 0x80170DB4
       - [0x79D4C, data, tm1/stars]          # 0x80170E04
       - [0x79D6C, data, tm1/screen]         # 0x80170E24
       - [0x79FC8, data, tm1/ai_car_update]  # 0x80171080
@@ -161,8 +158,7 @@ segments:
       - [0x94EF0, sdata, tm1/weapon]        # 0x8018BFA8
       - [0x94F18, sdata, tm1/ai_car]        # 0x8018BFD0
       - [0x94F1C, sdata, tm1/car_update]    # 0x8018BFD4
-      - [0x94F30, sdata, tm1/launcher]      # 0x8018BFE8
-      - [0x94FCC, sdata, tm1/pickup]        # 0x8018C084
+      - [0x94F30, sdata, tm1/interactives]  # 0x8018BFE8
       - [0x94FE4, sdata, tm1/explosion]     # 0x8018C09C
       - [0x94FE8, sdata, tm1/screen]        # 0x8018C0A0
       - [0x95154, sdata, tm1/ai_car_update] # 0x8018C20C
@@ -187,7 +183,7 @@ segments:
       - [0x95450, sbss, tm1/view]           # 0x8018C508
       - [0x9546C, sbss, tm1/weapon]         # 0x8018C524
       - [0x95480, sbss, tm1/ai_car]         # 0x8018C538
-      - [0x95484, sbss, tm1/launcher]       # 0x8018C53C
+      - [0x95484, sbss, tm1/interactives]   # 0x8018C53C
       - [0x954A4, sbss, tm1/explode]        # 0x8018C55C
       - [0x954AC, sbss, tm1/screen]         # 0x8018C564
       - [0x95504, sbss, tm1/ua_sw]          # 0x8018C5BC
@@ -210,7 +206,93 @@ segments:
       - [0x95624, common,  tm1/shell]        # 0x8018C6DC
       - [0x95628, common,  tm1/screen]       # 0x8018C6E0
       # ------------------------------------------------
-      # .bss segment (TODO)
+      # .bss segment
       # ------------------------------------------------
-      - {start: 0x95800, type: bss, vram: 0x8018C8B8}
+      - {start: 0x95800, type: bss, vram: 0x8018C8B8} # TODO: Unknown if any data exists here
+      - {start: 0x95800, type: bss, vram: 0x8018D864, name: tm1/hier}
+      - {start: 0x95800, type: bss, vram: 0x8018EDB8, name: tm1/cs}
+      - {start: 0x95800, type: bss, vram: 0x80194BF0, name: tm1/rt}
+      - {start: 0x95800, type: bss, vram: 0x80194F10, name: tm1/db}
+      - {start: 0x95800, type: bss, vram: 0x80195EAC, name: tm1/hd}
+      - {start: 0x95800, type: bss, vram: 0x80196064, name: tm1/light}
+      - {start: 0x95800, type: bss, vram: 0x801961E8, name: tm1/sound}
+      - {start: 0x95800, type: bss, vram: 0x80198A4C, name: tm1/ua_sound}
+      - {start: 0x95800, type: bss, vram: 0x80198A6C, name: tm1/hier_sub}
+      - {start: 0x95800, type: bss, vram: 0x80198A90, name: tm1/timer}
+      - {start: 0x95800, type: bss, vram: 0x80198A98, name: tm1/view}
+      - {start: 0x95800, type: bss, vram: 0x80198B10, name: tm1/font}
+      - {start: 0x95800, type: bss, vram: 0x80198C28, name: tm1/weapon}
+      - {start: 0x95800, type: bss, vram: 0x801996B8, name: tm1/interactives}
+      - {start: 0x95800, type: bss, vram: 0x80199DB8, name: tm1/explosion}
+      - {start: 0x95800, type: bss, vram: 0x8019B488, name: tm1/stars}
+      - {start: 0x95800, type: bss, vram: 0x8019C5B8, name: tm1/explode}
+      - {start: 0x95800, type: bss, vram: 0x8019C948, name: tm1/screen}
+      - {start: 0x95800, type: bss, vram: 0x8019CD3C, name: tm1/ua_sw}
+      - {start: 0x95800, type: bss, vram: 0x8019D184, name: tm1/ua_dash}
+      - {start: 0x95800, type: bss, vram: 0x8019E5BC, name: tm1/ua_effect}
+      - {start: 0x95800, type: bss, vram: 0x8019E648, name: tm1/hud}
+      - {start: 0x95800, type: bss, vram: 0x8019E9B8, name: tm1/targets}
+      - {start: 0x95800, type: bss, vram: 0x8019ED7C, name: tm1/ua}
+      - {start: 0x95800, type: bss, vram: 0x801A2818, name: tm1/shell}
+      - {start: 0x95800, type: bss, vram: 0x801A28AC, name: tm1/movie}
+      # Start of SDK BSS. TODO
+      - {start: 0x95800, type: bss, vram: 0x801A2904, name: sdk/sdk}
+      #
+      # TODO: After what seems to be the SDK BSS, there is some odd linker behavior.
+      # Many pieces of variables from the PSYQ SDK library are interspersed
+      # between more BSS data from TM1 TUs.
+      # No idea how to correctly split everything.
+      # Maybe these are shared BSS variables (header vars)?
+      # These are probably hints to extra TUs that aren't currently defined.
+      #
+      # - {start: 0x95800, type: bss, vram: 0x801A99EC} # tm1/sound
+      # - {start: 0x95800, type: bss, vram: 0x801A9A2C} # SDK sound library
+      # - {start: 0x95800, type: bss, vram: 0x801A9A30} # tm1/car_update? first ref is `CheckForCurb()`
+      # - {start: 0x95800, type: bss, vram: 0x801A9C10} # tm1/weapon
+      # - {start: 0x95800, type: bss, vram: 0x801AC320} # tm1/slick_spots
+      # - {start: 0x95800, type: bss, vram: 0x801AC35C} # tm1/trigger_pts
+      # - {start: 0x95800, type: bss, vram: 0x801AC910} # SDK sound library
+      # - {start: 0x95800, type: bss, vram: 0x801AC934} # tm1/screen
+      # - {start: 0x95800, type: bss, vram: 0x801AC95C} # SDK MDEC library
+      # - {start: 0x95800, type: bss, vram: 0x801AC968} # tm1/targets
+      # - {start: 0x95800, type: bss, vram: 0x801ACEE0} # SDK sound library
+      # - {start: 0x95800, type: bss, vram: 0x801ACFDC} # tm1/view
+      # - {start: 0x95800, type: bss, vram: 0x801ACFE8} # tm1/hier
+      # - {start: 0x95800, type: bss, vram: 0x801AEB68} # SDK sound library
+      # - {start: 0x95800, type: bss, vram: 0x801AEB70} # tm1/hier
+      # - {start: 0x95800, type: bss, vram: 0x801AF430} # tm1/bridges
+      # - {start: 0x95800, type: bss, vram: 0x801AFBB0} # SDK sound library
+      # - {start: 0x95800, type: bss, vram: 0x801AFBE4} # tm1/sound
+      # - {start: 0x95800, type: bss, vram: 0x801AFC24} # tm1/trigger_pts
+      # - {start: 0x95800, type: bss, vram: 0x801B0F48} # SDK sound library
+      # - {start: 0x95800, type: bss, vram: 0x801B0F50} # tm1/ua_dash
+      # - {start: 0x95800, type: bss, vram: 0x801B2210} # SDK sound library
+      # - {start: 0x95800, type: bss, vram: 0x801B2218} # SDK MDEC library
+      # - {start: 0x95800, type: bss, vram: 0x801B221C} # SDK sound library
+      # - {start: 0x95800, type: bss, vram: 0x801B2228} # tm1/trigger_pts
+      # - {start: 0x95800, type: bss, vram: 0x801B225C} # tm1/screen
+      # - {start: 0x95800, type: bss, vram: 0x801B2314} # tm1/ua_dash
+      # - {start: 0x95800, type: bss, vram: 0x801B2374} # SDK pad library
+      # - {start: 0x95800, type: bss, vram: 0x801B2378} # SDK (graphics?) library
+      # - {start: 0x95800, type: bss, vram: 0x801B239C} # SDK sound library
+      # - {start: 0x95800, type: bss, vram: 0x801B23A8} # SDK MDEC library
+      # - {start: 0x95800, type: bss, vram: 0x801B23AC} # tm1/potholes
+      # - {start: 0x95800, type: bss, vram: 0x801B244C} # SDK (graphics) library
+      # - {start: 0x95800, type: bss, vram: 0x801B2470} # SDK sound library
+      # - {start: 0x95800, type: bss, vram: 0x801B24B0} # SDK CD library?
+      # - {start: 0x95800, type: bss, vram: 0x801B24BC} # tm1/ua_dash
+      # - {start: 0x95800, type: bss, vram: 0x801B74D0} # tm1/rt
+      # - {start: 0x95800, type: bss, vram: 0x801F4C50} # SDK MDEC library
+      # - {start: 0x95800, type: bss, vram: 0x801F4C54} # tm1/hier
+      # - {start: 0x95800, type: bss, vram: 0x801F5A64} # SDK CRT?
+      # - {start: 0x95800, type: bss, vram: 0x801F7264} # tm1/ua
+      # - {start: 0x95800, type: bss, vram: 0x801F7284} # SDK sound library
+      # - {start: 0x95800, type: bss, vram: 0x801F729C} # tm1/hier
+      # - {start: 0x95800, type: bss, vram: 0x801F7B5C} # SDK graphics library
+      # - {start: 0x95800, type: bss, vram: 0x801F7B64} # SDK sound library
+      # - {start: 0x95800, type: bss, vram: 0x801F83FC} # tm1/targets
+      # - {start: 0x95800, type: bss, vram: 0x801F8434} # SDK sound library
+      # - {start: 0x95800, type: bss, vram: 0x801F84C8} # SDK MDEC library
+      # - {start: 0x95800, type: bss, vram: 0x801F84CC} # SDK sound library
+      # End of executable - Heap starts at `0x801F8524`
   - [0x95800] # End of file
