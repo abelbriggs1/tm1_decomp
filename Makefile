@@ -51,17 +51,17 @@ SPLAT      := splat split $(SPLAT_YAML)
 DIFF       := diff
 
 # For the actual compilers.
-CROSSC   := /compilers/ps1/gcc2.6.0-mipsel/
+CROSSC   := /compilers/ps1/gcc2.7.2-mipsel/
 # For binutils / linkers.
 CROSSB   := mipsel-linux-gnu-
 
-AS       := $(CROSSC)as
+AS       := $(CROSSB)as
 LD       := $(CROSSB)ld
 OBJCOPY  := $(CROSSB)objcopy
 STRIP    := $(CROSSB)strip
-CPP      := $(CROSSC)cpp
+CPP      := $(CROSSB)cpp
 CC       := $(CROSSC)cc1
-MASPSX   := $(CROSSC)maspsx --aspsx-version=2.21 --gnu-as-path=mipsel-linux-gnu-as
+MASPSX   := $(PYTHON) $(CROSSC)maspsx/maspsx.py --aspsx-version=2.34 --gnu-as-path=mipsel-linux-gnu-as
 
 PRINT := printf '
  ENDCOLOR := \033[0m
@@ -78,11 +78,10 @@ PRINT := printf '
 ENDLINE := \n'
 
 ### Compiler Options ###
-
 ASFLAGS        := -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections
-CFLAGS         := -O2 -G65536 -fpeephole -ffunction-cse -fkeep-static-consts -fpcc-struct-return \
-                  -fcommon -fgnu-linker -msplit-addresses -mgas -mgpOPT -mgpopt -msoft-float -gcoff -quiet
-CPPFLAGS       := -Iinclude
+CFLAGS         := -O2 -G0 -fpeephole -ffunction-cse -fpcc-struct-return -fno-builtin \
+                  -fcommon -fgnu-linker -mgas -mgpOPT -mgpopt -msoft-float -gcoff -quiet
+CPPFLAGS       := -Iinclude -fno-builtin
 LDFLAGS        := -T undefined_syms_auto.txt -T undefined_funcs.txt -T $(BUILD_DIR)/$(LD_SCRIPT) -Map $(LD_MAP) --no-check-sections -nostdlib
 
 ifeq ($(NON_MATCHING),1)

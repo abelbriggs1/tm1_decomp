@@ -24,7 +24,7 @@ options:
   data_string_guesser_level: 2
   ld_bss_is_noload: True
   subalign: 4
-  migrate_rodata_to_functions: False
+  migrate_rodata_to_functions: True
 
 segments:
   - name: header
@@ -85,7 +85,7 @@ segments:
       - [0x10314, asm, tm1/ua_sound]        # 0x801073CC
       - [0x118C4, asm, tm1/sound_req]       # 0x8010897C
       - [0x11A2C, asm, tm1/hier_sub]        # 0x80108AE4
-      - [0x12A50, asm, tm1/timer]           # 0x80109B08
+      - [0x12A50, c, tm1/timer]             # 0x80109B08
       - [0x12D4C, asm, tm1/view]            # 0x80109E04
       - [0x13F00, asm, tm1/font]            # 0x8010AFB8
       - [0x14FA4, asm, tm1/weapon]          # 0x8010C05C

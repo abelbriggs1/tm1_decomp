@@ -21,7 +21,7 @@
             "\t.include \"" FOLDER "/" #NAME ".s\"\n"                                              \
             ".section .text")
 #endif
-
+__asm__(".include \"include/macro.inc\"\n");
 #else
 #define INCLUDE_ASM(FOLDER, NAME)
 #define INCLUDE_RODATA(FOLDER, NAME)
