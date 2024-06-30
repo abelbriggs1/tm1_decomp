@@ -61,7 +61,7 @@ OBJCOPY  := $(CROSSB)objcopy
 STRIP    := $(CROSSB)strip
 CPP      := $(CROSSB)cpp
 CC       := $(CROSSC)cc1
-MASPSX   := $(PYTHON) $(CROSSC)maspsx/maspsx.py --aspsx-version=2.34 --gnu-as-path=mipsel-linux-gnu-as
+MASPSX   := $(PYTHON) $(CROSSC)maspsx/maspsx.py --aspsx-version=2.34 --gnu-as-path=mipsel-linux-gnu-as --expand-div
 
 PRINT := printf '
  ENDCOLOR := \033[0m
