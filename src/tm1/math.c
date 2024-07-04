@@ -55,8 +55,7 @@ void mathMulTransVecShort(volatile MATRIX* lhs, SVECTOR* rhs, volatile VECTOR* o
         / FXP_ONE;
 }
 
-// Matches on PSYQ 3.6 but not vanilla GCC 2.7.2
-// TODO figure out instruction reordering
+// TODO: Fix when PSYQ3.6 instruction reordering is figured out - matches otherwise
 INCLUDE_ASM("asm/nonmatchings/tm1/math", mathNormalizeVec);
 // void mathNormalizeVec(volatile VECTOR* in, volatile VECTOR* out)
 // {

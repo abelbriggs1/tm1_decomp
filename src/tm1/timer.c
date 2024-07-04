@@ -60,6 +60,7 @@ s16 GetFieldsLastFrame() { return gFieldsLastFrame; }
 s16 GetUpdateRate() { return gUpdateRate; }
 
 // Returns the number of microseconds since the last frame.
+// TODO: Fix when PSYQ3.6 instruction reordering is figured out - matches otherwise
 INCLUDE_ASM("asm/nonmatchings/tm1/timer", GetFrameTime);
 // u32 GetFrameTime() { return RCNT2_TICKS_TO_USECS(gFrameTime); }
 
@@ -69,6 +70,7 @@ void ResetUpdateRate() { gLastTics = GetCurTics(); }
 
 void SysClkIntHandler() { gTotalTics = gTotalTics + RCNT2_MAX_VALUE; }
 
+// TODO: Fix when PSYQ3.6 instruction reordering is figured out - matches otherwise
 INCLUDE_ASM("asm/nonmatchings/tm1/timer", FrameTimeToUpdateRate);
 // u32 FrameTimeToUpdateRate(s32 unk)
 // {

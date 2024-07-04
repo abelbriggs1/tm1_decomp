@@ -68,13 +68,14 @@ INCLUDE_ASM("asm/nonmatchings/tm1/font", fontGetCharacterInfo);
 
 INCLUDE_ASM("asm/nonmatchings/tm1/font", fontInit);
 
-// Matches with -fforce-addr -fno-delayed-branch
+// Matches with -fforce-addr
 INCLUDE_ASM("asm/nonmatchings/tm1/font", fontSetColor);
 // void fontSetColor(int font, u8 red, u8 green, u8 blue)
 // {
-//     gCharacterTemplate[font].r0 = red;
-//     gCharacterTemplate[font].g0 = green;
-//     gCharacterTemplate[font].b0 = blue;
+//     SPRT* fontData = &gCharacterTemplate[font];
+//     fontData->r0 = red;
+//     fontData->g0 = green;
+//     fontData->b0 = blue;
 // }
 
 // Uses jump table in rodata
