@@ -25,6 +25,7 @@ options:
   ld_bss_is_noload: True
   subalign: 4
   migrate_rodata_to_functions: True
+  include_macro_inc: False
 
 segments:
   - name: header
@@ -52,7 +53,7 @@ segments:
       - [0x27D8, rodata, tm1/sound]         # 0x800F9890
       - [0x2824, rodata, tm1/ua_sound]      # 0x800F98DC
       - [0x387C, rodata, tm1/view]          # 0x800FA934
-      - [0x38E4, rodata, tm1/font]          # 0x800FA99C
+      - [0x38E4, .rodata, tm1/font]         # 0x800FA99C
       - [0x3948, rodata, tm1/car]           # 0x800FAA00
       - [0x39EC, rodata, tm1/car_update]    # 0x800FAAA4
       - [0x3A00, rodata, tm1/car_init]      # 0x800FAAB8
@@ -72,7 +73,7 @@ segments:
       # .text segment (C code)
       # ------------------------------------------------
       - [0x6724,  asm, tm1/hier]            # 0x800FD7DC
-      - [0x790C,  asm, tm1/math]            # 0x800FE9C4
+      - [0x790C,  c, tm1/math]              # 0x800FE9C4
       - [0x7F84,  asm, tm1/wdcopy]          # 0x800FF03C
       - [0x7FB8,  asm, tm1/cs]              # 0x800FF070
       - [0x82E4,  asm, tm1/rt]              # 0x800FF39C
@@ -87,7 +88,7 @@ segments:
       - [0x11A2C, asm, tm1/hier_sub]        # 0x80108AE4
       - [0x12A50, c, tm1/timer]             # 0x80109B08
       - [0x12D4C, asm, tm1/view]            # 0x80109E04
-      - [0x13F00, asm, tm1/font]            # 0x8010AFB8
+      - [0x13F00, c, tm1/font]              # 0x8010AFB8
       - [0x14FA4, asm, tm1/weapon]          # 0x8010C05C
       - [0x1A1A4, asm, tm1/car]             # 0x8011125C
       - [0x22454, asm, tm1/ai_car]          # 0x8011950C
@@ -125,7 +126,7 @@ segments:
       - [0x78DF4, data, tm1/cs]             # 0x8016FEAC
       - [0x78E14, data, tm1/sound]          # 0x8016FECC
       - [0x78E44, data, tm1/ua_sound]       # 0x8016FEFC
-      - [0x79180, data, tm1/timer]          # 0x80170238
+      - [0x79180, .data, tm1/timer]          # 0x80170238
       - [0x79198, data, tm1/view]           # 0x80170250
       - [0x796F8, data, tm1/font]           # 0x801707B0
       - [0x79CDC, data, tm1/car_init]       # 0x80170D94
@@ -218,7 +219,7 @@ segments:
       - {start: 0x95800, type: bss, vram: 0x801961E8, name: tm1/sound}
       - {start: 0x95800, type: bss, vram: 0x80198A4C, name: tm1/ua_sound}
       - {start: 0x95800, type: bss, vram: 0x80198A6C, name: tm1/hier_sub}
-      - {start: 0x95800, type: bss, vram: 0x80198A90, name: tm1/timer}
+      - {start: 0x95800, type: .bss, vram: 0x80198A90, name: tm1/timer}
       - {start: 0x95800, type: bss, vram: 0x80198A98, name: tm1/view}
       - {start: 0x95800, type: bss, vram: 0x80198B10, name: tm1/font}
       - {start: 0x95800, type: bss, vram: 0x80198C28, name: tm1/weapon}

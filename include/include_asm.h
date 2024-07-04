@@ -20,11 +20,11 @@
     __asm__(".section .rodata\n"                                                                   \
             "\t.include \"" FOLDER "/" #NAME ".s\"\n"                                              \
             ".section .text")
-#endif
+#endif // INCLUDE_ASM
 __asm__(".include \"include/macro.inc\"\n");
 #else
 #define INCLUDE_ASM(FOLDER, NAME)
 #define INCLUDE_RODATA(FOLDER, NAME)
-#endif
+#endif // PERMUTER
 
-#endif
+#endif // INCLUDE_ASM_H

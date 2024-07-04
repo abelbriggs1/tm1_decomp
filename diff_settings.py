@@ -4,4 +4,4 @@ def apply(config, args):
     config["myimg"] = "build/TM1.EXE"
     config["mapfile"] = "build/TM1.map"
     config["source_directories"] = ["."]
-    config["objdump_executable"] = "mipsel-linux-gnu-objdump"
+    config["objdump_executable"] = "mips-linux-gnu-objdump"

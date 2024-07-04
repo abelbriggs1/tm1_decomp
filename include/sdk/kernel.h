@@ -1,3 +1,6 @@
+#ifndef __SDK_KERNEL_H__
+#define __SDK_KERNEL_H__
+
 #include "common.h"
 
 #define DescMask 0xff000000
@@ -68,3 +71,5 @@
 
 extern void EnterCriticalSection(void);
 extern void ExitCriticalSection(void);
+
+#endif // __SDK_KERNEL_H__

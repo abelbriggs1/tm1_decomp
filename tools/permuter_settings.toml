@@ -1,0 +1,4 @@
+compiler_type = "gcc"
+compiler_command = "mips-linux-gnu-cpp -EL -Iinclude -fno-builtin -ffreestanding -MMD -MP -MT build/src/tm1/timer.c.o -MF build/src/tm1/timer.c.o.d src/tm1/timer.c | /compilers/ps1/gcc2.7.2-mipsel/cc1 -O2 -G0 -mips1 -mcpu=r3000 -funsigned-char -fno-builtin -fcommon -fgnu-linker -mgas -msoft-float -quiet | python3 /compilers/ps1/gcc2.7.2-mipsel/maspsx/maspsx.py --aspsx-version=2.34 --gnu-as-path=mipsel-linux-gnu-as --expand-div -G0 | mips-linux-gnu-as -EL -Iinclude -G0 -march=r3000 -mtune=r3000 -no-pad-sections"
+assembler_command = "mips-linux-gnu-as -EL -Iinclude -G0 -march=r3000 -mtune=r3000 -no-pad-sections"
+asm_prelude_file = "include/macro.inc"

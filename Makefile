@@ -53,7 +53,7 @@ DIFF       := diff
 # For the actual compilers.
 CROSSC   := /compilers/ps1/gcc2.7.2-mipsel/
 # For binutils / linkers.
-CROSSB   := mipsel-linux-gnu-
+CROSSB   := mips-linux-gnu-
 
 AS       := $(CROSSB)as
 LD       := $(CROSSB)ld
@@ -61,7 +61,7 @@ OBJCOPY  := $(CROSSB)objcopy
 STRIP    := $(CROSSB)strip
 CPP      := $(CROSSB)cpp
 CC       := $(CROSSC)cc1
-MASPSX   := $(PYTHON) $(CROSSC)maspsx/maspsx.py --aspsx-version=2.34 --gnu-as-path=mipsel-linux-gnu-as --expand-div
+MASPSX   := $(PYTHON) $(CROSSC)maspsx/maspsx.py --aspsx-version=2.34 --gnu-as-path=mipsel-linux-gnu-as --expand-div -G0
 
 PRINT := printf '
  ENDCOLOR := \033[0m
@@ -77,12 +77,15 @@ PRINT := printf '
  ENDPURPLE := $(ENDCOLOR)
 ENDLINE := \n'
 
+# -fforce-addr -fno-delayed-branch
+# -fpeephole -ffunction-cse -fpcc-struct-return
+
 ### Compiler Options ###
-ASFLAGS        := -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections
-CFLAGS         := -O2 -G0 -fpeephole -ffunction-cse -fpcc-struct-return -fno-builtin \
-                  -fcommon -fgnu-linker -mgas -mgpOPT -mgpopt -msoft-float -gcoff -quiet
-CPPFLAGS       := -Iinclude -fno-builtin
-LDFLAGS        := -T undefined_syms_auto.txt -T undefined_funcs.txt -T $(BUILD_DIR)/$(LD_SCRIPT) -Map $(LD_MAP) --no-check-sections -nostdlib
+ASFLAGS        := -EL -Iinclude -G0 -march=r3000 -mtune=r3000 -no-pad-sections
+CFLAGS         := -O2 -G0 -mips1 -mcpu=r3000 -funsigned-char -fno-builtin -fvolatile \
+                  -fcommon -fgnu-linker -mgas -msoft-float -quiet
+CPPFLAGS       := -EL -Iinclude -fno-builtin
+LDFLAGS        := -EL -T undefined_syms_auto.txt -T undefined_funcs.txt -T $(BUILD_DIR)/$(LD_SCRIPT) -Map $(LD_MAP) --no-check-sections -nostdlib
 
 ifeq ($(NON_MATCHING),1)
 CPPFLAGS += -DNON_MATCHING

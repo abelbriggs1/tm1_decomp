@@ -6,8 +6,8 @@ FROM debian:bookworm
 # Add some extra dependencies for use in a devcontainer context.
 RUN apt-get update
 RUN apt-get install -y \
-    gcc-mipsel-linux-gnu                   \
-    binutils-mipsel-linux-gnu              \
+    gcc-mips-linux-gnu                     \
+    binutils-mips-linux-gnu                \
     clang-format                           \
     python3 python3-pip python3-virtualenv \
     nano                                   \
@@ -30,7 +30,7 @@ RUN unzip maspsx.zip
 RUN cp -r maspsx-${MASPSX_HASH} /compilers/ps1/gcc2.7.2-mipsel/maspsx
 
 RUN echo '#!/bin/bash' >> as
-RUN echo 'python3 $(dirname -- $0)/maspsx/maspsx.py --run-assembler --aspsx-version=2.34 --gnu-as-path=mipsel-linux-gnu-as -I${COMPILER_DIR} -- $@' >> as
+RUN echo 'python3 $(dirname -- $0)/maspsx/maspsx.py --run-assembler --aspsx-version=2.34 --gnu-as-path=mips-linux-gnu-as -I${COMPILER_DIR} -- $@' >> as
 RUN cp as /compilers/ps1/gcc2.7.2-mipsel/
 
 RUN chown -R root:root /compilers/ps1/gcc2.7.2-mipsel/
