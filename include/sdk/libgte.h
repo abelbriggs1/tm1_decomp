@@ -21,4 +21,6 @@ typedef struct {
     unsigned char cd; // GPU code
 } CVECTOR;
 
+extern long SquareRoot0(long a);
+
 #endif // __SDK_LIBGTE_H__
