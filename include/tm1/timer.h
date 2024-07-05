@@ -3,7 +3,12 @@
 
 #include "common.h"
 
+void InitTimer();
+void TermTimer();
+u32 GetCurTics();
 s16 GetFieldsLastFrame();
 s16 GetUpdateRate();
+u32 GetFrameCount();
+void ResetUpdateRate();
 
 #endif

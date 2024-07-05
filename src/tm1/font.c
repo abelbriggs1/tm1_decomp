@@ -15,26 +15,27 @@ INCLUDE_RODATA("asm/nonmatchings/tm1/font", D_800FA9C0);
 
 INCLUDE_ASM("asm/nonmatchings/tm1/font", fontPrintXY);
 
-char fontMapUsefulCharacter(char value)
-{
-    if (value == '.') {
-        return ';';
-    }
-    if (value == '!') {
-        return '\\';
-    }
-    if (value == ',') {
-        return '^';
-    }
-    if (value == '\'') {
-        return '`';
-    }
-    if (value == '*') {
-        return '{';
-    }
+INCLUDE_ASM("asm/nonmatchings/tm1/font", fontMapUsefulCharacter);
+// char fontMapUsefulCharacter(char value)
+// {
+//     if (value == '.') {
+//         return ';';
+//     }
+//     if (value == '!') {
+//         return '\\';
+//     }
+//     if (value == ',') {
+//         return '^';
+//     }
+//     if (value == '\'') {
+//         return '`';
+//     }
+//     if (value == '*') {
+//         return '{';
+//     }
 
-    return value;
-}
+//     return value;
+// }
 
 INCLUDE_ASM("asm/nonmatchings/tm1/font", fontStringWidth);
 

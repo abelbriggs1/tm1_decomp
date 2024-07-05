@@ -55,18 +55,16 @@ void mathMulTransVecShort(volatile MATRIX* lhs, SVECTOR* rhs, volatile VECTOR* o
         / FXP_ONE;
 }
 
-// TODO: Fix when PSYQ3.6 instruction reordering is figured out - matches otherwise
-INCLUDE_ASM("asm/nonmatchings/tm1/math", mathNormalizeVec);
-// void mathNormalizeVec(volatile VECTOR* in, volatile VECTOR* out)
-// {
-//     s32 norm = SquareRoot0((in->vx * in->vx) + (in->vy * in->vy) + (in->vz * in->vz));
-//     if (norm > 0) {
-//         out->vx = (in->vx * FXP_ONE) / norm;
-//         out->vy = (in->vy * FXP_ONE) / norm;
-//         out->vz = (in->vz * FXP_ONE) / norm;
-//     } else {
-//         out->vx = 0;
-//         out->vy = 0;
-//         out->vz = 0;
-//     }
-// }
+void mathNormalizeVec(volatile VECTOR* in, volatile VECTOR* out)
+{
+    s32 norm = SquareRoot0((in->vx * in->vx) + (in->vy * in->vy) + (in->vz * in->vz));
+    if (norm > 0) {
+        out->vx = (in->vx * FXP_ONE) / norm;
+        out->vy = (in->vy * FXP_ONE) / norm;
+        out->vz = (in->vz * FXP_ONE) / norm;
+    } else {
+        out->vx = 0;
+        out->vy = 0;
+        out->vz = 0;
+    }
+}

@@ -18,6 +18,8 @@ options:
   create_undefined_funcs_auto: False
   create_undefined_syms_auto: True
   extensions_path: tools/splat_ext
+  reloc_addrs_path:
+   - reloc_addrs.txt
   string_encoding: ASCII
   data_string_encoding: ASCII
   rodata_string_guesser_level: 2

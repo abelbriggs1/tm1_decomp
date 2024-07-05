@@ -1,7 +1,6 @@
 #include "tm1/timer.h"
 
 #include "common.h"
-
 #include "sdk/kernel.h"
 #include "sdk/libapi.h"
 
@@ -10,6 +9,8 @@
 #define RCNT2_TICKS_PER_FRAME 70618
 #define RCNT2_TICKS_PER_HALF_FRAME 35309
 #define RCNT2_TICKS_TO_USECS(ticks) ((ticks * 236) / 1000)
+#define CALCULATE_FIELDS_LAST_FRAME(frameTime)                                                     \
+    (((frameTime) + RCNT2_TICKS_PER_HALF_FRAME) / RCNT2_TICKS_PER_FRAME)
 
 s16 gFieldsLastFrame = 2;
 /* Current target number of updates per second. */
@@ -51,33 +52,72 @@ void TermTimer()
     CloseEvent(event);
 }
 
-u32 GetCurTics() { return gTotalTics + GetRCnt(RCntCNT2); }
+u32 GetCurTics()
+{
+    return gTotalTics + GetRCnt(RCntCNT2);
+}
 
-INCLUDE_ASM("asm/nonmatchings/tm1/timer", SetFrameStart);
+void SetFrameStart()
+{
+    u32 curTics = GetCurTics();
+    u32 lastTics = gLastTics;
+    u32 frameTime = curTics - lastTics;
 
-s16 GetFieldsLastFrame() { return gFieldsLastFrame; }
+    gFrameTime = frameTime;
+    gCurTics = curTics;
+    gLastTics = curTics;
+    gFieldsLastFrame = CALCULATE_FIELDS_LAST_FRAME(frameTime);
 
-s16 GetUpdateRate() { return gUpdateRate; }
+    if (gFieldsLastFrame < 1) {
+        gFieldsLastFrame = 3;
+    }
+    if (5 < gFieldsLastFrame) {
+        gFieldsLastFrame = 5;
+    }
 
-// Returns the number of microseconds since the last frame.
-// TODO: Fix when PSYQ3.6 instruction reordering is figured out - matches otherwise
-INCLUDE_ASM("asm/nonmatchings/tm1/timer", GetFrameTime);
-// u32 GetFrameTime() { return RCNT2_TICKS_TO_USECS(gFrameTime); }
+    gUpdateRate = updateRate / gFieldsLastFrame;
+    if (gUpdateRate < 1) {
+        gUpdateRate = 1;
+    }
+    gFrameCount += 1;
+}
 
-u32 GetFrameCount() { return gFrameCount; }
+s16 GetFieldsLastFrame()
+{
+    return gFieldsLastFrame;
+}
 
-void ResetUpdateRate() { gLastTics = GetCurTics(); }
+s16 GetUpdateRate()
+{
+    return gUpdateRate;
+}
 
-void SysClkIntHandler() { gTotalTics = gTotalTics + RCNT2_MAX_VALUE; }
+u32 GetFrameTime()
+{
+    return RCNT2_TICKS_TO_USECS(gFrameTime);
+}
 
-// TODO: Fix when PSYQ3.6 instruction reordering is figured out - matches otherwise
-INCLUDE_ASM("asm/nonmatchings/tm1/timer", FrameTimeToUpdateRate);
-// u32 FrameTimeToUpdateRate(s32 unk)
-// {
-//     u32 unk1 = (unk + RCNT2_TICKS_PER_HALF_FRAME) / RCNT2_TICKS_PER_FRAME;
-//     u32 unk2 = updateRate / unk1;
-//     if ((s32)unk2 < 1) {
-//         unk2 = 1;
-//     }
-//     return unk2;
-// }
+u32 GetFrameCount()
+{
+    return gFrameCount;
+}
+
+void ResetUpdateRate()
+{
+    gLastTics = GetCurTics();
+}
+
+void SysClkIntHandler()
+{
+    gTotalTics += RCNT2_MAX_VALUE;
+}
+
+u32 FrameTimeToUpdateRate(s32 unk)
+{
+    u32 unk1 = CALCULATE_FIELDS_LAST_FRAME(unk);
+    u32 unk2 = updateRate / unk1;
+    if ((s32)unk2 < 1) {
+        unk2 = 1;
+    }
+    return unk2;
+}

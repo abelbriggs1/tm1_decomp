@@ -2038,6 +2038,7 @@ PATCHGTE_OBJ_68                          = 0x8015dec4;
 // DATA SYMBOLS
 // -------------------------------------------------------------------------
 systemAttributes                         = 0x8016fecc;
+
 gFieldsLastFrame                         = 0x80170238; // type:s16
 gUpdateRate                              = 0x8017023a; // type:s16
 gFrameCount                              = 0x8017023c; // type:u32
@@ -2045,6 +2046,7 @@ gTotalTics                               = 0x80170240; // type:u32
 gFrameTime                               = 0x80170244; // type:u32
 gLastTics                                = 0x80170248; // type:u32
 gCurTics                                 = 0x8017024c; // type:u32
+
 gTransitionLabels                        = 0x80170ea4;
 IceCreamProfileFront                     = 0x80171080;
 IceCreamProfileRear                      = 0x80171090;

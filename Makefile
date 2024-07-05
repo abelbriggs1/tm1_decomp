@@ -82,7 +82,7 @@ ENDLINE := \n'
 
 ### Compiler Options ###
 ASFLAGS        := -EL -Iinclude -G0 -march=r3000 -mtune=r3000 -no-pad-sections
-CFLAGS         := -O2 -G0 -mips1 -mcpu=r3000 -funsigned-char -fno-builtin -fvolatile \
+CFLAGS         := -O2 -mips1 -mcpu=r6000 -funsigned-char -fno-builtin -fvolatile \
                   -fcommon -fgnu-linker -mgas -msoft-float -quiet
 CPPFLAGS       := -EL -Iinclude -fno-builtin
 LDFLAGS        := -EL -T undefined_syms_auto.txt -T undefined_funcs.txt -T $(BUILD_DIR)/$(LD_SCRIPT) -Map $(LD_MAP) --no-check-sections -nostdlib
@@ -97,6 +97,10 @@ endif
 OBJECTS := $(shell grep -E 'build.+\.o' $(LD_SCRIPT) -o)
 OBJECTS := $(OBJECTS:BUILD_PATH/%=$(BUILD_DIR)/%)
 DEPENDS := $(OBJECTS:=.d)
+
+# List of C files that seem to be "independent" of the rest of the code, and are
+# compiled without the global pointer (-G0).
+INDEP_OBJECTS=timer.c.o
 
 ### Targets ###
 
@@ -117,11 +121,14 @@ setup: distclean split
 split:
 	$(V)$(SPLAT)
 
+# Compile independent objects with G0.
+$(BUILD_DIR)/%$(INDEP_OBJECTS): EXTRA_FLAGS := -G0
+
 # Compile .c files
 $(BUILD_DIR)/%.c.o: %.c
 	@$(PRINT)$(GREEN)Compiling C file: $(ENDGREEN)$(BLUE)$<$(ENDBLUE)$(ENDLINE)
 	@mkdir -p $(shell dirname $@)
-	$(V)$(CPP) $(CPPFLAGS) -ffreestanding -MMD -MP -MT $@ -MF $@.d $< | $(CC) $(CFLAGS) | $(MASPSX) | $(AS) $(ASFLAGS) -o $@
+	$(V)$(CPP) $(CPPFLAGS) -ffreestanding -MMD -MP -MT $@ -MF $@.d $< | $(CC) $(CFLAGS) $(EXTRA_FLAGS) | $(MASPSX) | $(AS) $(ASFLAGS) -o $@
 
 # Compile .s files
 $(BUILD_DIR)/%.s.o: %.s
