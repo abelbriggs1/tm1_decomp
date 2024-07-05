@@ -1,7 +1,7 @@
 {
     "name": "tm_decomp_dev",
     "build": {
-        "dockerfile": "../Dockerfile",
+        "dockerfile": "Dockerfile",
         "context": ".."
     },
     "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
@@ -44,5 +44,5 @@
             ]
         }
     },
-    "postCreateCommand": ".devcontainer/setup_dev.sh"
+    "postCreateCommand": ".devcontainer/setup_devcontainer.sh"
 }

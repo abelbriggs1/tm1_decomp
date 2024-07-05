@@ -1,2 +1,0 @@
-compiler_type = "gcc"
-asm_prelude_file = "include/macro.inc"

@@ -1,12 +1,18 @@
 ### Build Options ###
 
+VERSION      ?= JP
 EXEPATH      := disks
-BASEEXE      := SIPS_600.07
-TARGET       := TM1
 COMPARE      ?= 1
 NON_MATCHING ?= 0
 VERBOSE      ?= 0
 BUILD_DIR    ?= build
+
+ifeq ($(VERSION),JP)
+BASEEXE      := SIPS_600.07
+endif
+
+TARGET       := TM1_$(VERSION)
+SPLAT_DIR    := config/$(VERSION)
 
 # Fail early if baserom does not exist
 ifeq ($(wildcard $(EXEPATH)/$(BASEEXE)),)
@@ -46,12 +52,12 @@ LD_MAP       := $(BUILD_DIR)/$(TARGET).map
 ### Tools ###
 
 PYTHON     := python3
-SPLAT_YAML := $(BASEEXE).yaml
+SPLAT_YAML := $(SPLAT_DIR)/$(BASEEXE).yaml
 SPLAT      := splat split $(SPLAT_YAML)
 DIFF       := diff
 
 # For the actual compilers.
-CROSSC   := /compilers/ps1/gcc2.7.2-mipsel/
+CROSSC   := tools/gcc_2.7.2-mipsel/
 # For binutils / linkers.
 CROSSB   := mips-linux-gnu-
 
@@ -61,7 +67,7 @@ OBJCOPY  := $(CROSSB)objcopy
 STRIP    := $(CROSSB)strip
 CPP      := $(CROSSB)cpp
 CC       := $(CROSSC)cc1
-MASPSX   := $(PYTHON) $(CROSSC)maspsx/maspsx.py --aspsx-version=2.34 --gnu-as-path=mipsel-linux-gnu-as --expand-div -G0
+MASPSX   := $(PYTHON) tools/maspsx/maspsx.py --aspsx-version=2.34 --gnu-as-path=mipsel-linux-gnu-as --expand-div -G0
 
 PRINT := printf '
  ENDCOLOR := \033[0m
@@ -85,7 +91,7 @@ ASFLAGS        := -EL -Iinclude -G0 -march=r3000 -mtune=r3000 -no-pad-sections
 CFLAGS         := -O2 -mips1 -mcpu=r6000 -funsigned-char -fno-builtin -fvolatile \
                   -fcommon -fgnu-linker -mgas -msoft-float -quiet
 CPPFLAGS       := -EL -Iinclude -fno-builtin
-LDFLAGS        := -EL -T undefined_syms_auto.txt -T undefined_funcs.txt -T $(BUILD_DIR)/$(LD_SCRIPT) -Map $(LD_MAP) --no-check-sections -nostdlib
+LDFLAGS        := -EL -T $(SPLAT_DIR)/undefined_syms_auto.txt -T $(SPLAT_DIR)/undefined_funcs.txt -T $(BUILD_DIR)/$(LD_SCRIPT) -Map $(LD_MAP) --no-check-sections -nostdlib
 
 ifeq ($(NON_MATCHING),1)
 CPPFLAGS += -DNON_MATCHING

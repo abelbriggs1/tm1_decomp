@@ -1,15 +1,21 @@
 name: SIPS_600.07
 sha1: d176f71e6962f02b531942e80718906d42f31799
 options:
-  basename: TM1
-  target_path: disks/SIPS_600.07
-  base_path: .
   platform: psx
   compiler: GCC
+  basename: TM1_JP
+  base_path: ../..
+  target_path: disks/SIPS_600.07
   asm_path: asm
   src_path: src
+  ld_script_path: TM1_JP.ld
+  symbol_addrs_path: config/JP/symbol_addrs.txt
+  reloc_addrs_path: config/JP/reloc_addrs.txt
+  undefined_funcs_auto_path: config/JP/undefined_funcs.txt
+  undefined_syms_auto_path: config/JP/undefined_syms_auto.txt
+  extensions_path: tools/splat_ext
   nonmatchings_path: nonmatchings
-  ld_script_path: TM1.ld
+
   find_file_boundaries: False
   gp_value: 0x8018BF04
   use_legacy_include_asm: False
@@ -17,9 +23,6 @@ options:
   auto_all_sections: []
   create_undefined_funcs_auto: False
   create_undefined_syms_auto: True
-  extensions_path: tools/splat_ext
-  reloc_addrs_path:
-   - reloc_addrs.txt
   string_encoding: ASCII
   data_string_encoding: ASCII
   rodata_string_guesser_level: 2
