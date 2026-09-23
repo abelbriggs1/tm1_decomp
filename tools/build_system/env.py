@@ -265,7 +265,8 @@ class EnvironmentToolchain:
                 "--gap-fill 0x00",
             ],
             g_level={
-                "tm1/font": 8
+                "tm1/font": 8,
+                "tm1/ctlpad": 8,
             }
         )
 
