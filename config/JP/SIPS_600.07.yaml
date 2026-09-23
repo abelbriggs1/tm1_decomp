@@ -105,7 +105,7 @@ segments:
       - [0x354C0, asm, tm1/bridges]         # 0x8012CD78
       - [0x38DB0, c  , tm1/potholes]        # 0x80130668
       - [0x391D4, c  , tm1/curbs]           # 0x80130A8C
-      - [0x39A40, asm, tm1/slick_spots]     # 0x801312F8
+      - [0x39A40, c  , tm1/slick_spots]     # 0x801312F8
       - [0x39ABC, asm, tm1/interactives]    # 0x80131374
       - [0x3E6D8, asm, tm1/explosion]       # 0x80135F90
       - [0x3FA04, asm, tm1/stars]           # 0x801372BC
