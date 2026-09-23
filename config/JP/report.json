@@ -1,21 +1,21 @@
 {
   "measures": {
-    "fuzzy_match_percent": 2.168298,
+    "fuzzy_match_percent": 2.3934543,
     "total_code": "470784",
-    "matched_code": "10208",
-    "matched_code_percent": 2.168298,
+    "matched_code": "11268",
+    "matched_code_percent": 2.3934543,
     "total_data": "582556",
     "matched_data": "324",
     "matched_data_percent": 0.05561697,
     "total_functions": 1983,
-    "matched_functions": 50,
-    "matched_functions_percent": 2.5214322,
-    "complete_code": "10208",
-    "complete_code_percent": 2.168298,
+    "matched_functions": 57,
+    "matched_functions_percent": 2.8744328,
+    "complete_code": "11268",
+    "complete_code_percent": 2.3934543,
     "complete_data": "2012",
     "complete_data_percent": 0.34537452,
     "total_units": 164,
-    "complete_units": 5
+    "complete_units": 6
   },
   "units": [
     {
@@ -4849,24 +4849,35 @@
     {
       "name": "tm1/potholes",
       "measures": {
+        "fuzzy_match_percent": 100.0,
         "total_code": "1060",
+        "matched_code": "1060",
+        "matched_code_percent": 100.0,
         "matched_data_percent": 100.0,
         "total_functions": 7,
+        "matched_functions": 7,
+        "matched_functions_percent": 100.0,
+        "complete_code": "1060",
+        "complete_code_percent": 100.0,
         "complete_data_percent": 100.0,
-        "total_units": 1
+        "total_units": 1,
+        "complete_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "1060",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         }
       ],
@@ -4874,48 +4885,56 @@
         {
           "name": "GetPotHoleDat",
           "size": "24",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
         {
           "name": "InitLevel1PotHoles",
           "size": "292",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "24"
         },
         {
           "name": "InitLevel2PotHoles",
           "size": "224",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "316"
         },
         {
           "name": "InitLevel3PotHoles",
           "size": "180",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "540"
         },
         {
           "name": "InitLevel4PotHoles",
           "size": "144",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "720"
         },
         {
           "name": "InitLevel5PotHoles",
           "size": "180",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "864"
         },
         {
           "name": "InitLevel6PotHoles",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1044"
         }
       ],
       "metadata": {
-        "complete": false,
+        "complete": true,
+        "source_path": "src/tm1/potholes.c",
         "progress_categories": [
           "tm1"
         ]
@@ -17655,22 +17674,22 @@
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 2.8470385,
+        "fuzzy_match_percent": 3.1426754,
         "total_code": "358548",
-        "matched_code": "10208",
-        "matched_code_percent": 2.8470385,
+        "matched_code": "11268",
+        "matched_code_percent": 3.1426754,
         "total_data": "115752",
         "matched_data": "324",
         "matched_data_percent": 0.27990878,
         "total_functions": 1009,
-        "matched_functions": 50,
-        "matched_functions_percent": 4.9554014,
-        "complete_code": "10208",
-        "complete_code_percent": 2.8470385,
+        "matched_functions": 57,
+        "matched_functions_percent": 5.6491575,
+        "complete_code": "11268",
+        "complete_code_percent": 3.1426754,
         "complete_data": "2012",
         "complete_data_percent": 1.7381989,
         "total_units": 158,
-        "complete_units": 5
+        "complete_units": 6
       }
     },
     {

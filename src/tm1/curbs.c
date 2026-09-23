@@ -1,21 +1,8 @@
 #include "common.h"
 
-#include "tm1/curbs.h"
+#include "tm1/car_update.h"
 
-// The definitions almost certainly live in the AI or car code
-// (`numCurbs` would be on an invalid 0x2 `.sdata` boundary if
-// defined here).
-// Leaving them declared here for now.
-typedef struct {
-    s16 w; /* 0x00 */
-    s16 h; /* 0x02 */
-    s16 t; /* 0x04 */
-    s16 pad; /* 0x06 */
-    s32 x; /* 0x08 */
-    s32 z; /* 0x0C */
-} Curb; /* 0x10 */
-extern Curb curbs[];
-extern s16 numCurbs;
+#include "tm1/curbs.h"
 
 void InitLevel1Curbs(void)
 {
