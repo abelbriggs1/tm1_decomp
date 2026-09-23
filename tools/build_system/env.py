@@ -268,6 +268,7 @@ class EnvironmentToolchain:
                 "tm1/font": 8,
                 "tm1/ctlpad": 8,
                 "tm1/curbs": 8,
+                "tm1/potholes": 8,
             }
         )
 
