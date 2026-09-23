@@ -29,4 +29,14 @@ extern PotHole potHoles[];
 extern s16 numPotHoles;
 extern s16 numCheckPotHoles;
 
+typedef struct SlickSpot {
+    s16 w; /* +0 */
+    s16 h; /* +2 */
+    s32 x; /* +4 */
+    s32 z; /* +8 */
+} SlickSpot;
+
+extern SlickSpot slickSpots[];
+extern s16 numSlickSpots;
+
 #endif // __TM1_CAR_UPDATE_H__
