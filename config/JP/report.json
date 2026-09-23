@@ -1,21 +1,21 @@
 {
   "measures": {
-    "fuzzy_match_percent": 2.4197934,
+    "fuzzy_match_percent": 3.5991027,
     "total_code": "470784",
-    "matched_code": "11392",
-    "matched_code_percent": 2.4197934,
+    "matched_code": "16944",
+    "matched_code_percent": 3.5991027,
     "total_data": "582556",
-    "matched_data": "324",
-    "matched_data_percent": 0.05561697,
+    "matched_data": "364",
+    "matched_data_percent": 0.062483262,
     "total_functions": 1983,
-    "matched_functions": 63,
-    "matched_functions_percent": 3.1770046,
-    "complete_code": "11392",
-    "complete_code_percent": 2.4197934,
-    "complete_data": "2012",
-    "complete_data_percent": 0.34537452,
-    "total_units": 164,
-    "complete_units": 7
+    "matched_functions": 99,
+    "matched_functions_percent": 4.992436,
+    "complete_code": "16944",
+    "complete_code_percent": 3.5991027,
+    "complete_data": "6236",
+    "complete_data_percent": 1.070455,
+    "total_units": 160,
+    "complete_units": 8
   },
   "units": [
     {
@@ -263,42 +263,6 @@
         {
           "name": ".rodata",
           "size": "76",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "complete": false,
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/ua_sound",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "4184",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".rodata",
-          "size": "4184",
           "metadata": {}
         },
         {
@@ -2476,24 +2440,50 @@
     {
       "name": "tm1/ua_sound",
       "measures": {
+        "fuzzy_match_percent": 100.0,
         "total_code": "5552",
-        "matched_data_percent": 100.0,
+        "matched_code": "5552",
+        "matched_code_percent": 100.0,
+        "total_data": "4224",
+        "matched_data": "40",
+        "matched_data_percent": 0.94696975,
         "total_functions": 36,
+        "matched_functions": 36,
+        "matched_functions_percent": 100.0,
+        "complete_code": "5552",
+        "complete_code_percent": 100.0,
+        "complete_data": "4224",
         "complete_data_percent": 100.0,
-        "total_units": 1
+        "total_units": 1,
+        "complete_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".rodata",
+          "size": "4184",
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "5552",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         }
       ],
@@ -2501,222 +2491,259 @@
         {
           "name": "uasoundFireCarMachineGuns",
           "size": "344",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
         {
           "name": "uasoundStopCarMachineGuns",
           "size": "344",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "344"
         },
         {
           "name": "uasoundExplodeMachineGunBullet",
           "size": "60",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "688"
         },
         {
           "name": "uasoundPlayCarEngineRev",
           "size": "180",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "748"
         },
         {
           "name": "uasoundPlayCarCrash",
           "size": "236",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "928"
         },
         {
           "name": "uasoundPlayCarExplode",
           "size": "228",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1164"
         },
         {
           "name": "uasoundPlayCarSkid",
           "size": "224",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1392"
         },
         {
           "name": "uasoundStopCarSounds",
           "size": "420",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1616"
         },
         {
           "name": "uasoundPlayCarWeaponPickup",
           "size": "172",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2036"
         },
         {
           "name": "uasoundPlayCarWeaponLaunchOrInflight",
           "size": "172",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2208"
         },
         {
           "name": "uasoundStopCarWeapon",
           "size": "164",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2380"
         },
         {
           "name": "uasoundPlayCarWeaponExplode",
           "size": "280",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2544"
         },
         {
           "name": "uasoundPlayCarSpecialWeaponPickup",
           "size": "176",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2824"
         },
         {
           "name": "uasoundPlayCarSpecialWeaponLaunchOrInflight",
           "size": "176",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3000"
         },
         {
           "name": "uasoundStopCarSpecialWeapon",
           "size": "176",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3176"
         },
         {
           "name": "uasoundPlayCarSpecialWeaponExplode",
           "size": "300",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3352"
         },
         {
           "name": "uasoundPlayCarSignature",
           "size": "180",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3652"
         },
         {
           "name": "uasoundStopCarSignature",
           "size": "180",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3832"
         },
         {
           "name": "uasoundPlayTurboBoost",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4012"
         },
         {
           "name": "uasoundStopTurboBoost",
           "size": "44",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4068"
         },
         {
           "name": "uasoundPlayHoverCops",
           "size": "68",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4112"
         },
         {
           "name": "uasoundStopHoverCops",
           "size": "44",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4180"
         },
         {
           "name": "uasoundPlayRecharge",
           "size": "52",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4224"
         },
         {
           "name": "uasoundPlayBeep",
           "size": "52",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4276"
         },
         {
           "name": "uasoundPlayMenuCycleFlush",
           "size": "60",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4328"
         },
         {
           "name": "uasoundPlayMenuCycle",
           "size": "52",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4388"
         },
         {
           "name": "uasoundPlayMenuSelectFlush",
           "size": "60",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4440"
         },
         {
           "name": "uasoundPlayMenuSelect",
           "size": "52",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4500"
         },
         {
           "name": "uasoundPlayCardThrowFlush",
           "size": "60",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4552"
         },
         {
           "name": "uasoundPlayMaleScream",
           "size": "52",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4612"
         },
         {
           "name": "uasoundPlayGeneralExplode",
           "size": "204",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4664"
         },
         {
           "name": "uasoundPlayScreenEngineRev",
           "size": "52",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4868"
         },
         {
           "name": "uasoundStopScreenEngineRev",
           "size": "44",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4920"
         },
         {
           "name": "uasoundPlayHuntDA",
           "size": "172",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4964"
         },
         {
           "name": "uasoundPlayBattleDA",
           "size": "176",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5136"
         },
         {
           "name": "uasoundSetMusicVolume",
           "size": "240",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5312"
         }
       ],
       "metadata": {
-        "complete": false,
+        "complete": true,
+        "source_path": "src/tm1/ua_sound.c",
         "progress_categories": [
           "tm1"
         ]
@@ -14514,7 +14541,7 @@
       "measures": {
         "fuzzy_match_percent": 100.0,
         "matched_code_percent": 100.0,
-        "total_data": "48",
+        "total_data": "876",
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
@@ -14526,39 +14553,7 @@
         },
         {
           "name": ".data",
-          "size": "48",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "complete": false,
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/ua_sound",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "828",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "size": "828",
+          "size": "876",
           "metadata": {}
         },
         {
@@ -15259,42 +15254,6 @@
         {
           "name": ".sdata",
           "size": "40",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "complete": false,
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/ua_sound",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "8",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "8",
           "metadata": {}
         },
         {
@@ -17078,38 +17037,6 @@
       }
     },
     {
-      "name": "tm1/ua_sound",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "32",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "size": "32",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "complete": false,
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/hier_sub",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -17689,6 +17616,28 @@
   "version": 2,
   "categories": [
     {
+      "id": "tm1",
+      "name": "tm1",
+      "measures": {
+        "fuzzy_match_percent": 4.725727,
+        "total_code": "358548",
+        "matched_code": "16944",
+        "matched_code_percent": 4.725727,
+        "total_data": "115752",
+        "matched_data": "364",
+        "matched_data_percent": 0.3144654,
+        "total_functions": 1009,
+        "matched_functions": 99,
+        "matched_functions_percent": 9.811695,
+        "complete_code": "16944",
+        "complete_code_percent": 4.725727,
+        "complete_data": "6236",
+        "complete_data_percent": 5.38738,
+        "total_units": 154,
+        "complete_units": 8
+      }
+    },
+    {
       "id": "data",
       "name": "data",
       "measures": {
@@ -17698,28 +17647,6 @@
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
-      }
-    },
-    {
-      "id": "tm1",
-      "name": "tm1",
-      "measures": {
-        "fuzzy_match_percent": 3.1772594,
-        "total_code": "358548",
-        "matched_code": "11392",
-        "matched_code_percent": 3.1772594,
-        "total_data": "115752",
-        "matched_data": "324",
-        "matched_data_percent": 0.27990878,
-        "total_functions": 1009,
-        "matched_functions": 63,
-        "matched_functions_percent": 6.2438054,
-        "complete_code": "11392",
-        "complete_code_percent": 3.1772594,
-        "complete_data": "2012",
-        "complete_data_percent": 1.7381989,
-        "total_units": 158,
-        "complete_units": 7
       }
     },
     {
