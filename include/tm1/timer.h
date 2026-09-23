@@ -11,4 +11,4 @@ s16 GetUpdateRate();
 u32 GetFrameCount();
 void ResetUpdateRate();
 
-#endif
+#endif // __TM1_TIMER_H__
