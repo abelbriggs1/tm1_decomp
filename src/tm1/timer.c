@@ -59,13 +59,19 @@ u32 GetCurTics()
 
 void SetFrameStart()
 {
-    u32 curTics = GetCurTics();
-    u32 lastTics = gLastTics;
-    u32 frameTime = curTics - lastTics;
+    u32 curTics;
+    u32 lastTics;
+    u32 frameTime;
 
-    gFrameTime = frameTime;
+    do {
+        curTics = GetCurTics();
+    } while (0);
+    lastTics = gLastTics;
+    frameTime = curTics - lastTics;
+
     gCurTics = curTics;
     gLastTics = curTics;
+    gFrameTime = frameTime;
     gFieldsLastFrame = CALCULATE_FIELDS_LAST_FRAME(frameTime);
 
     if (gFieldsLastFrame < 1) {
@@ -92,10 +98,14 @@ s16 GetUpdateRate()
     return gUpdateRate;
 }
 
+#ifdef NON_MATCHING
 u32 GetFrameTime()
 {
     return RCNT2_TICKS_TO_USECS(gFrameTime);
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/timer", GetFrameTime);
+#endif // NON_MATCHING
 
 u32 GetFrameCount()
 {
@@ -112,6 +122,7 @@ void SysClkIntHandler()
     gTotalTics += RCNT2_MAX_VALUE;
 }
 
+#ifdef NON_MATCHING
 u32 FrameTimeToUpdateRate(s32 unk)
 {
     u32 unk1 = CALCULATE_FIELDS_LAST_FRAME(unk);
@@ -121,3 +132,6 @@ u32 FrameTimeToUpdateRate(s32 unk)
     }
     return unk2;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/timer", FrameTimeToUpdateRate);
+#endif // NON_MATCHING

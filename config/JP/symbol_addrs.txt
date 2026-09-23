@@ -2047,6 +2047,12 @@ gFrameTime                               = 0x80170244; // type:u32
 gLastTics                                = 0x80170248; // type:u32
 gCurTics                                 = 0x8017024c; // type:u32
 
+gFontVramCoords                           = 0x801707b0; // size:0x38
+fontInfo1                                = 0x801707e8; // size:464
+fontInfo2                                = 0x801709b8; // size:464
+fontInfo3                                = 0x80170b88; // size:60
+fontInfo4                                = 0x80170bc4; // size:464
+
 gTransitionLabels                        = 0x80170ea4;
 IceCreamProfileFront                     = 0x80171080;
 IceCreamProfileRear                      = 0x80171090;
