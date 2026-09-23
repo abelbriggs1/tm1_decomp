@@ -52,7 +52,7 @@ segments:
       # ------------------------------------------------
       - [0x8FC,  rodata, tm1/hier]          # 0x800F81B4
       - [0x92C,  rodata, tm1/cs]            # 0x800F81E4
-      - [0x960,  rodata, tm1/ctlpad]        # 0x800F8218
+      - [0x960, .rodata, tm1/ctlpad]        # 0x800F8218
       - [0x9B0,  rodata, tm1/db]            # 0x800F8268
       - [0x1F78, rodata, tm1/hd]            # 0x800F9830
       - [0x1FA8, rodata, tm1/hdp]           # 0x800F9860
@@ -79,11 +79,11 @@ segments:
       # .text segment (C code)
       # ------------------------------------------------
       - [0x5F24,  asm, tm1/hier]            # 0x800FD7DC
-      - [0x710C,  c, tm1/math]              # 0x800FE9C4
+      - [0x710C,  c,   tm1/math]            # 0x800FE9C4
       - [0x7784,  asm, tm1/wdcopy]          # 0x800FF03C
       - [0x77B8,  asm, tm1/cs]              # 0x800FF070
       - [0x7AE4,  asm, tm1/rt]              # 0x800FF39C
-      - [0x8234,  asm, tm1/ctlpad]          # 0x800FFAEC
+      - [0x8234,  c,   tm1/ctlpad]          # 0x800FFAEC
       - [0x8790,  asm, tm1/db]              # 0x80100048
       - [0x9438,  asm, tm1/hd]              # 0x80100CF0
       - [0xB29C,  asm, tm1/hdp]             # 0x80102B54
@@ -92,9 +92,9 @@ segments:
       - [0xFB14,  asm, tm1/ua_sound]        # 0x801073CC
       - [0x110C4, asm, tm1/sound_req]       # 0x8010897C
       - [0x1122C, asm, tm1/hier_sub]        # 0x80108AE4
-      - [0x12250, c, tm1/timer]             # 0x80109B08
+      - [0x12250, c,   tm1/timer]           # 0x80109B08
       - [0x1254C, asm, tm1/view]            # 0x80109E04
-      - [0x13700, c, tm1/font]              # 0x8010AFB8
+      - [0x13700, c,   tm1/font]            # 0x8010AFB8
       - [0x147A4, asm, tm1/weapon]          # 0x8010C05C
       - [0x199A4, asm, tm1/car]             # 0x8011125C
       - [0x21C54, asm, tm1/ai_car]          # 0x8011950C
@@ -154,7 +154,7 @@ segments:
       - [0x9464C, sdata, tm1/hier]          # 0x8018BF04
       - [0x9465C, sdata, tm1/cs]            # 0x8018BF14
       - [0x94660, sdata, tm1/rt]            # 0x8018BF18
-      - [0x9467C, sdata, tm1/ctlpad]        # 0x8018BF34
+      - [0x9467C, .sdata, tm1/ctlpad]       # 0x8018BF34
       - [0x94680, sdata, tm1/db]            # 0x8018BF38
       - [0x94694, sdata, tm1/hd]            # 0x8018BF4C
       - [0x946A4, sdata, tm1/hdp]           # 0x8018BF5C

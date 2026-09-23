@@ -1,21 +1,21 @@
 {
   "measures": {
-    "fuzzy_match_percent": 1.4189098,
+    "fuzzy_match_percent": 1.7103385,
     "total_code": "470784",
-    "matched_code": "6680",
-    "matched_code_percent": 1.4189097,
+    "matched_code": "8052",
+    "matched_code_percent": 1.7103385,
     "total_data": "582556",
-    "matched_data": "320",
-    "matched_data_percent": 0.054930344,
+    "matched_data": "324",
+    "matched_data_percent": 0.05561697,
     "total_functions": 1983,
-    "matched_functions": 30,
-    "matched_functions_percent": 1.5128593,
-    "complete_code": "6680",
-    "complete_code_percent": 1.4189097,
-    "complete_data": "1928",
-    "complete_data_percent": 0.3309553,
-    "total_units": 166,
-    "complete_units": 3
+    "matched_functions": 44,
+    "matched_functions_percent": 2.2188604,
+    "complete_code": "8052",
+    "complete_code_percent": 1.7103385,
+    "complete_data": "2012",
+    "complete_data_percent": 0.34537452,
+    "total_units": 164,
+    "complete_units": 4
   },
   "units": [
     {
@@ -119,42 +119,6 @@
         {
           "name": ".rodata",
           "size": "52",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "complete": false,
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/ctlpad",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "80",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".rodata",
-          "size": "80",
           "metadata": {}
         },
         {
@@ -1410,24 +1374,49 @@
     {
       "name": "tm1/ctlpad",
       "measures": {
+        "fuzzy_match_percent": 100.0,
         "total_code": "1372",
-        "matched_data_percent": 100.0,
+        "matched_code": "1372",
+        "matched_code_percent": 100.0,
+        "total_data": "84",
+        "matched_data": "4",
+        "matched_data_percent": 4.7619047,
         "total_functions": 14,
+        "matched_functions": 14,
+        "matched_functions_percent": 100.0,
+        "complete_code": "1372",
+        "complete_code_percent": 100.0,
+        "complete_data": "84",
         "complete_data_percent": 100.0,
-        "total_units": 1
+        "total_units": 1,
+        "complete_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".rodata",
+          "size": "80",
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "4",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "1372",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         }
       ],
@@ -1435,90 +1424,105 @@
         {
           "name": "InitCtlPad",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
         {
           "name": "TermCtlPad",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "32"
         },
         {
           "name": "UpdCtlPad",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "64"
         },
         {
           "name": "GetPadStatus",
           "size": "72",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "100"
         },
         {
           "name": "SetPadStatus",
           "size": "76",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "172"
         },
         {
           "name": "GetCtlPad",
           "size": "300",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "248"
         },
         {
           "name": "ctlpadSpecial",
           "size": "144",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "548"
         },
         {
           "name": "ctlpadAnyKey",
           "size": "52",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "692"
         },
         {
           "name": "ctlpadAnyUp",
           "size": "124",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "744"
         },
         {
           "name": "ctlpadAnyDown",
           "size": "124",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "868"
         },
         {
           "name": "ctlpadAnyLeft",
           "size": "124",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "992"
         },
         {
           "name": "ctlpadAnyRight",
           "size": "124",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1116"
         },
         {
           "name": "ctlpadAnySelect",
           "size": "124",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1240"
         },
         {
           "name": "GetJoyStick",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1364"
         }
       ],
       "metadata": {
-        "complete": false,
+        "complete": true,
+        "source_path": "src/tm1/ctlpad.c",
         "progress_categories": [
           "tm1"
         ]
@@ -15071,42 +15075,6 @@
       }
     },
     {
-      "name": "tm1/ctlpad",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "4",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "4",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "complete": false,
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/db",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -17666,6 +17634,16 @@
   "version": 2,
   "categories": [
     {
+      "id": "sdk",
+      "name": "sdk",
+      "measures": {
+        "total_code": "112236",
+        "total_data": "462792",
+        "total_functions": 974,
+        "total_units": 5
+      }
+    },
+    {
       "id": "data",
       "name": "data",
       "measures": {
@@ -17681,32 +17659,22 @@
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 1.8630699,
+        "fuzzy_match_percent": 2.2457244,
         "total_code": "358548",
-        "matched_code": "6680",
-        "matched_code_percent": 1.86307,
+        "matched_code": "8052",
+        "matched_code_percent": 2.2457244,
         "total_data": "115752",
-        "matched_data": "320",
-        "matched_data_percent": 0.2764531,
+        "matched_data": "324",
+        "matched_data_percent": 0.27990878,
         "total_functions": 1009,
-        "matched_functions": 30,
-        "matched_functions_percent": 2.9732409,
-        "complete_code": "6680",
-        "complete_code_percent": 1.86307,
-        "complete_data": "1928",
-        "complete_data_percent": 1.66563,
-        "total_units": 160,
-        "complete_units": 3
-      }
-    },
-    {
-      "id": "sdk",
-      "name": "sdk",
-      "measures": {
-        "total_code": "112236",
-        "total_data": "462792",
-        "total_functions": 974,
-        "total_units": 5
+        "matched_functions": 44,
+        "matched_functions_percent": 4.360753,
+        "complete_code": "8052",
+        "complete_code_percent": 2.2457244,
+        "complete_data": "2012",
+        "complete_data_percent": 1.7381989,
+        "total_units": 158,
+        "complete_units": 4
       }
     }
   ]
