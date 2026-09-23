@@ -267,6 +267,7 @@ class EnvironmentToolchain:
             g_level={
                 "tm1/font": 8,
                 "tm1/ctlpad": 8,
+                "tm1/curbs": 8,
             }
         )
 
