@@ -141,7 +141,6 @@ def _generate_ninja_script(
             unit["base_path"] = None
             unit["metadata"] = {}
             unit["metadata"]["progress_categories"] = [category]
-            unit["metadata"]["complete"] = False
 
             if _is_assemblable(segment):
                 # Incomplete TU with no decompiled equivalent.
