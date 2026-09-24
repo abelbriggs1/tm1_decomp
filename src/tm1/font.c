@@ -1,7 +1,7 @@
 #include "tm1/font.h"
 
 #include "common.h"
-#include "sdk/libgpu.h"
+#include <libgpu.h>
 
 #define NUM_FONTS 7
 #define NUM_FONTINFO_FIELDS 187

@@ -2,6 +2,7 @@
 #define __COMMON_H__
 
 #include "include_asm.h"
+#include <sys/types.h>
 
 #define NULL (void*)0
 #define EXTERN extern
