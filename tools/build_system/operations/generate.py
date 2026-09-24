@@ -178,7 +178,6 @@ def _generate_ninja_script(
 
                 unit["target_path"] = str(target_path)
                 unit["base_path"] = str(entry.object_path)
-                unit["metadata"]["complete"] = True
                 unit["metadata"]["source_path"] = str(local_out_path)
 
             if entry.object_path.suffix == ".o":
