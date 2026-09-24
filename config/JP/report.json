@@ -17629,6 +17629,16 @@
   "version": 2,
   "categories": [
     {
+      "id": "sdk",
+      "name": "sdk",
+      "measures": {
+        "total_code": "112236",
+        "total_data": "462792",
+        "total_functions": 974,
+        "total_units": 5
+      }
+    },
+    {
       "id": "data",
       "name": "data",
       "measures": {
@@ -17660,16 +17670,6 @@
         "complete_data_percent": 5.38738,
         "total_units": 154,
         "complete_units": 9
-      }
-    },
-    {
-      "id": "sdk",
-      "name": "sdk",
-      "measures": {
-        "total_code": "112236",
-        "total_data": "462792",
-        "total_functions": 974,
-        "total_units": 5
       }
     }
   ]

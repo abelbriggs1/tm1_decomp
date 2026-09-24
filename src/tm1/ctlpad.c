@@ -1,6 +1,6 @@
 #include "common.h"
 
-#include "sdk/libetc.h"
+#include <libetc.h>
 
 #include "tm1/ctlpad.h"
 
