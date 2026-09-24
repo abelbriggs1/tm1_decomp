@@ -1,21 +1,21 @@
 {
   "measures": {
-    "fuzzy_match_percent": 3.6101482,
+    "fuzzy_match_percent": 3.786025,
     "total_code": "470784",
-    "matched_code": "16996",
-    "matched_code_percent": 3.6101482,
-    "total_data": "582556",
+    "matched_code": "17824",
+    "matched_code_percent": 3.7860253,
+    "total_data": "582564",
     "matched_data": "364",
-    "matched_data_percent": 0.062483262,
+    "matched_data_percent": 0.06248241,
     "total_functions": 1983,
-    "matched_functions": 100,
-    "matched_functions_percent": 5.0428643,
-    "complete_code": "16996",
-    "complete_code_percent": 3.6101482,
-    "complete_data": "6236",
-    "complete_data_percent": 1.070455,
+    "matched_functions": 110,
+    "matched_functions_percent": 5.5471506,
+    "complete_code": "17824",
+    "complete_code_percent": 3.7860253,
+    "complete_data": "6244",
+    "complete_data_percent": 1.0718136,
     "total_units": 160,
-    "complete_units": 9
+    "complete_units": 10
   },
   "units": [
     {
@@ -8445,24 +8445,41 @@
     {
       "name": "tm1/fileio",
       "measures": {
+        "fuzzy_match_percent": 100.0,
         "total_code": "828",
-        "matched_data_percent": 100.0,
+        "matched_code": "828",
+        "matched_code_percent": 100.0,
+        "total_data": "8",
         "total_functions": 10,
+        "matched_functions": 10,
+        "matched_functions_percent": 100.0,
+        "complete_code": "828",
+        "complete_code_percent": 100.0,
+        "complete_data": "8",
         "complete_data_percent": 100.0,
-        "total_units": 1
+        "total_units": 1,
+        "complete_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "8",
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "828",
+          "fuzzy_match_percent": 74.87923,
           "metadata": {}
         }
       ],
@@ -8470,66 +8487,77 @@
         {
           "name": "fileioOpenFile",
           "size": "208",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
         {
           "name": "fileioOpenFileAsync",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "208"
         },
         {
           "name": "fileioSeekToFileAsync",
           "size": "52",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "240"
         },
         {
           "name": "fileioReadFile",
           "size": "76",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "292"
         },
         {
           "name": "fileioReadFileAsync",
           "size": "48",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "368"
         },
         {
           "name": "fileioAsyncReadCompleted",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "416"
         },
         {
           "name": "fileioCloseFile",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "452"
         },
         {
           "name": "fileioLoadFileIntoRam",
           "size": "108",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "460"
         },
         {
           "name": "fileioWriteFileFromRam",
           "size": "220",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "568"
         },
         {
           "name": "fileioInit",
           "size": "40",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "788"
         }
       ],
       "metadata": {
-        "complete": false,
+        "complete": true,
+        "source_path": "src/tm1/fileio.c",
         "progress_categories": [
           "tm1"
         ]
@@ -17639,6 +17667,28 @@
       }
     },
     {
+      "id": "tm1",
+      "name": "tm1",
+      "measures": {
+        "fuzzy_match_percent": 4.9711614,
+        "total_code": "358548",
+        "matched_code": "17824",
+        "matched_code_percent": 4.9711614,
+        "total_data": "115760",
+        "matched_data": "364",
+        "matched_data_percent": 0.31444368,
+        "total_functions": 1009,
+        "matched_functions": 110,
+        "matched_functions_percent": 10.901883,
+        "complete_code": "17824",
+        "complete_code_percent": 4.9711614,
+        "complete_data": "6244",
+        "complete_data_percent": 5.3939185,
+        "total_units": 154,
+        "complete_units": 10
+      }
+    },
+    {
       "id": "data",
       "name": "data",
       "measures": {
@@ -17648,28 +17698,6 @@
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
-      }
-    },
-    {
-      "id": "tm1",
-      "name": "tm1",
-      "measures": {
-        "fuzzy_match_percent": 4.74023,
-        "total_code": "358548",
-        "matched_code": "16996",
-        "matched_code_percent": 4.74023,
-        "total_data": "115752",
-        "matched_data": "364",
-        "matched_data_percent": 0.3144654,
-        "total_functions": 1009,
-        "matched_functions": 100,
-        "matched_functions_percent": 9.910803,
-        "complete_code": "16996",
-        "complete_code_percent": 4.74023,
-        "complete_data": "6236",
-        "complete_data_percent": 5.38738,
-        "total_units": 154,
-        "complete_units": 9
       }
     }
   ]

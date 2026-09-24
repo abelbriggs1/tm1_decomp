@@ -5,6 +5,7 @@ Implementation of the "generate" command.
 import argparse
 import json
 import logging
+import subprocess
 from pathlib import Path
 
 import splat.scripts.split as splat_split
@@ -251,6 +252,13 @@ def generate(env: Environment, clean_first: bool = True):
     ]
 
     _generate_ninja_script(env, splat_split.config, linker_entries)
+
+    # While we're at it, just generate the `compile_commands.json` too so
+    # IDEs can see our environment properly.
+    LOG.info("Generating `compile_commands.json` for IDEs.")
+    res = subprocess.run(["ninja", "-t", "compdb"], stdout=subprocess.PIPE, check=True)
+    target = env.directories.root / "compile_commands.json"
+    target.write_text(res.stdout.decode("utf-8"))
 
 
 def _add_build_rule(
