@@ -80,7 +80,7 @@ segments:
       # ------------------------------------------------
       - [0x5F24,  asm, tm1/hier]            # 0x800FD7DC
       - [0x710C,  c,   tm1/math]            # 0x800FE9C4
-      - [0x7784,  asm, tm1/wdcopy]          # 0x800FF03C
+      - [0x7784,  c,   tm1/wdcopy]          # 0x800FF03C
       - [0x77B8,  asm, tm1/cs]              # 0x800FF070
       - [0x7AE4,  asm, tm1/rt]              # 0x800FF39C
       - [0x8234,  c,   tm1/ctlpad]          # 0x800FFAEC
