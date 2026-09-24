@@ -1,21 +1,21 @@
 {
   "measures": {
-    "fuzzy_match_percent": 3.786025,
+    "fuzzy_match_percent": 4.8285413,
     "total_code": "470784",
-    "matched_code": "17824",
-    "matched_code_percent": 3.7860253,
-    "total_data": "582564",
-    "matched_data": "364",
-    "matched_data_percent": 0.06248241,
+    "matched_code": "22732",
+    "matched_code_percent": 4.8285413,
+    "total_data": "588408",
+    "matched_data": "6204",
+    "matched_data_percent": 1.0543704,
     "total_functions": 1983,
-    "matched_functions": 110,
-    "matched_functions_percent": 5.5471506,
-    "complete_code": "17824",
-    "complete_code_percent": 3.7860253,
-    "complete_data": "6244",
-    "complete_data_percent": 1.0718136,
+    "matched_functions": 137,
+    "matched_functions_percent": 6.9087243,
+    "complete_code": "22732",
+    "complete_code_percent": 4.8285413,
+    "complete_data": "12088",
+    "complete_data_percent": 2.0543568,
     "total_units": 160,
-    "complete_units": 10
+    "complete_units": 11
   },
   "units": [
     {
@@ -5442,24 +5442,44 @@
     {
       "name": "tm1/explosion",
       "measures": {
+        "fuzzy_match_percent": 100.0,
         "total_code": "4908",
-        "matched_data_percent": 100.0,
+        "matched_code": "4908",
+        "matched_code_percent": 100.0,
+        "total_data": "5844",
+        "matched_data": "5840",
+        "matched_data_percent": 99.93156,
         "total_functions": 27,
+        "matched_functions": 27,
+        "matched_functions_percent": 100.0,
+        "complete_code": "4908",
+        "complete_code_percent": 100.0,
+        "complete_data": "5844",
         "complete_data_percent": 100.0,
-        "total_units": 1
+        "total_units": 1,
+        "complete_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "5840",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "4",
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "4908",
+          "fuzzy_match_percent": 44.49878,
           "metadata": {}
         }
       ],
@@ -5467,168 +5487,196 @@
         {
           "name": "init_explosion",
           "size": "300",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
         {
           "name": "animate_explosions",
           "size": "400",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "300"
         },
         {
           "name": "find_free_explosion",
           "size": "60",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "700"
         },
         {
           "name": "draw_explosions",
           "size": "1832",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "760"
         },
         {
           "name": "do_simple_spark",
           "size": "120",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2592"
         },
         {
           "name": "do_simple_explosion",
           "size": "120",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2712"
         },
         {
           "name": "do_blue_explosion",
           "size": "160",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2832"
         },
         {
           "name": "do_flamethrower_burst",
           "size": "192",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2992"
         },
         {
           "name": "do_mini_explosion",
           "size": "120",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3184"
         },
         {
           "name": "do_big_explosion",
           "size": "120",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3304"
         },
         {
           "name": "do_bigger_explosion",
           "size": "120",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3424"
         },
         {
           "name": "do_mondo_explosion",
           "size": "120",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3544"
         },
         {
           "name": "do_missile_plume",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3664"
         },
         {
           "name": "do_flames",
           "size": "92",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3720"
         },
         {
           "name": "do_groundburst",
           "size": "84",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3812"
         },
         {
           "name": "do_big_flames",
           "size": "92",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3896"
         },
         {
           "name": "do_afterburner",
           "size": "116",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3988"
         },
         {
           "name": "do_flare",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4104"
         },
         {
           "name": "do_burn",
           "size": "128",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4160"
         },
         {
           "name": "do_flash",
           "size": "128",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4288"
         },
         {
           "name": "do_mflash",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4416"
         },
         {
           "name": "do_gun_plume",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4472"
         },
         {
           "name": "do_smoke",
           "size": "80",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4528"
         },
         {
           "name": "do_steam",
           "size": "60",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4608"
         },
         {
           "name": "do_big_smoke",
           "size": "80",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4668"
         },
         {
           "name": "do_puff",
           "size": "76",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4748"
         },
         {
           "name": "clear_explosions",
           "size": "84",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4824"
         }
       ],
       "metadata": {
-        "complete": false,
+        "complete": true,
+        "source_path": "src/tm1/explosion.c",
         "progress_categories": [
           "tm1"
         ]
@@ -17657,6 +17705,28 @@
   "version": 2,
   "categories": [
     {
+      "id": "tm1",
+      "name": "tm1",
+      "measures": {
+        "fuzzy_match_percent": 6.340016,
+        "total_code": "358548",
+        "matched_code": "22732",
+        "matched_code_percent": 6.340016,
+        "total_data": "121604",
+        "matched_data": "6204",
+        "matched_data_percent": 5.1018057,
+        "total_functions": 1009,
+        "matched_functions": 137,
+        "matched_functions_percent": 13.5778,
+        "complete_code": "22732",
+        "complete_code_percent": 6.340016,
+        "complete_data": "12088",
+        "complete_data_percent": 9.940462,
+        "total_units": 154,
+        "complete_units": 11
+      }
+    },
+    {
       "id": "sdk",
       "name": "sdk",
       "measures": {
@@ -17664,28 +17734,6 @@
         "total_data": "462792",
         "total_functions": 974,
         "total_units": 5
-      }
-    },
-    {
-      "id": "tm1",
-      "name": "tm1",
-      "measures": {
-        "fuzzy_match_percent": 4.9711614,
-        "total_code": "358548",
-        "matched_code": "17824",
-        "matched_code_percent": 4.9711614,
-        "total_data": "115760",
-        "matched_data": "364",
-        "matched_data_percent": 0.31444368,
-        "total_functions": 1009,
-        "matched_functions": 110,
-        "matched_functions_percent": 10.901883,
-        "complete_code": "17824",
-        "complete_code_percent": 4.9711614,
-        "complete_data": "6244",
-        "complete_data_percent": 5.3939185,
-        "total_units": 154,
-        "complete_units": 10
       }
     },
     {
