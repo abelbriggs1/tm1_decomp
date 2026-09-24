@@ -122,7 +122,7 @@ segments:
       - [0x59528, asm, tm1/smooth]          # 0x80150DE0
       - [0x599D8, asm, tm1/vehicle]         # 0x80151290
       - [0x5A18C, asm, tm1/shell]           # 0x80151A44
-      - [0x5BE30, asm, tm1/fileio]          # 0x801536E8
+      - [0x5BE30, c,   tm1/fileio]          # 0x801536E8
       - [0x5C16C, asm, tm1/movie]           # 0x80153A24
       # Start of SDK code. TODO
       - [0x5CEBC, asm, sdk/sdk]             # 0x80154774
