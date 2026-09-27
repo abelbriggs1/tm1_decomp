@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 3.4130301,
+    "fuzzy_match_percent": 3.6339383,
     "total_code": "470784",
-    "matched_code": "16068",
-    "matched_code_percent": 3.4130301,
-    "total_data": "589328",
-    "matched_data": "7116",
-    "matched_data_percent": 1.207477,
+    "matched_code": "17108",
+    "matched_code_percent": 3.6339383,
+    "total_data": "590128",
+    "matched_data": "7956",
+    "matched_data_percent": 1.3481821,
     "total_functions": 1983,
-    "matched_functions": 132,
-    "matched_functions_percent": 6.656581,
-    "total_units": 159
+    "matched_functions": 155,
+    "matched_functions_percent": 7.8164396,
+    "total_units": 157
   },
   "units": [
     {
@@ -1100,24 +1100,46 @@
     {
       "name": "tm1/rt",
       "measures": {
+        "fuzzy_match_percent": 55.555557,
         "total_code": "1872",
+        "matched_code": "1040",
+        "matched_code_percent": 55.555557,
+        "total_data": "840",
+        "matched_data": "840",
         "matched_data_percent": 100.0,
         "total_functions": 24,
-        "complete_data_percent": 100.0,
+        "matched_functions": 23,
+        "matched_functions_percent": 95.83333,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "800",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".sbss",
+          "size": "12",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "28",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "1872",
+          "fuzzy_match_percent": 55.555557,
           "metadata": {}
         }
       ],
@@ -1131,143 +1153,167 @@
         {
           "name": "rtReturnToShell",
           "size": "60",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "832"
         },
         {
           "name": "rtClearPendingReturns",
           "size": "72",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "892"
         },
         {
           "name": "rtTimeToReturnToShell",
           "size": "272",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "964"
         },
         {
           "name": "rtUpdateFieldCounter",
           "size": "24",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1236"
         },
         {
           "name": "rtResetFieldCounter",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1260"
         },
         {
           "name": "rtGetFieldCounter",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1272"
         },
         {
           "name": "rtGetDb",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1284"
         },
         {
           "name": "rtWhichDisplayBuffer",
           "size": "24",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1300"
         },
         {
           "name": "rtWhichDrawBuffer",
           "size": "24",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1324"
         },
         {
           "name": "rtGetCdb",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1348"
         },
         {
           "name": "rtSetCdb",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1360"
         },
         {
           "name": "rtWhichBuffer",
           "size": "24",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1392"
         },
         {
           "name": "rtGetDoubleBufferArea",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1416"
         },
         {
           "name": "rtGetSmallBufferArea",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1432"
         },
         {
           "name": "rtDoubleBufferInit",
           "size": "240",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1448"
         },
         {
           "name": "rtGetSplitScreenDb",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1688"
         },
         {
           "name": "rtGetRearViewDb",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1704"
         },
         {
           "name": "rtSetRearView",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1720"
         },
         {
           "name": "rtToggleRearView",
           "size": "72",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1756"
         },
         {
           "name": "rtIsRearViewOn",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1828"
         },
         {
           "name": "rtIsSplitScreenOn",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1840"
         },
         {
           "name": "rtSetSplitScreen",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1852"
         },
         {
           "name": "rtInitTweek",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1864"
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/rt.c",
         "progress_categories": [
           "tm1"
         ]
@@ -15022,41 +15068,6 @@
       }
     },
     {
-      "name": "tm1/rt",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "28",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "28",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/db",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15793,41 +15804,6 @@
     },
     {
       "name": "tm1/cs",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "12",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sbss",
-          "size": "12",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/rt",
       "measures": {
         "fuzzy_match_percent": 100.0,
         "matched_code_percent": 100.0,
@@ -17479,27 +17455,17 @@
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 4.481408,
+        "fuzzy_match_percent": 4.771467,
         "total_code": "358548",
-        "matched_code": "16068",
-        "matched_code_percent": 4.4814086,
-        "total_data": "122524",
-        "matched_data": "7116",
-        "matched_data_percent": 5.807842,
+        "matched_code": "17108",
+        "matched_code_percent": 4.771467,
+        "total_data": "123324",
+        "matched_data": "7956",
+        "matched_data_percent": 6.451299,
         "total_functions": 1009,
-        "matched_functions": 132,
-        "matched_functions_percent": 13.08226,
-        "total_units": 153
-      }
-    },
-    {
-      "id": "sdk",
-      "name": "sdk",
-      "measures": {
-        "total_code": "112236",
-        "total_data": "462792",
-        "total_functions": 974,
-        "total_units": 5
+        "matched_functions": 155,
+        "matched_functions_percent": 15.361744,
+        "total_units": 151
       }
     },
     {
@@ -17512,6 +17478,16 @@
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
+      }
+    },
+    {
+      "id": "sdk",
+      "name": "sdk",
+      "measures": {
+        "total_code": "112236",
+        "total_data": "462792",
+        "total_functions": 974,
+        "total_units": 5
       }
     }
   ]
