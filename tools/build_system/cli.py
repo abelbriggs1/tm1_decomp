@@ -5,6 +5,7 @@ Main CLI function/module of the build system.
 import argparse
 import logging
 import logging.config
+import os
 from pathlib import Path
 
 from .operations import (

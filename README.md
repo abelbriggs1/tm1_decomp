@@ -1,7 +1,7 @@
 # `tm_decomp`
 
 This repository contains a (WIP) matching decompilation of the 1995 Playstation
-game "Twisted Metal".
+game `Twisted Metal (NTSC-J) (SIPS-60007)`.
 
 ```diff
 - WARNING! -
@@ -55,20 +55,11 @@ sudo apt install -y $(cat ./tools/requirements-debian.txt)
 
 ### Python Packages
 
-This repository requires several Python dependencies with a Python virtual environment.
-A script in the repository, `tools/setup_dev.sh`, will automatically perform first-time
-setup for all Python dependencies and set up your Python virtual environment.
+This repository uses [`uv`](https://docs.astral.sh/uv/) for Python package and virtual
+environment management.
 
-```sh
-./tools/setup_dev.sh
-```
-
-**NOTE**: You will need to manually activate your Python virtual environment every time you
-open a new terminal in the repository. Once `setup_dev.sh` has been run once, you can
-activate your virtual environment with the following command:
-
-- Linux: `source .venv/bin/activate`
-- Windows: `.venv/Scripts/activate.ps1`
+After installing `uv`, you can install all required packages with `uv sync` in the
+root of the repository.
 
 ## Building
 
@@ -96,14 +87,14 @@ To build the repository, you will need a digital copy of the Playstation game
   - In the future, this repository will be able to perform this extraction for you.
     Currently, however, you will need to somehow extract this yourself.
 3. Place the `SIPS_600.07` file into the `disks/` directory of the repository.
-4. Run `./configure.py generate` at the root of the repository.
+4. Run `uv run configure.py generate` at the root of the repository.
   - This will split the binary into parts and generate a `build.ninja` file in the
     root of the repository.
 5. Run `ninja` at the root of the repository to build the repo.
   - On success, you should see `build/SIPS_600.07.rom: OK` in the logs, and an
     `objdiff` report should be successfully generated.
-6. Whenever you modify the splat config, you should perform a `./configure.py distclean`
-   before regenerating the config with `./configure.py generate`.
+6. Whenever you modify the splat config, you should perform a `uv run configure.py distclean`
+   before regenerating the config with `uv run configure.py generate`.
 
 # License
 
@@ -122,3 +113,23 @@ make no claim of copyright on any Sony proprietary APIs or structures.
 
 This project exists primarily for educational and research purposes. The authors of this
 project have no desire to use this project for monetary gain.
+
+# Acknowledgements
+
+This project is critically reliant on tools from dedicated members of the decomp community.
+Without them, this work would be impossible.
+Special thanks go to the teams and individuals behind:
+
+- `decomp.wiki`
+- `decomp.me`
+- `decomp.dev`
+- `splat`
+- `spimdisasm`
+- `objdiff` and `asm-differ`
+- `m2c`
+- All of the helpful and skilled decompers in various decomp communities and
+  Discords; PS1/PS2, GC/Wii, N64, and decomp.me servers.
+
+Also, SingleTrac/Incognito, for developing Twisted Metal, Jet Moto, and all of the other
+great games they put out during the 90s and 2000s. This project's goal is to preserve
+that legacy for future generations and allow others to experience what we did.
