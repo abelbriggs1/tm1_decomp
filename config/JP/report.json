@@ -1,15 +1,15 @@
 {
   "measures": {
-    "fuzzy_match_percent": 3.7189028,
+    "fuzzy_match_percent": 3.742693,
     "total_code": "470784",
-    "matched_code": "17508",
-    "matched_code_percent": 3.7189028,
+    "matched_code": "17620",
+    "matched_code_percent": 3.742693,
     "total_data": "590128",
     "matched_data": "7956",
     "matched_data_percent": 1.3481821,
     "total_functions": 1983,
-    "matched_functions": 158,
-    "matched_functions_percent": 7.9677253,
+    "matched_functions": 159,
+    "matched_functions_percent": 8.018155,
     "total_units": 157
   },
   "units": [
@@ -5800,24 +5800,32 @@
     {
       "name": "tm1/grutils",
       "measures": {
+        "fuzzy_match_percent": 8.284023,
         "total_code": "1352",
+        "matched_code": "112",
+        "matched_code_percent": 8.284023,
         "matched_data_percent": 100.0,
         "total_functions": 5,
+        "matched_functions": 1,
+        "matched_functions_percent": 20.0,
         "complete_data_percent": 100.0,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "1352",
+          "fuzzy_match_percent": 8.284023,
           "metadata": {}
         }
       ],
@@ -5825,6 +5833,7 @@
         {
           "name": "Load4BitClut",
           "size": "112",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
@@ -5854,6 +5863,7 @@
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/grutils.c",
         "progress_categories": [
           "tm1"
         ]
@@ -17489,16 +17499,16 @@
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 4.883028,
+        "fuzzy_match_percent": 4.914265,
         "total_code": "358548",
-        "matched_code": "17508",
-        "matched_code_percent": 4.883028,
+        "matched_code": "17620",
+        "matched_code_percent": 4.9142656,
         "total_data": "123324",
         "matched_data": "7956",
         "matched_data_percent": 6.451299,
         "total_functions": 1009,
-        "matched_functions": 158,
-        "matched_functions_percent": 15.659068,
+        "matched_functions": 159,
+        "matched_functions_percent": 15.758176,
         "total_units": 151
       }
     }

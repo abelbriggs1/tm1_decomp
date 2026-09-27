@@ -110,7 +110,7 @@ segments:
       - [0x3E6D8, c,   tm1/explosion]       # 0x80135F90
       - [0x3FA04, asm, tm1/stars]           # 0x801372BC
       - [0x3FE90, c,   tm1/explode]         # 0x80137748
-      - [0x40B44, asm, tm1/grutils]         # 0x801383FC
+      - [0x40B44, c,   tm1/grutils]         # 0x801383FC
       - [0x4108C, asm, tm1/screen]          # 0x80138944
       - [0x4969C, asm, tm1/ua_sw]           # 0x80140F54
       - [0x4A440, asm, tm1/ai_car_update]   # 0x80141CF8
