@@ -107,7 +107,7 @@ def _generate_ninja_script(
         ninja.rule(
             name="check",
             description="CHECK       $in",
-            command="./configure.py check --binary $in --output $out",
+            command="uv run configure.py check --binary $in --output $out",
         )
         ninja.rule(
             name="progress",

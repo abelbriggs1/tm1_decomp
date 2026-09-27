@@ -18,3 +18,5 @@ expected/
 build.ninja
 .ninja_log
 compile_commands.json
+.claude/
+CLAUDE.local.md
