@@ -119,7 +119,7 @@ segments:
       - [0x4F31C, asm, tm1/hud]             # 0x80146BD4
       - [0x50294, asm, tm1/targets]         # 0x80147B4C
       - [0x53950, asm, tm1/ua]              # 0x8014B208
-      - [0x59528, asm, tm1/smooth]          # 0x80150DE0
+      - [0x59528, c,   tm1/smooth]          # 0x80150DE0
       - [0x599D8, asm, tm1/vehicle]         # 0x80151290
       - [0x5A18C, asm, tm1/shell]           # 0x80151A44
       - [0x5BE30, c,   tm1/fileio]          # 0x801536E8

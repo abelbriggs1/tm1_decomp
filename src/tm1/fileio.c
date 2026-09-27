@@ -37,7 +37,7 @@ s32 fileioOpenFile(char* name, s32* sizeOut)
     return 1;
 }
 #else
-INCLUDE_ASM("/mnt/brahms/projects/tm_decomp/asm/nonmatchings/tm1/fileio", fileioOpenFile);
+INCLUDE_ASM("asm/nonmatchings/tm1/fileio", fileioOpenFile);
 #endif // NON_MATCHING
 
 s32 fileioOpenFileAsync(char* name, s32* sizeOut)
