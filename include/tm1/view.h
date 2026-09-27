@@ -9,12 +9,7 @@
 
 typedef Cs ViewNode;
 
-/* The view's double-buffered GPU environment block.  Retail reaches it as
-   SetDefDrawEnv(db+0x10 / db+0x90) and SetDefDispEnv(db+0x6C / db+0xEC), and pokes
-   dtd/isbg/r0/g0/b0 at 38,40,41..43 and 166,168,169..171 -- i.e. two PsyQ
-   {DRAWENV(92) DISPENV(20)} pairs 128 bytes apart, each preceded by 16 bytes.
-   Declared with local names so this header stays free of <LIBGPU.H>. */
-// TODO: This is almost certainly incorrect. Use the proper PSYQ types if they fit here.
+// TODO: Use the proper PSYQ types if they fit here.
 typedef struct {
     s16 x;
     s16 y;

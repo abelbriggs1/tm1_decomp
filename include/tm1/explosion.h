@@ -42,6 +42,8 @@ extern ExpFrame SparkInfo[4];
 extern ExpFrame BurnInfo[8];
 extern ExpFrame FlareInfo[4];
 extern ExpFrame SmokeInfo[28];
+extern ExpFrame ContrailInfo[6];
+extern ExpFrame PlasmaInfo[4];
 extern ExpFrame FlameInfo[10];
 extern ExpFrame GburstInfo[12];
 extern ExpFrame SteamInfo[16];
