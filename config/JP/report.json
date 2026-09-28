@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 5.487867,
+    "fuzzy_match_percent": 5.72067,
     "total_code": "470784",
-    "matched_code": "25836",
-    "matched_code_percent": 5.487867,
+    "matched_code": "26932",
+    "matched_code_percent": 5.72067,
     "total_data": "602900",
-    "matched_data": "18488",
-    "matched_data_percent": 3.0665119,
+    "matched_data": "18876",
+    "matched_data_percent": 3.1308672,
     "total_functions": 1983,
-    "matched_functions": 230,
-    "matched_functions_percent": 11.598588,
-    "total_units": 154
+    "matched_functions": 238,
+    "matched_functions_percent": 12.002017,
+    "total_units": 153
   },
   "units": [
     {
@@ -1685,24 +1685,34 @@
     {
       "name": "tm1/light",
       "measures": {
+        "fuzzy_match_percent": 44.552845,
         "total_code": "2460",
+        "matched_code": "1096",
+        "matched_code_percent": 44.552845,
+        "total_data": "388",
+        "matched_data": "388",
         "matched_data_percent": 100.0,
         "total_functions": 13,
-        "complete_data_percent": 100.0,
+        "matched_functions": 8,
+        "matched_functions_percent": 61.538464,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "388",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "2460",
+          "fuzzy_match_percent": 44.552845,
           "metadata": {}
         }
       ],
@@ -1716,24 +1726,28 @@
         {
           "name": "lightSetRot",
           "size": "436",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "484"
         },
         {
           "name": "lightSetColor",
           "size": "188",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "920"
         },
         {
           "name": "lightSetAmbient",
           "size": "96",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1108"
         },
         {
           "name": "lightInit",
           "size": "264",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1204"
         },
@@ -1764,29 +1778,34 @@
         {
           "name": "lightGetAmbient",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2348"
         },
         {
           "name": "lightGetRot",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2364"
         },
         {
           "name": "lightGetColor",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2380"
         },
         {
           "name": "lightGetEnv",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2396"
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/light.c",
         "progress_categories": [
           "tm1"
         ]
@@ -16896,37 +16915,6 @@
       }
     },
     {
-      "name": "tm1/light",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "388",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "size": "388",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/sound",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -17522,27 +17510,17 @@
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 7.20573,
+        "fuzzy_match_percent": 7.511407,
         "total_code": "358548",
-        "matched_code": "25836",
-        "matched_code_percent": 7.20573,
+        "matched_code": "26932",
+        "matched_code_percent": 7.511407,
         "total_data": "136096",
-        "matched_data": "18488",
-        "matched_data_percent": 13.584529,
+        "matched_data": "18876",
+        "matched_data_percent": 13.869621,
         "total_functions": 1009,
-        "matched_functions": 230,
-        "matched_functions_percent": 22.794846,
-        "total_units": 148
-      }
-    },
-    {
-      "id": "sdk",
-      "name": "sdk",
-      "measures": {
-        "total_code": "112236",
-        "total_data": "462792",
-        "total_functions": 974,
-        "total_units": 5
+        "matched_functions": 238,
+        "matched_functions_percent": 23.587711,
+        "total_units": 147
       }
     },
     {
@@ -17555,6 +17533,16 @@
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
+      }
+    },
+    {
+      "id": "sdk",
+      "name": "sdk",
+      "measures": {
+        "total_code": "112236",
+        "total_data": "462792",
+        "total_functions": 974,
+        "total_units": 5
       }
     }
   ]
