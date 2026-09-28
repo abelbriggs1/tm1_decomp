@@ -1,6 +1,6 @@
 #include "common.h"
 
-#include <libgte.h>
+#include "tm1/math.h"
 
 // Constant for `1.0` in fixed point with 12 bits of mantissa (FXP16 - 1.3.12, FXP32 - 1.19.12)
 #define FXP_ONE 0x1000

@@ -274,6 +274,7 @@ class EnvironmentToolchain:
                 "tm1/ua_sound": 8,
                 "tm1/rt": 8,
                 "tm1/sound": 8,
+                "tm1/view": 8,
             }
         )
 
