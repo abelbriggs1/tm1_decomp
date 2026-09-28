@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 5.72067,
+    "fuzzy_match_percent": 5.7504077,
     "total_code": "470784",
-    "matched_code": "26932",
-    "matched_code_percent": 5.72067,
+    "matched_code": "27072",
+    "matched_code_percent": 5.7504077,
     "total_data": "602900",
-    "matched_data": "18876",
-    "matched_data_percent": 3.1308672,
+    "matched_data": "19020",
+    "matched_data_percent": 3.154752,
     "total_functions": 1983,
-    "matched_functions": 238,
-    "matched_functions_percent": 12.002017,
-    "total_units": 153
+    "matched_functions": 240,
+    "matched_functions_percent": 12.102875,
+    "total_units": 149
   },
   "units": [
     {
@@ -602,41 +602,6 @@
         {
           "name": ".rodata",
           "size": "664",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/movie",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "64",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".rodata",
-          "size": "64",
           "metadata": {}
         },
         {
@@ -8645,24 +8610,51 @@
     {
       "name": "tm1/movie",
       "measures": {
+        "fuzzy_match_percent": 4.107981,
         "total_code": "3408",
-        "matched_data_percent": 100.0,
+        "matched_code": "140",
+        "matched_code_percent": 4.107981,
+        "total_data": "208",
+        "matched_data": "144",
+        "matched_data_percent": 69.230774,
         "total_functions": 12,
-        "complete_data_percent": 100.0,
+        "matched_functions": 2,
+        "matched_functions_percent": 16.666668,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "88",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".rodata",
+          "size": "64",
+          "metadata": {}
+        },
+        {
+          "name": ".sbss",
+          "size": "44",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "3408",
+          "fuzzy_match_percent": 4.107981,
           "metadata": {}
         }
       ],
@@ -8682,6 +8674,7 @@
         {
           "name": "movieInit",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "764"
         },
@@ -8730,6 +8723,7 @@
         {
           "name": "strKickCD",
           "size": "76",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2548"
         },
@@ -8741,6 +8735,7 @@
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/movie.c",
         "progress_categories": [
           "tm1"
         ]
@@ -15854,41 +15849,6 @@
       }
     },
     {
-      "name": "tm1/movie",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "12",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "12",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/hier",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -16470,41 +16430,6 @@
         {
           "name": ".sbss",
           "size": "32",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/movie",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "44",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sbss",
-          "size": "44",
           "metadata": {}
         },
         {
@@ -17442,37 +17367,6 @@
       }
     },
     {
-      "name": "tm1/movie",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "88",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "size": "88",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "sdk/sdk",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -17507,20 +17401,30 @@
   "version": 2,
   "categories": [
     {
+      "id": "sdk",
+      "name": "sdk",
+      "measures": {
+        "total_code": "112236",
+        "total_data": "462792",
+        "total_functions": 974,
+        "total_units": 5
+      }
+    },
+    {
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 7.511407,
+        "fuzzy_match_percent": 7.5504537,
         "total_code": "358548",
-        "matched_code": "26932",
-        "matched_code_percent": 7.511407,
+        "matched_code": "27072",
+        "matched_code_percent": 7.550453,
         "total_data": "136096",
-        "matched_data": "18876",
-        "matched_data_percent": 13.869621,
+        "matched_data": "19020",
+        "matched_data_percent": 13.97543,
         "total_functions": 1009,
-        "matched_functions": 238,
-        "matched_functions_percent": 23.587711,
-        "total_units": 147
+        "matched_functions": 240,
+        "matched_functions_percent": 23.785927,
+        "total_units": 143
       }
     },
     {
@@ -17533,16 +17437,6 @@
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
-      }
-    },
-    {
-      "id": "sdk",
-      "name": "sdk",
-      "measures": {
-        "total_code": "112236",
-        "total_data": "462792",
-        "total_functions": 974,
-        "total_units": 5
       }
     }
   ]
