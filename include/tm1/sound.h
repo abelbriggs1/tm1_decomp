@@ -150,6 +150,7 @@ void soundCloseGamePersistantSounds();
 void soundUnloadLevelVabFromSPURam();
 void soundShutdown();
 void soundStopPlayDA();
+void soundInterruptPlayDA(void);
 s32 soundGetMasterDopplerDelta();
 s32 soundGetMasterDopplerEffectiveRange();
 void soundSetMasterDopplerDelta(s32 delta);
