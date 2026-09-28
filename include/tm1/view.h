@@ -91,5 +91,6 @@ void viewSetBgColor();
 void viewGetCenter(s32 which, s32* cx, s32* cy);
 EyeTrans* viewGetEyeTrans(s32 which);
 EyeMat* viewGetEyeMat(s32 which);
+void wordCp(s32* dst, s32* src, s32 n);
 
 #endif
