@@ -102,7 +102,7 @@ segments:
       - [0x2AFC4, asm, tm1/car_init]        # 0x8012287C
       - [0x2D47C, asm, tm1/ai_car_init]     # 0x80124D34
       - [0x2E308, asm, tm1/trigger_pts]     # 0x80125BC0
-      - [0x354C0, asm, tm1/bridges]         # 0x8012CD78
+      - [0x354C0, c  , tm1/bridges]         # 0x8012CD78
       - [0x38DB0, c  , tm1/potholes]        # 0x80130668
       - [0x391D4, c  , tm1/curbs]           # 0x80130A8C
       - [0x39A40, c  , tm1/slick_spots]     # 0x801312F8
@@ -164,6 +164,8 @@ segments:
       - [0x946F0, sdata, tm1/weapon]        # 0x8018BFA8
       - [0x94718, sdata, tm1/ai_car]        # 0x8018BFD0
       - [0x9471C, sdata, tm1/car_update]    # 0x8018BFD4
+      - [0x94720, .sdata, tm1/bridges]      # 0x8018BFD8
+      - [0x94724, sdata, tm1/potholes]      # 0x8018BFDC
       - [0x94730, sdata, tm1/interactives]  # 0x8018BFE8
       - [0x947E4, sdata, tm1/explosion]     # 0x8018C09C
       - [0x947E8, sdata, tm1/screen]        # 0x8018C0A0
