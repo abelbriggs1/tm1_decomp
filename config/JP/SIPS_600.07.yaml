@@ -87,7 +87,7 @@ segments:
       - [0x8790,  asm, tm1/db]              # 0x80100048
       - [0x9438,  asm, tm1/hd]              # 0x80100CF0
       - [0xB29C,  asm, tm1/hdp]             # 0x80102B54
-      - [0xC1A0,  asm, tm1/light]           # 0x80103A58
+      - [0xC1A0,  c  , tm1/light]           # 0x80103A58
       - [0xCB3C,  c,   tm1/sound]           # 0x801043F4
       - [0xFB14,  c,   tm1/ua_sound]        # 0x801073CC
       - [0x110C4, asm, tm1/sound_req]       # 0x8010897C
@@ -222,7 +222,7 @@ segments:
       - {start: 0x94BC8, type: bss, vram: 0x80194BF0, name: tm1/rt}
       - {start: 0x94BC8, type: bss, vram: 0x80194F10, name: tm1/db}
       - {start: 0x94BC8, type: bss, vram: 0x80195EAC, name: tm1/hd}
-      - {start: 0x94BC8, type: bss, vram: 0x80196064, name: tm1/light}
+      - {start: 0x94BC8, type: .bss, vram: 0x80196064, name: tm1/light}
       - {start: 0x94BC8, type: bss, vram: 0x801961E8, name: tm1/sound}
       - {start: 0x94BC8, type: .bss, vram: 0x80198A4C, name: tm1/ua_sound}
       - {start: 0x94BC8, type: bss, vram: 0x80198A6C, name: tm1/hier_sub}
