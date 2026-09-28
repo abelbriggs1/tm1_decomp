@@ -76,7 +76,6 @@ typedef struct ProgVabRec {
     /*0x5*/ u8 pad;
 } ProgVabRec;
 
-/* One queued play/stop request (0x1C bytes, 46 entries). */
 typedef struct SoundIdRequest {
     /*0x00*/ s32 id;
     /*0x04*/ s32 dist;
@@ -102,7 +101,7 @@ typedef struct {
     s16 activeVoiceCount; /* +40 */
     s16 totalVoiceCount; /* +42 */
     s32 numProgVabProgs; /* +44 */
-} SoundSystemAttributes; /* 0x30 -- the whole .data this TU owns per the yaml */
+} SoundSystemAttributes; /* 0x30 */
 
 typedef struct SndMatrix {
     u16 m[9];

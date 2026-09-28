@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 3.742693,
+    "fuzzy_match_percent": 4.5473084,
     "total_code": "470784",
-    "matched_code": "17620",
-    "matched_code_percent": 3.742693,
-    "total_data": "590128",
-    "matched_data": "7956",
-    "matched_data_percent": 1.3481821,
+    "matched_code": "21408",
+    "matched_code_percent": 4.5473084,
+    "total_data": "601348",
+    "matched_data": "18364",
+    "matched_data_percent": 3.0538058,
     "total_functions": 1983,
-    "matched_functions": 159,
-    "matched_functions_percent": 8.018155,
-    "total_units": 157
+    "matched_functions": 219,
+    "matched_functions_percent": 11.043873,
+    "total_units": 154
   },
   "units": [
     {
@@ -217,41 +217,6 @@
         {
           "name": ".rodata",
           "size": "48",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/sound",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "76",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".rodata",
-          "size": "76",
           "metadata": {}
         },
         {
@@ -1865,24 +1830,56 @@
     {
       "name": "tm1/sound",
       "measures": {
+        "fuzzy_match_percent": 30.927498,
         "total_code": "12248",
-        "matched_data_percent": 100.0,
+        "matched_code": "3788",
+        "matched_code_percent": 30.927498,
+        "total_data": "11364",
+        "matched_data": "10408",
+        "matched_data_percent": 91.58747,
         "total_functions": 86,
-        "complete_data_percent": 100.0,
+        "matched_functions": 60,
+        "matched_functions_percent": 69.76744,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "10340",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "size": "876",
+          "metadata": {}
+        },
+        {
+          "name": ".rodata",
+          "size": "76",
+          "metadata": {}
+        },
+        {
+          "name": ".sbss",
+          "size": "28",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".scommon",
+          "size": "4",
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "40",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "12248",
+          "fuzzy_match_percent": 30.927498,
           "metadata": {}
         }
       ],
@@ -1890,18 +1887,21 @@
         {
           "name": "soundGetCurrentDATrack",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
         {
           "name": "soundGetCalculatedSoundRange",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "12"
         },
         {
           "name": "soundGetCalculatedSoundXPosition",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "24"
         },
@@ -1914,6 +1914,7 @@
         {
           "name": "soundResetSoundEngine",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "520"
         },
@@ -1926,12 +1927,14 @@
         {
           "name": "getOpenVoice",
           "size": "140",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "836"
         },
         {
           "name": "releaseUsedVoice",
           "size": "20",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "976"
         },
@@ -1962,6 +1965,7 @@
         {
           "name": "soundOffOn",
           "size": "68",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1696"
         },
@@ -1986,24 +1990,28 @@
         {
           "name": "soundRangeSortInstances",
           "size": "268",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2444"
         },
         {
           "name": "soundPrioritySortInstances",
           "size": "268",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2712"
         },
         {
           "name": "soundSortInstances",
           "size": "80",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2980"
         },
         {
           "name": "soundLoadCoreVabIntoSPURam",
           "size": "148",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3060"
         },
@@ -2016,6 +2024,7 @@
         {
           "name": "vabIdIsValid",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3364"
         },
@@ -2028,30 +2037,35 @@
         {
           "name": "soundInitLevelPersistantSounds",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3456"
         },
         {
           "name": "soundCloseLevelPersistantSounds",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3492"
         },
         {
           "name": "soundInitLevelSwapSounds",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3528"
         },
         {
           "name": "soundCloseGamePersistantSounds",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3536"
         },
         {
           "name": "soundCloseLevelSwapSounds",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3572"
         },
@@ -2064,186 +2078,217 @@
         {
           "name": "soundShutdown",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3720"
         },
         {
           "name": "soundSetMasterVolume",
           "size": "500",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3776"
         },
         {
           "name": "soundGetMasterDopplerDelta",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4276"
         },
         {
           "name": "soundGetMasterDopplerEffectiveRange",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4292"
         },
         {
           "name": "soundSetMasterDopplerDelta",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4308"
         },
         {
           "name": "soundSetMasterDopplerEffectiveRange",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4324"
         },
         {
           "name": "soundGetMasterDopplerEffectiveRangeSquared",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4356"
         },
         {
           "name": "soundSetReverbVolume",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4372"
         },
         {
           "name": "soundGetReverbVolume",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4428"
         },
         {
           "name": "soundSetReverbType",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4444"
         },
         {
           "name": "soundGetReverbType",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4460"
         },
         {
           "name": "soundSetReverbOn",
           "size": "108",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4476"
         },
         {
           "name": "soundSetReverbOff",
           "size": "44",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4584"
         },
         {
           "name": "soundGetMasterVolume",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4628"
         },
         {
           "name": "soundSetSFXVolume",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4644"
         },
         {
           "name": "soundGetSFXVolume",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4700"
         },
         {
           "name": "soundSetMusicVolume",
           "size": "88",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4716"
         },
         {
           "name": "soundGetMusicVolume",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4804"
         },
         {
           "name": "soundSetVolumeRange",
           "size": "48",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4820"
         },
         {
           "name": "soundGetVolumeRangeSquared",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4868"
         },
         {
           "name": "soundGetVolumeRange",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4884"
         },
         {
           "name": "soundIncActiveVoiceCount",
           "size": "28",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4900"
         },
         {
           "name": "soundDecActiveVoiceCount",
           "size": "28",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4928"
         },
         {
           "name": "soundIncTotalVoiceCount",
           "size": "28",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4956"
         },
         {
           "name": "soundDecTotalVoiceCount",
           "size": "28",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4984"
         },
         {
           "name": "soundGetActiveVoiceCount",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5012"
         },
         {
           "name": "soundGetTotalVoiceCount",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5028"
         },
         {
           "name": "soundResetActiveVoiceCount",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5044"
         },
         {
           "name": "soundResetTotalVoiceCount",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5060"
         },
         {
           "name": "soundGetMusicVolumePreviousToInterrupt",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5076"
         },
         {
           "name": "soundSetPreviousMusicVolume",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5088"
         },
@@ -2268,6 +2313,7 @@
         {
           "name": "soundStopPlayDA",
           "size": "144",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5852"
         },
@@ -2286,12 +2332,14 @@
         {
           "name": "cdGetPos",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6252"
         },
         {
           "name": "cdGetRepTime",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6264"
         },
@@ -2304,12 +2352,14 @@
         {
           "name": "cbvsync",
           "size": "200",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6572"
         },
         {
           "name": "cdplay",
           "size": "84",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6772"
         },
@@ -2328,18 +2378,21 @@
         {
           "name": "filterIds",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10596"
         },
         {
           "name": "soundPlayId",
           "size": "296",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10604"
         },
         {
           "name": "soundStopPlayId",
           "size": "200",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10900"
         },
@@ -2364,6 +2417,7 @@
         {
           "name": "addToneToTonesToPlayList",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11500"
         },
@@ -2376,12 +2430,14 @@
         {
           "name": "turnOffAndDeleteASingleSoundsTones",
           "size": "116",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11736"
         },
         {
           "name": "soundIdInit",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11852"
         },
@@ -2400,11 +2456,13 @@
         {
           "name": "getProgVabProgs",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "12232"
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/sound.c",
         "progress_categories": [
           "tm1"
         ]
@@ -15195,41 +15253,6 @@
       }
     },
     {
-      "name": "tm1/sound",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "40",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "40",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/view",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15916,41 +15939,6 @@
         {
           "name": ".sbss",
           "size": "8",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/sound",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "28",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sbss",
-          "size": "28",
           "metadata": {}
         },
         {
@@ -17484,6 +17472,23 @@
       }
     },
     {
+      "id": "tm1",
+      "name": "tm1",
+      "measures": {
+        "fuzzy_match_percent": 5.970749,
+        "total_code": "358548",
+        "matched_code": "21408",
+        "matched_code_percent": 5.9707484,
+        "total_data": "134544",
+        "matched_data": "18364",
+        "matched_data_percent": 13.649066,
+        "total_functions": 1009,
+        "matched_functions": 219,
+        "matched_functions_percent": 21.704657,
+        "total_units": 148
+      }
+    },
+    {
       "id": "data",
       "name": "data",
       "measures": {
@@ -17493,23 +17498,6 @@
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
-      }
-    },
-    {
-      "id": "tm1",
-      "name": "tm1",
-      "measures": {
-        "fuzzy_match_percent": 4.914265,
-        "total_code": "358548",
-        "matched_code": "17620",
-        "matched_code_percent": 4.9142656,
-        "total_data": "123324",
-        "matched_data": "7956",
-        "matched_data_percent": 6.451299,
-        "total_functions": 1009,
-        "matched_functions": 159,
-        "matched_functions_percent": 15.758176,
-        "total_units": 151
       }
     }
   ]
