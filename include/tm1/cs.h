@@ -2,13 +2,14 @@
 #define __TM1_CS_H__
 
 #include "common.h"
+#include "tm1/light.h"
 #include "tm1/long_vector.h"
 #include <libgte.h>
 
 /* Coordinate system record -- 0x10C bytes (csCreate strides by 0x10C). */
 typedef struct Cs {
     /* 0x000 */ s32 unk00;
-    /* 0x004 */ void* env; /* lightGetEnv() result */
+    /* 0x004 */ LightEnv* env;
     /* 0x008 */ s32 drawMode;
     /* 0x00C */ s32 unk0C;
     /* 0x010 */ struct Cs* parent;
