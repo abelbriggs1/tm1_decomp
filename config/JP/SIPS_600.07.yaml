@@ -55,7 +55,7 @@ segments:
       - [0x960, .rodata, tm1/ctlpad]        # 0x800F8218
       - [0x9B0,  rodata, tm1/db]            # 0x800F8268
       - [0x1F78, .rodata, tm1/hd]           # 0x800F9830
-      - [0x1FA8, rodata, tm1/hdp]           # 0x800F9860
+      - [0x1FA8, .rodata, tm1/hdp]          # 0x800F9860
       - [0x1FD8, .rodata, tm1/sound]         # 0x800F9890
       - [0x2024, .rodata, tm1/ua_sound]     # 0x800F98DC
       - [0x307C, .rodata, tm1/view]         # 0x800FA934
@@ -86,7 +86,7 @@ segments:
       - [0x8234,  c,   tm1/ctlpad]          # 0x800FFAEC
       - [0x8790,  asm, tm1/db]              # 0x80100048
       - [0x9438,  c,   tm1/hd]              # 0x80100CF0
-      - [0xB29C,  asm, tm1/hdp]             # 0x80102B54
+      - [0xB29C,  c,   tm1/hdp]             # 0x80102B54
       - [0xC1A0,  c  , tm1/light]           # 0x80103A58
       - [0xCB3C,  c,   tm1/sound]           # 0x801043F4
       - [0xFB14,  c,   tm1/ua_sound]        # 0x801073CC
@@ -156,7 +156,7 @@ segments:
       - [0x9467C, .sdata, tm1/ctlpad]       # 0x8018BF34
       - [0x94680, sdata, tm1/db]            # 0x8018BF38
       - [0x94694, .sdata, tm1/hd]           # 0x8018BF4C
-      - [0x946A4, sdata, tm1/hdp]           # 0x8018BF5C
+      - [0x946A4, .sdata, tm1/hdp]          # 0x8018BF5C
       - [0x946A8, .sdata, tm1/sound]         # 0x8018BF60
       - [0x946D0, .sdata, tm1/ua_sound]      # 0x8018BF88
       - [0x946D8, sdata, tm1/view]          # 0x8018BF90
@@ -185,7 +185,7 @@ segments:
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C4B0, name: tm1/cs}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C4BC, name: tm1/rt}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C4C8, name: tm1/hd}
-      - {start: 0x94BC8, type: sbss, vram: 0x8018C4D4, name: tm1/hdp}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4D4, name: tm1/hdp}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C4DC, name: tm1/sound}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C4F8, name: tm1/hier_sub}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C508, name: tm1/view}

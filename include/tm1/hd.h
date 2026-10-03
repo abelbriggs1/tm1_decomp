@@ -101,13 +101,6 @@ typedef struct HdSwitch3 {
     /* 0x10 */ void* child[1];
 } HdSwitch3;
 
-typedef struct HdCtrlBox {
-    /* 0x00 */ MATRIX mat;
-    /* 0x20 */ s16 min[3];
-    /* 0x26 */ s16 pad26;
-    /* 0x28 */ s16 max[3];
-} HdCtrlBox;
-
 typedef struct HdCtrl {
     /* 0x00 */ u8 kind;
     /* 0x01 */ u8 pad01;
@@ -118,7 +111,7 @@ typedef struct HdCtrl {
     /* 0x0B */ u8 pad0B;
     /* 0x0C */ void* inNode;
     /* 0x10 */ void* outNode;
-    /* 0x14 */ HdCtrlBox* box[1];
+    /* 0x14 */ HdBox* box[1];
 } HdCtrl;
 
 typedef struct HdLodRec {
@@ -172,7 +165,7 @@ void hdLod(HdLodNode* node, HdEnt* e);
 s32 hdPntBox(HdBox* b, VECTOR* pos, HdCsHit* res, s32 matIdx);
 s32 hdPntVolume(HdVol* n, VECTOR* pos, HdCsHit* res, s32 matIdx);
 void hdCtrlNode(HdEnt* e, s16 id0, s16 id1);
-s32 hdInCtrlBox(HdCtrlBox* box, s32* pt);
+s32 hdInCtrlBox(HdBox* box, s32* pt);
 void hdSetHitTag(HdCsHit* hit, s16 id0, s16 id1, HdEnt* e);
 void HdCsTest(Cs* cs, HdCsHit* hit, s32 doWorld, MATRIX* otherMat, s32* otherPos);
 void hdInit(HdEnt* stack);

@@ -149,7 +149,7 @@ push:
             HdBoxNode* n = (HdBoxNode*)e->node;
 
             if (n->code == -2) {
-                r = hdpPntBox(&n->box, (VECTOR*)e->v, res, 1);
+                r = hdpPntBox(&n->box, (VECTOR*)e->v, &res->hit, 1);
             } else {
                 r = hdPntBox(&n->box, (VECTOR*)e->v, res, e->matIdx);
             }
@@ -698,7 +698,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/hd", hdCtrlNode);
 #endif
 
 #ifdef NON_MATCHING
-s32 hdInCtrlBox(HdCtrlBox* box, s32* pt)
+s32 hdInCtrlBox(HdBox* box, s32* pt)
 {
     VECTOR r;
     s32 q[3];
@@ -706,13 +706,13 @@ s32 hdInCtrlBox(HdCtrlBox* box, s32* pt)
 
     mathMulVec(&box->mat, (VECTOR*)pt, &r);
     res = 0;
-    q[2] = box->min[2] + r.vz;
+    q[2] = box->lo.vz + r.vz;
     if (q[2] >= 0) {
-        q[1] = box->min[1] + r.vy;
+        q[1] = box->lo.vy + r.vy;
         if (q[1] >= 0) {
-            q[0] = box->min[0] + r.vx;
-            if (q[0] >= 0 && (box->max[0] - q[0]) >= 0 && (box->max[1] - q[1]) >= 0) {
-                res = (box->max[2] - q[2]) >= 0;
+            q[0] = box->lo.vx + r.vx;
+            if (q[0] >= 0 && (box->hi.vx - q[0]) >= 0 && (box->hi.vy - q[1]) >= 0) {
+                res = (box->hi.vz - q[2]) >= 0;
             }
         }
     }
