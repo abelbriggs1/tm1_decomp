@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 7.732633,
+    "fuzzy_match_percent": 8.2475195,
     "total_code": "470784",
-    "matched_code": "36404",
-    "matched_code_percent": 7.7326336,
-    "total_data": "614652",
-    "matched_data": "55384",
-    "matched_data_percent": 9.010627,
+    "matched_code": "38828",
+    "matched_code_percent": 8.2475195,
+    "total_data": "629732",
+    "matched_data": "70512",
+    "matched_data_percent": 11.1971445,
     "total_functions": 1983,
-    "matched_functions": 300,
-    "matched_functions_percent": 15.128593,
-    "total_units": 137
+    "matched_functions": 331,
+    "matched_functions_percent": 16.691881,
+    "total_units": 134
   },
   "units": [
     {
@@ -392,41 +392,6 @@
         {
           "name": ".rodata",
           "size": "412",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/ua",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "612",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".rodata",
-          "size": "612",
           "metadata": {}
         },
         {
@@ -7385,24 +7350,51 @@
     {
       "name": "tm1/ua",
       "measures": {
+        "fuzzy_match_percent": 10.309629,
         "total_code": "23512",
-        "matched_data_percent": 100.0,
+        "matched_code": "2424",
+        "matched_code_percent": 10.309629,
+        "total_data": "16060",
+        "matched_data": "15128",
+        "matched_data_percent": 94.19676,
         "total_functions": 95,
-        "complete_data_percent": 100.0,
+        "matched_functions": 31,
+        "matched_functions_percent": 32.63158,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "15004",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "size": "244",
+          "fuzzy_match_percent": 82.58197,
+          "metadata": {}
+        },
+        {
+          "name": ".rodata",
+          "size": "612",
+          "metadata": {}
+        },
+        {
+          "name": ".sbss",
+          "size": "76",
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "124",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "23512",
+          "fuzzy_match_percent": 10.309629,
           "metadata": {}
         }
       ],
@@ -7410,6 +7402,7 @@
         {
           "name": "UASetBattleMusicOn",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
@@ -7422,6 +7415,7 @@
         {
           "name": "uaInit",
           "size": "232",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "140"
         },
@@ -7488,6 +7482,7 @@
         {
           "name": "InitLevel",
           "size": "544",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3832"
         },
@@ -7536,12 +7531,14 @@
         {
           "name": "uaLeaveLevel",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8208"
         },
         {
           "name": "UASetNumPlayers",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8216"
         },
@@ -7566,30 +7563,35 @@
         {
           "name": "UASetGodMode",
           "size": "92",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8524"
         },
         {
           "name": "uaDrivingAICars",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8616"
         },
         {
           "name": "uaDriveAICars",
           "size": "88",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8632"
         },
         {
           "name": "UASetInfiniteWeapons",
           "size": "48",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8720"
         },
         {
           "name": "UASetHelicoptorMode",
           "size": "52",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8768"
         },
@@ -7626,6 +7628,7 @@
         {
           "name": "CheckPlayerHealthStand",
           "size": "320",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "12292"
         },
@@ -7662,6 +7665,7 @@
         {
           "name": "UAStats",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "15044"
         },
@@ -7740,42 +7744,49 @@
         {
           "name": "GetAITheCameraFollows",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17792"
         },
         {
           "name": "GetPlayerSpeed",
           "size": "188",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17804"
         },
         {
           "name": "GetAISpeed",
           "size": "196",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17992"
         },
         {
           "name": "GetNumPlayers",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18188"
         },
         {
           "name": "GetPlayerInfo",
           "size": "44",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18200"
         },
         {
           "name": "GetNumAICars",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18244"
         },
         {
           "name": "GetAICarInfo",
           "size": "52",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18256"
         },
@@ -7824,18 +7835,21 @@
         {
           "name": "uaUsingLanes",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20260"
         },
         {
           "name": "uaUsingGroupGroundHeight",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20272"
         },
         {
           "name": "uaInitTweeking",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20284"
         },
@@ -7848,18 +7862,21 @@
         {
           "name": "uaSetDifficulty",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20508"
         },
         {
           "name": "uaGetDifficulty",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20564"
         },
         {
           "name": "uaGetTwoPlayerMode",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20576"
         },
@@ -7896,6 +7913,7 @@
         {
           "name": "GetAICarStrength",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "21372"
         },
@@ -7914,12 +7932,14 @@
         {
           "name": "uaGetCurrentCar",
           "size": "204",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "21680"
         },
         {
           "name": "GetPlayerTheCameraFollows",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "21884"
         },
@@ -7938,6 +7958,7 @@
         {
           "name": "GetCarNumFromCarName",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "22496"
         },
@@ -7962,12 +7983,14 @@
         {
           "name": "uaHasPlayerBeatThisLevel",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "23268"
         },
         {
           "name": "uaPlayerCheating",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "23280"
         },
@@ -7979,6 +8002,7 @@
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/ua.c",
         "progress_categories": [
           "tm1"
         ]
@@ -15020,37 +15044,6 @@
       }
     },
     {
-      "name": "tm1/ua",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "244",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "size": "244",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/vehicle",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15655,41 +15648,6 @@
         {
           "name": ".sdata",
           "size": "36",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/ua",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "124",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "124",
           "metadata": {}
         },
         {
@@ -17194,15 +17152,20 @@
   "version": 2,
   "categories": [
     {
-      "id": "data",
-      "name": "data",
+      "id": "tm1",
+      "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "4012",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
+        "fuzzy_match_percent": 10.829233,
+        "total_code": "358548",
+        "matched_code": "38828",
+        "matched_code_percent": 10.829233,
+        "total_data": "162928",
+        "matched_data": "70512",
+        "matched_data_percent": 43.27801,
+        "total_functions": 1009,
+        "matched_functions": 331,
+        "matched_functions_percent": 32.804756,
+        "total_units": 128
       }
     },
     {
@@ -17216,20 +17179,15 @@
       }
     },
     {
-      "id": "tm1",
-      "name": "tm1",
+      "id": "data",
+      "name": "data",
       "measures": {
-        "fuzzy_match_percent": 10.153173,
-        "total_code": "358548",
-        "matched_code": "36404",
-        "matched_code_percent": 10.153173,
-        "total_data": "147848",
-        "matched_data": "55384",
-        "matched_data_percent": 37.460094,
-        "total_functions": 1009,
-        "matched_functions": 300,
-        "matched_functions_percent": 29.732409,
-        "total_units": 131
+        "fuzzy_match_percent": 100.0,
+        "matched_code_percent": 100.0,
+        "total_data": "4012",
+        "matched_functions_percent": 100.0,
+        "complete_code_percent": 100.0,
+        "total_units": 1
       }
     }
   ]

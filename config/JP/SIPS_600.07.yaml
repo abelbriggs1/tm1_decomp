@@ -70,7 +70,7 @@ segments:
       - [0x4760, rodata, tm1/ai_car_update] # 0x800FC018
       - [0x4944, .rodata, tm1/ua_dash]      # 0x800FC1FC
       - [0x4AD8, rodata, tm1/targets]       # 0x800FC390
-      - [0x4C74, rodata, tm1/ua]            # 0x800FC52C
+      - [0x4C74, .rodata, tm1/ua]           # 0x800FC52C
       - [0x4ED8, rodata, tm1/shell]         # 0x800FC790
       - [0x5170, .rodata, tm1/movie]        # 0x800FCA28
       # Start of SDK rodata - TODO
@@ -118,7 +118,7 @@ segments:
       - [0x4EA38, c,   tm1/ua_effect]       # 0x801462F0
       - [0x4F31C, asm, tm1/hud]             # 0x80146BD4
       - [0x50294, asm, tm1/targets]         # 0x80147B4C
-      - [0x53950, asm, tm1/ua]              # 0x8014B208
+      - [0x53950, c,   tm1/ua]              # 0x8014B208
       - [0x59528, c,   tm1/smooth]          # 0x80150DE0
       - [0x599D8, asm, tm1/vehicle]         # 0x80151290
       - [0x5A18C, asm, tm1/shell]           # 0x80151A44
@@ -142,7 +142,7 @@ segments:
       - [0x799F8, data, tm1/ua_dash]        # 0x801712B0
       - [0x79A5C, .data, tm1/ua_effect]     # 0x80171314
       - [0x79C54, data, tm1/targets]        # 0x8017150C
-      - [0x79EB0, data, tm1/ua]             # 0x80171768
+      - [0x79EB0, .data, tm1/ua]            # 0x80171768
       - [0x79FA4, data, tm1/vehicle]        # 0x8017185C
       - [0x79FC4, data, tm1/shell]          # 0x8017187C
       # Start of SDK data. TODO
@@ -174,7 +174,7 @@ segments:
       - [0x94A3C, .sdata, tm1/ua_effect]    # 0x8018C2F4
       - [0x94A54, sdata, tm1/hud]           # 0x8018C30C
       - [0x94A58, sdata, tm1/targets]       # 0x8018C310
-      - [0x94A7C, sdata, tm1/ua]            # 0x8018C334
+      - [0x94A7C, .sdata, tm1/ua]           # 0x8018C334
       - [0x94AF8, sdata, tm1/shell]         # 0x8018C3B0
       - [0x94BB4, sdata, tm1/fileio]        # 0x8018C46C
       - [0x94BBC, .sdata, tm1/movie]        # 0x8018C474
