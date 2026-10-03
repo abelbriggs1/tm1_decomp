@@ -96,6 +96,28 @@ To build the repository, you will need a digital copy of the Playstation game
 6. Whenever you modify the splat config, you should perform a `uv run configure.py distclean`
    before regenerating the config with `uv run configure.py generate`.
 
+## Known Issues
+
+This is a list of known repository-wide issues that prevent functions or data from
+matching when they otherwise should.
+
+### `scommon`/`common` are unhandled
+
+These are sections which we don't know how to handle currently, so any data from these
+sections cannot be decompiled.
+
+### Small data (`$gp`) in partially-decompiled TUs
+
+Some functions will not match until **all** small data (`.sdata`/`.sbss`)
+is defined in C, rather than linked from the disassembly and declared `extern`.
+
+In order to properly compile TUs with non-migrated (`extern`) small-data, we pass
+`--dont-force-G0` to `maspsx`. However, this will generate `$gp` use for symbols
+that didn't actually use it in the original binary, breaking matches.
+
+Once no C file declares small data as `extern`, `--dont-force-G0` can be removed, and
+`maspsx` will handle `$gp` usage the way the original assembler did.
+
 # License
 
 This project is licensed under MIT, with the intent that the community will band
