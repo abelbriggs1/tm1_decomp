@@ -155,6 +155,9 @@ make no claim of copyright on any Sony proprietary APIs or structures.
 This project exists primarily for educational and research purposes. The authors of this
 project have no desire to use this project for monetary gain.
 
+This project contains code generated with the assistance of agentic
+LLMs (AI).
+
 # Acknowledgements
 
 This project is critically reliant on tools from dedicated members of the decomp community.
