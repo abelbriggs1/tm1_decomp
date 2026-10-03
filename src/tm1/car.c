@@ -12,6 +12,7 @@
 #include "tm1/smooth.h"
 #include "tm1/timer.h"
 #include "tm1/ua.h"
+#include "tm1/ua_dash.h"
 #include "tm1/ua_effect.h"
 #include "tm1/ua_sound.h"
 #include "tm1/ua_sw.h"
@@ -24,7 +25,6 @@
 
 extern void StartLostCheck(Car* car);
 extern void RecomputeCarDeltas(CarStats* s);
-extern void UAdashSetDashboardDrawFlag(s32 on);
 extern void* sdk_memcpy();
 extern s32 GetClosestTriggerPt(Car* car, u8 which);
 extern s32 shellGetCurrentLevel(void);

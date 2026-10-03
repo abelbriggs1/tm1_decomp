@@ -10,6 +10,7 @@
 #include "tm1/rt.h"
 #include "tm1/sound.h"
 #include "tm1/ua.h"
+#include "tm1/ua_dash.h"
 #include "tm1/ua_sound.h"
 #include "tm1/ua_sw.h"
 #include "tm1/view.h"
@@ -141,7 +142,6 @@ u8 healthRegenPending = 0;
 s32 healthRegenTimer = 0;
 
 extern void hudAddRadarSig(s32 obj, s32* d, s32 z);
-extern void uadashMaxCarryCapacity(void);
 extern s32 shellGetCurrentLevel(void);
 
 void carSetPowerupDelaysBySkillLevel(s32 level)
