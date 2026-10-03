@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 6.194773,
+    "fuzzy_match_percent": 6.4530654,
     "total_code": "470784",
-    "matched_code": "29164",
-    "matched_code_percent": 6.1947727,
+    "matched_code": "30380",
+    "matched_code_percent": 6.4530654,
     "total_data": "604804",
     "matched_data": "20992",
     "matched_data_percent": 3.4708765,
     "total_functions": 1983,
-    "matched_functions": 266,
-    "matched_functions_percent": 13.41402,
-    "total_units": 147
+    "matched_functions": 277,
+    "matched_functions_percent": 13.968735,
+    "total_units": 146
   },
   "units": [
     {
@@ -217,41 +217,6 @@
         {
           "name": ".rodata",
           "size": "48",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/car",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "164",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".rodata",
-          "size": "164",
           "metadata": {}
         },
         {
@@ -3662,24 +3627,36 @@
     {
       "name": "tm1/car",
       "measures": {
+        "fuzzy_match_percent": 3.6346245,
         "total_code": "33456",
-        "matched_data_percent": 100.0,
+        "matched_code": "1216",
+        "matched_code_percent": 3.6346245,
+        "total_data": "164",
         "total_functions": 42,
-        "complete_data_percent": 100.0,
+        "matched_functions": 11,
+        "matched_functions_percent": 26.190477,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".rodata",
+          "size": "164",
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "33456",
+          "fuzzy_match_percent": 3.6346245,
           "metadata": {}
         }
       ],
@@ -3711,12 +3688,14 @@
         {
           "name": "CarTransUpdate",
           "size": "212",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6552"
         },
         {
           "name": "CarCheckDynamics",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6764"
         },
@@ -3729,6 +3708,7 @@
         {
           "name": "UpdateNonDriftingCar",
           "size": "192",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6912"
         },
@@ -3753,6 +3733,7 @@
         {
           "name": "UpdateDriftingCar",
           "size": "208",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8224"
         },
@@ -3813,6 +3794,7 @@
         {
           "name": "RotateCarsAwayFromCollision",
           "size": "100",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "21380"
         },
@@ -3825,6 +3807,7 @@
         {
           "name": "SetCollisionBounce",
           "size": "152",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "22684"
         },
@@ -3837,6 +3820,7 @@
         {
           "name": "SetCollisCount",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "22864"
         },
@@ -3879,12 +3863,14 @@
         {
           "name": "CheckCatapults",
           "size": "184",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "28308"
         },
         {
           "name": "UpdateCatapultedTire",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "28492"
         },
@@ -3903,6 +3889,7 @@
         {
           "name": "UpdateBombDamagedTire",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "30092"
         },
@@ -3933,11 +3920,13 @@
         {
           "name": "TermCar",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "33448"
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/car.c",
         "progress_categories": [
           "tm1"
         ]
@@ -17403,6 +17392,23 @@
       }
     },
     {
+      "id": "tm1",
+      "name": "tm1",
+      "measures": {
+        "fuzzy_match_percent": 8.473063,
+        "total_code": "358548",
+        "matched_code": "30380",
+        "matched_code_percent": 8.473063,
+        "total_data": "138000",
+        "matched_data": "20992",
+        "matched_data_percent": 15.211594,
+        "total_functions": 1009,
+        "matched_functions": 277,
+        "matched_functions_percent": 27.452925,
+        "total_units": 140
+      }
+    },
+    {
       "id": "data",
       "name": "data",
       "measures": {
@@ -17412,23 +17418,6 @@
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
-      }
-    },
-    {
-      "id": "tm1",
-      "name": "tm1",
-      "measures": {
-        "fuzzy_match_percent": 8.133918,
-        "total_code": "358548",
-        "matched_code": "29164",
-        "matched_code_percent": 8.133918,
-        "total_data": "138000",
-        "matched_data": "20992",
-        "matched_data_percent": 15.211594,
-        "total_functions": 1009,
-        "matched_functions": 266,
-        "matched_functions_percent": 26.362736,
-        "total_units": 141
       }
     }
   ]

@@ -1,0 +1,287 @@
+#ifndef __TM1_CAR_H__
+#define __TM1_CAR_H__
+
+#include "common.h"
+#include "tm1/cs.h"
+#include "tm1/long_vector.h"
+#include <libgte.h>
+
+typedef struct CarMotion {
+    /*0x00*/ u16 unk00;
+    /*0x02*/ u16 unk02;
+    /*0x04*/ s32 unk04;
+    /*0x08*/ VEC3 pos;
+    /*0x14*/ VEC3 vel;
+    /*0x20*/ VEC3 rot;
+    /*0x2C*/ VEC3 rotDelta;
+    /*0x38*/ VEC3 rot2;
+    /*0x44*/ VEC3 rot2Delta;
+    /*0x50*/ MATRIX mat2;
+    /*0x70*/ MATRIX mat;
+    /*0x90*/ u8 pad90[0x18];
+    /*0xA8*/ s32 unkA8;
+    /*0xAC*/ s32 unkAC;
+    /*0xB0*/ s32 unkB0;
+    /*0xB4*/ u8 pad90b[0x20];
+    /*0xD4*/ s32 unkD4;
+} CarMotion; /* 0xD8 */
+
+typedef struct CarCollision {
+    /*0x00*/ u8 unk0;
+    /*0x01*/ u8 unk1;
+    /*0x02*/ u8 unk2;
+    /*0x03*/ u8 unk3;
+    /*0x04*/ u16 unk4;
+    /*0x06*/ u16 count;
+    /*0x08*/ s16 unk8;
+    /*0x0A*/ s16 unkA;
+    /*0x0C*/ s16 unkC;
+    /*0x0E*/ s16 unkE;
+    /*0x10*/ u16 unk10;
+    /*0x12*/ s16 unk12;
+    /*0x14*/ u16 unk14;
+    /*0x16*/ u16 unk16;
+} CarCollision; /* 0x18 */
+
+typedef struct CarTire {
+    /*0x000*/ u8 unk0;
+    /*0x001*/ u8 unk1;
+    /*0x002*/ u8 unk2;
+    /*0x003*/ u8 unk3;
+    /*0x004*/ u8 catapulted;
+    /*0x005*/ u8 bombDamaged;
+    /*0x006*/ u8 unk6;
+    /*0x007*/ u8 pad01[0x3];
+    /*0x00A*/ u16 unk0A;
+    /*0x00C*/ u8 pad0C[0x6];
+    /*0x012*/ u16 unk12;
+    /*0x014*/ u16 unk14;
+    /*0x016*/ u8 pad02[0x6];
+    /*0x01C*/ u16 unk1C;
+    /*0x01E*/ u16 unk1E;
+    /*0x020*/ u8 pad03[0x4];
+    /*0x024*/ u16 unk24;
+    /*0x026*/ s16 unk26;
+    /*0x028*/ u8 pad03b[0x10];
+    /*0x038*/ s32 unk38;
+    /*0x03C*/ s32 unk3C;
+    /*0x040*/ s32 unk40;
+} CarTire; /* 0x44 */
+
+typedef struct CarHit {
+    /*0x00*/ s32 unk00;
+    /*0x04*/ s32 isCar;
+    /*0x08*/ u16 mode;
+    /*0x0A*/ s16 unk0A;
+    /*0x0C*/ s16 unk0C;
+    /*0x0E*/ u8 pad0E[0x2];
+    /*0x10*/ s32 unk10;
+    /*0x14*/ s32 unk14;
+    /*0x18*/ s32 unk18;
+    /*0x1C*/ u8 pad1C[0x4];
+    /*0x20*/ Cs* obj;
+    /*0x24*/ u8 pad24[0xC];
+} CarHit; /* 0x30 */
+
+typedef struct CarStats {
+    /*0x000*/ u8 pad00[0x2];
+    /*0x002*/ u8 monster;
+    /*0x003*/ u8 pad00a[0x5];
+    /*0x008*/ u8 cheatA;
+    /*0x009*/ u8 cheatAArmed;
+    /*0x00A*/ u8 cheatB;
+    /*0x00B*/ u8 cheatBArmed;
+    /*0x00C*/ u16 cheatTimer;
+    /*0x00E*/ u8 pad00b[0x2];
+    /*0x010*/ u16 updateRate;
+    /*0x012*/ u16 blasts;
+    /*0x014*/ u16 unk14;
+    /*0x016*/ u8 pad00c[0x2];
+    /*0x018*/ s16 unk18;
+    /*0x01A*/ u16 spikeTimer;
+    /*0x01C*/ s16 unk1C;
+    /*0x01E*/ u8 pad01[0x2];
+    /*0x020*/ u16 deathTimer;
+    /*0x022*/ u16 unk22;
+    /*0x024*/ u8 pad01a[0x6];
+    /*0x02A*/ s16 unk2A;
+    /*0x02C*/ s16 unk2C;
+    /*0x02E*/ u8 pad01b[0x2];
+    /*0x030*/ s32 unk30;
+    /*0x034*/ s32 unk34;
+    /*0x038*/ s32 unk38;
+    /*0x03C*/ s32 unk3C;
+    /*0x040*/ s32 unk40;
+    /*0x044*/ u8 pad01d[0x4];
+    /*0x048*/ u16 lostTimer;
+    /*0x04A*/ u16 unk4A;
+    /*0x04C*/ s32 unk4C;
+    /*0x050*/ u8 pad02[0xC];
+    /*0x05C*/ s32 unk5C;
+    /*0x060*/ u8 pad60[0xC];
+    /*0x06C*/ s32 unk6C;
+    /*0x070*/ s32 unk70;
+    /*0x074*/ s32 unk74;
+    /*0x078*/ s32 unk78;
+    /*0x07C*/ s32 unk7C;
+    /*0x080*/ s32 unk80;
+    /*0x084*/ s32 unk84;
+    /*0x088*/ u8 pad03[0x18];
+    /*0x0A0*/ s32 unkA0;
+    /*0x0A4*/ s32 unkA4;
+    /*0x0A8*/ s32 unkA8;
+    /*0x0AC*/ s32 unkAC;
+    /*0x0B0*/ s32 unkB0;
+    /*0x0B4*/ u8 pad05[0x4];
+    /*0x0B8*/ s32 unkB8;
+    /*0x0BC*/ s32 unkBC;
+    /*0x0C0*/ s32 unkC0;
+    /*0x0C4*/ u8 pad06[0x8];
+    /*0x0CC*/ s32 unkCC;
+    /*0x0D0*/ s32 unkD0;
+    /*0x0D4*/ s32 unkD4;
+    /*0x0D8*/ s32 unkD8;
+    /*0x0DC*/ u8 pad07[0xC];
+    /*0x0E8*/ s32 unkE8;
+    /*0x0EC*/ s32 unkEC;
+    /*0x0F0*/ u8 pad08[0x4];
+    /*0x0F4*/ s32 unkF4;
+    /*0x0F8*/ s32 unkF8;
+    /*0x0FC*/ s32 unkFC;
+    /*0x100*/ s32 unk100;
+    /*0x104*/ s32 unk104;
+    /*0x108*/ s32 unk108;
+} CarStats; /* 0x10C */
+
+typedef struct CarBounce {
+    /*0x00*/ s32 unk00;
+    /*0x04*/ s32 unk04;
+    /*0x08*/ s32 unk08;
+    /*0x0C*/ s16 unk0C;
+    /*0x0E*/ s16 unk0E;
+    /*0x10*/ s16 unk10;
+    /*0x12*/ s16 unk12;
+    /*0x14*/ s16 unk14;
+    /*0x16*/ s16 unk16;
+    /*0x18*/ s32 unk18;
+    /*0x1C*/ s32 unk1C;
+    /*0x20*/ s32 unk20;
+    /*0x24*/ s32 unk24;
+    /*0x28*/ s32 unk28;
+    /*0x2C*/ s32 unk2C;
+    /*0x30*/ s32 unk30;
+    /*0x34*/ s32 unk34;
+} CarBounce; /* 0x38 */
+
+typedef struct CarWeap {
+    /*0x00*/ u8 pad00[0x22];
+    /*0x22*/ s16 unk22;
+    /*0x24*/ u8 pad24[0x1E];
+    /*0x42*/ u8 unk42;
+    /*0x43*/ u8 pad43[0x3];
+    /*0x46*/ u16 unk46;
+    /*0x48*/ u8 pad48;
+    /*0x49*/ u8 unk49;
+} CarWeap;
+
+typedef struct Car {
+    /*0x000*/ u8 pad00[0x2];
+    /*0x002*/ u16 playerIdx;
+    /*0x004*/ SVECTOR dRot;
+    /*0x00C*/ VEC3 dTrans;
+    /*0x018*/ SVECTOR vrRot[6];
+    /*0x048*/ VEC3 vrPos[6];
+    /*0x090*/ s32 speedDelta;
+    /*0x094*/ s32 uaIndex;
+    /*0x098*/ u8 pad03[0x2];
+    /*0x09A*/ u8 unk9A;
+    /*0x09B*/ u8 unk9B;
+    /*0x09C*/ u8 pad03b[0x4];
+    /*0x0A0*/ u8 flags[36];
+    /*0x0C4*/ s32 bearing;
+    /*0x0C8*/ u8 skid[44];
+    /*0x0F4*/ s32 unkF4;
+    /*0x0F8*/ s32 unkF8;
+    /*0x0FC*/ CarBounce bounce;
+    /*0x134*/ u8 pad04[0x4];
+    /*0x138*/ CarStats stats;
+    /*0x244*/ u8 pad05[0x14];
+    /*0x258*/ CarCollision collision;
+    /*0x270*/ CarTire tires[4];
+    /*0x380*/ CarMotion motion;
+    /*0x458*/ CarWeap weap;
+} Car;
+
+typedef struct CarAlt {
+    /*0x000*/ u8 pad00[0x6];
+    /*0x006*/ u16 playerIdx;
+    /*0x008*/ u8 pad00b[0x2C];
+    /*0x034*/ s32 unk34;
+    /*0x038*/ u8 pad38[0x4];
+    /*0x03C*/ s32 uaIndex;
+    /*0x040*/ u8 unk40;
+    /*0x041*/ u8 pad00c[0x5];
+    /*0x046*/ u8 unk46;
+    /*0x047*/ u8 pad00c2[0x7];
+    /*0x04E*/ u8 skid[24];
+    /*0x066*/ u8 flags[36];
+    /*0x08A*/ u8 pad01[0x7E];
+    /*0x108*/ CarBounce bounce;
+    /*0x140*/ u8 pad01b[0x8];
+    /*0x148*/ CarCollision collision;
+    /*0x160*/ u8 pad01c[0xD];
+    /*0x16D*/ u8 unk16D;
+    /*0x16E*/ u8 unk16E;
+    /*0x16F*/ u8 pad01d[0x99];
+    /*0x208*/ s32 bearing;
+    /*0x20C*/ CarStats stats;
+    /*0x318*/ u8 pad02[0x14];
+    /*0x32C*/ CarTire tires[4];
+    /*0x43C*/ CarMotion motion;
+    /*0x514*/ CarWeap weap;
+} CarAlt;
+
+void CarUpdate(Car* car);
+void CarUpdateDeltas(Car* car, u8 which);
+void CarUpdateControlPad(Car* car);
+void CarRotUpdate(Car* car, u8 which);
+void CarTransUpdate(Car* car, u8 which);
+void CarCheckDynamics(Car* car);
+void CarInitMotion(Car* car, u8 which);
+void UpdateNonDriftingCar(Car* car);
+void SetNoCarDrift(CarMotion* m, u8* f);
+s32 CalcMaxRotBeforeDrift(Car* car, u8 which);
+void SlowDownNonDriftingCar(Car* car, u8 which);
+void UpdateDriftingCar(Car* car);
+void SetFullCarDrift(CarMotion* m);
+void BringBackDriftingCar(Car* car, u8 which);
+void SlowDownDriftingCar(Car* car, u8 which);
+void UpdateBearing(Car* car, u8 which);
+void CheckHitDetection(Car* car, u8 which);
+void CalcHitDynamics(Car* car, CarHit* hit, u8 which);
+void CheckIfLostAICar(Car* car);
+u8 CheckCSHit(Car* car, u8 which, Cs* obj, s32 a, s32 b);
+void DoCsHitCalculations(Car* car, u8 which, Car* other, u8 otherWhich, s32 oang, u16 mode);
+void RotateCarsAwayFromCollision(CarMotion* a, CarMotion* b);
+void RicochetOffObject(Car* car, u8 which, u8 doHit, s32 delta, u16 mode);
+void SetCollisionBounce(Car* car, u8 which, s32 mag);
+void InitNoCollision(CarCollision* c);
+void SetCollisCount(CarCollision* c);
+void CarViewUpdate(Car* car);
+void SetBounce(Car* car, s32 level, s32 a, s32 b, u8 which);
+void CarInitBounceDeltas(Car* car, u8 which);
+void UpdateBounce(Car* car, u8 which);
+void carTakeHit(s32 id, s32 amount, s32 a, s32 flag);
+void InitCatapult(Car* car, u8 which);
+void CheckCatapults(Car* car, u8 which);
+void UpdateCatapultedTire(CarTire* t);
+void InitBombDamage(Car* car, u8 which, s8 full, u8 noMotion);
+void CheckBombDamage(Car* car, u8 which);
+void UpdateBombDamagedTire(CarTire* t, CarMotion* m);
+void CheckSpikeDamage(Car* car, u8 which);
+void InitMonsterSmash(Car* carA, u8 whichA, Car* carB, u8 whichB, s16 unused_mode);
+void SetCarVRMode(Car* car, u32 mode);
+void UpdateCarDeath(Car* car, u8 which);
+void TermCar(void);
+
+#endif // __TM1_CAR_H__

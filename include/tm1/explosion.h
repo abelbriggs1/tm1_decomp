@@ -2,12 +2,7 @@
 #define __TM1_EXPLOSION_H__
 
 #include "common.h"
-
-typedef struct VEC3 {
-    s32 x;
-    s32 y;
-    s32 z;
-} VEC3;
+#include "tm1/long_vector.h"
 
 typedef struct Explosion {
     /*0x00*/ VEC3 pos;
