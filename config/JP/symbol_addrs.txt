@@ -2037,6 +2037,7 @@ PATCHGTE_OBJ_68                          = 0x8015dec4;
 // -------------------------------------------------------------------------
 // DATA SYMBOLS
 // -------------------------------------------------------------------------
+unitMatrix                               = 0x8016feac; // size:0x20
 systemAttributes                         = 0x8016fecc; // size:0x30
 
 gFieldsLastFrame                         = 0x80170238; // type:s16
@@ -2161,7 +2162,7 @@ D_8018BF04                               = 0x8018bf04; // type:u32
 D_8018BF08                               = 0x8018bf08; // type:u32
 fastStack                                = 0x8018bf0c; // type:u32
 D_8018BF10                               = 0x8018bf10; // type:u32
-D_8018BF14                               = 0x8018bf14; // type:u32
+csList                                   = 0x8018bf14; // type:u32
 D_8018BF18                               = 0x8018bf18; // type:u32
 D_8018BF1C                               = 0x8018bf1c; // type:u32
 D_8018BF20                               = 0x8018bf20; // type:u32
