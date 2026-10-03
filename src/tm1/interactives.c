@@ -1,8 +1,10 @@
 #include "common.h"
 
+#include "tm1/car.h"
 #include "tm1/cs.h"
 #include "tm1/explosion.h"
 #include "tm1/grutils.h"
+#include "tm1/interactives.h"
 #include "tm1/math.h"
 #include "tm1/rt.h"
 #include "tm1/sound.h"
@@ -12,162 +14,7 @@
 #include <libgte.h>
 #include <rand.h>
 
-#define CAR_WEAPCFG(c) ((WeapCfg*)((u8*)(c) + 0x138))
-#define CARALT_WEAPCFG(c) ((WeapCfg*)((u8*)(c) + 0x20C))
-#define CAR_SKID(c) ((Skid*)((u8*)(c) + 0xC8))
-#define CARALT_SKID(c) ((Skid*)((u8*)(c) + 0x4E))
-#define CAR_GUNAIM(c) ((GunAim*)((u8*)(c) + 0xFC))
-#define CARALT_GUNAIM(c) ((GunAim*)((u8*)(c) + 0x108))
-
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
-
-typedef struct {
-    /* 0x00 */ u16 gunDelay;
-    /* 0x02 */ u16 fireDelay;
-    /* 0x04 */ u8 unk04;
-    /* 0x05 */ u8 pad05[3];
-    /* 0x08 */ u32 cur;
-    /* 0x0C */ u16 ammo[14];
-    /* 0x28 */ u16 maxAmmo;
-    /* 0x2A */ u8 pad2A[0x34 - 0x2A];
-    /* 0x34 */ u16 totalAmmo;
-    /* 0x36 */ u16 gunHeat;
-    /* 0x38 */ u8 gunOverheat;
-    /* 0x39 */ u8 pad39;
-    /* 0x3A */ s16 timer;
-    /* 0x3C */ u16 unk3C;
-    /* 0x3E */ u8 pad3E[0x44 - 0x3E];
-    /* 0x44 */ u16 unk44;
-    /* 0x46 */ s16 unk46;
-    /* 0x48 */ u8 pad48;
-    /* 0x49 */ u8 reset;
-    /* 0x4A */ u8 pad4A[0xBC - 0x4A];
-} WeapPad;
-
-typedef struct {
-    /* 0x00 */ s32 unk00;
-    /* 0x04 */ s32 unk04;
-    /* 0x08 */ s32 pos[3];
-    /* 0x14 */ s32 vel[3];
-    /* 0x20 */ s32 rot[3];
-    /* 0x2C */ u8 pad2C[0x50 - 0x2C];
-    /* 0x50 */ MATRIX mat2;
-    /* 0x70 */ u8 pad70[0xD8 - 0x70];
-} CarMotion; /* 0xD8 */
-
-typedef struct {
-    /* 0x00 */ u8 pad00[0x22];
-    /* 0x22 */ u16 unk22;
-    /* 0x24 */ u8 pad24[0x44 - 0x24];
-} CarTire; /* 0x44 */
-
-typedef struct {
-    /* 0x000 */ u8 pad000[0x18];
-    /* 0x018 */ u16 unk18;
-    /* 0x01A */ u8 pad01A[0x6C - 0x1A];
-    /* 0x06C */ s32 unk6C;
-    /* 0x070 */ s32 unk70;
-    /* 0x074 */ u8 pad074[0x110 - 0x74];
-    /* 0x110 */ u16 unk110;
-    /* 0x112 */ u16 unk112;
-    /* 0x114 */ u16 unk114;
-    /* 0x116 */ u8 pad116[2];
-    /* 0x118 */ u16 dropPower;
-    /* 0x11A */ u8 pad11A[2];
-} WeapCfg;
-
-typedef struct {
-    /* 0x00 */ u8 pad00[9];
-    /* 0x09 */ u8 unk09;
-    /* 0x0A */ u8 unk0A;
-    /* 0x0B */ u8 pad0B[1];
-} Skid;
-
-typedef struct {
-    /* 0x00 */ u8 pad00[0x30];
-    /* 0x30 */ s32 unk30;
-    /* 0x34 */ u8 pad34[4];
-    /* 0x38 */ s32 unk38;
-    /* 0x3C */ u8 pad3C[4];
-} GunAim;
-
-typedef struct {
-    /* 0x000 */ u8 pad000[2];
-    /* 0x002 */ u16 playerIdx;
-    /* 0x004 */ u8 pad004[0x2C - 4];
-    /* 0x02C */ s32 unk2C;
-    /* 0x030 */ u8 pad030[4];
-    /* 0x034 */ s32 unk34;
-    /* 0x038 */ u8 pad038[4];
-    /* 0x03C */ s32 unk3C;
-    /* 0x040 */ u8 unk40;
-    /* 0x041 */ u8 pad041[2];
-    /* 0x043 */ u8 unk43;
-    /* 0x044 */ u8 unk44;
-    /* 0x045 */ u8 unk45;
-    /* 0x046 */ u8 pad046[0x57 - 0x46];
-    /* 0x057 */ u8 unk57;
-    /* 0x058 */ u8 unk58;
-    /* 0x059 */ u8 pad059[0x94 - 0x59];
-    /* 0x094 */ s32 unk94;
-    /* 0x098 */ u8 pad098[0xA0 - 0x98];
-    /* 0x0A0 */ u8 flags[36];
-    /* 0x0C4 */ u8 pad0C4[0xD3 - 0xC4];
-    /* 0x0D3 */ u8 padNext;
-    /* 0x0D4 */ u8 padPrev;
-    /* 0x0D5 */ u8 pad0D5[2];
-    /* 0x0D7 */ u8 padReady;
-    /* 0x0D8 */ u8 pad0D8[0x144 - 0xD8];
-    /* 0x144 */ s32 unk144;
-    /* 0x148 */ u8 pad148[0x24C - 0x148];
-    /* 0x24C */ s32 unk24C;
-    /* 0x250 */ s32 unk250;
-    /* 0x254 */ u8 pad254[0x270 - 0x254];
-    /* 0x270 */ CarTire tires[4];
-    /* 0x380 */ CarMotion motion;
-    /* 0x458 */ WeapPad player;
-    /* 0x514 */ WeapPad ai;
-} Car;
-
-typedef struct {
-    /* 0x000 */ u8 pad000[6];
-    /* 0x006 */ u16 aiIdx;
-    /* 0x008 */ u8 pad008[0x3C - 8];
-    /* 0x03C */ s32 unk3C;
-    /* 0x040 */ u8 pad040[0x66 - 0x40];
-    /* 0x066 */ u8 flags[36];
-    /* 0x08A */ u8 pad08A[0x32C - 0x8A];
-    /* 0x32C */ CarTire tires[4];
-    /* 0x43C */ CarMotion motion;
-    /* 0x514 */ WeapPad ai;
-} CarAlt;
-
-typedef struct {
-    /* 0x00 */ u8 pad00[3];
-    /* 0x03 */ u8 len;
-    /* 0x04 */ u8 pad04[3];
-    /* 0x07 */ u8 code;
-    /* 0x08 */ s16 x0;
-    /* 0x0A */ s16 y0;
-    /* 0x0C */ u8 u0;
-    /* 0x0D */ u8 v0;
-    /* 0x0E */ u16 clut;
-    /* 0x10 */ s16 x1;
-    /* 0x12 */ s16 y1;
-    /* 0x14 */ u8 u1;
-    /* 0x15 */ u8 v1;
-    /* 0x16 */ u16 tpage;
-    /* 0x18 */ s16 x2;
-    /* 0x1A */ s16 y2;
-    /* 0x1C */ u8 u2;
-    /* 0x1D */ u8 v2;
-    /* 0x1E */ u16 pad1E;
-    /* 0x20 */ s16 x3;
-    /* 0x22 */ s16 y3;
-    /* 0x24 */ u8 u3;
-    /* 0x25 */ u8 v3;
-    /* 0x26 */ u16 pad26;
-} OilPrim;
 
 typedef struct {
     /* 0x00 */ u8 pad00[3];
@@ -187,25 +34,10 @@ typedef struct {
 } TaserLine;
 
 typedef struct {
-    /* 0x00 */ u32* ot;
-    /* 0x04 */ u8 pad04[4];
-    /* 0x08 */ u8* prim;
-    /* 0x0C */ u8* primEnd;
-} RenderCtx;
-
-typedef struct {
     /* 0x00 */ u8 pad00[0x56];
     /* 0x56 */ s16 unk56;
     /* 0x58 */ u8 pad58[2];
 } Missile;
-
-typedef struct {
-    /* 0x000 */ u8 pad000[0x3C];
-    /* 0x03C */ s32 unk3C;
-    /* 0x040 */ u8 pad040[0x24C - 0x40];
-    /* 0x24C */ s32 unk24C;
-    /* 0x250 */ u8 pad250[4];
-} AICarInfo;
 
 typedef struct {
     /* 0x00 */ u8 pad00[0x0A];
@@ -318,46 +150,31 @@ s32 healthRegenTimer = 0;
 
 extern void uaswSetState(s32 obj, s32 idx, s32 state);
 extern void uaswSetNumChildren(s32 obj, s32 idx, s32 n);
-extern Car* GetPlayerInfo(s32 n);
+extern Car* GetPlayerInfo(s16 idx);
 extern void hudAddRadarSig(s32 obj, s32* d, s32 z);
 extern Cs* GetPlayerCs3D(s16 idx);
 extern Cs* GetAICs3D(s16 idx);
-extern AICarInfo* GetAICarInfo(s16 i);
+extern Car* GetAICarInfo(s16 idx);
 extern s16 GetNumAICars(void);
 extern s16 GetNumPlayers(void);
 extern void UASetBattleMusicOn(void);
 extern void create_bullet(s16 idx, s32* rot, s32* pos, s32 dmg);
 extern void s_create_bullet(s16 idx, s32* rot, s32* pos, s32 kind, s32 dmg, s32 a, s32 b);
-extern s16 create_SWARM_missile(s16 idx, LVECTOR* tgt, s32* rot, s32* pos, s32 dmg);
-extern s16 create_GHOST_missile(s16 idx, LVECTOR* tgt, s32* rot, s32* pos, s32 dmg);
-extern s16 create_DEATHSPEAR_missile(s16 idx, LVECTOR* tgt, s32* rot, s32* pos, s32 dmg);
+extern s16 create_SWARM_missile(s16 idx, LVECTOR* tgt, VEC3* rot, s32* pos, s32 dmg);
+extern s16 create_GHOST_missile(s16 idx, LVECTOR* tgt, VEC3* rot, s32* pos, s32 dmg);
+extern s16 create_DEATHSPEAR_missile(s16 idx, LVECTOR* tgt, VEC3* rot, s32* pos, s32 dmg);
 extern void uadashMaxCarryCapacity(void);
 extern s32 CAR_HD(s32* pos, s32 owner, s32 kind);
 extern Missile* get_missile(u32 index);
-extern s16 create_FIRE_missile(s32 owner, LVECTOR* tgt, s32* rot, s32* pos, s32 dmg);
-extern s16 create_FREEZE_missile(s32 owner, s32* rot, s32* pos, s32 dmg);
-extern s16 create_POWER_missile(s32 owner, s32* rot, s32* pos, s32 dmg);
-extern s16 create_SINGING_missile(s32 owner, s32* rot, s32* pos, s32 dmg);
-extern s16 create_REAR_missile(s32 owner, LVECTOR* tgt, s32* rot, s32* pos, s32 dmg);
-extern s16 create_HOMING_missile(s32 owner, LVECTOR* tgt, s32* rot, s32* pos, s32 dmg);
+extern s16 create_FIRE_missile(s32 owner, LVECTOR* tgt, VEC3* rot, s32* pos, s32 dmg);
+extern s16 create_FREEZE_missile(s32 owner, VEC3* rot, s32* pos, s32 dmg);
+extern s16 create_POWER_missile(s32 owner, VEC3* rot, s32* pos, s32 dmg);
+extern s16 create_SINGING_missile(s32 owner, VEC3* rot, s32* pos, s32 dmg);
+extern s16 create_REAR_missile(s32 owner, LVECTOR* tgt, VEC3* rot, s32* pos, s32 dmg);
+extern s16 create_HOMING_missile(s32 owner, LVECTOR* tgt, VEC3* rot, s32* pos, s32 dmg);
 extern void bulDispatchDamage(s32 hit, s32 a, s32 b, s32 amount, s32* pos, s32 dmg);
 extern HdPnt* HdPntTest(s32 owner, s32 flag, s32* pos, s32* hit);
 extern s32 shellGetCurrentLevel(void);
-extern void carTakeHit(s32 id, s32 amount, s32 unused, s32 flag);
-
-void UpdatePlayerWeaponPadStatus(Car* car);
-void UpdateAIWeaponPadStatus(Car* car);
-u16 UpdateGuns(Car* car, u8 isPlayer);
-void UpdateNonGuns(Car* car, u8 isPlayer);
-void FireMissiles(Car* car, u8 isPlayer);
-void FireSpecials(Car* car, u8 isPlayer);
-s32 fire_taser(Car* car, s32 isPlayer);
-void LaunchDrops(Car* car, u8 isPlayer);
-u8 carDropWeapon(u32 kind, s32 idx, s32* pos, s32 power);
-void carLockon(u8 who, LVECTOR** out);
-void carLockon2(u8 who, LVECTOR** out);
-void fireRearFlameThrower(Car* car, u8 isPlayer);
-s16 fireFlameThrower(Car* car, u8 isPlayer, u8 rear, s32* pos);
 
 void carSetPowerupDelaysBySkillLevel(s32 level)
 {
@@ -416,16 +233,16 @@ s32 getSpecialWeaponCost(s32 id)
 #ifdef NON_MATCHING
 void UpdateWeapons(Car* car, u8 isPlayer)
 {
-    WeapPad* pad;
+    CarWeap* pad;
     s32 i;
     s16 t;
 
     if (isPlayer) {
         UpdatePlayerWeaponPadStatus(car);
-        pad = &car->player;
+        pad = &car->weap;
     } else {
-        UpdateAIWeaponPadStatus(car);
-        pad = &car->ai;
+        UpdateAIWeaponPadStatus((CarAlt*)car);
+        pad = &((CarAlt*)car)->weap;
     }
     if (pad->reset != 0) {
         for (i = 0; i < 14; i++) {
@@ -444,8 +261,9 @@ void UpdateWeapons(Car* car, u8 isPlayer)
             } else {
                 pad->ammo[11] = 20;
             }
-            if (!isPlayer && car->unk40 == 0 && car->unk24C < (car->unk250 >> 2)) {
-                car->unk24C = car->unk24C + 1;
+            if (!isPlayer && ((CarAlt*)car)->unk40 == 0
+                && ((CarAlt*)car)->stats.unk40 < (((CarAlt*)car)->stats.unk44 >> 2)) {
+                ((CarAlt*)car)->stats.unk40 = ((CarAlt*)car)->stats.unk40 + 1;
             }
         }
     }
@@ -461,54 +279,54 @@ void UpdatePlayerWeaponPadStatus(Car* car)
 {
     u32 start;
 
-    if (car->padNext != 0) {
-        if (car->padReady == 0) {
+    if (car->skid[0x0B] != 0) {
+        if (car->skid[0x0F] == 0) {
             return;
         }
-        car->padReady = 0;
-        start = car->player.cur;
-        car->player.cur = start + 1;
+        car->skid[0x0F] = 0;
+        start = car->weap.cur;
+        car->weap.cur = start + 1;
         for (;;) {
-            if (car->player.cur >= 13) {
-                car->player.cur = 0;
+            if (car->weap.cur >= 13) {
+                car->weap.cur = 0;
             }
-            if ((s16)car->player.ammo[car->player.cur] > 0) {
+            if ((s16)car->weap.ammo[car->weap.cur] > 0) {
                 return;
             }
-            if (car->player.cur == start) {
+            if (car->weap.cur == start) {
                 return;
             }
-            car->player.cur++;
+            car->weap.cur++;
         }
-    } else if (car->padPrev != 0) {
-        if (car->padReady == 0) {
+    } else if (car->skid[0x0C] != 0) {
+        if (car->skid[0x0F] == 0) {
             return;
         }
-        car->padReady = 0;
-        start = car->player.cur;
-        if (car->player.cur == 0) {
-            car->player.cur = 11;
+        car->skid[0x0F] = 0;
+        start = car->weap.cur;
+        if (car->weap.cur == 0) {
+            car->weap.cur = 11;
         } else {
-            car->player.cur--;
+            car->weap.cur--;
         }
-        if ((s16)car->player.ammo[car->player.cur] > 0) {
+        if ((s16)car->weap.ammo[car->weap.cur] > 0) {
             return;
         }
         for (;;) {
-            if (car->player.cur == start) {
+            if (car->weap.cur == start) {
                 return;
             }
-            if (car->player.cur == 0) {
-                car->player.cur = 11;
+            if (car->weap.cur == 0) {
+                car->weap.cur = 11;
             } else {
-                car->player.cur--;
+                car->weap.cur--;
             }
-            if ((s16)car->player.ammo[car->player.cur] > 0) {
+            if ((s16)car->weap.ammo[car->weap.cur] > 0) {
                 return;
             }
         }
     } else {
-        car->padReady = 1;
+        car->skid[0x0F] = 1;
     }
 }
 #else
@@ -516,7 +334,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/interactives", UpdatePlayerWeaponPadStatus);
 #endif
 
 #ifdef NON_MATCHING
-void UpdateAIWeaponPadStatus(Car* car)
+void UpdateAIWeaponPadStatus(CarAlt* car)
 {
     s32 n;
     s32 t;
@@ -539,22 +357,22 @@ void UpdateAIWeaponPadStatus(Car* car)
             t = -t;
         }
         if (t < lim && car->unk34 < 4800) {
-            car->unk57 = 1;
+            car->skid[9] = 1;
         }
-        if (car->unk3C == 130 && car->unk144 == 1) {
+        if (car->uaIndex == 130 && car->unk144 == 1) {
             s32 a;
             a = car->unk2C;
             if (a < 0) {
                 a = -a;
             }
             if ((((180 - n * 10) << 12) / 360) < a) {
-                car->unk57 = 1;
+                car->skid[9] = 1;
             }
         }
-        if (car->ai.cur == 2 && n < 3) {
+        if (car->weap.cur == 2 && n < 3) {
             n += 2;
         }
-        if (car->ai.cur == 11 && n < 3 && (car->unk3C == 70 || car->unk3C == 110)) {
+        if (car->weap.cur == 11 && n < 3 && (car->uaIndex == 70 || car->uaIndex == 110)) {
             n += 2;
         }
         lim = n * 113;
@@ -563,7 +381,7 @@ void UpdateAIWeaponPadStatus(Car* car)
             t = -t;
         }
         if (t < lim) {
-            car->unk58 = 1;
+            car->skid[10] = 1;
         } else if (car->unk144 == 1) {
             s32 a;
             a = car->unk2C;
@@ -571,11 +389,11 @@ void UpdateAIWeaponPadStatus(Car* car)
                 a = -a;
             }
             if ((((180 - n * 10) << 12) / 360) < a) {
-                car->unk58 = 1;
+                car->skid[10] = 1;
             }
         }
-        if (car->ai.cur < 11) {
-            car->ai.ammo[car->ai.cur] = 10;
+        if (car->weap.cur < 11) {
+            car->weap.ammo[car->weap.cur] = 10;
         }
     }
 }
@@ -590,49 +408,49 @@ u16 UpdateGuns(Car* car, u8 isPlayer)
     s32 d[3];
     s32 v[3];
     u16 idx;
-    WeapCfg* cfg;
+    CarStats* cfg;
     CarMotion* m;
-    Skid* sk;
-    WeapPad* pad;
-    GunAim* aim;
+    u8* sk;
+    CarWeap* pad;
+    CarBounce* aim;
     s32 snd;
     s32 range;
     MATRIX* mat;
 
     if (isPlayer) {
-        cfg = CAR_WEAPCFG(car);
+        cfg = &car->stats;
         m = &car->motion;
-        sk = CAR_SKID(car);
-        pad = &car->player;
-        aim = CAR_GUNAIM(car);
+        sk = car->skid;
+        pad = &car->weap;
+        aim = &car->bounce;
         idx = car->playerIdx + 1;
-        snd = GetPlayerInfo((s16)car->playerIdx)->unk94;
+        snd = GetPlayerInfo((s16)car->playerIdx)->uaIndex;
     } else {
-        cfg = CARALT_WEAPCFG(car);
+        cfg = &((CarAlt*)car)->stats;
         m = &((CarAlt*)car)->motion;
-        sk = CARALT_SKID(car);
-        pad = &car->ai;
-        aim = CARALT_GUNAIM(car);
-        idx = ((CarAlt*)car)->aiIdx + 50;
-        snd = GetAICarInfo((s16)((CarAlt*)car)->aiIdx)->unk3C;
+        sk = ((CarAlt*)car)->skid;
+        pad = &((CarAlt*)car)->weap;
+        aim = &((CarAlt*)car)->bounce;
+        idx = ((CarAlt*)car)->playerIdx + 50;
+        snd = ((CarAlt*)GetAICarInfo((s16)((CarAlt*)car)->playerIdx))->uaIndex;
     }
-    soundSetRangeAndXPositionFromWorldLoc(m->pos);
+    soundSetRangeAndXPositionFromWorldLoc(&m->pos.x);
     if ((s16)pad->gunDelay > 0) {
         pad->gunDelay = pad->gunDelay - 1;
         return pad->gunDelay;
     }
     if (!isPlayer) {
         if (rand() % 100 + 1 > (s16)pad->unk3C) {
-            sk->unk09 = 0;
+            sk[9] = 0;
         }
     }
     if ((s16)cfg->unk18 > 0) {
-        sk->unk09 = 0;
+        sk[9] = 0;
     }
     if (isPlayer && pad->gunOverheat != 0) {
-        sk->unk09 = 0;
+        sk[9] = 0;
     }
-    if (sk->unk09 != 0) {
+    if (sk[9] != 0) {
         range = soundGetCalculatedSoundRange();
         uasoundFireCarMachineGuns(snd, range, soundGetCalculatedSoundXPosition());
     } else {
@@ -659,12 +477,12 @@ u16 UpdateGuns(Car* car, u8 isPlayer)
         mat = &m->mat2;
         pad->unk04 = 1 - pad->unk04;
         mathMulTransVec(mat, v, d);
-        d[0] = d[0] + m->pos[0];
-        d[1] = d[1] + m->pos[1];
-        d[2] = d[2] + m->pos[2];
-        r[0] = rsin(m->rot[2] - aim->unk38);
-        r[1] = rcos(m->rot[2] - aim->unk38);
-        r[2] = -rsin(m->rot[0] - aim->unk30);
+        d[0] = d[0] + m->pos.x;
+        d[1] = d[1] + m->pos.y;
+        d[2] = d[2] + m->pos.z;
+        r[0] = rsin(m->rot.z - aim->unk38);
+        r[1] = rcos(m->rot.z - aim->unk38);
+        r[2] = -rsin(m->rot.x - aim->unk30);
         create_bullet((s16)idx, r, d, gunDamage);
         do_mflash(d);
         if (snd == 0x82) {
@@ -672,12 +490,12 @@ u16 UpdateGuns(Car* car, u8 isPlayer)
                 v[0] = 0;
                 v[1] = -v[1];
                 mathMulTransVec(mat, v, d);
-                d[0] = d[0] + m->pos[0];
-                d[1] = d[1] + m->pos[1];
+                d[0] = d[0] + m->pos.x;
+                d[1] = d[1] + m->pos.y;
                 r[2] = -r[2];
                 r[0] = -r[0];
                 r[1] = -r[1];
-                d[2] = d[2] + m->pos[2];
+                d[2] = d[2] + m->pos.z;
                 s_create_bullet((s16)idx, r, d, 2, gunDamage * 2, 20, 0);
                 do_mflash(d);
             }
@@ -700,36 +518,36 @@ INCLUDE_ASM("asm/nonmatchings/tm1/interactives", UpdateGuns);
 #ifdef NON_MATCHING
 void UpdateNonGuns(Car* car, u8 isPlayer)
 {
-    WeapCfg* cfg;
-    Skid* sk;
-    WeapPad* pad;
+    CarStats* cfg;
+    u8* sk;
+    CarWeap* pad;
     Cs* cs;
     s16 idx;
 
     if (isPlayer) {
-        cfg = CAR_WEAPCFG(car);
-        sk = CAR_SKID(car);
-        pad = &car->player;
+        cfg = &car->stats;
+        sk = car->skid;
+        pad = &car->weap;
         idx = car->playerIdx + 1;
         cs = GetPlayerCs3D((s16)car->playerIdx);
     } else {
-        cfg = CARALT_WEAPCFG(car);
-        sk = CARALT_SKID(car);
-        pad = &car->ai;
-        idx = ((CarAlt*)car)->aiIdx + 50;
-        cs = GetAICs3D((s16)((CarAlt*)car)->aiIdx);
+        cfg = &((CarAlt*)car)->stats;
+        sk = ((CarAlt*)car)->skid;
+        pad = &((CarAlt*)car)->weap;
+        idx = ((CarAlt*)car)->playerIdx + 50;
+        cs = GetAICs3D((s16)((CarAlt*)car)->playerIdx);
     }
     if ((s16)pad->fireDelay > 0) {
         pad->fireDelay--;
         return;
     }
     if (pad->cur == 12) {
-        sk->unk0A = 0;
+        sk[10] = 0;
     }
     if ((s16)cfg->unk18 > 0) {
-        sk->unk0A = 0;
+        sk[10] = 0;
     }
-    if (sk->unk0A != 0) {
+    if (sk[10] != 0) {
         if (isPlayer == 0 && pad->cur != 11) {
             pad->ammo[pad->cur] = 5;
         }
@@ -776,9 +594,9 @@ void FireMissiles(Car* car, u8 isPlayer)
     s32 d[3];
     s32 v[3];
     LVECTOR* tgt;
-    WeapCfg* cfg;
+    CarStats* cfg;
     CarMotion* m;
-    WeapPad* pad;
+    CarWeap* pad;
     u8* flags;
     Cs* cs;
     Missile* mp;
@@ -787,48 +605,48 @@ void FireMissiles(Car* car, u8 isPlayer)
 
     if (isPlayer) {
         idx = car->playerIdx + 1;
-        cfg = CAR_WEAPCFG(car);
+        cfg = &car->stats;
         m = &car->motion;
-        pad = &car->player;
+        pad = &car->weap;
         flags = car->flags;
         cs = GetPlayerCs3D((s16)car->playerIdx);
     } else {
-        idx = ((CarAlt*)car)->aiIdx + 50;
-        cfg = CARALT_WEAPCFG(car);
+        idx = ((CarAlt*)car)->playerIdx + 50;
+        cfg = &((CarAlt*)car)->stats;
         m = &((CarAlt*)car)->motion;
-        pad = &car->ai;
+        pad = &((CarAlt*)car)->weap;
         flags = ((CarAlt*)car)->flags;
-        cs = GetAICs3D((s16)((CarAlt*)car)->aiIdx);
+        cs = GetAICs3D((s16)((CarAlt*)car)->playerIdx);
     }
     v[1] = 0;
     v[0] = (s16)cfg->dropPower;
     v[2] = cfg->unk70 + 8;
     mathMulTransVec(&m->mat2, v, d);
-    d[0] = d[0] + m->pos[0];
-    d[1] = d[1] + m->pos[1];
-    d[2] = d[2] + m->pos[2];
+    d[0] = d[0] + m->pos.x;
+    d[1] = d[1] + m->pos.y;
+    d[2] = d[2] + m->pos.z;
     r = -1;
     switch (pad->cur) {
     case 0:
         carLockon(isPlayer, &tgt);
-        r = create_FIRE_missile(cs->unkC0, tgt, m->rot, d, missileDamageFire);
+        r = create_FIRE_missile(cs->unkC0, tgt, &m->rot, d, missileDamageFire);
         break;
     case 1:
-        r = create_FREEZE_missile(cs->unkC0, m->rot, d, -1);
+        r = create_FREEZE_missile(cs->unkC0, &m->rot, d, -1);
         break;
     case 3:
-        r = create_POWER_missile(cs->unkC0, m->rot, d, missileDamagePower);
+        r = create_POWER_missile(cs->unkC0, &m->rot, d, missileDamagePower);
         break;
     case 4:
-        r = create_SINGING_missile(cs->unkC0, m->rot, d, missileDamageSinging);
+        r = create_SINGING_missile(cs->unkC0, &m->rot, d, missileDamageSinging);
         break;
     case 5:
         carLockon2(isPlayer, &tgt);
-        r = create_REAR_missile(cs->unkC0, tgt, m->rot, d, missileDamageRear);
+        r = create_REAR_missile(cs->unkC0, tgt, &m->rot, d, missileDamageRear);
         break;
     case 2:
         carLockon(isPlayer, &tgt);
-        r = create_HOMING_missile(cs->unkC0, tgt, m->rot, d, missileDamageHoming);
+        r = create_HOMING_missile(cs->unkC0, tgt, &m->rot, d, missileDamageHoming);
         break;
     }
     if (r >= 0) {
@@ -851,9 +669,9 @@ void FireSpecials(Car* car, u8 isPlayer)
     s32 v[3];
     s32 r[3];
     LVECTOR* tgt;
-    WeapCfg* cfg;
+    CarStats* cfg;
     CarMotion* m;
-    WeapPad* pad;
+    CarWeap* pad;
     u8* flags;
     MATRIX* mat;
     s16 idx;
@@ -865,35 +683,35 @@ void FireSpecials(Car* car, u8 isPlayer)
         flags = car->flags;
         idx = car->playerIdx + 1;
         GetPlayerCs3D((s16)car->playerIdx);
-        kind = car->unk94;
-        cfg = CAR_WEAPCFG(car);
+        kind = car->uaIndex;
+        cfg = &car->stats;
         m = &car->motion;
-        pad = &car->player;
+        pad = &car->weap;
     } else {
         flags = ((CarAlt*)car)->flags;
-        idx = ((CarAlt*)car)->aiIdx + 50;
-        GetAICs3D((s16)((CarAlt*)car)->aiIdx);
-        kind = ((CarAlt*)car)->unk3C;
-        cfg = CARALT_WEAPCFG(car);
+        idx = ((CarAlt*)car)->playerIdx + 50;
+        GetAICs3D((s16)((CarAlt*)car)->playerIdx);
+        kind = ((CarAlt*)car)->uaIndex;
+        cfg = &((CarAlt*)car)->stats;
         m = &((CarAlt*)car)->motion;
-        pad = &car->ai;
+        pad = &((CarAlt*)car)->weap;
     }
-    soundSetRangeAndXPositionFromWorldLoc(m->pos);
+    soundSetRangeAndXPositionFromWorldLoc(&m->pos.x);
     v[0] = 0;
     v[1] = (s16)cfg->unk112;
     v[2] = (s16)cfg->unk114;
     mat = &m->mat2;
     mathMulTransVec(mat, v, d);
-    d[0] = d[0] + m->pos[0];
-    d[1] = d[1] + m->pos[1];
-    d[2] = d[2] + m->pos[2];
+    d[0] = d[0] + m->pos.x;
+    d[1] = d[1] + m->pos.y;
+    d[2] = d[2] + m->pos.z;
     v[0] = 0;
     v[1] = -100;
     v[2] = 0;
     mathMulTransVec(mat, v, r);
-    r[0] = rsin(m->rot[2]) >> 6;
-    r[1] = rcos(m->rot[2]) >> 6;
-    r[2] = -rsin(m->rot[0]) >> 6;
+    r[0] = rsin(m->rot.z) >> 6;
+    r[1] = rcos(m->rot.z) >> 6;
+    r[2] = -rsin(m->rot.x) >> 6;
     switch (kind) {
     case 30:
         if ((s16)pad->ammo[11] >= weaponCost30) {
@@ -956,29 +774,29 @@ void FireSpecials(Car* car, u8 isPlayer)
             v[0] = (s16)cfg->dropPower;
             v[2] = cfg->unk70 + 8;
             mathMulTransVec(mat2, v, d);
-            d[0] = d[0] + m->pos[0];
-            d[1] = d[1] + m->pos[1];
-            d[2] = d[2] + m->pos[2];
-            res = create_SWARM_missile(idx, tgt, m->rot, d, damage70);
+            d[0] = d[0] + m->pos.x;
+            d[1] = d[1] + m->pos.y;
+            d[2] = d[2] + m->pos.z;
+            res = create_SWARM_missile(idx, tgt, &m->rot, d, damage70);
             count = res >= 0;
             v[0] = (s16)cfg->unk110;
             v[1] = (s16)cfg->unk112;
             v[2] = (s16)cfg->unk114;
             mathMulTransVec(mat2, v, d);
-            d[0] = d[0] + m->pos[0];
-            d[1] = d[1] + m->pos[1];
-            d[2] = d[2] + m->pos[2];
-            if (create_SWARM_missile(idx, tgt, m->rot, d, damage70) >= 0) {
+            d[0] = d[0] + m->pos.x;
+            d[1] = d[1] + m->pos.y;
+            d[2] = d[2] + m->pos.z;
+            if (create_SWARM_missile(idx, tgt, &m->rot, d, damage70) >= 0) {
                 count = count + 1;
             }
             v[0] = -(s16)cfg->unk110;
             v[1] = (s16)cfg->unk112;
             v[2] = (s16)cfg->unk114;
             mathMulTransVec(mat2, v, d);
-            d[0] = d[0] + m->pos[0];
-            d[1] = d[1] + m->pos[1];
-            d[2] = d[2] + m->pos[2];
-            if (create_SWARM_missile(idx, tgt, m->rot, d, damage70) >= 0) {
+            d[0] = d[0] + m->pos.x;
+            d[1] = d[1] + m->pos.y;
+            d[2] = d[2] + m->pos.z;
+            if (create_SWARM_missile(idx, tgt, &m->rot, d, damage70) >= 0) {
                 count = count + 1;
             }
             if (count != 0) {
@@ -1007,10 +825,10 @@ void FireSpecials(Car* car, u8 isPlayer)
             v[0] = (s16)cfg->dropPower;
             v[2] = cfg->unk70 + 8;
             mathMulTransVec(&m->mat2, v, d);
-            d[0] = d[0] + m->pos[0];
-            d[1] = d[1] + m->pos[1];
-            d[2] = d[2] + m->pos[2];
-            if (create_GHOST_missile(idx, tgt, m->rot, d, damage110) >= 0) {
+            d[0] = d[0] + m->pos.x;
+            d[1] = d[1] + m->pos.y;
+            d[2] = d[2] + m->pos.z;
+            if (create_GHOST_missile(idx, tgt, &m->rot, d, damage110) >= 0) {
                 pad->ammo[11] = pad->ammo[11] - weaponCost110;
                 uasoundStopCarSpecialWeapon(3);
                 range = soundGetCalculatedSoundRange();
@@ -1041,10 +859,10 @@ void FireSpecials(Car* car, u8 isPlayer)
             v[0] = (s16)cfg->dropPower;
             v[2] = cfg->unk70 + 8;
             mathMulTransVec(&m->mat2, v, d);
-            d[0] = d[0] + m->pos[0];
-            d[1] = d[1] + m->pos[1];
-            d[2] = d[2] + m->pos[2];
-            if (create_DEATHSPEAR_missile(idx, tgt, m->rot, d, damage120) >= 0) {
+            d[0] = d[0] + m->pos.x;
+            d[1] = d[1] + m->pos.y;
+            d[2] = d[2] + m->pos.z;
+            if (create_DEATHSPEAR_missile(idx, tgt, &m->rot, d, damage120) >= 0) {
                 pad->ammo[11] = pad->ammo[11] - weaponCost120;
                 uasoundStopCarSpecialWeapon(2);
                 range = soundGetCalculatedSoundRange();
@@ -1055,21 +873,21 @@ void FireSpecials(Car* car, u8 isPlayer)
         break;
     case 130:
         if ((s16)pad->ammo[11] >= weaponCost100) {
-            s32 rot2[3];
+            VEC3 rot2;
             carLockon(isPlayer, &tgt);
             v[1] = 0;
             v[0] = (s16)cfg->dropPower;
             v[2] = cfg->unk70 + 8;
             mathMulTransVec(&m->mat2, v, d);
-            d[0] = d[0] + m->pos[0];
-            d[1] = d[1] + m->pos[1];
-            d[2] = d[2] + m->pos[2];
-            create_SWARM_missile(idx, tgt, m->rot, d, damage130);
+            d[0] = d[0] + m->pos.x;
+            d[1] = d[1] + m->pos.y;
+            d[2] = d[2] + m->pos.z;
+            create_SWARM_missile(idx, tgt, &m->rot, d, damage130);
             carLockon2(isPlayer, &tgt);
-            rot2[0] = m->rot[0];
-            rot2[1] = m->rot[1];
-            rot2[2] = m->rot[2] + 2048;
-            create_SWARM_missile(idx, tgt, rot2, d, damage130);
+            rot2.x = m->rot.x;
+            rot2.y = m->rot.y;
+            rot2.z = m->rot.z + 2048;
+            create_SWARM_missile(idx, tgt, &rot2, d, damage130);
             s_create_bullet(idx, r, d, 19, damage130, 30, 0);
             fire_taser(car, isPlayer);
             fireFlameThrower(car, isPlayer, 2, r);
@@ -1146,7 +964,7 @@ s32 fire_taser(Car* car, s32 isPlayer)
         cs = GetPlayerCs3D((s16)car->playerIdx);
     } else {
         m = &((CarAlt*)car)->motion;
-        cs = GetAICs3D((s16)((CarAlt*)car)->aiIdx);
+        cs = GetAICs3D((s16)((CarAlt*)car)->playerIdx);
     }
     idx = find_free_taser();
     if (idx < 0) {
@@ -1159,9 +977,9 @@ s32 fire_taser(Car* car, s32 isPlayer)
     best = taserRange + 400;
     for (i = 0; i < numP; i++) {
         other = GetPlayerCs3D(i);
-        dx = m->pos[0] - other->pos.vx;
-        dy = m->pos[1] - other->pos.vy;
-        dz = m->pos[2] - other->pos.vz;
+        dx = m->pos.x - other->pos.vx;
+        dy = m->pos.y - other->pos.vy;
+        dz = m->pos.z - other->pos.vz;
         if (dx < 0) {
             dx = -dx;
         }
@@ -1172,7 +990,7 @@ s32 fire_taser(Car* car, s32 isPlayer)
             dz = -dz;
         }
         if (dy < dz) {
-            t = m->pos[2] - other->pos.vz;
+            t = m->pos.z - other->pos.vz;
             if (t < 0) {
                 t = -t;
             }
@@ -1181,14 +999,14 @@ s32 fire_taser(Car* car, s32 isPlayer)
             }
             goto p_x;
         }
-        t = m->pos[1] - other->pos.vy;
+        t = m->pos.y - other->pos.vy;
         if (t < 0) {
             t = -t;
         }
         if (dx < t) {
         p_yz:
-            dy = m->pos[1] - other->pos.vy;
-            dz = m->pos[2] - other->pos.vz;
+            dy = m->pos.y - other->pos.vy;
+            dz = m->pos.z - other->pos.vz;
             if (dy < 0) {
                 dy = -dy;
             }
@@ -1196,13 +1014,13 @@ s32 fire_taser(Car* car, s32 isPlayer)
                 dz = -dz;
             }
             if (dy < dz) {
-                t = m->pos[2] - other->pos.vz;
+                t = m->pos.z - other->pos.vz;
             } else {
-                t = m->pos[1] - other->pos.vy;
+                t = m->pos.y - other->pos.vy;
             }
         } else {
         p_x:
-            t = m->pos[0] - other->pos.vx;
+            t = m->pos.x - other->pos.vx;
         }
         if (t < 0) {
             t = -t;
@@ -1213,18 +1031,18 @@ s32 fire_taser(Car* car, s32 isPlayer)
                 if (dist < best) {
                     best = dist;
                     bestId = other->unkC0;
-                    bestObj = GetPlayerInfo(i)->motion.pos;
+                    bestObj = &GetPlayerInfo(i)->motion.pos.x;
                 }
             }
         }
     }
     i = 0;
     for (j = 0; j < numA; j++) {
-        if (GetAICarInfo(i)->unk24C > 0) {
+        if (((CarAlt*)GetAICarInfo(i))->stats.unk40 > 0) {
             other = GetAICs3D(i);
-            dx = m->pos[0] - other->pos.vx;
-            dy = m->pos[1] - other->pos.vy;
-            dz = m->pos[2] - other->pos.vz;
+            dx = m->pos.x - other->pos.vx;
+            dy = m->pos.y - other->pos.vy;
+            dz = m->pos.z - other->pos.vz;
             if (dx < 0) {
                 dx = -dx;
             }
@@ -1235,7 +1053,7 @@ s32 fire_taser(Car* car, s32 isPlayer)
                 dz = -dz;
             }
             if (dy < dz) {
-                t = m->pos[2] - other->pos.vz;
+                t = m->pos.z - other->pos.vz;
                 if (t < 0) {
                     t = -t;
                 }
@@ -1244,14 +1062,14 @@ s32 fire_taser(Car* car, s32 isPlayer)
                 }
                 goto a_x;
             }
-            t = m->pos[1] - other->pos.vy;
+            t = m->pos.y - other->pos.vy;
             if (t < 0) {
                 t = -t;
             }
             if (dx < t) {
             a_yz:
-                dy = m->pos[1] - other->pos.vy;
-                dz = m->pos[2] - other->pos.vz;
+                dy = m->pos.y - other->pos.vy;
+                dz = m->pos.z - other->pos.vz;
                 if (dy < 0) {
                     dy = -dy;
                 }
@@ -1259,13 +1077,13 @@ s32 fire_taser(Car* car, s32 isPlayer)
                     dz = -dz;
                 }
                 if (dy < dz) {
-                    t = m->pos[2] - other->pos.vz;
+                    t = m->pos.z - other->pos.vz;
                 } else {
-                    t = m->pos[1] - other->pos.vy;
+                    t = m->pos.y - other->pos.vy;
                 }
             } else {
             a_x:
-                t = m->pos[0] - other->pos.vx;
+                t = m->pos.x - other->pos.vx;
             }
             if (t < 0) {
                 t = -t;
@@ -1276,7 +1094,7 @@ s32 fire_taser(Car* car, s32 isPlayer)
                     if (dist < best) {
                         best = dist;
                         bestId = other->unkC0;
-                        bestObj = ((CarAlt*)GetAICarInfo(i))->motion.pos;
+                        bestObj = &((CarAlt*)GetAICarInfo(i))->motion.pos.x;
                     }
                 }
             }
@@ -1291,7 +1109,7 @@ s32 fire_taser(Car* car, s32 isPlayer)
         taser[idx].target = bestId;
         taser[idx].targetPos = bestObj;
     }
-    taser[idx].pos = m->pos;
+    taser[idx].pos = &m->pos.x;
     return 1;
 }
 #else
@@ -1416,9 +1234,9 @@ void LaunchDrops(Car* car, u8 isPlayer)
 {
     s32 d[3];
     s32 v[3];
-    WeapCfg* cfg;
+    CarStats* cfg;
     CarMotion* m;
-    WeapPad* pad;
+    CarWeap* pad;
     u8* flags;
     CarTire* t;
     s16 idx;
@@ -1427,20 +1245,20 @@ void LaunchDrops(Car* car, u8 isPlayer)
     u32 weapon;
 
     if (isPlayer) {
-        cfg = CAR_WEAPCFG(car);
+        cfg = &car->stats;
         m = &car->motion;
-        pad = &car->player;
+        pad = &car->weap;
         flags = car->flags;
         idx = car->playerIdx + 1;
         GetPlayerCs3D((s16)car->playerIdx);
         t = car->tires;
     } else {
-        cfg = CARALT_WEAPCFG(car);
+        cfg = &((CarAlt*)car)->stats;
         m = &((CarAlt*)car)->motion;
-        pad = &((CarAlt*)car)->ai;
+        pad = &((CarAlt*)car)->weap;
         flags = ((CarAlt*)car)->flags;
-        idx = ((CarAlt*)car)->aiIdx + 50;
-        GetAICs3D((s16)((CarAlt*)car)->aiIdx);
+        idx = ((CarAlt*)car)->playerIdx + 50;
+        GetAICs3D((s16)((CarAlt*)car)->playerIdx);
         t = ((CarAlt*)car)->tires;
     }
     if ((s16)t[2].unk22 < (s16)t[3].unk22) {
@@ -1452,9 +1270,9 @@ void LaunchDrops(Car* car, u8 isPlayer)
     v[2] = 0;
     v[0] = (s16)cfg->dropPower;
     mathMulTransVec(&m->mat2, v, d);
-    d[0] = d[0] + m->pos[0];
-    d[1] = d[1] + m->pos[1];
-    d[2] = d[2] + m->pos[2];
+    d[0] = d[0] + m->pos.x;
+    d[1] = d[1] + m->pos.y;
+    d[2] = d[2] + m->pos.z;
     soundSetRangeAndXPositionFromWorldLoc(d);
     do {
         weapon = pad->cur;
@@ -1821,7 +1639,7 @@ void carLockon(u8 who, LVECTOR** out)
     for (i = 0; i < n; i++) {
         cs = GetAICs3D(i);
         q = &cs->pos;
-        if (q != 0 && GetAICarInfo(i)->unk24C > 0) {
+        if (q != 0 && ((CarAlt*)GetAICarInfo(i))->stats.unk40 > 0) {
             d[0] = cs->pos.vx - p->vx;
             d[1] = cs->pos.vy - p->vy;
             d[2] = cs->pos.vz - p->vz;
@@ -1897,7 +1715,7 @@ void carLockon2(u8 who, LVECTOR** out)
     for (i = 0; i < n; i++) {
         cs = GetAICs3D(i);
         q = &cs->pos;
-        if (q != 0 && GetAICarInfo(i)->unk24C > 0) {
+        if (q != 0 && ((CarAlt*)GetAICarInfo(i))->stats.unk40 > 0) {
             d[0] = cs->pos.vx - p->vx;
             d[1] = cs->pos.vy - p->vy;
             do {
@@ -1978,18 +1796,18 @@ s16 find_free_flamethrower(void)
 
 void fireRearFlameThrower(Car* car, u8 isPlayer)
 {
-    WeapPad* pad;
+    CarWeap* pad;
     CarMotion* m;
     s32 range;
 
     if (isPlayer) {
-        pad = &car->player;
+        pad = &car->weap;
         m = &car->motion;
     } else {
-        pad = &((CarAlt*)car)->ai;
+        pad = &((CarAlt*)car)->weap;
         m = &((CarAlt*)car)->motion;
     }
-    soundSetRangeAndXPositionFromWorldLoc(m->pos);
+    soundSetRangeAndXPositionFromWorldLoc(&m->pos.x);
     range = soundGetCalculatedSoundRange();
     uasoundPlayCarWeaponLaunchOrInflight(7, range, soundGetCalculatedSoundXPosition());
     if (fireFlameThrower(car, isPlayer, 0, 0) != 0) {
@@ -2012,7 +1830,7 @@ s16 fireFlameThrower(Car* car, u8 isPlayer, u8 rear, s32* pos)
     if (isPlayer) {
         cs = GetPlayerCs3D((s16)car->playerIdx);
     } else {
-        cs = GetAICs3D((s16)((CarAlt*)car)->aiIdx);
+        cs = GetAICs3D((s16)((CarAlt*)car)->playerIdx);
     }
     i = find_free_flamethrower();
     if (i < 0) {
@@ -2164,8 +1982,8 @@ INCLUDE_ASM("asm/nonmatchings/tm1/interactives", displayFlamethrowers);
 #ifdef NON_MATCHING
 void carResetGunHeat(Car* car)
 {
-    car->player.gunOverheat = 0;
-    car->player.gunHeat = 0;
+    car->weap.gunOverheat = 0;
+    car->weap.gunHeat = 0;
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/tm1/interactives", carResetGunHeat);
@@ -2230,7 +2048,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/interactives", regeneratePickupWeapons);
 #ifdef NON_MATCHING
 void carGetPickup(Car* car, u8 isPlayer, s32 kind, s32 idx)
 {
-    WeapPad* pad;
+    CarWeap* pad;
     CarMotion* m;
     s32 cap;
     s32 amt;
@@ -2239,10 +2057,10 @@ void carGetPickup(Car* car, u8 isPlayer, s32 kind, s32 idx)
 
     idx = idx - 1;
     if (isPlayer) {
-        pad = &car->player;
+        pad = &car->weap;
         m = &car->motion;
     } else {
-        pad = &car->ai;
+        pad = &((CarAlt*)car)->weap;
         m = &((CarAlt*)car)->motion;
     }
     cap = (s16)pad->maxAmmo - (s16)pad->totalAmmo;
@@ -2338,7 +2156,7 @@ void carGetPickup(Car* car, u8 isPlayer, s32 kind, s32 idx)
             pad->unk46 = (u32)pad->unk46 + (u32)weaponPickupAmount[12];
             break;
         }
-        soundSetRangeAndXPositionFromWorldLoc(m->pos);
+        soundSetRangeAndXPositionFromWorldLoc(&m->pos.x);
         range = soundGetCalculatedSoundRange();
         uasoundPlayCarWeaponPickup(kind, range, soundGetCalculatedSoundXPosition());
         uaswSetNumChildren(kind, idx + 1, 0);
@@ -2442,10 +2260,10 @@ void regen_healthstands(void)
     do {
         for (i = 0; i < nextHealthStand; i++) {
             if (HStand[i].active != 0) {
-                d[0] = (s32)((u32)HStand[i].pos[0] - (u32)pi->motion.pos[0]);
-                d[1] = (s32)((u32)HStand[i].pos[1] - (u32)pi->motion.pos[1]);
-                d[2] = (s32)((u32)HStand[i].pos[2] - (u32)pi->motion.pos[2]);
-                hudAddRadarSig(0x398, d, pi->motion.rot[2]);
+                d[0] = (s32)((u32)HStand[i].pos[0] - (u32)pi->motion.pos.x);
+                d[1] = (s32)((u32)HStand[i].pos[1] - (u32)pi->motion.pos.y);
+                d[2] = (s32)((u32)HStand[i].pos[2] - (u32)pi->motion.pos.z);
+                hudAddRadarSig(0x398, d, pi->motion.rot.z);
             }
         }
     } while (0);
