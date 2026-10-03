@@ -2059,6 +2059,7 @@ fontInfo3                                = 0x80170b88; // size:60
 fontInfo4                                = 0x80170bc4; // size:464
 
 weaponPickupAmount                       = 0x80170db4; // size:0x38
+starMatrix                               = 0x80170e04; // size:0x20
 
 gTransitionLabels                        = 0x80170ea4;
 IceCreamProfileFront                     = 0x80171080;
