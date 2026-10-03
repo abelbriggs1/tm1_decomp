@@ -68,7 +68,7 @@ segments:
       - [0x3ECC, .rodata, tm1/explode]       # 0x800FB784
       - [0x3EF0, rodata, tm1/screen]        # 0x800FB7A8
       - [0x4760, rodata, tm1/ai_car_update] # 0x800FC018
-      - [0x4944, rodata, tm1/ua_dash]       # 0x800FC1FC
+      - [0x4944, .rodata, tm1/ua_dash]      # 0x800FC1FC
       - [0x4AD8, rodata, tm1/targets]       # 0x800FC390
       - [0x4C74, rodata, tm1/ua]            # 0x800FC52C
       - [0x4ED8, rodata, tm1/shell]         # 0x800FC790
@@ -114,7 +114,7 @@ segments:
       - [0x4108C, asm, tm1/screen]          # 0x80138944
       - [0x4969C, asm, tm1/ua_sw]           # 0x80140F54
       - [0x4A440, asm, tm1/ai_car_update]   # 0x80141CF8
-      - [0x4AD5C, asm, tm1/ua_dash]         # 0x80142614
+      - [0x4AD5C, c,   tm1/ua_dash]         # 0x80142614
       - [0x4EA38, c,   tm1/ua_effect]       # 0x801462F0
       - [0x4F31C, asm, tm1/hud]             # 0x80146BD4
       - [0x50294, asm, tm1/targets]         # 0x80147B4C

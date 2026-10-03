@@ -202,7 +202,7 @@ typedef struct CarWeap {
     /*0x43*/ u8 pad43;
     /*0x44*/ u16 unk44;
     /*0x46*/ u16 unk46;
-    /*0x48*/ u8 pad48;
+    /*0x48*/ u8 unk48;
     /*0x49*/ u8 reset;
     /*0x4A*/ u8 pad4A[0x72];
 } CarWeap; /* 0xBC */
@@ -237,7 +237,9 @@ typedef struct Car {
 
 // AI car struct.
 typedef struct CarAlt {
-    /*0x000*/ u8 pad00[0x6];
+    /*0x000*/ u8 pad00[0x2];
+    /*0x002*/ u8 unk02;
+    /*0x003*/ u8 pad03[0x3];
     /*0x006*/ u16 playerIdx;
     /*0x008*/ u8 pad00b[0x24];
     /*0x02C*/ s32 unk2C;

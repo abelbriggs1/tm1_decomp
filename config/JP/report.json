@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 6.6195965,
+    "fuzzy_match_percent": 6.7759314,
     "total_code": "470784",
-    "matched_code": "31164",
-    "matched_code_percent": 6.6195965,
-    "total_data": "604836",
-    "matched_data": "45808",
-    "matched_data_percent": 7.573623,
+    "matched_code": "31900",
+    "matched_code_percent": 6.7759314,
+    "total_data": "610220",
+    "matched_data": "50984",
+    "matched_data_percent": 8.35502,
     "total_functions": 1983,
-    "matched_functions": 289,
-    "matched_functions_percent": 14.573878,
-    "total_units": 138
+    "matched_functions": 298,
+    "matched_functions_percent": 15.027736,
+    "total_units": 137
   },
   "units": [
     {
@@ -357,41 +357,6 @@
         {
           "name": ".rodata",
           "size": "484",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/ua_dash",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "404",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".rodata",
-          "size": "404",
           "metadata": {}
         },
         {
@@ -6741,24 +6706,49 @@
     {
       "name": "tm1/ua_dash",
       "measures": {
+        "fuzzy_match_percent": 4.724005,
         "total_code": "15580",
-        "matched_data_percent": 100.0,
+        "matched_code": "736",
+        "matched_code_percent": 4.724005,
+        "total_data": "5788",
+        "matched_data": "5176",
+        "matched_data_percent": 89.4264,
         "total_functions": 28,
-        "complete_data_percent": 100.0,
+        "matched_functions": 9,
+        "matched_functions_percent": 32.142857,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "5176",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "size": "100",
+          "metadata": {}
+        },
+        {
+          "name": ".rodata",
+          "size": "404",
+          "metadata": {}
+        },
+        {
+          "name": ".sbss",
+          "size": "32",
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "76",
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "15580",
+          "fuzzy_match_percent": 4.724005,
           "metadata": {}
         }
       ],
@@ -6778,18 +6768,21 @@
         {
           "name": "UAdashTierFromPercentageOfHealth",
           "size": "116",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "392"
         },
         {
           "name": "uadashMaxCarryCapacity",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "508"
         },
         {
           "name": "uadashClearCarryCapacity",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "524"
         },
@@ -6814,6 +6807,7 @@
         {
           "name": "uadashGetTopBlitAddr",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7424"
         },
@@ -6844,6 +6838,7 @@
         {
           "name": "uadashLoadHarleyTms",
           "size": "176",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "9000"
         },
@@ -6856,6 +6851,7 @@
         {
           "name": "UAdashSetDashboardDrawFlag",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "9684"
         },
@@ -6916,23 +6912,27 @@
         {
           "name": "UAdashDrawRearViewMirror",
           "size": "96",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "15192"
         },
         {
           "name": "uadashToggleRemainingCarsList",
           "size": "24",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "15288"
         },
         {
           "name": "uadashListRemainingCars",
           "size": "268",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "15312"
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/ua_dash.c",
         "progress_categories": [
           "tm1"
         ]
@@ -17181,17 +17181,27 @@
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 8.691723,
+        "fuzzy_match_percent": 8.896996,
         "total_code": "358548",
-        "matched_code": "31164",
-        "matched_code_percent": 8.691724,
-        "total_data": "138032",
-        "matched_data": "45808",
-        "matched_data_percent": 33.18651,
+        "matched_code": "31900",
+        "matched_code_percent": 8.896996,
+        "total_data": "143416",
+        "matched_data": "50984",
+        "matched_data_percent": 35.54973,
         "total_functions": 1009,
-        "matched_functions": 289,
-        "matched_functions_percent": 28.64222,
-        "total_units": 132
+        "matched_functions": 298,
+        "matched_functions_percent": 29.534191,
+        "total_units": 131
+      }
+    },
+    {
+      "id": "sdk",
+      "name": "sdk",
+      "measures": {
+        "total_code": "112236",
+        "total_data": "462792",
+        "total_functions": 974,
+        "total_units": 5
       }
     },
     {
@@ -17204,16 +17214,6 @@
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
-      }
-    },
-    {
-      "id": "sdk",
-      "name": "sdk",
-      "measures": {
-        "total_code": "112236",
-        "total_data": "462792",
-        "total_functions": 974,
-        "total_units": 5
       }
     }
   ]
