@@ -11,6 +11,7 @@
 #include "tm1/rt.h"
 #include "tm1/smooth.h"
 #include "tm1/timer.h"
+#include "tm1/ua_effect.h"
 #include "tm1/ua_sound.h"
 #include "tm1/view.h"
 #include <libgte.h>
@@ -43,7 +44,6 @@ extern void CheckBridges(Car* car, u8 which);
 extern void CheckPotHoles(Car* car, u8 which);
 extern void CheckMonsterSmash(Car* car, u8 which);
 extern void UpdateTirePositions(Car* car, u8 which);
-extern void UAeffectUpdateCarSpeed(s32 uaIndex, s32 speed);
 extern s32 GetPlayerTheCameraFollows(void);
 extern void CarInit(Car* car, s32 uaIndex, s32 which);
 extern u8 uaPlayerCheating(void);
@@ -51,7 +51,6 @@ extern s32 uaGetTwoPlayerMode(void);
 extern u8 uaDrivingAICars(void);
 extern void uaDriveAICars(s32 on);
 extern void HdCsTest(Cs* cs, CarHit* hit, s32 doWorld, void* user1, void* user0);
-extern void UAeffectBarricade(s32 kind, s32 index, s32 state);
 extern void bulDispatchDamage(s32 owner, s16 a, s16 b, s32 damage, VEC3* rot, s32 extra);
 extern s16 MakeFakePotHole(void);
 extern void CheckForBridge(CarTire* tire, u8 which, s32 height);
@@ -60,9 +59,6 @@ extern u8 uaHasPlayerBeatThisLevel(void);
 extern s32 uaGetDifficulty(void);
 extern void SetFXSheet(s32 rate, u8 r, u8 g, u8 b);
 extern s32 uaIsCarMatID(s16 matId, s8* isPlayer, u16* index);
-extern void UAeffectActHitLights(Cs* cs, s32 count, u8* unused_rgb);
-extern void UAeffectSetFreezeLight(Cs* cs);
-extern void UAeffectClearFreezeLight(Cs* cs);
 
 #ifdef NON_MATCHING
 void CarUpdate(Car* car)
