@@ -5,6 +5,7 @@
 #include "tm1/rt.h"
 #include "tm1/ua.h"
 #include "tm1/ua_effect.h"
+#include "tm1/weapon.h"
 
 // TODO: Give proper names.
 s32 D_8018BF18 = 0; /* numPendingReturns */

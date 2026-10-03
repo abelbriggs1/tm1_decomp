@@ -12,6 +12,7 @@
 #include "tm1/ua_sound.h"
 #include "tm1/ua_sw.h"
 #include "tm1/view.h"
+#include "tm1/weapon.h"
 #include <libgpu.h>
 #include <libgte.h>
 #include <rand.h>
@@ -34,12 +35,6 @@ typedef struct {
     /* 0x10 */ s16 x1;
     /* 0x12 */ s16 y1;
 } TaserLine;
-
-typedef struct {
-    /* 0x00 */ u8 pad00[0x56];
-    /* 0x56 */ s16 unk56;
-    /* 0x58 */ u8 pad58[2];
-} Missile;
 
 typedef struct {
     /* 0x00 */ u8 pad00[0x0A];
@@ -151,21 +146,7 @@ u8 healthRegenPending = 0;
 s32 healthRegenTimer = 0;
 
 extern void hudAddRadarSig(s32 obj, s32* d, s32 z);
-extern void create_bullet(s16 idx, s32* rot, s32* pos, s32 dmg);
-extern void s_create_bullet(s16 idx, s32* rot, s32* pos, s32 kind, s32 dmg, s32 a, s32 b);
-extern s16 create_SWARM_missile(s16 idx, LVECTOR* tgt, VEC3* rot, s32* pos, s32 dmg);
-extern s16 create_GHOST_missile(s16 idx, LVECTOR* tgt, VEC3* rot, s32* pos, s32 dmg);
-extern s16 create_DEATHSPEAR_missile(s16 idx, LVECTOR* tgt, VEC3* rot, s32* pos, s32 dmg);
 extern void uadashMaxCarryCapacity(void);
-extern s32 CAR_HD(s32* pos, s32 owner, s32 kind);
-extern Missile* get_missile(u32 index);
-extern s16 create_FIRE_missile(s32 owner, LVECTOR* tgt, VEC3* rot, s32* pos, s32 dmg);
-extern s16 create_FREEZE_missile(s32 owner, VEC3* rot, s32* pos, s32 dmg);
-extern s16 create_POWER_missile(s32 owner, VEC3* rot, s32* pos, s32 dmg);
-extern s16 create_SINGING_missile(s32 owner, VEC3* rot, s32* pos, s32 dmg);
-extern s16 create_REAR_missile(s32 owner, LVECTOR* tgt, VEC3* rot, s32* pos, s32 dmg);
-extern s16 create_HOMING_missile(s32 owner, LVECTOR* tgt, VEC3* rot, s32* pos, s32 dmg);
-extern void bulDispatchDamage(s32 hit, s32 a, s32 b, s32 amount, s32* pos, s32 dmg);
 extern HdPnt* HdPntTest(s32 owner, s32 flag, s32* pos, s32* hit);
 extern s32 shellGetCurrentLevel(void);
 
