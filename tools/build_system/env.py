@@ -276,6 +276,7 @@ class EnvironmentToolchain:
                 "tm1/sound": 8,
                 "tm1/view": 8,
                 "tm1/movie": 8,
+                "tm1/interactives": 8,
             }
         )
 

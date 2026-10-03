@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 5.797138,
+    "fuzzy_match_percent": 6.194773,
     "total_code": "470784",
-    "matched_code": "27292",
-    "matched_code_percent": 5.797138,
-    "total_data": "602900",
-    "matched_data": "19020",
-    "matched_data_percent": 3.154752,
+    "matched_code": "29164",
+    "matched_code_percent": 6.1947727,
+    "total_data": "604804",
+    "matched_data": "20992",
+    "matched_data_percent": 3.4708765,
     "total_functions": 1983,
-    "matched_functions": 246,
-    "matched_functions_percent": 12.405446,
-    "total_units": 149
+    "matched_functions": 266,
+    "matched_functions_percent": 13.41402,
+    "total_units": 147
   },
   "units": [
     {
@@ -357,41 +357,6 @@
         {
           "name": ".rodata",
           "size": "484",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/interactives",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "1256",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".rodata",
-          "size": "1256",
           "metadata": {}
         },
         {
@@ -5144,24 +5109,50 @@
     {
       "name": "tm1/interactives",
       "measures": {
+        "fuzzy_match_percent": 9.607883,
         "total_code": "19484",
-        "matched_data_percent": 100.0,
+        "matched_code": "1872",
+        "matched_code_percent": 9.607883,
+        "total_data": "3340",
+        "matched_data": "1972",
+        "matched_data_percent": 59.041916,
         "total_functions": 42,
-        "complete_data_percent": 100.0,
+        "matched_functions": 20,
+        "matched_functions_percent": 47.61905,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "1792",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "size": "80",
+          "metadata": {}
+        },
+        {
+          "name": ".rodata",
+          "size": "1256",
+          "metadata": {}
+        },
+        {
+          "name": ".sbss",
+          "size": "32",
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "180",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "19484",
+          "fuzzy_match_percent": 9.607883,
           "metadata": {}
         }
       ],
@@ -5169,12 +5160,14 @@
         {
           "name": "carSetPowerupDelaysBySkillLevel",
           "size": "72",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
         {
           "name": "getSpecialWeaponCost",
           "size": "208",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "72"
         },
@@ -5223,12 +5216,14 @@
         {
           "name": "find_free_taser",
           "size": "60",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6996"
         },
         {
           "name": "carInitTasers",
           "size": "40",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7056"
         },
@@ -5253,24 +5248,28 @@
         {
           "name": "carAddWeapTex",
           "size": "152",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10672"
         },
         {
           "name": "carInitDropWeaps",
           "size": "52",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10824"
         },
         {
           "name": "FindFreeDropWeap",
           "size": "60",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10876"
         },
         {
           "name": "carDropWeapon",
           "size": "424",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10936"
         },
@@ -5307,18 +5306,21 @@
         {
           "name": "carInitFlamethrowers",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "15216"
         },
         {
           "name": "find_free_flamethrower",
           "size": "68",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "15252"
         },
         {
           "name": "fireRearFlameThrower",
           "size": "184",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "15320"
         },
@@ -5343,12 +5345,14 @@
         {
           "name": "carInitPickupWeapons",
           "size": "40",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17240"
         },
         {
           "name": "setPickup",
           "size": "144",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17280"
         },
@@ -5367,36 +5371,42 @@
         {
           "name": "getBombDamage",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18676"
         },
         {
           "name": "health_stand_active",
           "size": "28",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18688"
         },
         {
           "name": "animate_health_stand",
           "size": "80",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18716"
         },
         {
           "name": "deactivate_health_stand",
           "size": "84",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18796"
         },
         {
           "name": "reactivate_healthstand",
           "size": "72",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18880"
         },
         {
           "name": "init_health_stands",
           "size": "44",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18952"
         },
@@ -5415,11 +5425,13 @@
         {
           "name": "carweapGetMonsterDamage",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "19472"
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/interactives.c",
         "progress_categories": [
           "tm1"
         ]
@@ -15479,41 +15491,6 @@
       }
     },
     {
-      "name": "tm1/interactives",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "180",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "180",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/explosion",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -17426,23 +17403,6 @@
       }
     },
     {
-      "id": "tm1",
-      "name": "tm1",
-      "measures": {
-        "fuzzy_match_percent": 7.611812,
-        "total_code": "358548",
-        "matched_code": "27292",
-        "matched_code_percent": 7.611812,
-        "total_data": "136096",
-        "matched_data": "19020",
-        "matched_data_percent": 13.97543,
-        "total_functions": 1009,
-        "matched_functions": 246,
-        "matched_functions_percent": 24.380575,
-        "total_units": 143
-      }
-    },
-    {
       "id": "data",
       "name": "data",
       "measures": {
@@ -17452,6 +17412,23 @@
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
+      }
+    },
+    {
+      "id": "tm1",
+      "name": "tm1",
+      "measures": {
+        "fuzzy_match_percent": 8.133918,
+        "total_code": "358548",
+        "matched_code": "29164",
+        "matched_code_percent": 8.133918,
+        "total_data": "138000",
+        "matched_data": "20992",
+        "matched_data_percent": 15.211594,
+        "total_functions": 1009,
+        "matched_functions": 266,
+        "matched_functions_percent": 26.362736,
+        "total_units": 141
       }
     }
   ]
