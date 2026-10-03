@@ -8,6 +8,7 @@
 #include "tm1/cs.h"
 #include "tm1/explosion.h"
 #include "tm1/grutils.h"
+#include "tm1/hdp.h"
 #include "tm1/interactives.h"
 #include "tm1/math.h"
 #include "tm1/rt.h"
@@ -49,12 +50,6 @@ typedef struct Target {
     /* 0x18 */ s32 z;
 } Target;
 
-typedef struct WeapHit {
-    /* 0x00 */ u8 pad00[0x0A];
-    /* 0x0A */ u16 tag0;
-    /* 0x0C */ u16 tag1;
-} WeapHit;
-
 static s32 bulletFlipFlop = 0;
 void* fire_missile_node = 0;
 void* homing_missile_node = 0;
@@ -75,7 +70,6 @@ GrSprite* fireballInfo;
 extern s32 shellGetCurrentLevel(void);
 extern s32 check_ped_hits(VEC3* pt, s32 arg1);
 extern VEC3* get_hcop_position(s32 num);
-extern WeapHit* HdPntTest(s32 skip0, s32 skip1, VEC3* pt, s32* out);
 extern Target* get_targets(void);
 extern void target_takehit(s32 id, s32 x, s32 who);
 extern void merc_takehit(s32 which, s32 who);
@@ -336,7 +330,7 @@ void move_bullets(void)
     s32 range;
     u8 hitok;
     Bullet* b;
-    WeapHit* hit;
+    HdCsHit* hit;
     VEC3 p;
     VEC3 q;
 
@@ -372,7 +366,7 @@ void move_bullets(void)
                 }
                 if (k == 2 && b->unk30 == 0) {
                     hit = HdPntTest(b->owner, -1, &p, &b->unk30);
-                    if ((s16)hit->tag0 == -b->owner || (s16)hit->tag0 == 0x3FD) {
+                    if (hit->tag0 == -b->owner || hit->tag0 == 0x3FD) {
                         hit->tag0 = 0;
                         b->unk30 = 0;
                     }
@@ -400,7 +394,7 @@ void move_bullets(void)
                     range = soundGetCalculatedSoundRange();
                     uasoundExplodeMachineGunBullet(range, soundGetCalculatedSoundXPosition(), 25);
                     hitok = bulDispatchDamage(
-                        b->unk30, (s16)hit->tag0, (s16)hit->tag1, b->damage, &b->vel, b->owner);
+                        b->unk30, hit->tag0, hit->tag1, b->damage, &b->vel, b->owner);
                     k = -1;
                     if (b->kind == 3 && hitok) {
                         do_blue_explosion(&p);
@@ -1426,7 +1420,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/weapon", turn_heatseeker);
 #ifdef NON_MATCHING
 void move_missile(Missile* m)
 {
-    WeapHit* hit;
+    HdCsHit* hit;
     s32 exploded;
     u8 idx;
     s32 i;
@@ -1490,10 +1484,10 @@ void move_missile(Missile* m)
             }
             if ((i & 1) && m->unk2C != 3 && m->unk44 == 0) {
                 hit = HdPntTest(m->unk50, m->cs->unkC0, &pt, &m->unk44);
-                if (m->unk44 == 8 && (s16)hit->tag0 == -m->unk50) {
+                if (m->unk44 == 8 && hit->tag0 == -m->unk50) {
                     m->unk44 = 0;
                 }
-                if ((s16)hit->tag0 == 1021) {
+                if (hit->tag0 == 1021) {
                     m->unk44 = 0;
                 }
             }
@@ -1520,8 +1514,7 @@ void move_missile(Missile* m)
                 kill_missile(idx, 1);
                 exploded = 1;
                 i = -1;
-                bulDispatchDamage(
-                    m->unk44, (s16)hit->tag0, (s16)hit->tag1, m->damage, (VEC3*)&d, m->unk50);
+                bulDispatchDamage(m->unk44, hit->tag0, hit->tag1, m->damage, (VEC3*)&d, m->unk50);
             }
         }
         if (m->unk2C != 3 && m->cs->pos.vz < 0) {

@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "tm1/cs.h"
+#include "tm1/hd.h"
 #include "tm1/long_vector.h"
 #include <libgte.h>
 
@@ -69,21 +70,6 @@ typedef struct CarTire {
     /*0x03C*/ s32 unk3C;
     /*0x040*/ s32 unk40;
 } CarTire; /* 0x44 */
-
-typedef struct CarHit {
-    /*0x00*/ s32 unk00;
-    /*0x04*/ s32 isCar;
-    /*0x08*/ u16 mode;
-    /*0x0A*/ s16 unk0A;
-    /*0x0C*/ s16 unk0C;
-    /*0x0E*/ u8 pad0E[0x2];
-    /*0x10*/ s32 unk10;
-    /*0x14*/ s32 unk14;
-    /*0x18*/ s32 unk18;
-    /*0x1C*/ u8 pad1C[0x4];
-    /*0x20*/ Cs* obj;
-    /*0x24*/ u8 pad24[0xC];
-} CarHit; /* 0x30 */
 
 typedef struct CarStats {
     /*0x000*/ u8 pad00[0x2];
@@ -314,7 +300,7 @@ void BringBackDriftingCar(Car* car, u8 which);
 void SlowDownDriftingCar(Car* car, u8 which);
 void UpdateBearing(Car* car, u8 which);
 void CheckHitDetection(Car* car, u8 which);
-void CalcHitDynamics(Car* car, CarHit* hit, u8 which);
+void CalcHitDynamics(Car* car, HdCsHit* hit, u8 which);
 void CheckIfLostAICar(Car* car);
 u8 CheckCSHit(Car* car, u8 which, Cs* obj, s32 a, s32 b);
 void DoCsHitCalculations(Car* car, u8 which, Car* other, u8 otherWhich, s32 oang, u16 mode);
