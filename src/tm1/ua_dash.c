@@ -12,19 +12,14 @@
 #include "tm1/grutils.h"
 #include "tm1/rt.h"
 #include "tm1/smooth.h"
+#include "tm1/ua.h"
 #include "tm1/ua_dash.h"
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 extern void exit(s32 code);
 extern void* sdk_memcpy();
-extern Car* GetPlayerInfo(s16 idx);
-extern CarAlt* GetAICarInfo(s16 idx);
-extern s16 GetNumAICars(void);
-extern s16 GetNumAICarsLiving(void);
 extern void* GetClosestCarToPlayer(s16 player, u8* isPlayer);
-extern s32 GetPlayerSpeed(s16 player);
-extern s16 GetCarNumFromCarName(s32 car);
 extern s32 shellLivesRemaining(void);
 
 extern char* gCockpitTmsNames[12];

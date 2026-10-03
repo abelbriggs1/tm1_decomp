@@ -11,6 +11,7 @@
 #include "tm1/rt.h"
 #include "tm1/smooth.h"
 #include "tm1/timer.h"
+#include "tm1/ua.h"
 #include "tm1/ua_effect.h"
 #include "tm1/ua_sound.h"
 #include "tm1/view.h"
@@ -21,17 +22,8 @@
 
 extern void StartLostCheck(Car* car);
 extern void RecomputeCarDeltas(CarStats* s);
-extern u8 uaIsCarCS(Cs* obj, u8* isPlayer, s16* idx);
-extern Car* GetPlayerInfo(s16 idx);
-extern Car* GetAICarInfo(s16 idx);
-extern Cs* GetPlayerCs3D(s16 idx);
-extern Cs* GetAICs3D(s16 idx);
-extern void UASetCameraPosition(s16 idx, VECTOR* pos, SVECTOR* rot);
 extern void UAdashSetDashboardDrawFlag(s32 on);
-extern void uaDrawCar(s16 idx, s32 a);
-extern void uaDontDrawCar(s16 idx, s32 a);
 extern void* sdk_memcpy();
-extern Cs* UAGetCameraCS(s16 idx);
 extern s32 GetClosestTriggerPt(Car* car, u8 which);
 extern s32 shellGetCurrentLevel(void);
 extern void uaswSetCarShadow(s32 uaIndex, s32 on);
@@ -44,21 +36,12 @@ extern void CheckBridges(Car* car, u8 which);
 extern void CheckPotHoles(Car* car, u8 which);
 extern void CheckMonsterSmash(Car* car, u8 which);
 extern void UpdateTirePositions(Car* car, u8 which);
-extern s32 GetPlayerTheCameraFollows(void);
 extern void CarInit(Car* car, s32 uaIndex, s32 which);
-extern u8 uaPlayerCheating(void);
-extern s32 uaGetTwoPlayerMode(void);
-extern u8 uaDrivingAICars(void);
-extern void uaDriveAICars(s32 on);
 extern void HdCsTest(Cs* cs, CarHit* hit, s32 doWorld, void* user1, void* user0);
 extern void bulDispatchDamage(s32 owner, s16 a, s16 b, s32 damage, VEC3* rot, s32 extra);
 extern s16 MakeFakePotHole(void);
 extern void CheckForBridge(CarTire* tire, u8 which, s32 height);
-extern s16 uaGetCarMatID(s16 idx, u8 which);
-extern u8 uaHasPlayerBeatThisLevel(void);
-extern s32 uaGetDifficulty(void);
 extern void SetFXSheet(s32 rate, u8 r, u8 g, u8 b);
-extern s32 uaIsCarMatID(s16 matId, s8* isPlayer, u16* index);
 
 #ifdef NON_MATCHING
 void CarUpdate(Car* car)
@@ -1553,7 +1536,7 @@ u8 CheckCSHit(Car* car, u8 which, Cs* obj, s32 a, s32 b)
         if (isPlayer) {
             info = GetPlayerInfo(idx);
         } else {
-            info = GetAICarInfo(idx);
+            info = (Car*)GetAICarInfo(idx);
         }
         DoCsHitCalculations(car, which, info, isPlayer, a, (s16)bb);
         ret = 0;
@@ -2656,8 +2639,8 @@ void carTakeHit(s32 id, s32 amount, s32 a, s32 flag)
             enabled = 1;
             ua = car->uaIndex;
         } else {
-            info = GetAICarInfo(idx);
-            alt = (CarAlt*)GetAICarInfo(idx);
+            info = (Car*)GetAICarInfo(idx);
+            alt = GetAICarInfo(idx);
             wp = &alt->weap;
             cs = GetAICs3D(idx);
             enabled = alt->unk40;
@@ -3178,7 +3161,7 @@ void SetCarVRMode(Car* car, u32 mode)
             pos.vy = 0;
             pos.vz = 0;
             moved = 1;
-            UASetCameraPosition((s16)car->playerIdx, &pos, &rot);
+            UASetCameraPosition((s16)car->playerIdx, (VEC3*)&pos, &rot);
         }
     }
 
@@ -3245,7 +3228,7 @@ void SetCarVRMode(Car* car, u32 mode)
         base.vx = car->motion.pos.x + off.vx;
         base.vy = car->motion.pos.y + off.vy;
         base.vz = car->motion.pos.z + off.vz;
-        UASetCameraPosition((s16)car->playerIdx, &base, &car->vrRot[3]);
+        UASetCameraPosition((s16)car->playerIdx, (VEC3*)&base, &car->vrRot[3]);
         break;
     case 4:
         if (car->stats.unk3C) {

@@ -3,6 +3,7 @@
 #include <libgpu.h>
 
 #include "tm1/rt.h"
+#include "tm1/ua.h"
 #include "tm1/ua_effect.h"
 
 // TODO: Give proper names.

@@ -8,6 +8,7 @@
 #include "tm1/math.h"
 #include "tm1/rt.h"
 #include "tm1/sound.h"
+#include "tm1/ua.h"
 #include "tm1/ua_sound.h"
 #include "tm1/view.h"
 #include <libgpu.h>
@@ -150,14 +151,7 @@ s32 healthRegenTimer = 0;
 
 extern void uaswSetState(s32 obj, s32 idx, s32 state);
 extern void uaswSetNumChildren(s32 obj, s32 idx, s32 n);
-extern Car* GetPlayerInfo(s16 idx);
 extern void hudAddRadarSig(s32 obj, s32* d, s32 z);
-extern Cs* GetPlayerCs3D(s16 idx);
-extern Cs* GetAICs3D(s16 idx);
-extern Car* GetAICarInfo(s16 idx);
-extern s16 GetNumAICars(void);
-extern s16 GetNumPlayers(void);
-extern void UASetBattleMusicOn(void);
 extern void create_bullet(s16 idx, s32* rot, s32* pos, s32 dmg);
 extern void s_create_bullet(s16 idx, s32* rot, s32* pos, s32 kind, s32 dmg, s32 a, s32 b);
 extern s16 create_SWARM_missile(s16 idx, LVECTOR* tgt, VEC3* rot, s32* pos, s32 dmg);
@@ -432,7 +426,7 @@ u16 UpdateGuns(Car* car, u8 isPlayer)
         pad = &((CarAlt*)car)->weap;
         aim = &((CarAlt*)car)->bounce;
         idx = ((CarAlt*)car)->playerIdx + 50;
-        snd = ((CarAlt*)GetAICarInfo((s16)((CarAlt*)car)->playerIdx))->uaIndex;
+        snd = GetAICarInfo((s16)((CarAlt*)car)->playerIdx)->uaIndex;
     }
     soundSetRangeAndXPositionFromWorldLoc(&m->pos.x);
     if ((s16)pad->gunDelay > 0) {
@@ -1038,7 +1032,7 @@ s32 fire_taser(Car* car, s32 isPlayer)
     }
     i = 0;
     for (j = 0; j < numA; j++) {
-        if (((CarAlt*)GetAICarInfo(i))->stats.unk40 > 0) {
+        if (GetAICarInfo(i)->stats.unk40 > 0) {
             other = GetAICs3D(i);
             dx = m->pos.x - other->pos.vx;
             dy = m->pos.y - other->pos.vy;
@@ -1094,7 +1088,7 @@ s32 fire_taser(Car* car, s32 isPlayer)
                     if (dist < best) {
                         best = dist;
                         bestId = other->unkC0;
-                        bestObj = &((CarAlt*)GetAICarInfo(i))->motion.pos.x;
+                        bestObj = &GetAICarInfo(i)->motion.pos.x;
                     }
                 }
             }
@@ -1639,7 +1633,7 @@ void carLockon(u8 who, LVECTOR** out)
     for (i = 0; i < n; i++) {
         cs = GetAICs3D(i);
         q = &cs->pos;
-        if (q != 0 && ((CarAlt*)GetAICarInfo(i))->stats.unk40 > 0) {
+        if (q != 0 && GetAICarInfo(i)->stats.unk40 > 0) {
             d[0] = cs->pos.vx - p->vx;
             d[1] = cs->pos.vy - p->vy;
             d[2] = cs->pos.vz - p->vz;
@@ -1715,7 +1709,7 @@ void carLockon2(u8 who, LVECTOR** out)
     for (i = 0; i < n; i++) {
         cs = GetAICs3D(i);
         q = &cs->pos;
-        if (q != 0 && ((CarAlt*)GetAICarInfo(i))->stats.unk40 > 0) {
+        if (q != 0 && GetAICarInfo(i)->stats.unk40 > 0) {
             d[0] = cs->pos.vx - p->vx;
             d[1] = cs->pos.vy - p->vy;
             do {
