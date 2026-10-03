@@ -2548,7 +2548,9 @@ gHierNodes                               = 0x80194f10;
 location                                 = 0x801952f8;
 matPtrs                                  = 0x80195eb0;
 worldToTp                                = 0x80195fc8;
-tmpResult.24                             = 0x80196034;
+// `tmpResult` (static local of `HdPntTest`, emitted as `tmpResult.24`)
+// TODO: restore the original name once the bss is migrated to C
+hdp_tmpResult                            = 0x80196034;
 ambient                                  = 0x80196064; // size:0xC
 lightRot                                 = 0x80196070; // size:0x24
 lightColor                               = 0x80196094; // size:0x24
