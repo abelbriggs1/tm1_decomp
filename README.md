@@ -101,6 +101,25 @@ To build the repository, you will need a digital copy of the Playstation game
 This is a list of known repository-wide issues that prevent functions or data from
 matching when they otherwise should.
 
+### Compiler flags
+
+It is currently unclear exactly what compiler flags were used to compile
+TM1; there are many TUs which can only be fully matched with specific
+compiler flags.
+
+Here is a list of flags that we believe change most often between TUs:
+
+- `-G8` vs. `-G0`
+- `-fvolatile`
+- `-mcpu=r6000`
+
+We currently do not compile with `-fvolatile` or `-mcpu=r6000`; these
+will be experimented with later on.
+
+It's likely that SingleTrac compiled multiple TUs in different groups
+with different compiler flags for each, but we haven't determined how
+these groups are structured.
+
 ### `scommon`/`common` are unhandled
 
 These are sections which we don't know how to handle currently, so any data from these
