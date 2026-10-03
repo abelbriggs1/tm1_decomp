@@ -4,9 +4,9 @@
     "total_code": "470784",
     "matched_code": "31900",
     "matched_code_percent": 6.7759314,
-    "total_data": "610220",
-    "matched_data": "50984",
-    "matched_data_percent": 8.35502,
+    "total_data": "614652",
+    "matched_data": "55384",
+    "matched_data_percent": 9.010627,
     "total_functions": 1983,
     "matched_functions": 298,
     "matched_functions_percent": 15.027736,
@@ -5625,18 +5625,22 @@
       "name": "tm1/stars",
       "measures": {
         "total_code": "1164",
-        "matched_data_percent": 100.0,
+        "total_data": "4432",
+        "matched_data": "4400",
+        "matched_data_percent": 99.27798,
         "total_functions": 2,
-        "complete_data_percent": 100.0,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "4400",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "size": "32",
           "metadata": {}
         },
         {
@@ -5660,6 +5664,7 @@
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/stars.c",
         "progress_categories": [
           "tm1"
         ]
@@ -17178,6 +17183,18 @@
   "version": 2,
   "categories": [
     {
+      "id": "data",
+      "name": "data",
+      "measures": {
+        "fuzzy_match_percent": 100.0,
+        "matched_code_percent": 100.0,
+        "total_data": "4012",
+        "matched_functions_percent": 100.0,
+        "complete_code_percent": 100.0,
+        "total_units": 1
+      }
+    },
+    {
       "id": "tm1",
       "name": "tm1",
       "measures": {
@@ -17185,9 +17202,9 @@
         "total_code": "358548",
         "matched_code": "31900",
         "matched_code_percent": 8.896996,
-        "total_data": "143416",
-        "matched_data": "50984",
-        "matched_data_percent": 35.54973,
+        "total_data": "147848",
+        "matched_data": "55384",
+        "matched_data_percent": 37.460094,
         "total_functions": 1009,
         "matched_functions": 298,
         "matched_functions_percent": 29.534191,
@@ -17202,18 +17219,6 @@
         "total_data": "462792",
         "total_functions": 974,
         "total_units": 5
-      }
-    },
-    {
-      "id": "data",
-      "name": "data",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "4012",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
       }
     }
   ]
