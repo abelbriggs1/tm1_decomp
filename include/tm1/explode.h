@@ -31,6 +31,7 @@ typedef struct ArmorIconInfo {
     u8 pad2[6];
 } ArmorIconInfo;
 
+void explodeCreateFragments(s32 count, VECTOR* pos);
 ArmorIconInfo* explodeGetArmorIcon(void);
 
 #endif

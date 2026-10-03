@@ -7,4 +7,10 @@
 typedef struct {
     s32 vx, vy, vz;
 } LVECTOR;
+
+typedef struct VEC3 {
+    s32 x;
+    s32 y;
+    s32 z;
+} VEC3;
 #endif
