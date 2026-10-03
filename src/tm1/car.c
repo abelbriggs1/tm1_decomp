@@ -5,6 +5,7 @@
 #include "tm1/ctlpad.h"
 #include "tm1/explode.h"
 #include "tm1/explosion.h"
+#include "tm1/interactives.h"
 #include "tm1/math.h"
 #include "tm1/potholes.h"
 #include "tm1/rt.h"
@@ -24,8 +25,6 @@ extern Car* GetPlayerInfo(s16 idx);
 extern Car* GetAICarInfo(s16 idx);
 extern Cs* GetPlayerCs3D(s16 idx);
 extern Cs* GetAICs3D(s16 idx);
-extern s32 getSpecialWeaponCost(s32 kind);
-extern s32 carweapGetMonsterDamage(void);
 extern void UASetCameraPosition(s16 idx, VECTOR* pos, SVECTOR* rot);
 extern void UAdashSetDashboardDrawFlag(s32 on);
 extern void uaDrawCar(s16 idx, s32 a);
@@ -45,7 +44,6 @@ extern void CheckPotHoles(Car* car, u8 which);
 extern void CheckMonsterSmash(Car* car, u8 which);
 extern void UpdateTirePositions(Car* car, u8 which);
 extern void UAeffectUpdateCarSpeed(s32 uaIndex, s32 speed);
-extern void UpdateWeapons(Car* car, u8 which);
 extern s32 GetPlayerTheCameraFollows(void);
 extern void CarInit(Car* car, s32 uaIndex, s32 which);
 extern u8 uaPlayerCheating(void);
@@ -53,7 +51,6 @@ extern s32 uaGetTwoPlayerMode(void);
 extern u8 uaDrivingAICars(void);
 extern void uaDriveAICars(s32 on);
 extern void HdCsTest(Cs* cs, CarHit* hit, s32 doWorld, void* user1, void* user0);
-extern void carGetPickup(Car* car, u8 which, s32 kind, s32 index);
 extern void UAeffectBarricade(s32 kind, s32 index, s32 state);
 extern void bulDispatchDamage(s32 owner, s16 a, s16 b, s32 damage, VEC3* rot, s32 extra);
 extern s16 MakeFakePotHole(void);
@@ -207,10 +204,10 @@ void CarUpdate(Car* car)
                 car->stats.cheatTimer = 0;
             } else if (ctlpadSpecial(6, car->playerIdx)) {
                 if (car->stats.cheatAArmed) {
-                    if (car->weap.unk49) {
-                        car->weap.unk49 = 0;
+                    if (car->weap.reset) {
+                        car->weap.reset = 0;
                     } else {
-                        car->weap.unk49 = 1;
+                        car->weap.reset = 1;
                     }
                 }
                 car->stats.cheatAArmed = 0;
@@ -3125,7 +3122,7 @@ void InitMonsterSmash(Car* carA, u8 whichA, Car* carB, u8 whichB, s16 unused_mod
         uaIdx = ((CarAlt*)carB)->uaIndex;
     }
 
-    if (wa->unk22 < getSpecialWeaponCost(0x28)) {
+    if ((s16)wa->ammo[11] < getSpecialWeaponCost(0x28)) {
         return;
     }
     if (fa[27]) {
@@ -3133,7 +3130,7 @@ void InitMonsterSmash(Car* carA, u8 whichA, Car* carB, u8 whichB, s16 unused_mod
     }
 
     uasoundPlayCarSpecialWeaponLaunchOrInflight(5, 0, 0);
-    wa->unk22 = wa->unk22 - getSpecialWeaponCost(0x28);
+    wa->ammo[11] = wa->ammo[11] - getSpecialWeaponCost(0x28);
     if (whichB) {
         cs = GetPlayerCs3D((s16)idx);
     } else {
