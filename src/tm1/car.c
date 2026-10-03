@@ -14,6 +14,7 @@
 #include "tm1/ua.h"
 #include "tm1/ua_effect.h"
 #include "tm1/ua_sound.h"
+#include "tm1/ua_sw.h"
 #include "tm1/view.h"
 #include <libgte.h>
 #include <rand.h>
@@ -26,7 +27,6 @@ extern void UAdashSetDashboardDrawFlag(s32 on);
 extern void* sdk_memcpy();
 extern s32 GetClosestTriggerPt(Car* car, u8 which);
 extern s32 shellGetCurrentLevel(void);
-extern void uaswSetCarShadow(s32 uaIndex, s32 on);
 extern void UpdateCarOnSlickSpot(Car* car, u8 which);
 extern void CheckSlickSpots(Car* car, u8 which);
 extern void CheckHealthStands(Car* car, u8 which);

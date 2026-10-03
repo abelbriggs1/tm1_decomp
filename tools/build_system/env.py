@@ -276,6 +276,7 @@ class EnvironmentToolchain:
                 "tm1/ua_sound": 8,
                 "tm1/ua_dash": 8,
                 "tm1/ua_effect": 8,
+                "tm1/ua_sw": 8,
                 "tm1/cs": 8,
                 "tm1/rt": 8,
                 "tm1/sound": 8,

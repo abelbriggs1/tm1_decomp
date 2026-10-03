@@ -10,6 +10,7 @@
 #include "tm1/sound.h"
 #include "tm1/ua.h"
 #include "tm1/ua_sound.h"
+#include "tm1/ua_sw.h"
 #include "tm1/view.h"
 #include <libgpu.h>
 #include <libgte.h>
@@ -149,8 +150,6 @@ s32 pickupTimer = 0;
 u8 healthRegenPending = 0;
 s32 healthRegenTimer = 0;
 
-extern void uaswSetState(s32 obj, s32 idx, s32 state);
-extern void uaswSetNumChildren(s32 obj, s32 idx, s32 n);
 extern void hudAddRadarSig(s32 obj, s32* d, s32 z);
 extern void create_bullet(s16 idx, s32* rot, s32* pos, s32 dmg);
 extern void s_create_bullet(s16 idx, s32* rot, s32* pos, s32 kind, s32 dmg, s32 a, s32 b);

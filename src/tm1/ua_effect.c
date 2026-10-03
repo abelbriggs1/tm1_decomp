@@ -8,9 +8,8 @@
 #include "tm1/light.h"
 #include "tm1/rt.h"
 #include "tm1/ua_effect.h"
+#include "tm1/ua_sw.h"
 
-extern void uaswSetState(s32 a0, s32 a1, u32 state);
-extern void uaswToggleCarTireState(s32 index, s32 direction);
 extern s32 shellGetCurrentLevel(void);
 
 s32 gNumTVs = 0;
