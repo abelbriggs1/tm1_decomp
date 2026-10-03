@@ -48,4 +48,31 @@ extern ExpFrame FlameInfo[10];
 extern ExpFrame GburstInfo[12];
 extern ExpFrame SteamInfo[16];
 
+Explosion* init_explosion(VEC3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag);
+void animate_explosions(void);
+s32 find_free_explosion(void);
+void do_simple_spark(VEC3* pos);
+void do_simple_explosion(VEC3* pos);
+Explosion* do_blue_explosion(VEC3* pos);
+void do_flamethrower_burst(VEC3* pos);
+void do_mini_explosion(VEC3* pos);
+void do_big_explosion(VEC3* pos);
+void do_bigger_explosion(VEC3* pos);
+void do_mondo_explosion(VEC3* pos);
+void do_missile_plume(VEC3* pos);
+void do_flames(VEC3* pos);
+void do_groundburst(VEC3* pos);
+void do_big_flames(VEC3* pos);
+void do_afterburner(VEC3* pos, VEC3* vel);
+void do_flare(VEC3* pos);
+void do_burn(VEC3* pos);
+void do_flash(VEC3* pos);
+void do_mflash(VEC3* pos);
+void do_gun_plume(VEC3* pos);
+void do_smoke(VEC3* pos);
+void do_steam(VEC3* pos);
+void do_big_smoke(VEC3* pos);
+void do_puff(VEC3* pos);
+void clear_explosions(void);
+
 #endif // __TM1_EXPLOSION_H__
