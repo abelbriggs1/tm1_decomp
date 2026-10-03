@@ -2039,6 +2039,8 @@ PATCHGTE_OBJ_68                          = 0x8015dec4;
 // -------------------------------------------------------------------------
 unitMatrix                               = 0x8016feac; // size:0x20
 systemAttributes                         = 0x8016fecc; // size:0x30
+gLightningPart                           = 0x80171314; // size:0x10
+gLightningUVs                            = 0x80171324; // size:0xA8
 
 gFieldsLastFrame                         = 0x80170238; // type:s16
 gUpdateRate                              = 0x8017023a; // type:s16
@@ -2371,12 +2373,12 @@ s_SPECTRE_8018c2d4                       = 0x8018c2d4; // type:asciz size:8
 s_WARTHOG_8018c2dc                       = 0x8018c2dc; // type:asciz size:8
 s_THUMPER_8018c2e4                       = 0x8018c2e4; // type:asciz size:8
 s_OUTLAW_8018c2ec                        = 0x8018c2ec; // type:asciz size:8
-D_8018C2F4                               = 0x8018c2f4; // type:u32
-D_8018C2F8                               = 0x8018c2f8; // type:u32
-D_8018C2FC                               = 0x8018c2fc; // type:u32
-D_8018C300                               = 0x8018c300; // type:u32
-D_8018C304                               = 0x8018c304; // type:u32
-D_8018C308                               = 0x8018c308; // type:u32
+gNumTVs                                  = 0x8018c2f4; // type:u32
+gTruckWheelAngle                         = 0x8018c2f8; // type:u32
+gHitLightFlash                           = 0x8018c2fc; // type:u32
+gLightningTick                           = 0x8018c300; // type:u32
+gLightningPeriod                         = 0x8018c304; // type:u32
+gLightningOn                             = 0x8018c308; // type:u32
 D_8018C30C                               = 0x8018c30c; // type:u32
 D_8018C310                               = 0x8018c310; // type:u32
 D_8018C314                               = 0x8018c314; // type:u32

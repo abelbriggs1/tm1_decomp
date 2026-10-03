@@ -272,6 +272,7 @@ class EnvironmentToolchain:
                 "tm1/potholes": 8,
                 "tm1/slick_spots": 8,
                 "tm1/ua_sound": 8,
+                "tm1/ua_effect": 8,
                 "tm1/cs": 8,
                 "tm1/rt": 8,
                 "tm1/sound": 8,
