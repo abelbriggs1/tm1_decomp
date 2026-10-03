@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 8.329085,
+    "fuzzy_match_percent": 8.7743,
     "total_code": "470784",
-    "matched_code": "39212",
-    "matched_code_percent": 8.329085,
-    "total_data": "630860",
-    "matched_data": "71636",
-    "matched_data_percent": 11.355293,
+    "matched_code": "41308",
+    "matched_code_percent": 8.7743,
+    "total_data": "633564",
+    "matched_data": "74400",
+    "matched_data_percent": 11.743092,
     "total_functions": 1983,
-    "matched_functions": 338,
-    "matched_functions_percent": 17.044882,
-    "total_units": 133
+    "matched_functions": 359,
+    "matched_functions_percent": 18.103882,
+    "total_units": 131
   },
   "units": [
     {
@@ -3252,24 +3252,46 @@
     {
       "name": "tm1/weapon",
       "measures": {
+        "fuzzy_match_percent": 9.984756,
         "total_code": "20992",
+        "matched_code": "2096",
+        "matched_code_percent": 9.984756,
+        "total_data": "2764",
+        "matched_data": "2764",
         "matched_data_percent": 100.0,
         "total_functions": 45,
-        "complete_data_percent": 100.0,
+        "matched_functions": 21,
+        "matched_functions_percent": 46.666668,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "2704",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".sbss",
+          "size": "20",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "40",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "20992",
+          "fuzzy_match_percent": 9.984756,
           "metadata": {}
         }
       ],
@@ -3277,42 +3299,49 @@
         {
           "name": "bulSetOwnship",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
         {
           "name": "bulSetEyeWeaponGraphics",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "12"
         },
         {
           "name": "bulSetPlasmaGraphics",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "24"
         },
         {
           "name": "bulSetFireballGraphics",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "36"
         },
         {
           "name": "bulSetContrailGraphics",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "48"
         },
         {
           "name": "bulAddCs",
           "size": "112",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "60"
         },
         {
           "name": "bulMakeSpecialBullet",
           "size": "200",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "172"
         },
@@ -3325,12 +3354,14 @@
         {
           "name": "init_bullets",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2108"
         },
         {
           "name": "destroy_all_bullets",
           "size": "116",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2144"
         },
@@ -3361,12 +3392,14 @@
         {
           "name": "kill_bullet",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8980"
         },
         {
           "name": "find_free_bullet",
           "size": "72",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "9012"
         },
@@ -3385,6 +3418,7 @@
         {
           "name": "setContrailColor",
           "size": "80",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "9868"
         },
@@ -3415,12 +3449,14 @@
         {
           "name": "destroy_all_missiles",
           "size": "68",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11656"
         },
         {
           "name": "find_free_missile",
           "size": "84",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11724"
         },
@@ -3439,6 +3475,7 @@
         {
           "name": "create_FIRE_missile",
           "size": "196",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "13212"
         },
@@ -3451,12 +3488,14 @@
         {
           "name": "create_FREEZE_missile",
           "size": "168",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "13660"
         },
         {
           "name": "create_POWER_missile",
           "size": "168",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "13828"
         },
@@ -3469,12 +3508,14 @@
         {
           "name": "create_SINGING_missile",
           "size": "168",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "14236"
         },
         {
           "name": "create_GHOST_missile",
           "size": "292",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "14404"
         },
@@ -3511,12 +3552,14 @@
         {
           "name": "get_missile",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18300"
         },
         {
           "name": "move_missiles",
           "size": "188",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18356"
         },
@@ -3546,6 +3589,7 @@
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/weapon.c",
         "progress_categories": [
           "tm1"
         ]
@@ -15344,41 +15388,6 @@
       }
     },
     {
-      "name": "tm1/weapon",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "40",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "40",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/ai_car",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15925,41 +15934,6 @@
         {
           "name": ".sbss",
           "size": "28",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/weapon",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "20",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sbss",
-          "size": "20",
           "metadata": {}
         },
         {
@@ -17174,17 +17148,17 @@
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 10.936332,
+        "fuzzy_match_percent": 11.520912,
         "total_code": "358548",
-        "matched_code": "39212",
-        "matched_code_percent": 10.936332,
-        "total_data": "164056",
-        "matched_data": "71636",
-        "matched_data_percent": 43.66558,
+        "matched_code": "41308",
+        "matched_code_percent": 11.520912,
+        "total_data": "166760",
+        "matched_data": "74400",
+        "matched_data_percent": 44.615017,
         "total_functions": 1009,
-        "matched_functions": 338,
-        "matched_functions_percent": 33.498512,
-        "total_units": 127
+        "matched_functions": 359,
+        "matched_functions_percent": 35.579784,
+        "total_units": 125
       }
     }
   ]

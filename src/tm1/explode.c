@@ -4,6 +4,7 @@
 #include "tm1/grutils.h"
 #include "tm1/rt.h"
 #include "tm1/view.h"
+#include "tm1/weapon.h"
 
 #include "tm1/explode.h"
 
