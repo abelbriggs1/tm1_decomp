@@ -278,6 +278,7 @@ class EnvironmentToolchain:
                 "tm1/ua_effect": 8,
                 "tm1/ua_sw": 8,
                 "tm1/weapon": 8,
+                "tm1/hd": 8,
                 "tm1/cs": 8,
                 "tm1/rt": 8,
                 "tm1/sound": 8,

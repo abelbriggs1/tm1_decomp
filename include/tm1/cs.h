@@ -18,8 +18,8 @@ typedef struct Cs {
     /* 0x054 */ SVECTOR rot;
     /* 0x05C */ LVECTOR pos;
     /* 0x068 */ LVECTOR wpos;
-    /* 0x074 */ s32 unk74; /* collision mode-count bound */
-    /* 0x078 */ u8 pad78[0xC0 - 0x78];
+    /* 0x074 */ s32 nhist;
+    /* 0x078 */ SVECTOR hist[9];
     /* 0x0C0 */ s32 unkC0;
     /* 0x0C4 */ MATRIX mat3;
     /* 0x0E4 */ MATRIX mat4;

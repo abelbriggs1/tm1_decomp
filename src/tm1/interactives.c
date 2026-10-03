@@ -4,6 +4,7 @@
 #include "tm1/cs.h"
 #include "tm1/explosion.h"
 #include "tm1/grutils.h"
+#include "tm1/hdp.h"
 #include "tm1/interactives.h"
 #include "tm1/math.h"
 #include "tm1/rt.h"
@@ -35,12 +36,6 @@ typedef struct {
     /* 0x10 */ s16 x1;
     /* 0x12 */ s16 y1;
 } TaserLine;
-
-typedef struct {
-    /* 0x00 */ u8 pad00[0x0A];
-    /* 0x0A */ u16 unk0A;
-    /* 0x0C */ u16 unk0C;
-} HdPnt;
 
 typedef struct {
     /* 0x00 */ s32* pos;
@@ -147,7 +142,6 @@ s32 healthRegenTimer = 0;
 
 extern void hudAddRadarSig(s32 obj, s32* d, s32 z);
 extern void uadashMaxCarryCapacity(void);
-extern HdPnt* HdPntTest(s32 owner, s32 flag, s32* pos, s32* hit);
 extern s32 shellGetCurrentLevel(void);
 
 void carSetPowerupDelaysBySkillLevel(s32 level)
@@ -1851,7 +1845,7 @@ void displayFlamethrowers(void)
     s32 hitDone;
     s32 v;
     Cs* cs;
-    HdPnt* pnt;
+    HdCsHit* pnt;
 
     cp = 0;
     for (i = 0; i < 5; i++) {
@@ -1943,7 +1937,7 @@ void displayFlamethrowers(void)
             if (hit <= 0) {
                 continue;
             }
-            bulDispatchDamage(hit, (s16)pnt->unk0A, (s16)pnt->unk0C, flameDamage, d, 0);
+            bulDispatchDamage(hit, pnt->tag0, pnt->tag1, flameDamage, d, 0);
         }
         flameThrower[i].life = 0;
         do_smoke(flameThrower[i].world);

@@ -38,7 +38,6 @@ extern void CheckPotHoles(Car* car, u8 which);
 extern void CheckMonsterSmash(Car* car, u8 which);
 extern void UpdateTirePositions(Car* car, u8 which);
 extern void CarInit(Car* car, s32 uaIndex, s32 which);
-extern void HdCsTest(Cs* cs, CarHit* hit, s32 doWorld, void* user1, void* user0);
 extern s16 MakeFakePotHole(void);
 extern void CheckForBridge(CarTire* tire, u8 which, s32 height);
 
@@ -1087,7 +1086,7 @@ void CheckHitDetection(Car* car, u8 which)
     CarMotion* m;
     CarTire* t;
     Cs* cs;
-    CarHit hit;
+    HdCsHit hit;
     PotHole* hole;
     s32 bearing;
     s32 speed;
@@ -1127,23 +1126,23 @@ void CheckHitDetection(Car* car, u8 which)
             cs->mat.m[row][column] = m->mat2.m[row][column];
     for (i = 0; i < 3; ++i)
         cs->mat.t[i] = m->mat2.t[i];
-    hit.unk00 = 0;
-    HdCsTest(cs, &hit, 1, m->pad90b, m->pad90);
-    if (hit.unk00) {
+    hit.hit = 0;
+    HdCsTest(cs, &hit, 1, &m->lastMat, &m->lastPos.x);
+    if (hit.hit) {
         if (!which && flags[29] && (s16)st->unk22 >= 13)
-            hit.unk00 = 0;
-        type = (u16)hit.unk0A;
+            hit.hit = 0;
+        type = (u16)hit.tag0;
         if (type - 401U < 50U) {
-            carGetPickup(car, which, (s16)type, hit.unk0C);
-            hit.unk00 = 0;
+            carGetPickup(car, which, (s16)type, hit.tag1);
+            hit.hit = 0;
         } else if ((s16)type == 700) {
-            UAeffectBarricade(700, hit.unk0C, bearing);
+            UAeffectBarricade(700, hit.tag1, bearing);
             speed = __builtin_abs(m->vel.y);
             denominator = speed < st->unkA8 ? st->unkA8 : speed;
             col->unk12 = (s32)((u32)speed * 99U) / denominator;
-            hit.unk00 = 0;
+            hit.hit = 0;
         } else if (type - 750U < 33U || (s16)type == 1001) {
-            bulDispatchDamage(hit.obj->unkC0, (s16)type, hit.unk0C, 10, &m->rot, 0);
+            bulDispatchDamage(hit.obj->unkC0, (s16)type, hit.tag1, 10, &m->rot, 0);
             t[0].unk0A = MakeFakePotHole();
             t[1].unk0A = t[0].unk0A;
             t[2].unk0A = t[0].unk0A;
@@ -1173,11 +1172,11 @@ void CheckHitDetection(Car* car, u8 which)
                 hole->b = st->unk74 + 32;
             }
             hole->c = 40;
-            hit.unk00 = 0;
+            hit.hit = 0;
         } else if ((s16)type == 1400) {
             for (i = 0; i < 4; ++i)
                 t[i].unk14 = (u16)-20;
-            hit.unk00 = 0;
+            hit.hit = 0;
             m->vel.y = 0;
         } else if ((s16)type == 500) {
             height = 160;
@@ -1188,10 +1187,10 @@ void CheckHitDetection(Car* car, u8 which)
             if (flags[19] || flags[15]) {
                 for (i = 0; i < 4; ++i)
                     t[i].unk14 = (u16)-20;
-                hit.unk00 = 0;
+                hit.hit = 0;
                 m->vel.y = 0;
             }
-            switch ((s16)hit.mode) {
+            switch (hit.histIdx) {
             case 0:
                 CheckForBridge(&t[0], 1, height);
                 break;
@@ -1210,23 +1209,23 @@ void CheckHitDetection(Car* car, u8 which)
                 break;
             }
             if (t[0].unk0 || t[1].unk0 || t[2].unk0 || t[3].unk0)
-                hit.unk00 = 0;
+                hit.hit = 0;
         } else if ((s16)type == 1021) {
             if (!which && !alt->unk16E && !flags[0]) {
                 if (alt->unk34 < 800 && alt->uaIndex != 130) {
                     if ((s16)col->unkE < 100 || flags[13] || flags[15])
-                        hit.unk00 = 0;
+                        hit.hit = 0;
                 }
             } else
-                hit.unk00 = 0;
+                hit.hit = 0;
         }
     }
-    col->unk4 = hit.unk00;
-    if (hit.unk00) {
+    col->unk4 = hit.hit;
+    if (hit.hit) {
         col->unk0 = 1;
         ++col->unk14;
         col->unk16 = 0;
-        if ((s16)hit.mode < cs->unk74)
+        if (hit.histIdx < cs->nhist)
             CalcHitDynamics(car, &hit, which);
         else
             col->unk0 = 0;
@@ -1272,7 +1271,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car", CheckHitDetection);
 #endif
 
 #ifdef NON_MATCHING
-void CalcHitDynamics(Car* car, CarHit* hit, u8 which)
+void CalcHitDynamics(Car* car, HdCsHit* hit, u8 which)
 {
     CarStats* st;
     CarMotion* m;
@@ -1310,17 +1309,17 @@ void CalcHitDynamics(Car* car, CarHit* hit, u8 which)
         tires = ((CarAlt*)car)->tires;
     }
 
-    if (hit->isCar) {
+    if (hit->unk04) {
         if (m->vel.y >= 0) {
             ang = m->unkB0;
         } else {
             ang = m->unkB0 + 2048;
         }
     } else {
-        if (hit->unk18 == 0) {
-            hit->unk18 = 1;
+        if (hit->normal[1] == 0) {
+            hit->normal[1] = 1;
         }
-        ang = ratan2(hit->unk14, hit->unk18);
+        ang = ratan2(hit->normal[0], hit->normal[1]);
     }
     BoundAngle(&ang);
     if (m->vel.y >= 0) {
@@ -1334,7 +1333,7 @@ void CalcHitDynamics(Car* car, CarHit* hit, u8 which)
     BoundAngle(&bounce);
 
     if (hit->obj != 0 && hit->obj->unkC0 < 100 && hit->obj->unkC0 != 8) {
-        hitCs = CheckCSHit(car, which, hit->obj, bounce, (s16)hit->mode);
+        hitCs = CheckCSHit(car, which, hit->obj, bounce, hit->histIdx);
         col->unk3 = 1;
         m->unkB0 = m->rot2.z;
         ang = m->unkB0;
@@ -1351,10 +1350,10 @@ void CalcHitDynamics(Car* car, CarHit* hit, u8 which)
             dmg = __builtin_abs(num) * 10 / st->unkA8 / 4096;
             if (dmg > 0) {
                 if (dmg - 3 > 0 && which) {
-                    carTakeHit((s16)uaGetCarMatID((s16)idx, which), dmg - 3, (s32)&hit->unk14, 1);
+                    carTakeHit((s16)uaGetCarMatID((s16)idx, which), dmg - 3, (s32)hit->normal, 1);
                 }
-                bulDispatchDamage(hit->obj->unkC0, (s16)hit->unk0A, (s16)hit->unk0C,
-                    dmg * st->unk104 / 33, &m->rot, 0);
+                bulDispatchDamage(
+                    hit->obj->unkC0, hit->tag0, hit->tag1, dmg * st->unk104 / 33, &m->rot, 0);
                 if (f[10]) {
                     tires[0].unk3 = 1;
                     tires[1].unk3 = 1;
@@ -1387,7 +1386,7 @@ void CalcHitDynamics(Car* car, CarHit* hit, u8 which)
                 bounce = -1706;
             }
         }
-        RicochetOffObject(car, which, 0, bounce, (s16)hit->mode);
+        RicochetOffObject(car, which, 0, bounce, hit->histIdx);
     }
 
     if (hitCs == 0) {
@@ -1396,15 +1395,15 @@ void CalcHitDynamics(Car* car, CarHit* hit, u8 which)
         rot.vz = ang;
         RotMatrixYXZ(&rot, &mat);
         delta.vx = 0;
-        if (hit->isCar && col->unk3 == 0) {
+        if (hit->unk04 && col->unk3 == 0) {
             mag = m->vel.y / 32;
             if (mag < 0) {
                 mag = m->vel.y / -32;
             }
-            hit->unk10 += mag;
+            hit->depth += mag;
         }
         delta.vz = 0;
-        delta.vy = -(hit->unk10 + 8);
+        delta.vy = -(hit->depth + 8);
         mathMulTransVec(&mat, &delta, &out);
         m->pos.x += out.vx;
         m->pos.y += out.vy;
@@ -1412,7 +1411,7 @@ void CalcHitDynamics(Car* car, CarHit* hit, u8 which)
         delta.vx = 0;
         delta.vy = 0;
         delta.vz = 0;
-        switch ((s16)hit->mode) {
+        switch (hit->histIdx) {
         case 0:
             delta.vx = 8;
             spark.x = tires[0].unk38;
@@ -1427,8 +1426,8 @@ void CalcHitDynamics(Car* car, CarHit* hit, u8 which)
             break;
         case 2:
             delta.vx = -8;
-            if (hit->isCar) {
-                mag = hit->unk10;
+            if (hit->unk04) {
+                mag = hit->depth;
                 if (mag < 0) {
                     mag = -mag;
                 }
@@ -1440,8 +1439,8 @@ void CalcHitDynamics(Car* car, CarHit* hit, u8 which)
             break;
         case 3:
             delta.vx = 8;
-            if (hit->isCar) {
-                mag = hit->unk10;
+            if (hit->unk04) {
+                mag = hit->depth;
                 if (mag < 0) {
                     mag = -mag;
                 }
@@ -1494,7 +1493,7 @@ void CalcHitDynamics(Car* car, CarHit* hit, u8 which)
         m->pos.z += out.vz;
         if ((s16)GetFieldsLastFrame() * 380 / 100 * 32 < m->vel.y) {
             do_simple_spark(&spark);
-            if (hit->isCar) {
+            if (hit->unk04) {
                 do_puff(&spark);
             }
         }
