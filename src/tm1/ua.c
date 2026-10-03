@@ -19,6 +19,7 @@
 #include "tm1/trigger_pts.h"
 #include "tm1/ua_dash.h"
 #include "tm1/ua_sound.h"
+#include "tm1/ua_sw.h"
 #include "tm1/view.h"
 #include "tm1/wdcopy.h"
 
@@ -172,10 +173,6 @@ extern void move_targets(void);
 extern void hudInitRadar(void);
 extern void hudRadarToggle(void);
 extern void hudAddRadarSig(s32 name, s32* d, s32 rot);
-extern void uaswInitCarSwitch(Cs* cs, s32 name);
-extern void uaswSetCarShadow(s32 name, s32 on);
-extern void uaswCarHeadlightsOnOff(s32 name, s32 on);
-extern void uaswSetCarState(s32 name, u32 state, s8 unused);
 extern void CarInit(Car* car, s32 name, u8 weapons);
 extern void CarInitStrength(CarStats* stats, s32 strength);
 extern void AICarInit(CarAlt* car, s32 name, s32 flag);

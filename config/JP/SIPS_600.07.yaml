@@ -112,7 +112,7 @@ segments:
       - [0x3FE90, c,   tm1/explode]         # 0x80137748
       - [0x40B44, c,   tm1/grutils]         # 0x801383FC
       - [0x4108C, asm, tm1/screen]          # 0x80138944
-      - [0x4969C, asm, tm1/ua_sw]           # 0x80140F54
+      - [0x4969C, c,   tm1/ua_sw]           # 0x80140F54
       - [0x4A440, asm, tm1/ai_car_update]   # 0x80141CF8
       - [0x4AD5C, c,   tm1/ua_dash]         # 0x80142614
       - [0x4EA38, c,   tm1/ua_effect]       # 0x801462F0
@@ -194,7 +194,7 @@ segments:
       - {start: 0x94BC8, type: sbss, vram: 0x8018C53C, name: tm1/interactives}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C55C, name: tm1/explode}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C564, name: tm1/screen}
-      - {start: 0x94BC8, type: sbss, vram: 0x8018C5BC, name: tm1/ua_sw}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C5BC, name: tm1/ua_sw}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C5D8, name: tm1/ua_dash}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C5F8, name: tm1/ua_effect}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C604, name: tm1/hud}
