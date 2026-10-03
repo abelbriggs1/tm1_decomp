@@ -1,15 +1,15 @@
 {
   "measures": {
-    "fuzzy_match_percent": 5.7504077,
+    "fuzzy_match_percent": 5.797138,
     "total_code": "470784",
-    "matched_code": "27072",
-    "matched_code_percent": 5.7504077,
+    "matched_code": "27292",
+    "matched_code_percent": 5.797138,
     "total_data": "602900",
     "matched_data": "19020",
     "matched_data_percent": 3.154752,
     "total_functions": 1983,
-    "matched_functions": 240,
-    "matched_functions_percent": 12.102875,
+    "matched_functions": 246,
+    "matched_functions_percent": 12.405446,
     "total_units": 149
   },
   "units": [
@@ -2726,24 +2726,32 @@
     {
       "name": "tm1/sound_req",
       "measures": {
+        "fuzzy_match_percent": 61.11111,
         "total_code": "360",
+        "matched_code": "220",
+        "matched_code_percent": 61.11111,
         "matched_data_percent": 100.0,
         "total_functions": 8,
+        "matched_functions": 6,
+        "matched_functions_percent": 75.0,
         "complete_data_percent": 100.0,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "360",
+          "fuzzy_match_percent": 61.11111,
           "metadata": {}
         }
       ],
@@ -2751,18 +2759,21 @@
         {
           "name": "flushSoundRequestBuffer",
           "size": "116",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
         {
           "name": "soundFlushRequestBuffers",
           "size": "40",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "116"
         },
         {
           "name": "soundFlushRequestStopBuffers",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "156"
         },
@@ -2775,6 +2786,7 @@
         {
           "name": "soundInitRequestBuffers",
           "size": "40",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "212"
         },
@@ -2787,17 +2799,20 @@
         {
           "name": "soundProcessSpecialSounds",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "344"
         },
         {
           "name": "soundShutDownSpecialSounds",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "352"
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/sound_req.c",
         "progress_categories": [
           "tm1"
         ]
@@ -17401,19 +17416,29 @@
   "version": 2,
   "categories": [
     {
+      "id": "sdk",
+      "name": "sdk",
+      "measures": {
+        "total_code": "112236",
+        "total_data": "462792",
+        "total_functions": 974,
+        "total_units": 5
+      }
+    },
+    {
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 7.5504537,
+        "fuzzy_match_percent": 7.611812,
         "total_code": "358548",
-        "matched_code": "27072",
-        "matched_code_percent": 7.550453,
+        "matched_code": "27292",
+        "matched_code_percent": 7.611812,
         "total_data": "136096",
         "matched_data": "19020",
         "matched_data_percent": 13.97543,
         "total_functions": 1009,
-        "matched_functions": 240,
-        "matched_functions_percent": 23.785927,
+        "matched_functions": 246,
+        "matched_functions_percent": 24.380575,
         "total_units": 143
       }
     },
@@ -17427,16 +17452,6 @@
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
-      }
-    },
-    {
-      "id": "sdk",
-      "name": "sdk",
-      "measures": {
-        "total_code": "112236",
-        "total_data": "462792",
-        "total_functions": 974,
-        "total_units": 5
       }
     }
   ]
