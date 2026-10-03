@@ -2100,6 +2100,7 @@ Level5OpponentBitMask                    = 0x801717e4;
 Level6OpponentBitMask                    = 0x801717fc;
 OpponentBitMasks                         = 0x80171814;
 CarNumToCarName                          = 0x8017182c;
+gVehicleIdentity                         = 0x8017185c; // size:0x20
 DCL_DVLC                                 = 0x80171a80;
 DCC_DVLC                                 = 0x80172280;
 CF_DVLC                                  = 0x80172a80;

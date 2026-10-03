@@ -1,15 +1,15 @@
 {
   "measures": {
-    "fuzzy_match_percent": 8.2475195,
+    "fuzzy_match_percent": 8.312092,
     "total_code": "470784",
-    "matched_code": "38828",
-    "matched_code_percent": 8.2475195,
-    "total_data": "629732",
+    "matched_code": "39132",
+    "matched_code_percent": 8.312092,
+    "total_data": "629764",
     "matched_data": "70512",
-    "matched_data_percent": 11.1971445,
+    "matched_data_percent": 11.196575,
     "total_functions": 1983,
-    "matched_functions": 331,
-    "matched_functions_percent": 16.691881,
+    "matched_functions": 335,
+    "matched_functions_percent": 16.893595,
     "total_units": 134
   },
   "units": [
@@ -8145,24 +8145,31 @@
     {
       "name": "tm1/vehicle",
       "measures": {
+        "fuzzy_match_percent": 15.415821,
         "total_code": "1972",
-        "matched_data_percent": 100.0,
+        "matched_code": "304",
+        "matched_code_percent": 15.415822,
+        "total_data": "32",
         "total_functions": 9,
-        "complete_data_percent": 100.0,
+        "matched_functions": 4,
+        "matched_functions_percent": 44.444447,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "size": "32",
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "1972",
+          "fuzzy_match_percent": 15.415821,
           "metadata": {}
         }
       ],
@@ -8176,6 +8183,7 @@
         {
           "name": "InitVehicleDynamics",
           "size": "92",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "148"
         },
@@ -8188,12 +8196,14 @@
         {
           "name": "InitVehicleTweeking",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "336"
         },
         {
           "name": "TermVehicle",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "344"
         },
@@ -8218,11 +8228,13 @@
         {
           "name": "VehicleTransUpdate",
           "size": "196",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1776"
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/vehicle.c",
         "progress_categories": [
           "tm1"
         ]
@@ -17152,19 +17164,31 @@
   "version": 2,
   "categories": [
     {
+      "id": "data",
+      "name": "data",
+      "measures": {
+        "fuzzy_match_percent": 100.0,
+        "matched_code_percent": 100.0,
+        "total_data": "4012",
+        "matched_functions_percent": 100.0,
+        "complete_code_percent": 100.0,
+        "total_units": 1
+      }
+    },
+    {
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 10.829233,
+        "fuzzy_match_percent": 10.91402,
         "total_code": "358548",
-        "matched_code": "38828",
-        "matched_code_percent": 10.829233,
-        "total_data": "162928",
+        "matched_code": "39132",
+        "matched_code_percent": 10.914021,
+        "total_data": "162960",
         "matched_data": "70512",
-        "matched_data_percent": 43.27801,
+        "matched_data_percent": 43.269516,
         "total_functions": 1009,
-        "matched_functions": 331,
-        "matched_functions_percent": 32.804756,
+        "matched_functions": 335,
+        "matched_functions_percent": 33.201187,
         "total_units": 128
       }
     },
@@ -17176,18 +17200,6 @@
         "total_data": "462792",
         "total_functions": 974,
         "total_units": 5
-      }
-    },
-    {
-      "id": "data",
-      "name": "data",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "4012",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
       }
     }
   ]
