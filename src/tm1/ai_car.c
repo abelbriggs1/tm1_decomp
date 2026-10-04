@@ -4,6 +4,7 @@
 #include <rand.h>
 
 #include "tm1/ai_car_init.h"
+#include "tm1/ai_car_update.h"
 #include "tm1/car.h"
 #include "tm1/car_init.h"
 #include "tm1/car_update.h"
@@ -21,8 +22,6 @@
 
 s16 numAICarsInBattle = 0;
 s16 aiCarsInBattle[2];
-
-extern void AICarUpdateAttackProfile(CarAlt* car);
 
 #ifdef NON_MATCHING
 void AICarUpdate(CarAlt* car)
