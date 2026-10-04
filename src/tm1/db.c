@@ -7,6 +7,7 @@
 #include "tm1/hud.h"
 #include "tm1/interactives.h"
 #include "tm1/math.h"
+#include "tm1/screen.h"
 #include "tm1/shell.h"
 #include "tm1/targets.h"
 #include "tm1/ua.h"
@@ -22,7 +23,6 @@
 #define DMD_VERSION 0x43
 
 extern void exit(s32 code);
-extern void screenInitCarOccupants(void* node);
 
 s32 db3DEnvironmentTrap = 0;
 char dbOlder[] = "older";

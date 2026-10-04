@@ -292,6 +292,7 @@ class EnvironmentToolchain:
                 "tm1/hud": 8,
                 "tm1/targets": 8,
                 "tm1/shell": 8,
+                "tm1/screen": 8,
             }
         )
 

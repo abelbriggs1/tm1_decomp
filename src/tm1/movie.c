@@ -10,6 +10,7 @@
 #include "tm1/ctlpad.h"
 #include "tm1/fileio.h"
 #include "tm1/rt.h"
+#include "tm1/screen.h"
 #include "tm1/sound.h"
 #include "tm1/timer.h"
 
@@ -49,8 +50,6 @@ StrEnv dec;
 extern s32 StCdIntrFlag;
 
 extern void DecDCToutCallback(void (*func)());
-extern void screenDisplayToDisplay(s32 toRight, s32 unused);
-extern void screenDisplayImage(s32 rightHalf, u_long* data, s32 x, s32 y);
 
 void disp_mdec(u_long* src, s32* pflip);
 void strSetDefDecEnv(StrEnv* env, s32 flip, s32 x0, s32 y0, s32 x1, s32 y1, s32 w, s32 h);
