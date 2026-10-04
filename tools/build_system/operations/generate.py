@@ -71,7 +71,9 @@ def _generate_ninja_script(
         ninja.rule(
             name="cpp",
             description="CPP          $in",
-            command=f"{env.generate_c_preprocessor_cmd()} $in -o $out",
+            command=f"{env.generate_c_preprocessor_cmd()} -MT $out -MF $out.d $in -o $out",
+            depfile="$out.d",
+            deps="gcc",
         )
         ninja.rule(
             name="cc",
