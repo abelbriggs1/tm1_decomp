@@ -2,7 +2,7 @@
 #define __TM1_VEHICLE_H__
 
 #include "common.h"
-#include "tm1/long_vector.h"
+#include "tm1/math.h"
 #include <libgte.h>
 
 typedef struct Vehicle {
@@ -18,10 +18,10 @@ typedef struct Vehicle {
     /*0x28*/ s32 turnMax;
     /*0x2C*/ s32 moveMaxScale;
     /*0x30*/ s32 turnMaxScale;
-    /*0x34*/ VEC3 pos;
-    /*0x40*/ VEC3 vel;
-    /*0x4C*/ VEC3 ang;
-    /*0x58*/ VEC3 angVel;
+    /*0x34*/ VECTOR3 pos;
+    /*0x40*/ VECTOR3 vel;
+    /*0x4C*/ VECTOR3 ang;
+    /*0x58*/ VECTOR3 angVel;
     /*0x64*/ MATRIX mat;
 } Vehicle; /* 0x84 */
 

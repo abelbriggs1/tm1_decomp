@@ -4,7 +4,7 @@
 #include "common.h"
 #include "tm1/car.h"
 #include "tm1/grutils.h"
-#include "tm1/long_vector.h"
+#include "tm1/math.h"
 
 typedef struct {
     /* 0x00 */ u8 pad00[3];
@@ -43,8 +43,8 @@ typedef struct {
 void carSetPowerupDelaysBySkillLevel(s32 level);
 s32 getSpecialWeaponCost(s32 id);
 void UpdateWeapons(Car* car, u8 isPlayer);
-void UpdatePlayerWeaponPadStatus(Car* car);
-void UpdateAIWeaponPadStatus(CarAlt* car);
+void UpdatePlayerWeaponPadStatus(PlayerCar* car);
+void UpdateAIWeaponPadStatus(AICar* car);
 u16 UpdateGuns(Car* car, u8 isPlayer);
 void UpdateNonGuns(Car* car, u8 isPlayer);
 void FireMissiles(Car* car, u8 isPlayer);
@@ -61,14 +61,14 @@ u8 carDropWeapon(u32 kind, s32 idx, s32* pos, s32 power);
 void check_dropweap_impact(s32 i);
 void drawOil(OilPrim* prim, s32* pos, s32 view);
 void displayDropWeapons(RenderCtx* ctx, s32 view);
-void carLockon(u8 who, LVECTOR** out);
-void carLockon2(u8 who, LVECTOR** out);
+void carLockon(u8 who, VECTOR3** out);
+void carLockon2(u8 who, VECTOR3** out);
 void carInitFlamethrowers(void);
 s16 find_free_flamethrower(void);
 void fireRearFlameThrower(Car* car, u8 isPlayer);
 s16 fireFlameThrower(Car* car, u8 isPlayer, u8 rear, s32* pos);
 void displayFlamethrowers(void);
-void carResetGunHeat(Car* car);
+void carResetGunHeat(PlayerCar* car);
 void carInitPickupWeapons(void);
 void setPickup(s32* pos, s32 obj, s32 n);
 void regeneratePickupWeapons(void);

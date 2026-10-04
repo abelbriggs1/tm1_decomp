@@ -2,10 +2,10 @@
 #define __TM1_EXPLOSION_H__
 
 #include "common.h"
-#include "tm1/long_vector.h"
+#include "tm1/math.h"
 
 typedef struct Explosion {
-    /*0x00*/ VEC3 pos;
+    /*0x00*/ VECTOR3 pos;
     /*0x0C*/ u8 unk0C;
     /*0x0D*/ u8 pad0D[3];
     /*0x10*/ s32 unk10;
@@ -18,7 +18,7 @@ typedef struct Explosion {
     /*0x2A*/ u16 unk2A;
     /*0x2C*/ u8 unk2C;
     /*0x2D*/ u8 pad2D[3];
-    /*0x30*/ VEC3 vel;
+    /*0x30*/ VECTOR3 vel;
     /*0x3C*/ u8 idx;
     /*0x3D*/ u8 pad3D[3];
 } Explosion;
@@ -43,31 +43,31 @@ extern ExpFrame FlameInfo[10];
 extern ExpFrame GburstInfo[12];
 extern ExpFrame SteamInfo[16];
 
-Explosion* init_explosion(VEC3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag);
+Explosion* init_explosion(VECTOR3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag);
 void animate_explosions(void);
 s32 find_free_explosion(void);
-void do_simple_spark(VEC3* pos);
-void do_simple_explosion(VEC3* pos);
-Explosion* do_blue_explosion(VEC3* pos);
-void do_flamethrower_burst(VEC3* pos);
-void do_mini_explosion(VEC3* pos);
-void do_big_explosion(VEC3* pos);
-void do_bigger_explosion(VEC3* pos);
-void do_mondo_explosion(VEC3* pos);
-void do_missile_plume(VEC3* pos);
-void do_flames(VEC3* pos);
-void do_groundburst(VEC3* pos);
-void do_big_flames(VEC3* pos);
-void do_afterburner(VEC3* pos, VEC3* vel);
-void do_flare(VEC3* pos);
-void do_burn(VEC3* pos);
-void do_flash(VEC3* pos);
-void do_mflash(VEC3* pos);
-void do_gun_plume(VEC3* pos);
-void do_smoke(VEC3* pos);
-void do_steam(VEC3* pos);
-void do_big_smoke(VEC3* pos);
-void do_puff(VEC3* pos);
+void do_simple_spark(VECTOR3* pos);
+void do_simple_explosion(VECTOR3* pos);
+Explosion* do_blue_explosion(VECTOR3* pos);
+void do_flamethrower_burst(VECTOR3* pos);
+void do_mini_explosion(VECTOR3* pos);
+void do_big_explosion(VECTOR3* pos);
+void do_bigger_explosion(VECTOR3* pos);
+void do_mondo_explosion(VECTOR3* pos);
+void do_missile_plume(VECTOR3* pos);
+void do_flames(VECTOR3* pos);
+void do_groundburst(VECTOR3* pos);
+void do_big_flames(VECTOR3* pos);
+void do_afterburner(VECTOR3* pos, VECTOR3* vel);
+void do_flare(VECTOR3* pos);
+void do_burn(VECTOR3* pos);
+void do_flash(VECTOR3* pos);
+void do_mflash(VECTOR3* pos);
+void do_gun_plume(VECTOR3* pos);
+void do_smoke(VECTOR3* pos);
+void do_steam(VECTOR3* pos);
+void do_big_smoke(VECTOR3* pos);
+void do_puff(VECTOR3* pos);
 void clear_explosions(void);
 
 #endif // __TM1_EXPLOSION_H__

@@ -16478,6 +16478,16 @@
   "version": 2,
   "categories": [
     {
+      "id": "sdk",
+      "name": "sdk",
+      "measures": {
+        "total_code": "112236",
+        "total_data": "462792",
+        "total_functions": 974,
+        "total_units": 5
+      }
+    },
+    {
       "id": "tm1",
       "name": "tm1",
       "measures": {
@@ -16492,16 +16502,6 @@
         "matched_functions": 470,
         "matched_functions_percent": 46.580772,
         "total_units": 94
-      }
-    },
-    {
-      "id": "sdk",
-      "name": "sdk",
-      "measures": {
-        "total_code": "112236",
-        "total_data": "462792",
-        "total_functions": 974,
-        "total_units": 5
       }
     },
     {

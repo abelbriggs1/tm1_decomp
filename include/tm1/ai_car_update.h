@@ -5,11 +5,11 @@
 
 #include "tm1/car.h"
 
-void AICarUpdateAttackProfile(CarAlt* car);
-void AIPickAttackWeapon(CarAlt* car);
-u8 AIInSpecialParameters(CarAlt* car);
-void AICarSetDefaultWeapons(CarAlt* car);
-void AICarChooseForeWeapon(CarAlt* car);
-void AICarChooseAftWeapon(CarAlt* car);
+void AICarUpdateAttackProfile(AICar* car);
+void AIPickAttackWeapon(AICar* car);
+u8 AIInSpecialParameters(AICar* car);
+void AICarSetDefaultWeapons(AICar* car);
+void AICarChooseForeWeapon(AICar* car);
+void AICarChooseAftWeapon(AICar* car);
 
 #endif /* __TM1_AI_CAR_UPDATE_H__ */

@@ -20,7 +20,7 @@
 static s32 potHoleTics = 0;
 
 #ifdef NON_MATCHING
-s16 GetClosestTriggerPt(void* car, u8 which)
+s16 GetClosestTriggerPt(Car* car, u8 isPlayer)
 {
     s16 group;
     s16 i;
@@ -31,20 +31,20 @@ s16 GetClosestTriggerPt(void* car, u8 which)
     CarMotion* m;
 
     best = 0;
-    if (which) {
-        group = ((Car*)car)->unkC0;
-        m = &((Car*)car)->motion;
+    if (isPlayer) {
+        group = PLAYER_CAR(car)->unkC0;
+        m = &PLAYER_CAR(car)->motion;
     } else {
-        group = ((CarAlt*)car)->unk176;
-        m = &((CarAlt*)car)->motion;
+        group = AI_CAR(car)->unk176;
+        m = &AI_CAR(car)->motion;
     }
     bestDist = 0x7FFFFFFF;
     for (i = 0; i < numTriggerPoints; i++) {
         if (tPoints[i].type != group && group < 11) {
             continue;
         }
-        dx = m->pos.x - tPoints[i].x;
-        dz = m->pos.y - tPoints[i].z;
+        dx = m->pos.vx - tPoints[i].x;
+        dz = m->pos.vy - tPoints[i].z;
         if (dx < 0) {
             dx = -dx;
         }
@@ -64,7 +64,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", GetClosestTriggerPt);
 #endif
 
 #ifdef NON_MATCHING
-void CalcTireCoordinates(Car* car, u8 which)
+void CalcTireCoordinates(Car* car, u8 isPlayer)
 {
     CarMotion* m;
     CarStats* st;
@@ -81,43 +81,43 @@ void CalcTireCoordinates(Car* car, u8 which)
     VECTOR vin;
     VECTOR vout;
 
-    if (which) {
-        m = &car->motion;
-        st = &car->stats;
-        tires = car->tires;
+    if (isPlayer) {
+        m = &PLAYER_CAR(car)->motion;
+        st = &PLAYER_CAR(car)->stats;
+        tires = PLAYER_CAR(car)->tires;
     } else {
-        m = &((CarAlt*)car)->motion;
-        st = &((CarAlt*)car)->stats;
-        tires = ((CarAlt*)car)->tires;
+        m = &AI_CAR(car)->motion;
+        st = &AI_CAR(car)->stats;
+        tires = AI_CAR(car)->tires;
     }
     vin.vx = -st->unk74 / 2;
     vin.vy = st->unk80;
     vin.vz = -st->unk6C;
     mathMulTransVec(&m->mat2, &vin, (VECTOR*)&tires[0].unk2C);
-    tires[0].unk38 = m->pos.x + tires[0].unk2C.x;
-    tires[0].unk3C = m->pos.y + tires[0].unk2C.y;
+    tires[0].unk38 = m->pos.vx + tires[0].unk2C.vx;
+    tires[0].unk3C = m->pos.vy + tires[0].unk2C.vy;
     vin.vx = st->unk74 / 2;
     vin.vy = st->unk80;
     vin.vz = -st->unk6C;
     mathMulTransVec(&m->mat2, &vin, (VECTOR*)&tires[1].unk2C);
-    tires[1].unk38 = m->pos.x + tires[1].unk2C.x;
-    tires[1].unk3C = m->pos.y + tires[1].unk2C.y;
+    tires[1].unk38 = m->pos.vx + tires[1].unk2C.vx;
+    tires[1].unk3C = m->pos.vy + tires[1].unk2C.vy;
     vin.vx = -st->unk74 / 2;
     vin.vy = st->unk84;
     vin.vz = -st->unk6C;
     mathMulTransVec(&m->mat2, &vin, (VECTOR*)&tires[2].unk2C);
-    tires[2].unk38 = m->pos.x + tires[2].unk2C.x;
-    tires[2].unk3C = m->pos.y + tires[2].unk2C.y;
+    tires[2].unk38 = m->pos.vx + tires[2].unk2C.vx;
+    tires[2].unk3C = m->pos.vy + tires[2].unk2C.vy;
     vin.vx = st->unk74 / 2;
     vin.vy = st->unk84;
     vin.vz = -st->unk6C;
     mathMulTransVec(&m->mat2, &vin, (VECTOR*)&tires[3].unk2C);
-    tires[3].unk38 = m->pos.x + tires[3].unk2C.x;
-    tires[3].unk3C = m->pos.y + tires[3].unk2C.y;
+    tires[3].unk38 = m->pos.vx + tires[3].unk2C.vx;
+    tires[3].unk3C = m->pos.vy + tires[3].unk2C.vy;
 
-    vin.vx = m->vel.x / 32;
-    vin.vy = m->vel.y / 32;
-    vin.vz = m->vel.z / 32;
+    vin.vx = m->vel.vx / 32;
+    vin.vy = m->vel.vy / 32;
+    vin.vz = m->vel.vz / 32;
     mathMulTransVec(&m->mat, &vin, &vout);
     tires[0].unk38 += vout.vx;
     tires[0].unk3C += vout.vy;
@@ -132,13 +132,13 @@ void CalcTireCoordinates(Car* car, u8 which)
     tires[3].unk3C += vout.vy;
     tires[3].unk40 += vout.vz;
 
-    g0 = GetGroupTestPointIsIn(tires[0].unk38, tires[0].unk3C, m->pos.z);
-    g1 = GetGroupTestPointIsIn(tires[1].unk38, tires[1].unk3C, m->pos.z);
-    g2 = GetGroupTestPointIsIn(tires[2].unk38, tires[2].unk3C, m->pos.z);
-    g3 = GetGroupTestPointIsIn(tires[3].unk38, tires[3].unk3C, m->pos.z);
-    v = m->vel.y / 32;
+    g0 = GetGroupTestPointIsIn(tires[0].unk38, tires[0].unk3C, m->pos.vz);
+    g1 = GetGroupTestPointIsIn(tires[1].unk38, tires[1].unk3C, m->pos.vz);
+    g2 = GetGroupTestPointIsIn(tires[2].unk38, tires[2].unk3C, m->pos.vz);
+    g3 = GetGroupTestPointIsIn(tires[3].unk38, tires[3].unk3C, m->pos.vz);
+    v = m->vel.vy / 32;
     if (v < 0) {
-        v = -m->vel.y / 32;
+        v = -m->vel.vy / 32;
     }
     lim = st->unk5C + v;
 
@@ -148,7 +148,7 @@ void CalcTireCoordinates(Car* car, u8 which)
         dd = y - triggerPtGroups.pos[tires[0].unk10].y;
         if (dd > 0) {
             if ((-lim < dy || tires[1].unk10 == g0 || tires[2].unk10 == g0 || tires[3].unk10 == g0)
-                && m->vel.y != 0) {
+                && m->vel.vy != 0) {
                 tires[0].unk10 = g0;
                 if (tires[0].unk0 == 0) {
                     tires[0].unk0 = 1;
@@ -180,7 +180,7 @@ void CalcTireCoordinates(Car* car, u8 which)
         dd = y - triggerPtGroups.pos[tires[1].unk10].y;
         if (dd > 0) {
             if ((-lim < dy || tires[0].unk10 == g1 || tires[2].unk10 == g1 || tires[3].unk10 == g1)
-                && m->vel.y != 0) {
+                && m->vel.vy != 0) {
                 tires[1].unk10 = g1;
                 if (tires[1].unk0 == 0) {
                     tires[1].unk0 = 1;
@@ -212,7 +212,7 @@ void CalcTireCoordinates(Car* car, u8 which)
         dd = y - triggerPtGroups.pos[tires[2].unk10].y;
         if (dd > 0) {
             if ((-lim < dy || tires[0].unk10 == g2 || tires[1].unk10 == g2 || tires[3].unk10 == g2)
-                && m->vel.y != 0) {
+                && m->vel.vy != 0) {
                 tires[2].unk10 = g2;
                 if (tires[2].unk0 == 0) {
                     tires[2].unk0 = 1;
@@ -244,7 +244,7 @@ void CalcTireCoordinates(Car* car, u8 which)
         dd = y - triggerPtGroups.pos[tires[3].unk10].y;
         if (dd > 0) {
             if (-lim < dy || tires[0].unk10 == g3 || tires[1].unk10 == g3 || tires[2].unk10 == g3) {
-                if (m->vel.y != 0) {
+                if (m->vel.vy != 0) {
                     tires[3].unk10 = g3;
                     if (tires[3].unk0 == 0) {
                         tires[3].unk0 = 1;
@@ -271,12 +271,12 @@ void CalcTireCoordinates(Car* car, u8 which)
             }
         }
     }
-    if (which) {
+    if (isPlayer) {
         if (g0 == g1 && g0 == g2 && g0 == g3) {
-            car->unkC0 = g0;
+            PLAYER_CAR(car)->unkC0 = g0;
         }
     } else {
-        ((CarAlt*)car)->unk176 = g0;
+        AI_CAR(car)->unk176 = g0;
     }
 }
 #else
@@ -321,7 +321,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", GetGroupTestPointIsIn);
 #endif
 
 #ifdef NON_MATCHING
-void CheckBridges(Car* car, u8 which)
+void CheckBridges(Car* car, u8 isPlayer)
 {
     CarMotion* m;
     CarStats* st;
@@ -339,22 +339,22 @@ void CheckBridges(Car* car, u8 which)
     s16 other;
     s16 mine;
 
-    if (which) {
-        m = &car->motion;
-        collision = &car->collision;
-        padFlag = car->skid[0x15];
-        st = &car->stats;
-        flags = car->flags;
-        tires = car->tires;
+    if (isPlayer) {
+        m = &PLAYER_CAR(car)->motion;
+        collision = &PLAYER_CAR(car)->collision;
+        padFlag = PLAYER_CAR(car)->skid[0x15];
+        st = &PLAYER_CAR(car)->stats;
+        flags = PLAYER_CAR(car)->flags;
+        tires = PLAYER_CAR(car)->tires;
     } else {
-        m = &((CarAlt*)car)->motion;
-        collision = &((CarAlt*)car)->collision;
+        m = &AI_CAR(car)->motion;
+        collision = &AI_CAR(car)->collision;
         padFlag = 0;
-        st = &((CarAlt*)car)->stats;
-        flags = ((CarAlt*)car)->flags;
-        tires = ((CarAlt*)car)->tires;
+        st = &AI_CAR(car)->stats;
+        flags = AI_CAR(car)->flags;
+        tires = AI_CAR(car)->tires;
     }
-    d = m->vel.y / 32;
+    d = m->vel.vy / 32;
     if (flags[10] == 0) {
         h = st->unk5C + __builtin_abs(d);
     } else {
@@ -376,8 +376,8 @@ void CheckBridges(Car* car, u8 which)
             }
         }
         GetBridgeTireHeight(&tires[0], h);
-        if (which && tires[0].unk3 == 0 && tires[0].unk26 < 2) {
-            tires[0].unk14 = (bridges[tires[0].unk08].unk0A * m->vel.y) / st->unkA8;
+        if (isPlayer && tires[0].unk3 == 0 && tires[0].unk26 < 2) {
+            tires[0].unk14 = (bridges[tires[0].unk08].unk0A * m->vel.vy) / st->unkA8;
         }
         if ((tires[0].unk12 & 7) == 0) {
             tires[0].unk12++;
@@ -405,8 +405,8 @@ void CheckBridges(Car* car, u8 which)
             }
         }
         GetBridgeTireHeight(&tires[1], h);
-        if (which && tires[1].unk3 == 0 && tires[1].unk26 < 2) {
-            tires[1].unk14 = (bridges[tires[1].unk08].unk0A * m->vel.y) / st->unkA8;
+        if (isPlayer && tires[1].unk3 == 0 && tires[1].unk26 < 2) {
+            tires[1].unk14 = (bridges[tires[1].unk08].unk0A * m->vel.vy) / st->unkA8;
         }
         if ((tires[1].unk12 & 7) == 0) {
             tires[1].unk12++;
@@ -434,8 +434,8 @@ void CheckBridges(Car* car, u8 which)
             }
         }
         GetBridgeTireHeight(&tires[2], h);
-        if (which && tires[2].unk3 == 0 && tires[2].unk26 < 2) {
-            tires[2].unk14 = (bridges[tires[2].unk08].unk0A * m->vel.y) / st->unkA8;
+        if (isPlayer && tires[2].unk3 == 0 && tires[2].unk26 < 2) {
+            tires[2].unk14 = (bridges[tires[2].unk08].unk0A * m->vel.vy) / st->unkA8;
         }
     } else {
         tires[2].unk14 = -1;
@@ -460,8 +460,8 @@ void CheckBridges(Car* car, u8 which)
             }
         }
         GetBridgeTireHeight(&tires[3], h);
-        if (which && tires[3].unk3 == 0 && tires[3].unk26 < 2) {
-            tires[3].unk14 = (bridges[tires[3].unk08].unk0A * m->vel.y) / st->unkA8;
+        if (isPlayer && tires[3].unk3 == 0 && tires[3].unk26 < 2) {
+            tires[3].unk14 = (bridges[tires[3].unk08].unk0A * m->vel.vy) / st->unkA8;
         }
     } else {
         tires[3].unk14 = -1;
@@ -472,9 +472,9 @@ void CheckBridges(Car* car, u8 which)
     }
 
     ok = 0;
-    if (which) {
+    if (isPlayer) {
         if (flags[23] == 0 && flags[11] == 0) {
-            v = m->vel.y;
+            v = m->vel.vy;
             if (v < 0) {
                 v = -v;
             }
@@ -484,45 +484,45 @@ void CheckBridges(Car* car, u8 which)
         ok = flags[0] != 0;
     }
     if (ok) {
-        if (m->rot.x >= 57) {
-            if (m->rot.x >= 228) {
-                m->vel.y = m->vel.y + 3 * st->unkA0;
-            } else if (m->rot.x >= 114) {
-                m->vel.y = m->vel.y + 2 * st->unkA0;
+        if (m->rot.vx >= 57) {
+            if (m->rot.vx >= 228) {
+                m->vel.vy = m->vel.vy + 3 * st->unkA0;
+            } else if (m->rot.vx >= 114) {
+                m->vel.vy = m->vel.vy + 2 * st->unkA0;
             } else {
-                m->vel.y = m->vel.y + st->unkA0;
+                m->vel.vy = m->vel.vy + st->unkA0;
             }
-        } else if (m->rot.x < -56) {
-            if (m->rot.x < -227) {
-                m->vel.y = m->vel.y - 3 * st->unkA0;
-            } else if (m->rot.x < -113) {
-                m->vel.y = m->vel.y - 2 * st->unkA0;
+        } else if (m->rot.vx < -56) {
+            if (m->rot.vx < -227) {
+                m->vel.vy = m->vel.vy - 3 * st->unkA0;
+            } else if (m->rot.vx < -113) {
+                m->vel.vy = m->vel.vy - 2 * st->unkA0;
             } else {
-                m->vel.y = m->vel.y - st->unkA0;
+                m->vel.vy = m->vel.vy - st->unkA0;
             }
         }
     }
-    if (which) {
-        v = m->vel.y;
+    if (isPlayer) {
+        v = m->vel.vy;
         if (v < 0) {
             v = -v;
         }
         if (st->unkAC < v) {
-            if (m->rot.y >= 171) {
-                if (m->vel.y <= 0) {
-                    if (m->rotDelta.z < st->unkEC) {
-                        m->rotDelta.z = m->rotDelta.z + st->unkCC / 2;
+            if (m->rot.vy >= 171) {
+                if (m->vel.vy <= 0) {
+                    if (m->rotDelta.vz < st->unkEC) {
+                        m->rotDelta.vz = m->rotDelta.vz + st->unkCC / 2;
                     }
-                } else if (-st->unkEC < m->rotDelta.z) {
-                    m->rotDelta.z = m->rotDelta.z - st->unkCC / 2;
+                } else if (-st->unkEC < m->rotDelta.vz) {
+                    m->rotDelta.vz = m->rotDelta.vz - st->unkCC / 2;
                 }
-            } else if (m->rot.y < -170) {
-                if (m->vel.y > 0) {
-                    if (m->rotDelta.z < st->unkEC) {
-                        m->rotDelta.z = m->rotDelta.z + st->unkCC / 2;
+            } else if (m->rot.vy < -170) {
+                if (m->vel.vy > 0) {
+                    if (m->rotDelta.vz < st->unkEC) {
+                        m->rotDelta.vz = m->rotDelta.vz + st->unkCC / 2;
                     }
-                } else if (-st->unkEC < m->rotDelta.z) {
-                    m->rotDelta.z = m->rotDelta.z - st->unkCC / 2;
+                } else if (-st->unkEC < m->rotDelta.vz) {
+                    m->rotDelta.vz = m->rotDelta.vz - st->unkCC / 2;
                 }
             }
         }
@@ -547,7 +547,7 @@ void CheckBridges(Car* car, u8 which)
             collision->unk12 = 0xE;
         }
     } else if (flags[10] != 0) {
-        SetBounce(car, 3, 2, 1, which);
+        SetBounce(car, 3, 2, 1, isPlayer);
         collision->unk12 = 0x27;
     }
     flags[10] = any0;
@@ -831,20 +831,20 @@ void GetBridgeTireHeight(CarTire* tire, s32 h)
 INCLUDE_ASM("asm/nonmatchings/tm1/car_update", GetBridgeTireHeight);
 #endif
 
-void CheckPotHoles(Car* car, u8 which)
+void CheckPotHoles(Car* car, u8 isPlayer)
 {
     CarTire* tires;
     u8* flags;
     CarCollision* collision;
 
-    if (which) {
-        tires = car->tires;
-        flags = car->flags;
-        collision = &car->collision;
+    if (isPlayer) {
+        tires = PLAYER_CAR(car)->tires;
+        flags = PLAYER_CAR(car)->flags;
+        collision = &PLAYER_CAR(car)->collision;
     } else {
-        tires = ((CarAlt*)car)->tires;
-        flags = ((CarAlt*)car)->flags;
-        collision = &((CarAlt*)car)->collision;
+        tires = AI_CAR(car)->tires;
+        flags = AI_CAR(car)->flags;
+        collision = &AI_CAR(car)->collision;
     }
     if (tires[0].unk3 == 0) {
         CheckForPotHole(&tires[0], collision);
@@ -907,20 +907,20 @@ void CheckForPotHole(CarTire* tire, CarCollision* collision)
 INCLUDE_ASM("asm/nonmatchings/tm1/car_update", CheckForPotHole);
 #endif
 
-void CheckCurbs(Car* car, u8 which)
+void CheckCurbs(Car* car, u8 isPlayer)
 {
     CarTire* tires;
     u8* flags;
     CarCollision* collision;
 
-    if (which) {
-        tires = car->tires;
-        flags = car->flags;
-        collision = &car->collision;
+    if (isPlayer) {
+        tires = PLAYER_CAR(car)->tires;
+        flags = PLAYER_CAR(car)->flags;
+        collision = &PLAYER_CAR(car)->collision;
     } else {
-        tires = ((CarAlt*)car)->tires;
-        flags = ((CarAlt*)car)->flags;
-        collision = &((CarAlt*)car)->collision;
+        tires = AI_CAR(car)->tires;
+        flags = AI_CAR(car)->flags;
+        collision = &AI_CAR(car)->collision;
     }
     if (tires[0].unk3 == 0) {
         CheckForCurb(&tires[0], collision);
@@ -980,7 +980,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", CheckForCurb);
 #endif
 
 #ifdef NON_MATCHING
-void CheckSlickSpots(Car* car, u8 which)
+void CheckSlickSpots(Car* car, u8 isPlayer)
 {
     CarMotion* m;
     u8* flags;
@@ -988,14 +988,14 @@ void CheckSlickSpots(Car* car, u8 which)
     s16 i;
     s16 n;
 
-    if (which) {
-        m = &car->motion;
-        flags = car->flags;
-        st = &car->stats;
+    if (isPlayer) {
+        m = &PLAYER_CAR(car)->motion;
+        flags = PLAYER_CAR(car)->flags;
+        st = &PLAYER_CAR(car)->stats;
     } else {
-        m = &((CarAlt*)car)->motion;
-        flags = ((CarAlt*)car)->flags;
-        st = &((CarAlt*)car)->stats;
+        m = &AI_CAR(car)->motion;
+        flags = AI_CAR(car)->flags;
+        st = &AI_CAR(car)->stats;
     }
     if (flags[18]) {
         st->unk1C -= GetFieldsLastFrame();
@@ -1010,16 +1010,16 @@ void CheckSlickSpots(Car* car, u8 which)
     }
     n = numSlickSpots;
     for (i = 0; i < n; i++) {
-        if (m->pos.x < slickSpots[i].x) {
+        if (m->pos.vx < slickSpots[i].x) {
             continue;
         }
-        if (m->pos.y < slickSpots[i].z) {
+        if (m->pos.vy < slickSpots[i].z) {
             continue;
         }
-        if (slickSpots[i].x + slickSpots[i].w < m->pos.x) {
+        if (slickSpots[i].x + slickSpots[i].w < m->pos.vx) {
             continue;
         }
-        if (slickSpots[i].z + slickSpots[i].h < m->pos.y) {
+        if (slickSpots[i].z + slickSpots[i].h < m->pos.vy) {
             continue;
         }
         flags[13] = 1;
@@ -1031,7 +1031,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", CheckSlickSpots);
 #endif
 
 #ifdef NON_MATCHING
-void CheckHealthStands(Car* car, u8 which)
+void CheckHealthStands(Car* car, u8 isPlayer)
 {
     CarMotion* m;
     CarTire* tires;
@@ -1039,20 +1039,20 @@ void CheckHealthStands(Car* car, u8 which)
     s8* sel;
     CarStats* st;
 
-    if (which) {
-        m = &car->motion;
-        tires = car->tires;
-        flags = car->flags;
-        sel = &car->standId;
-        st = &car->stats;
+    if (isPlayer) {
+        m = &PLAYER_CAR(car)->motion;
+        tires = PLAYER_CAR(car)->tires;
+        flags = PLAYER_CAR(car)->flags;
+        sel = &PLAYER_CAR(car)->standId;
+        st = &PLAYER_CAR(car)->stats;
     } else {
-        m = &((CarAlt*)car)->motion;
-        tires = ((CarAlt*)car)->tires;
-        flags = ((CarAlt*)car)->flags;
-        sel = &((CarAlt*)car)->unk04;
-        st = &((CarAlt*)car)->stats;
+        m = &AI_CAR(car)->motion;
+        tires = AI_CAR(car)->tires;
+        flags = AI_CAR(car)->flags;
+        sel = &AI_CAR(car)->unk04;
+        st = &AI_CAR(car)->stats;
     }
-    if (!which) {
+    if (!isPlayer) {
         flags[22] = 0;
         tires[0].unk0E = 0;
         tires[1].unk0E = 0;
@@ -1077,7 +1077,7 @@ void CheckHealthStands(Car* car, u8 which)
     if (st->unk40 <= 0) {
         return;
     }
-    if (m->vel.y > 0) {
+    if (m->vel.vy > 0) {
         if (tires[2].unk0E != 0) {
             flags[22] = 1;
             *sel = tires[2].unk0E;
@@ -1102,21 +1102,21 @@ void CheckHealthStands(Car* car, u8 which)
         }
         return;
     }
-    if (!which) {
+    if (!isPlayer) {
         return;
     }
     if (st->unk01 != 0) {
         return;
     }
-    if (m->vel.y != 0) {
+    if (m->vel.vy != 0) {
         return;
     }
     switch (shellGetCurrentLevel()) {
     case 1:
-        if (m->pos.x >= -12464) {
-            if (m->pos.x < -12399) {
-                if (m->pos.y >= -4360) {
-                    if (m->pos.y < -4239) {
+        if (m->pos.vx >= -12464) {
+            if (m->pos.vx < -12399) {
+                if (m->pos.vy >= -4360) {
+                    if (m->pos.vy < -4239) {
                         st->unk01 = 1;
                         st->unk40 = st->unk44;
                     }
@@ -1125,10 +1125,10 @@ void CheckHealthStands(Car* car, u8 which)
         }
         break;
     case 2:
-        if (m->pos.x >= 16288) {
-            if (m->pos.x < 16337) {
-                if (m->pos.y >= -7600) {
-                    if (m->pos.y < -7439) {
+        if (m->pos.vx >= 16288) {
+            if (m->pos.vx < 16337) {
+                if (m->pos.vy >= -7600) {
+                    if (m->pos.vy < -7439) {
                         st->unk01 = 1;
                         st->unk40 = st->unk44;
                     }
@@ -1137,10 +1137,10 @@ void CheckHealthStands(Car* car, u8 which)
         }
         break;
     case 3:
-        if (m->pos.x >= 11840) {
-            if (m->pos.x < 12161) {
-                if (m->pos.y >= -4000) {
-                    if (m->pos.y < -3919) {
+        if (m->pos.vx >= 11840) {
+            if (m->pos.vx < 12161) {
+                if (m->pos.vy >= -4000) {
+                    if (m->pos.vy < -3919) {
                         st->unk01 = 1;
                         st->unk40 = st->unk44;
                     }
@@ -1149,10 +1149,10 @@ void CheckHealthStands(Car* car, u8 which)
         }
         break;
     case 4:
-        if (m->pos.x >= 22640) {
-            if (m->pos.x < 22673) {
-                if (m->pos.y >= 11632) {
-                    if (m->pos.y < 11793) {
+        if (m->pos.vx >= 22640) {
+            if (m->pos.vx < 22673) {
+                if (m->pos.vy >= 11632) {
+                    if (m->pos.vy < 11793) {
                         st->unk01 = 1;
                         st->unk40 = st->unk44;
                     }
@@ -1161,10 +1161,10 @@ void CheckHealthStands(Car* car, u8 which)
         }
         break;
     case 5:
-        if (m->pos.x >= 8272) {
-            if (m->pos.x < 8345) {
-                if (m->pos.y >= 10072) {
-                    if (m->pos.y < 10145) {
+        if (m->pos.vx >= 8272) {
+            if (m->pos.vx < 8345) {
+                if (m->pos.vy >= 10072) {
+                    if (m->pos.vy < 10145) {
                         st->unk01 = 1;
                         st->unk40 = st->unk44;
                     }
@@ -1179,14 +1179,14 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", CheckHealthStands);
 #endif
 
 #ifdef NON_MATCHING
-void UpdateTirePositions(Car* car, u8 which)
+void UpdateTirePositions(Car* car, u8 isPlayer)
 {
     CarMotion* m;
     CarStats* st;
     CarTire* tires;
     u8* flags;
     CarBounce* bounce;
-    CarAlt* ai;
+    AICar* ai;
     s32 uaIndex;
     s32 spd;
     s32 hi;
@@ -1201,24 +1201,24 @@ void UpdateTirePositions(Car* car, u8 which)
     s32 ang;
     s32 ang2;
 
-    if (which) {
-        m = &car->motion;
-        st = &car->stats;
-        tires = car->tires;
-        flags = car->flags;
-        uaIndex = car->uaIndex;
-        bounce = &car->bounce;
+    if (isPlayer) {
+        m = &PLAYER_CAR(car)->motion;
+        st = &PLAYER_CAR(car)->stats;
+        tires = PLAYER_CAR(car)->tires;
+        flags = PLAYER_CAR(car)->flags;
+        uaIndex = PLAYER_CAR(car)->uaIndex;
+        bounce = &PLAYER_CAR(car)->bounce;
         spd = 0;
         ai = 0;
     } else {
-        m = &((CarAlt*)car)->motion;
-        st = &((CarAlt*)car)->stats;
-        tires = ((CarAlt*)car)->tires;
-        flags = ((CarAlt*)car)->flags;
-        bounce = &((CarAlt*)car)->bounce;
-        spd = ((CarAlt*)car)->unk38;
-        ai = (CarAlt*)car;
-        uaIndex = ((CarAlt*)car)->uaIndex;
+        m = &AI_CAR(car)->motion;
+        st = &AI_CAR(car)->stats;
+        tires = AI_CAR(car)->tires;
+        flags = AI_CAR(car)->flags;
+        bounce = &AI_CAR(car)->bounce;
+        spd = AI_CAR(car)->unk38;
+        ai = AI_CAR(car);
+        uaIndex = AI_CAR(car)->uaIndex;
     }
     tires[0].unk40 = (s16)tires[0].unk24 + tires[0].unk16 + tires[0].unk18 + (s16)tires[0].unk1C
         + (s16)tires[0].unk1E + tires[0].unk20;
@@ -1267,14 +1267,14 @@ void UpdateTirePositions(Car* car, u8 which)
         tires[3].unk40 = lim;
     }
     if (flags[23] != 0) {
-        UpdateRollingCar(car, which);
+        UpdateRollingCar(car, isPlayer);
     } else if (flags[0] == 0) {
-        m->rot.y = ratan2(
+        m->rot.vy = ratan2(
             (tires[1].unk40 - tires[0].unk40 + tires[3].unk40 - tires[2].unk40) / 2, st->unk74);
-        if (m->rot.y >= 854) {
-            m->rot.y = 853;
-        } else if (m->rot.y < -853) {
-            m->rot.y = -853;
+        if (m->rot.vy >= 854) {
+            m->rot.vy = 853;
+        } else if (m->rot.vy < -853) {
+            m->rot.vy = -853;
         }
         d0 = 0;
         d1 = 0;
@@ -1282,36 +1282,36 @@ void UpdateTirePositions(Car* car, u8 which)
             d0 = (s16)tires[0].unk14 / GetFieldsLastFrame();
             d1 = (s16)tires[1].unk14 / GetFieldsLastFrame();
         }
-        if (d0 + st->unk5C < d1 && st->unkC0 < m->vel.y) {
+        if (d0 + st->unk5C < d1 && st->unkC0 < m->vel.vy) {
             flags[23] = 1;
-            m->unk02 = m->rot2.z;
-            m->rotDelta.y = 1;
-            m->unk04 = m->rot2.z + 1024;
-        } else if (d1 + st->unk5C < d0 && st->unkA8 / 2 < m->vel.y) {
+            m->unk02 = m->rot2.vz;
+            m->rotDelta.vy = 1;
+            m->unk04 = m->rot2.vz + 1024;
+        } else if (d1 + st->unk5C < d0 && st->unkA8 / 2 < m->vel.vy) {
             flags[23] = 1;
-            m->unk02 = m->rot2.z;
-            m->rotDelta.y = -1;
-            m->unk04 = m->rot2.z - 1024;
+            m->unk02 = m->rot2.vz;
+            m->rotDelta.vy = -1;
+            m->unk04 = m->rot2.vz - 1024;
         }
     }
     if (flags[0] == 0 || flags[10] != 0) {
-        m->rot.x = -ratan2(
+        m->rot.vx = -ratan2(
             (tires[0].unk40 - tires[2].unk40 + tires[1].unk40 - tires[3].unk40) / 2, st->unk78);
     } else {
-        m->rot.x = SmoothAngleValue(m->rot.x, 0, 98);
+        m->rot.vx = SmoothAngleValue(m->rot.vx, 0, 98);
     }
-    if (m->rot.x >= 513) {
-        m->rot.x = 512;
-    } else if (m->rot.x < -512) {
-        m->rot.x = -512;
+    if (m->rot.vx >= 513) {
+        m->rot.vx = 512;
+    } else if (m->rot.vx < -512) {
+        m->rot.vx = -512;
     }
     if (flags[10] == 0) {
-        m->rot.x += bounce->unk30;
-        m->rot.y += bounce->unk34;
+        m->rot.vx += bounce->unk30;
+        m->rot.vy += bounce->unk34;
     }
-    m->pos.z = (tires[0].unk40 + tires[1].unk40 + tires[2].unk40 + tires[3].unk40) / 4;
+    m->pos.vz = (tires[0].unk40 + tires[1].unk40 + tires[2].unk40 + tires[3].unk40) / 4;
     t = st->unk74;
-    k = m->rot.y;
+    k = m->rot.vy;
     if (k < 0) {
         k = -k;
     }
@@ -1327,11 +1327,11 @@ void UpdateTirePositions(Car* car, u8 which)
         p = t * ang / 1024;
         q = st->unk6C - st->unk6C * ang / 1024;
     }
-    m->pos.z += p + q;
-    if (shellGetCurrentLevel() == 5 && st->unk40 > 0 && m->pos.z < 160) {
-        if (which == 0 && ai != 0) {
+    m->pos.vz += p + q;
+    if (shellGetCurrentLevel() == 5 && st->unk40 > 0 && m->pos.vz < 160) {
+        if (isPlayer == 0 && ai != 0) {
             if (spd >= 1601) {
-                ang2 = 2048 - (GetPlayerInfo(ai->unk0E)->motion.rot.z - ai->unk30);
+                ang2 = 2048 - (GetPlayerInfo(ai->unk0E)->motion.rot.vz - ai->unk30);
                 BoundAngle(&ang2);
                 k = ang2;
                 if (k < 0) {
@@ -1359,7 +1359,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", UpdateTirePositions);
 #endif
 
 #ifdef NON_MATCHING
-void PutAICarBackOnRoof(CarAlt* car)
+void PutAICarBackOnRoof(AICar* car)
 {
     s32 dx;
     s32 dz;
@@ -1370,8 +1370,8 @@ void PutAICarBackOnRoof(CarAlt* car)
     } else {
         tp = 0x1F;
     }
-    dx = car->motion.pos.x - tPoints[tp].x;
-    dz = car->motion.pos.y - tPoints[tp].z;
+    dx = car->motion.pos.vx - tPoints[tp].x;
+    dz = car->motion.pos.vy - tPoints[tp].z;
     if (dx < 0) {
         dx = -dx;
     }
@@ -1384,11 +1384,11 @@ void PutAICarBackOnRoof(CarAlt* car)
         car->stats.unk38 = 1;
         car->unk16F = 0;
     } else {
-        car->motion.pos.x = SmoothValue(car->motion.pos.x, tPoints[tp].x, 0x62);
-        car->motion.pos.y = SmoothValue(car->motion.pos.y, tPoints[tp].z, 0x62);
+        car->motion.pos.vx = SmoothValue(car->motion.pos.vx, tPoints[tp].x, 0x62);
+        car->motion.pos.vy = SmoothValue(car->motion.pos.vy, tPoints[tp].z, 0x62);
         car->stats.unk38 = 0;
-        car->motion.vel.y = 0;
-        car->motion.rotDelta.z = 0;
+        car->motion.vel.vy = 0;
+        car->motion.rotDelta.vz = 0;
     }
 }
 #else
@@ -1396,7 +1396,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", PutAICarBackOnRoof);
 #endif
 
 #ifdef NON_MATCHING
-void UpdateRollingCar(Car* car, u8 which)
+void UpdateRollingCar(Car* car, u8 isPlayer)
 {
     CarMotion* m;
     CarStats* st;
@@ -1408,23 +1408,23 @@ void UpdateRollingCar(Car* car, u8 which)
     s32 v;
     s32 w;
 
-    if (which) {
-        m = &car->motion;
-        st = &car->stats;
-        tires = car->tires;
-        flags = car->flags;
+    if (isPlayer) {
+        m = &PLAYER_CAR(car)->motion;
+        st = &PLAYER_CAR(car)->stats;
+        tires = PLAYER_CAR(car)->tires;
+        flags = PLAYER_CAR(car)->flags;
     } else {
-        m = &((CarAlt*)car)->motion;
-        st = &((CarAlt*)car)->stats;
-        tires = ((CarAlt*)car)->tires;
-        flags = ((CarAlt*)car)->flags;
+        m = &AI_CAR(car)->motion;
+        st = &AI_CAR(car)->stats;
+        tires = AI_CAR(car)->tires;
+        flags = AI_CAR(car)->flags;
     }
-    if (m->vel.y < 32 * (2850 * GetFieldsLastFrame() / 100)) {
+    if (m->vel.vy < 32 * (2850 * GetFieldsLastFrame() / 100)) {
         lim = 32 * (2850 * GetFieldsLastFrame() / 100);
     } else {
-        lim = m->vel.y;
+        lim = m->vel.vy;
     }
-    r = 91 * m->vel.y * GetFieldsLastFrame() / lim;
+    r = 91 * m->vel.vy * GetFieldsLastFrame() / lim;
     if (r < 0) {
         if (-45 * GetFieldsLastFrame() < r) {
             r = -45 * GetFieldsLastFrame();
@@ -1440,21 +1440,21 @@ void UpdateRollingCar(Car* car, u8 which)
             do_smoke(&m->pos);
         }
     }
-    if (m->rotDelta.y > 0) {
-        v = __builtin_abs(rsin(m->rot.y));
+    if (m->rotDelta.vy > 0) {
+        v = __builtin_abs(rsin(m->rot.vy));
         d = r + v * r / 4096;
-        m->rot.y = m->rot.y + d;
+        m->rot.vy = m->rot.vy + d;
     } else {
-        v = __builtin_abs(rsin(m->rot.y));
+        v = __builtin_abs(rsin(m->rot.vy));
         d = r + v * r / 4096;
-        m->rot.y = m->rot.y - d;
+        m->rot.vy = m->rot.vy - d;
     }
-    v = m->vel.y;
+    v = m->vel.vy;
     if (v < 0) {
         v = -v;
     }
     if (v < 32 * (950 * GetFieldsLastFrame() / 100)) {
-        v = m->rot.y;
+        v = m->rot.vy;
         w = 3 * d;
         if (w < 0) {
             w = -w;
@@ -1464,26 +1464,26 @@ void UpdateRollingCar(Car* car, u8 which)
         }
         if (v < w) {
             flags[23] = 0;
-            m->rotDelta.y = 0;
-            m->rot.y = 0;
+            m->rotDelta.vy = 0;
+            m->rot.vy = 0;
             SetNoCarDrift(m, flags);
         }
     } else {
-        w = rsin(m->rot.y) * st->unk74 / 4096;
+        w = rsin(m->rot.vy) * st->unk74 / 4096;
         tires[0].unk40 += w;
         tires[1].unk40 += w;
         tires[2].unk40 += w;
         tires[3].unk40 += w;
-        if (m->vel.y != 0) {
-            if (m->vel.y > 0) {
-                m->vel.y = m->vel.y - st->unkBC / 3;
+        if (m->vel.vy != 0) {
+            if (m->vel.vy > 0) {
+                m->vel.vy = m->vel.vy - st->unkBC / 3;
             } else {
-                m->vel.y = m->vel.y + st->unkBC / 3;
+                m->vel.vy = m->vel.vy + st->unkBC / 3;
             }
         }
-        m->rot2.z = (s16)m->unk02;
+        m->rot2.vz = (s16)m->unk02;
         flags[1] = 1;
-        m->rot.z = SmoothAngleValue(m->rot.z, m->unk04, 95);
+        m->rot.vz = SmoothAngleValue(m->rot.vz, m->unk04, 95);
     }
 }
 #else
@@ -1622,29 +1622,29 @@ void InitTireGroup(CarTire* tires, s16 group)
 INCLUDE_ASM("asm/nonmatchings/tm1/car_update", InitTireGroup);
 #endif
 
-void UpdateCarOnSlickSpot(Car* car, u8 which)
+void UpdateCarOnSlickSpot(Car* car, u8 isPlayer)
 {
     CarStats* st;
     CarMotion* m;
     s32 v;
     s32 lim;
 
-    if (which) {
-        st = &car->stats;
-        m = &car->motion;
+    if (isPlayer) {
+        st = &PLAYER_CAR(car)->stats;
+        m = &PLAYER_CAR(car)->motion;
     } else {
-        st = &((CarAlt*)car)->stats;
-        m = &((CarAlt*)car)->motion;
+        st = &AI_CAR(car)->stats;
+        m = &AI_CAR(car)->motion;
     }
-    v = m->vel.y;
+    v = m->vel.vy;
     lim = st->unkA4;
     v = __builtin_abs(v);
     if (lim < v) {
         SetFullCarDrift(m);
         return;
     }
-    if (which) {
-        BringBackDriftingCar(car, which);
+    if (isPlayer) {
+        BringBackDriftingCar(car, isPlayer);
     }
 }
 
@@ -1702,7 +1702,7 @@ TriggerPtStartPts* GetTriggerPtStartPts(void)
 }
 
 #ifdef NON_MATCHING
-void CalcDistFromRoadCenter(CarAlt* car, s32* out, u8 which)
+void CalcDistFromRoadCenter(AICar* car, s32* out, u8 which)
 {
     s32 a;
     u8 b;
@@ -1739,12 +1739,12 @@ void CalcDistFromRoadCenter(CarAlt* car, s32* out, u8 which)
     }
     if (a) {
         if (h2 != 0) {
-            out[0] = (car->motion.pos.x - p1) - (h1 * (car->motion.pos.y - p2)) / h2;
+            out[0] = (car->motion.pos.vx - p1) - (h1 * (car->motion.pos.vy - p2)) / h2;
         } else {
             out[0] = 0;
         }
         if (h1 != 0) {
-            out[1] = (car->motion.pos.y - p2) - (h2 * (car->motion.pos.x - p1)) / h1;
+            out[1] = (car->motion.pos.vy - p2) - (h2 * (car->motion.pos.vx - p1)) / h1;
             d0 = out[0];
             d1 = out[1];
             if (d0 < 0) {
@@ -1762,11 +1762,11 @@ void CalcDistFromRoadCenter(CarAlt* car, s32* out, u8 which)
             out[1] = 0;
         }
     } else if (b) {
-        out[0] = car->motion.pos.x - q1;
+        out[0] = car->motion.pos.vx - q1;
         out[1] = 0;
     } else {
         out[0] = 0;
-        out[1] = car->motion.pos.y - q2;
+        out[1] = car->motion.pos.vy - q2;
     }
 }
 #else
@@ -1774,7 +1774,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", CalcDistFromRoadCenter);
 #endif
 
 #ifdef NON_MATCHING
-void CheckMonsterSmash(Car* car, u8 which)
+void CheckMonsterSmash(Car* car, u8 isPlayer)
 {
     u8* flags;
     CarMotion* m;
@@ -1783,27 +1783,27 @@ void CheckMonsterSmash(Car* car, u8 which)
     Cs* cs;
     u8* otherFlags;
     CarStats* otherStats;
-    Car* player;
-    CarAlt* ai;
+    PlayerCar* player;
+    AICar* ai;
     s32 best;
     s32 d;
     s32 dx;
     s32 dz;
     s32 v;
-    VEC3 pos;
-    u8 isPlayer;
+    VECTOR3 pos;
+    u8 otherIsPlayer;
     s16 idx;
 
-    if (which) {
-        flags = car->flags;
-        m = &car->motion;
-        tires = car->tires;
-        st = &car->stats;
+    if (isPlayer) {
+        flags = PLAYER_CAR(car)->flags;
+        m = &PLAYER_CAR(car)->motion;
+        tires = PLAYER_CAR(car)->tires;
+        st = &PLAYER_CAR(car)->stats;
     } else {
-        flags = ((CarAlt*)car)->flags;
-        m = &((CarAlt*)car)->motion;
-        tires = ((CarAlt*)car)->tires;
-        st = &((CarAlt*)car)->stats;
+        flags = AI_CAR(car)->flags;
+        m = &AI_CAR(car)->motion;
+        tires = AI_CAR(car)->tires;
+        st = &AI_CAR(car)->stats;
     }
     flags[27] = 0;
     best = 0x7FFF;
@@ -1859,8 +1859,8 @@ void CheckMonsterSmash(Car* car, u8 which)
             tires[3].unk20 = 0;
         }
     }
-    if (cs != 0 && uaIsCarCS(cs, &isPlayer, &idx)) {
-        if (isPlayer) {
+    if (cs != 0 && uaIsCarCS(cs, &otherIsPlayer, &idx)) {
+        if (otherIsPlayer) {
             player = GetPlayerInfo(idx);
             otherFlags = player->flags;
             otherStats = &player->stats;
@@ -1874,12 +1874,12 @@ void CheckMonsterSmash(Car* car, u8 which)
         otherStats = 0;
     }
     if (flags[27] != 0 && best < st->unk2A / 2) {
-        pos.x = m->pos.x + (rand() & 0x3F) - 32;
-        pos.y = m->pos.y + (rand() & 0x3F) - 32;
+        pos.vx = m->pos.vx + (rand() & 0x3F) - 32;
+        pos.vy = m->pos.vy + (rand() & 0x3F) - 32;
         v = (rand() & 0x1F) + 32;
-        pos.z = m->pos.z - v;
-        if (pos.z <= 0) {
-            pos.z = 1;
+        pos.vz = m->pos.vz - v;
+        if (pos.vz <= 0) {
+            pos.vz = 1;
         }
         explodeCreateFragments(rand() & 3, (VECTOR*)&pos);
         switch (rand() & 0xF) {
@@ -1916,7 +1916,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", CheckMonsterSmash);
 #endif
 
 #ifdef NON_MATCHING
-void InitTriggerPoint(CarAlt* car)
+void InitTriggerPoint(AICar* car)
 {
     s16 i;
     s16 next;
@@ -1945,12 +1945,12 @@ void InitTriggerPoint(CarAlt* car)
     AICarInitTransition(car);
     CalcTurnStart(car, 0);
     UpdateCurrentTriggerPt(car);
-    car->motion.pos.x = tPoints[car->stats.triggerPt].x;
-    car->motion.pos.y = tPoints[car->stats.triggerPt].z;
-    car->motion.pos.z = triggerPtGroups.pos[tPoints[car->stats.triggerPt].type].y;
-    car->motion.vel.y = 0;
+    car->motion.pos.vx = tPoints[car->stats.triggerPt].x;
+    car->motion.pos.vy = tPoints[car->stats.triggerPt].z;
+    car->motion.pos.vz = triggerPtGroups.pos[tPoints[car->stats.triggerPt].type].y;
+    car->motion.vel.vy = 0;
     car->flags[1] = 0;
-    car->motion.rot.z = car->unk1BC;
+    car->motion.rot.vz = car->unk1BC;
     InitTireGroup(car->tires, tPoints[car->stats.triggerPt].type);
 }
 #else
@@ -1958,7 +1958,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", InitTriggerPoint);
 #endif
 
 #ifdef NON_MATCHING
-void UpdateCurrentTriggerPt(CarAlt* car)
+void UpdateCurrentTriggerPt(AICar* car)
 {
     s16 dx;
     s16 dz;
@@ -2015,7 +2015,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", UpdateCurrentTriggerPt);
 #endif
 
 #ifdef NON_MATCHING
-void CalcTurnStart(CarAlt* car, u8 which)
+void CalcTurnStart(AICar* car, u8 which)
 {
     s32 v;
     s32 s;
@@ -2130,7 +2130,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", CalcTurnStart);
 #endif
 
 #ifdef NON_MATCHING
-void GetNextTriggerPoint(CarAlt* car, s16 pt)
+void GetNextTriggerPoint(AICar* car, s16 pt)
 {
     s32 r;
     s32 dx;
@@ -2191,7 +2191,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", GetNextTriggerPoint);
 #endif
 
 #ifdef NON_MATCHING
-s16 GetClosestTriggerPointFromCurrPt(CarAlt* car, TriggerPt* tp, s16* out)
+s16 GetClosestTriggerPointFromCurrPt(AICar* car, TriggerPt* tp, s16* out)
 {
     s16 la;
     s16 bestPt;
@@ -2249,9 +2249,9 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_update", GetClosestTriggerPointFromCurrPt)
 #endif
 
 #ifdef NON_MATCHING
-s16 GetLookAheadPos(CarAlt* car, s32* out)
+s16 GetLookAheadPos(AICar* car, s32* out)
 {
-    Car* player;
+    PlayerCar* player;
     s32 grp;
     s32 type;
     s16 ret;
@@ -2302,10 +2302,10 @@ s16 GetLookAheadPos(CarAlt* car, s32* out)
         vin.vy = car->unk34 / 2;
         vin.vz = 0;
         if (car->unk01 == 0) {
-            if (player->motion.vel.y != 0) {
-                a = car->stats.unk10C * player->motion.vel.y;
-                if (player->motion.vel.y >= player->stats.unkA8) {
-                    b = player->motion.vel.y;
+            if (player->motion.vel.vy != 0) {
+                a = car->stats.unk10C * player->motion.vel.vy;
+                if (player->motion.vel.vy >= player->stats.unkA8) {
+                    b = player->motion.vel.vy;
                 } else {
                     b = player->stats.unkA8;
                 }
@@ -2315,10 +2315,10 @@ s16 GetLookAheadPos(CarAlt* car, s32* out)
             }
         }
         mathMulTransVec(&player->motion.mat2, &vin, &vout);
-        out[0] = player->motion.pos.x + vout.vx;
-        out[1] = player->motion.pos.y + vout.vy;
+        out[0] = player->motion.pos.vx + vout.vx;
+        out[1] = player->motion.pos.vy + vout.vy;
         ret = -1;
-        out[2] = player->motion.pos.z + vout.vz;
+        out[2] = player->motion.pos.vz + vout.vz;
     }
     return ret;
 }

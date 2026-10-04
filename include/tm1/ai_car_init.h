@@ -10,9 +10,9 @@ typedef struct AITransDat {
     /*0x10*/ s16 unk10[11];
 } AITransDat; /* 0x26 */
 
-void AICarInit(CarAlt* car, s32 uaIndex, u8 which);
-void AICarInitDynamics(CarAlt* car);
-void AICarInitProfiles(CarAlt* car);
+void AICarInit(AICar* car, s32 uaIndex, u8 which);
+void AICarInitDynamics(AICar* car);
+void AICarInitProfiles(AICar* car);
 void InitAIFlags(u8* flags);
 void InitAITransDat(AITransDat* transDat);
 

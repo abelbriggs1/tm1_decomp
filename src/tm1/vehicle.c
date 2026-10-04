@@ -35,18 +35,18 @@ INCLUDE_ASM("asm/nonmatchings/tm1/vehicle", VehicleInit);
 
 void InitVehicleDynamics(Vehicle* veh)
 {
-    veh->pos.x = 0;
-    veh->pos.y = 0;
-    veh->pos.z = 0;
-    veh->vel.x = 0;
-    veh->vel.y = 0;
-    veh->vel.z = 0;
-    veh->ang.x = 0;
-    veh->ang.y = 0;
-    veh->ang.z = 0;
-    veh->angVel.x = 0;
-    veh->angVel.y = 0;
-    veh->angVel.z = 0;
+    veh->pos.vx = 0;
+    veh->pos.vy = 0;
+    veh->pos.vz = 0;
+    veh->vel.vx = 0;
+    veh->vel.vy = 0;
+    veh->vel.vz = 0;
+    veh->ang.vx = 0;
+    veh->ang.vy = 0;
+    veh->ang.vz = 0;
+    veh->angVel.vx = 0;
+    veh->angVel.vy = 0;
+    veh->angVel.vz = 0;
     sdk_memcpy(&veh->mat, &gVehicleIdentity, sizeof(MATRIX));
 }
 
@@ -93,63 +93,63 @@ INCLUDE_ASM("asm/nonmatchings/tm1/vehicle", RecomputeVehicleDeltas);
 void VehicleUpdate(Vehicle* veh, s16 padIdx)
 {
     if (GetCtlPad(veh->ctl[7], padIdx) && !GetCtlPad(veh->ctl[11], padIdx)) {
-        veh->angVel.z += veh->turnStep;
-        if (veh->angVel.z > veh->turnMax) {
-            veh->angVel.z = veh->turnMax;
+        veh->angVel.vz += veh->turnStep;
+        if (veh->angVel.vz > veh->turnMax) {
+            veh->angVel.vz = veh->turnMax;
         }
     } else if (GetCtlPad(veh->ctl[6], padIdx) && !GetCtlPad(veh->ctl[10], padIdx)) {
-        veh->angVel.z -= veh->turnStep;
-        if (veh->angVel.z < -veh->turnMax) {
-            veh->angVel.z = -veh->turnMax;
+        veh->angVel.vz -= veh->turnStep;
+        if (veh->angVel.vz < -veh->turnMax) {
+            veh->angVel.vz = -veh->turnMax;
         }
     } else {
-        veh->angVel.z = 0;
+        veh->angVel.vz = 0;
     }
 
     if (GetCtlPad(veh->ctl[8], padIdx)) {
-        veh->angVel.x = veh->turnMax;
+        veh->angVel.vx = veh->turnMax;
     } else if (GetCtlPad(veh->ctl[9], padIdx)) {
-        veh->angVel.x = -veh->turnMax;
+        veh->angVel.vx = -veh->turnMax;
     } else {
-        veh->angVel.x = 0;
+        veh->angVel.vx = 0;
     }
 
     if (GetCtlPad(veh->ctl[11], padIdx) && GetCtlPad(veh->ctl[7], padIdx)) {
-        veh->angVel.y = -veh->turnMax;
+        veh->angVel.vy = -veh->turnMax;
     } else if (GetCtlPad(veh->ctl[10], padIdx) && GetCtlPad(veh->ctl[6], padIdx)) {
-        veh->angVel.y = veh->turnMax;
+        veh->angVel.vy = veh->turnMax;
     } else {
-        veh->angVel.y = 0;
+        veh->angVel.vy = 0;
     }
 
     if (GetCtlPad(veh->ctl[0], padIdx) && !GetCtlPad(veh->ctl[4], padIdx)) {
-        veh->vel.y += veh->moveStep;
-        if (veh->vel.y > veh->moveMax) {
-            veh->vel.y = veh->moveMax;
+        veh->vel.vy += veh->moveStep;
+        if (veh->vel.vy > veh->moveMax) {
+            veh->vel.vy = veh->moveMax;
         }
     } else if (GetCtlPad(veh->ctl[1], padIdx) && !GetCtlPad(veh->ctl[5], padIdx)) {
-        veh->vel.y -= veh->moveStep;
-        if (veh->vel.y < -veh->moveMax) {
-            veh->vel.y = -veh->moveMax;
+        veh->vel.vy -= veh->moveStep;
+        if (veh->vel.vy < -veh->moveMax) {
+            veh->vel.vy = -veh->moveMax;
         }
     } else {
-        veh->vel.y = 0;
+        veh->vel.vy = 0;
     }
 
     if (GetCtlPad(veh->ctl[3], padIdx)) {
-        veh->vel.x = veh->moveDelta;
+        veh->vel.vx = veh->moveDelta;
     } else if (GetCtlPad(veh->ctl[2], padIdx)) {
-        veh->vel.x = -veh->moveDelta;
+        veh->vel.vx = -veh->moveDelta;
     } else {
-        veh->vel.x = 0;
+        veh->vel.vx = 0;
     }
 
     if (GetCtlPad(veh->ctl[4], padIdx) && GetCtlPad(veh->ctl[0], padIdx)) {
-        veh->vel.z = veh->moveDelta;
+        veh->vel.vz = veh->moveDelta;
     } else if (GetCtlPad(veh->ctl[5], padIdx) && GetCtlPad(veh->ctl[1], padIdx)) {
-        veh->vel.z = -veh->moveDelta;
+        veh->vel.vz = -veh->moveDelta;
     } else {
-        veh->vel.z = 0;
+        veh->vel.vz = 0;
     }
 
     VehicleRotUpdate(veh);
@@ -168,13 +168,13 @@ void VehicleRotUpdate(Vehicle* veh)
 {
     SVECTOR ang;
 
-    veh->ang.x += veh->angVel.x / 64;
-    veh->ang.y += veh->angVel.y / 64;
-    veh->ang.z += veh->angVel.z / 64;
-    BoundVector(&veh->ang.x);
-    ang.vx = veh->ang.x;
-    ang.vy = veh->ang.y;
-    ang.vz = veh->ang.z;
+    veh->ang.vx += veh->angVel.vx / 64;
+    veh->ang.vy += veh->angVel.vy / 64;
+    veh->ang.vz += veh->angVel.vz / 64;
+    BoundVector(&veh->ang.vx);
+    ang.vx = veh->ang.vx;
+    ang.vy = veh->ang.vy;
+    ang.vz = veh->ang.vz;
     RotMatrixYXZ(&ang, &veh->mat);
 }
 #else
@@ -183,14 +183,14 @@ INCLUDE_ASM("asm/nonmatchings/tm1/vehicle", VehicleRotUpdate);
 
 void VehicleTransUpdate(Vehicle* veh)
 {
-    VEC3 step;
-    VEC3 world;
+    VECTOR3 step;
+    VECTOR3 world;
 
-    step.x = veh->vel.x / 16;
-    step.y = veh->vel.y / 16;
-    step.z = veh->vel.z / 16;
+    step.vx = veh->vel.vx / 16;
+    step.vy = veh->vel.vy / 16;
+    step.vz = veh->vel.vz / 16;
     mathMulTransVec(&veh->mat, (VECTOR*)&step, (VECTOR*)&world);
-    veh->pos.x += world.x;
-    veh->pos.y += world.y;
-    veh->pos.z += world.z;
+    veh->pos.vx += world.vx;
+    veh->pos.vy += world.vy;
+    veh->pos.vz += world.vz;
 }

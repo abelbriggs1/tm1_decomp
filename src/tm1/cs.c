@@ -23,7 +23,7 @@ Cs csPool[90];
 void csUpdMat(Cs* cs, MATRIX* out)
 {
     MATRIX tm;
-    LVECTOR v;
+    VECTOR3 v;
 
     tm.t[0] = 0;
     tm.t[1] = 0;

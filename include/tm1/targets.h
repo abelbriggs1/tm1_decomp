@@ -5,7 +5,7 @@
 
 #include "tm1/cs.h"
 #include "tm1/db.h"
-#include "tm1/long_vector.h"
+#include "tm1/math.h"
 #include "tm1/ua_sw.h"
 
 typedef struct Target {
@@ -13,7 +13,7 @@ typedef struct Target {
     /* 0x04 */ s32 instance;
     /* 0x08 */ s32 kind;
     /* 0x0C */ u8 flag;
-    /* 0x10 */ VEC3 pos;
+    /* 0x10 */ VECTOR3 pos;
 } Target; /* 0x1C */
 
 typedef struct HoverMerc {
@@ -57,19 +57,19 @@ typedef struct StaticCop {
     /* 0x08 */ s16 hits;
     /* 0x0A */ s16 pad0A;
     /* 0x0C */ s32 kind;
-    /* 0x10 */ VEC3 pos;
+    /* 0x10 */ VECTOR3 pos;
 } StaticCop; /* 0x1C */
 
 s32 find_free_target(void);
 void clear_targets(void);
-void init_target(s32 type, s32 instance, VEC3* pos);
+void init_target(s32 type, s32 instance, VECTOR3* pos);
 Target* get_targets(void);
 s32 target_takehit(s32 type, s32 instance, s32 damage);
 void turnOnHoverCopSounds(s32* loc, u8 firing, u8 launching);
 void move_mercs(void);
 void merc_takehit(s32 which, s32 who);
 void init_merc(s32 which, DbNode* ep);
-VEC3* get_hcop_position(s32 num);
+VECTOR3* get_hcop_position(s32 num);
 void clear_mercs(void);
 void clear_pedestrians(void);
 void choose_ped_path(Pedestrian* ped);
@@ -77,10 +77,10 @@ void init_pedestrian(s32 id, DbNode* ep);
 void move_pedestrians(void);
 void pedestrian_takehit(s32 id, s32 damage);
 void ped_takehit(s32 num, s32 damage);
-s32 check_ped_hits(VEC3* pos, s32 damage);
+s32 check_ped_hits(VECTOR3* pos, s32 damage);
 void init_static_cops(void);
-void setup_static_cop(DbSwitch* node, VEC3* pos);
-void static_cop_fire(s32 num, VEC3* tgt);
+void setup_static_cop(DbSwitch* node, VECTOR3* pos);
+void static_cop_fire(s32 num, VECTOR3* tgt);
 void move_static_cops(void);
 void static_cop_takehit(s32 num);
 void move_drop_box(void);

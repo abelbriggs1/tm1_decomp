@@ -185,8 +185,8 @@ void explodeCreateFragments(s32 count, VECTOR* pos)
     s32 i;
     s32 idx;
     s32 r;
-    FragVec* p;
-    FragVec* v;
+    VECTOR3* p;
+    VECTOR3* v;
 
     for (i = 0; i < count; i++) {
         idx = findFreeFragment();
@@ -196,13 +196,13 @@ void explodeCreateFragments(s32 count, VECTOR* pos)
         fragment[idx].frame = 0;
         fragment[idx].life = 40;
         p = &fragment[idx].pos;
-        p->x = pos->vx;
-        p->y = pos->vy;
-        p->z = pos->vz;
+        p->vx = pos->vx;
+        p->vy = pos->vy;
+        p->vz = pos->vz;
         v = &fragment[idx].vel;
-        v->x = (rand() & 0x3F) - 32;
-        v->y = (rand() & 0x3F) - 32;
-        v->z = (rand() & 0x1F) + 16;
+        v->vx = (rand() & 0x3F) - 32;
+        v->vy = (rand() & 0x3F) - 32;
+        v->vz = (rand() & 0x1F) + 16;
         r = rand() & 3;
         if (r == 0) {
             fragment[idx].anim = fragmenta;
@@ -228,16 +228,16 @@ void explodeUpdateFragments(void)
         if (fragment[i].life > 0) {
             s32 dz;
 
-            fragment[i].pos.z = (s32)((u32)fragment[i].pos.z + (u32)fragment[i].vel.z);
-            fragment[i].pos.x = (s32)((u32)fragment[i].pos.x + (u32)fragment[i].vel.x);
-            fragment[i].pos.y = (s32)((u32)fragment[i].pos.y + (u32)fragment[i].vel.y);
-            dz = (s32)((u32)fragment[i].vel.z - 4u);
-            fragment[i].vel.z = dz;
-            if (fragment[i].pos.z <= 0 && dz < 0) {
+            fragment[i].pos.vz = (s32)((u32)fragment[i].pos.vz + (u32)fragment[i].vel.vz);
+            fragment[i].pos.vx = (s32)((u32)fragment[i].pos.vx + (u32)fragment[i].vel.vx);
+            fragment[i].pos.vy = (s32)((u32)fragment[i].pos.vy + (u32)fragment[i].vel.vy);
+            dz = (s32)((u32)fragment[i].vel.vz - 4u);
+            fragment[i].vel.vz = dz;
+            if (fragment[i].pos.vz <= 0 && dz < 0) {
                 if (dz >= -5) {
                     fragment[i].life = 0;
                 } else {
-                    fragment[i].vel.z = (s32)(0u - (u32)dz) / 2;
+                    fragment[i].vel.vz = (s32)(0u - (u32)dz) / 2;
                 }
             }
             if (fragment[i].life > 0) {
@@ -285,9 +285,9 @@ void explodeDisplayFragments(Db* cdb, s32 which)
     for (i = 0; i < 20; i++) {
         if (fragment[i].life > 0) {
             frame = fragment[i].frame;
-            v[0] = fragment[i].pos.x + eye->x;
-            v[1] = fragment[i].pos.y + eye->y;
-            v[2] = fragment[i].pos.z + eye->z;
+            v[0] = fragment[i].pos.vx + eye->x;
+            v[1] = fragment[i].pos.vy + eye->y;
+            v[2] = fragment[i].pos.vz + eye->z;
             mathMulVec(mat, v, r);
             z = r[2];
             if (z >= -32) {

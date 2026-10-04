@@ -3,7 +3,7 @@
 
 #include "common.h"
 #include "tm1/light.h"
-#include "tm1/long_vector.h"
+#include "tm1/math.h"
 #include <libgte.h>
 
 /* Coordinate system record -- 0x10C bytes (csCreate strides by 0x10C). */
@@ -16,8 +16,8 @@ typedef struct Cs {
     /* 0x014 */ MATRIX mat;
     /* 0x034 */ MATRIX wmat;
     /* 0x054 */ SVECTOR rot;
-    /* 0x05C */ LVECTOR pos;
-    /* 0x068 */ LVECTOR wpos;
+    /* 0x05C */ VECTOR3 pos;
+    /* 0x068 */ VECTOR3 wpos;
     /* 0x074 */ s32 nhist;
     /* 0x078 */ SVECTOR hist[9];
     /* 0x0C0 */ s32 unkC0;

@@ -38,9 +38,9 @@
 
 #define CONTRAIL_PT(k)                                                                             \
     mathMulTransVec(&m->cs->mat, &in, &out);                                                       \
-    m->trail[k].x = m->cs->pos.vx + out.vx - m->pos.x;                                             \
-    m->trail[k].y = m->cs->pos.vy + out.vy - m->pos.y;                                             \
-    m->trail[k].z = m->cs->pos.vz + out.vz - m->pos.z;
+    m->trail[k].x = m->cs->pos.vx + out.vx - m->pos.vx;                                            \
+    m->trail[k].y = m->cs->pos.vy + out.vy - m->pos.vy;                                            \
+    m->trail[k].z = m->cs->pos.vz + out.vz - m->pos.vz;
 
 static s32 bulletFlipFlop = 0;
 void* fire_missile_node = 0;
@@ -128,14 +128,14 @@ void bulMakeSpecialBullet(s32 id, GrObj* obj)
 }
 
 #ifdef NON_MATCHING
-s32 CAR_HD(VEC3* pt, s32 owner, s32 flag)
+s32 CAR_HD(VECTOR3* pt, s32 owner, s32 flag)
 {
     s32 i;
     s32 np;
     s32 nai;
     Cs* cs;
     Target* t;
-    VEC3* p;
+    VECTOR3* p;
 
     np = (s16)GetNumPlayers();
     i = 0;
@@ -143,8 +143,8 @@ s32 CAR_HD(VEC3* pt, s32 owner, s32 flag)
     for (i = 0; i < np; i++) {
         cs = GetPlayerCs3D(i);
         if (cs->unkC0 != owner) {
-            if (ABS(BIGGER(pt->x - cs->pos.vx, BIGGER(pt->y - cs->pos.vy, pt->z - cs->pos.vz))) >> 3
-                < flag + 6) {
+            if (ABS(BIGGER(pt->vx - cs->pos.vx, BIGGER(pt->vy - cs->pos.vy, pt->vz - cs->pos.vz)))
+                >> 3 < flag + 6) {
                 return cs->unkC0;
             }
         }
@@ -152,8 +152,8 @@ s32 CAR_HD(VEC3* pt, s32 owner, s32 flag)
     for (i = 0; i < nai; i++) {
         cs = GetAICs3D(i);
         if (cs->unkC0 != owner) {
-            if (ABS(BIGGER(pt->x - cs->pos.vx, BIGGER(pt->y - cs->pos.vy, pt->z - cs->pos.vz))) >> 3
-                < flag + 6) {
+            if (ABS(BIGGER(pt->vx - cs->pos.vx, BIGGER(pt->vy - cs->pos.vy, pt->vz - cs->pos.vz)))
+                >> 3 < flag + 6) {
                 return cs->unkC0;
             }
         }
@@ -161,7 +161,7 @@ s32 CAR_HD(VEC3* pt, s32 owner, s32 flag)
     t = get_targets();
     for (i = 0; i < 50; i++, t++) {
         if (t->kind > 0 && t->type != -owner) {
-            if (ABS(BIGGER(pt->x - t->pos.x, BIGGER(pt->y - t->pos.y, pt->z - t->pos.z))) >> 3
+            if (ABS(BIGGER(pt->vx - t->pos.vx, BIGGER(pt->vy - t->pos.vy, pt->vz - t->pos.vz))) >> 3
                 < flag + 5) {
                 return i + 500;
             }
@@ -173,7 +173,8 @@ s32 CAR_HD(VEC3* pt, s32 owner, s32 flag)
     for (i = 0; i < 2; i++) {
         p = get_hcop_position(i);
         if (p != 0) {
-            if (ABS(BIGGER(pt->x - p->x, BIGGER(pt->y - p->y, pt->z - p->z))) >> 3 < flag + 4) {
+            if (ABS(BIGGER(pt->vx - p->vx, BIGGER(pt->vy - p->vy, pt->vz - p->vz))) >> 3
+                < flag + 4) {
                 return i + 100;
             }
         }
@@ -205,47 +206,47 @@ void destroy_all_bullets(void)
 }
 
 #ifdef NON_MATCHING
-void create_bullet(s32 owner, VEC3* dir, VEC3* pos, s32 damage)
+void create_bullet(s32 owner, VECTOR3* dir, VECTOR3* pos, s32 damage)
 {
     s32 i;
     s32 big;
     s32 mag;
     s32 life;
-    VEC3 vel;
+    VECTOR3 vel;
     Bullet* b;
 
     i = find_free_bullet(40);
     if (i >= 0) {
         b = &blist[i];
-        big = BIGGER(dir->x, BIGGER(dir->y, dir->z));
+        big = BIGGER(dir->vx, BIGGER(dir->vy, dir->vz));
         mag = ABS(big);
         if (mag <= 0) {
             mag = 1;
         }
         if (owner == 1) {
-            vel.x = dir->x * 250 / mag;
-            vel.y = dir->y * 250 / mag;
-            vel.z = dir->z * 250 / mag;
+            vel.vx = dir->vx * 250 / mag;
+            vel.vy = dir->vy * 250 / mag;
+            vel.vz = dir->vz * 250 / mag;
             life = 15;
         } else {
-            vel.x = dir->x * 250 / mag;
-            vel.y = dir->y * 250 / mag;
-            vel.z = dir->z * 250 / mag;
+            vel.vx = dir->vx * 250 / mag;
+            vel.vy = dir->vy * 250 / mag;
+            vel.vz = dir->vz * 250 / mag;
             life = 15;
             if (owner >= 50) {
                 life = 20;
             }
         }
         b->life = life;
-        b->prev.x = pos->x;
-        b->prev.y = pos->y;
-        b->prev.z = pos->z;
-        b->vel.x = vel.x;
-        b->vel.y = vel.y;
-        b->vel.z = vel.z;
-        b->pos.x = pos->x;
-        b->pos.y = pos->y;
-        b->pos.z = pos->z;
+        b->prev.vx = pos->vx;
+        b->prev.vy = pos->vy;
+        b->prev.vz = pos->vz;
+        b->vel.vx = vel.vx;
+        b->vel.vy = vel.vy;
+        b->vel.vz = vel.vz;
+        b->pos.vx = pos->vx;
+        b->pos.vy = pos->vy;
+        b->pos.vz = pos->vz;
         b->owner = owner;
         b->kind = 0;
         b->unk30 = 0;
@@ -258,18 +259,19 @@ INCLUDE_ASM("asm/nonmatchings/tm1/weapon", create_bullet);
 #endif
 
 #ifdef NON_MATCHING
-void s_create_bullet(s32 owner, VEC3* dir, VEC3* pos, s32 kind, s32 damage, s32 life, s32 arg6)
+void s_create_bullet(
+    s32 owner, VECTOR3* dir, VECTOR3* pos, s32 kind, s32 damage, s32 life, s32 arg6)
 {
     s32 i;
     s32 big;
     s32 mag;
-    VEC3 vel;
+    VECTOR3 vel;
     Bullet* b;
 
     i = find_free_bullet(40);
     if (i >= 0) {
         b = &blist[i];
-        big = BIGGER(dir->x, BIGGER(dir->y, dir->z));
+        big = BIGGER(dir->vx, BIGGER(dir->vy, dir->vz));
         mag = ABS(big);
         if (mag <= 0) {
             mag = 1;
@@ -280,18 +282,18 @@ void s_create_bullet(s32 owner, VEC3* dir, VEC3* pos, s32 kind, s32 damage, s32 
         if (kind >= 15 || kind == 5) {
             mag = mag * 2;
         }
-        vel.x = dir->x * 250 / mag;
-        vel.y = dir->y * 250 / mag;
-        vel.z = dir->z * 250 / mag;
-        b->prev.x = pos->x;
-        b->prev.y = pos->y;
-        b->prev.z = pos->z;
-        b->vel.x = vel.x;
-        b->vel.y = vel.y;
-        b->vel.z = vel.z;
-        b->pos.x = pos->x;
-        b->pos.y = pos->y;
-        b->pos.z = pos->z;
+        vel.vx = dir->vx * 250 / mag;
+        vel.vy = dir->vy * 250 / mag;
+        vel.vz = dir->vz * 250 / mag;
+        b->prev.vx = pos->vx;
+        b->prev.vy = pos->vy;
+        b->prev.vz = pos->vz;
+        b->vel.vx = vel.vx;
+        b->vel.vy = vel.vy;
+        b->vel.vz = vel.vz;
+        b->pos.vx = pos->vx;
+        b->pos.vy = pos->vy;
+        b->pos.vz = pos->vz;
         b->life = life;
         b->owner = owner;
         b->kind = kind;
@@ -313,36 +315,36 @@ void move_bullets(void)
     u8 hitok;
     Bullet* b;
     HdCsHit* hit;
-    VEC3 p;
-    VEC3 q;
+    VECTOR3 p;
+    VECTOR3 q;
 
     hit = 0;
     for (i = 0; i < 40; i++) {
         if (blist[i].life > 0) {
             b = &blist[i];
             b->life--;
-            b->prev.x = b->pos.x;
-            b->prev.y = b->pos.y;
-            b->prev.z = b->pos.z;
-            b->pos.x += b->vel.x;
-            b->pos.y += b->vel.y;
-            b->pos.z += b->vel.z;
-            p.x = b->prev.x;
-            p.y = b->prev.y;
-            p.z = b->prev.z;
+            b->prev.vx = b->pos.vx;
+            b->prev.vy = b->pos.vy;
+            b->prev.vz = b->pos.vz;
+            b->pos.vx += b->vel.vx;
+            b->pos.vy += b->vel.vy;
+            b->pos.vz += b->vel.vz;
+            p.vx = b->prev.vx;
+            p.vy = b->prev.vy;
+            p.vz = b->prev.vz;
             for (k = 3; k >= 0; k--) {
-                q.x = p.x;
-                q.y = p.y;
-                q.z = p.z;
-                p.x = b->pos.x - ((b->vel.x * k) >> 2);
-                p.y = b->pos.y - ((b->vel.y * k) >> 2);
-                p.z = b->pos.z - ((b->vel.z * k) >> 2);
+                q.vx = p.vx;
+                q.vy = p.vy;
+                q.vz = p.vz;
+                p.vx = b->pos.vx - ((b->vel.vx * k) >> 2);
+                p.vy = b->pos.vy - ((b->vel.vy * k) >> 2);
+                p.vz = b->pos.vz - ((b->vel.vz * k) >> 2);
                 b->unk30 = CAR_HD(&p, b->owner, (b->kind >= 15) * 4);
                 if (b->unk30 == b->owner) {
                     b->unk30 = 0;
                 }
-                if (b->unk30 == 0 && p.z <= 0) {
-                    if (shellGetCurrentLevel() != 3 || b->vel.z < 0) {
+                if (b->unk30 == 0 && p.vz <= 0) {
+                    if (shellGetCurrentLevel() != 3 || b->vel.vz < 0) {
                         b->unk30 = 8;
                     }
                 }
@@ -355,9 +357,9 @@ void move_bullets(void)
                 }
                 if (b->unk30 > 0) {
                     if (b->unk30 == 1) {
-                        q.x = p.x;
-                        q.y = p.y;
-                        q.z = p.z;
+                        q.vx = p.vx;
+                        q.vy = p.vy;
+                        q.vz = p.vz;
                     }
                     do_simple_spark(&q);
                     if (rand() < 20000) {
@@ -368,11 +370,11 @@ void move_bullets(void)
                     }
                     if (b->kind >= 15) {
                         do_simple_explosion(&q);
-                        q.z = 0;
+                        q.vz = 0;
                         do_flames(&q);
                     }
                     b->life = 0;
-                    soundSetRangeAndXPositionFromWorldLoc(&p.x);
+                    soundSetRangeAndXPositionFromWorldLoc(&p.vx);
                     range = soundGetCalculatedSoundRange();
                     uasoundExplodeMachineGunBullet(range, soundGetCalculatedSoundXPosition(), 25);
                     hitok = bulDispatchDamage(
@@ -446,13 +448,13 @@ void display_bullets(Db* db, s32 which)
             continue;
         }
         b = &blist[i];
-        in.vx = b->pos.x + eye->x;
-        in.vy = b->pos.y + eye->y;
-        in.vz = b->pos.z + eye->z;
+        in.vx = b->pos.vx + eye->x;
+        in.vy = b->pos.vy + eye->y;
+        in.vz = b->pos.vz + eye->z;
         mathMulVec(mat, &in, &r0);
-        in.vx = b->prev.x + eye->x;
-        in.vy = b->prev.y + eye->y;
-        in.vz = b->prev.z + eye->z;
+        in.vx = b->prev.vx + eye->x;
+        in.vy = b->prev.vy + eye->y;
+        in.vz = b->prev.vz + eye->z;
         mathMulVec(mat, &in, &r1);
         z0 = r0.vz;
         z1 = r1.vz;
@@ -742,7 +744,7 @@ void InitContrails(void)
     s32 i;
     s32 j;
     TrailPt* tp;
-    VEC3* vp;
+    VECTOR3* vp;
     s32* fp;
 
     for (i = 0; i < 10; i++) {
@@ -781,9 +783,9 @@ void InitContrails(void)
         *fp = 0x2000;
         mlist[i].f118 = 0;
         vp = &mlist[i].f120;
-        vp->x = 0;
-        vp->y = 0;
-        vp->z = 0;
+        vp->vx = 0;
+        vp->vy = 0;
+        vp->vz = 0;
         mlist[i].f12C = 0x7FFF;
         mlist[i].csB = csCreate();
         mlist[i].csB->epNode = &mlist[i].f104;
@@ -1010,7 +1012,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/weapon", drop_contrail);
 #endif
 
 #ifdef NON_MATCHING
-void basic_missile_launch(Missile* m, VEC3* rot, VEC3* pos)
+void basic_missile_launch(Missile* m, VECTOR3* rot, VECTOR3* pos)
 {
     Cs* cs = m->cs;
     s32 index;
@@ -1020,15 +1022,15 @@ void basic_missile_launch(Missile* m, VEC3* rot, VEC3* pos)
     m->unk4D = 1;
     m->target = 0;
     m->unk54 = 6;
-    cs->rot.vx = rot->x;
-    cs->rot.vy = rot->y;
-    cs->rot.vz = rot->z;
-    cs->pos.vx = pos->x;
-    cs->pos.vy = pos->y;
-    cs->pos.vz = pos->z;
-    m->pos.x = pos->x;
-    m->pos.y = pos->y;
-    m->pos.z = pos->z;
+    cs->rot.vx = rot->vx;
+    cs->rot.vy = rot->vy;
+    cs->rot.vz = rot->vz;
+    cs->pos.vx = pos->vx;
+    cs->pos.vy = pos->vy;
+    cs->pos.vz = pos->vz;
+    m->pos.vx = pos->vx;
+    m->pos.vy = pos->vy;
+    m->pos.vz = pos->vz;
     if (cs->epNode == 0) {
         cs->drawMode = 0;
     } else {
@@ -1043,7 +1045,7 @@ void basic_missile_launch(Missile* m, VEC3* rot, VEC3* pos)
 INCLUDE_ASM("asm/nonmatchings/tm1/weapon", basic_missile_launch);
 #endif
 
-s16 create_FIRE_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 damage)
+s16 create_FIRE_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, s32 damage)
 {
     s16 i;
     s32 launch;
@@ -1057,7 +1059,7 @@ s16 create_FIRE_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 da
         mlist[i].unk3C = 10;
         setContrailColor(i, 0x80, 0x80, 0x80);
         mlist[i].unk48 = 0;
-        soundSetRangeAndXPositionFromWorldLoc(&pos->x);
+        soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
         uasoundStopCarWeapon(0);
         uasoundPlayCarWeaponLaunchOrInflight(
             0, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
@@ -1066,7 +1068,7 @@ s16 create_FIRE_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 da
 }
 
 #ifdef NON_MATCHING
-s16 create_DEATHSPEAR_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 damage)
+s16 create_DEATHSPEAR_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, s32 damage)
 {
     s32 i;
     i = create_HOMING_missile(owner, target, rot, pos, damage);
@@ -1088,14 +1090,14 @@ s16 create_DEATHSPEAR_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, 
 INCLUDE_ASM("asm/nonmatchings/tm1/weapon", create_DEATHSPEAR_missile);
 #endif
 
-s16 create_FREEZE_missile(s32 owner, VEC3* rot, VEC3* pos, s32 damage)
+s16 create_FREEZE_missile(s32 owner, VECTOR3* rot, VECTOR3* pos, s32 damage)
 {
     s16 i = create_LOS_missile(owner, rot, pos, damage);
 
     if (i >= 0) {
         setContrailColor(i, 0x20, 0x20, 0x9F);
         mlist[i].unk48 = 1;
-        soundSetRangeAndXPositionFromWorldLoc(&pos->x);
+        soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
         uasoundStopCarWeapon(1);
         uasoundPlayCarWeaponLaunchOrInflight(
             1, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
@@ -1103,14 +1105,14 @@ s16 create_FREEZE_missile(s32 owner, VEC3* rot, VEC3* pos, s32 damage)
     return i;
 }
 
-s16 create_POWER_missile(s32 owner, VEC3* rot, VEC3* pos, s32 damage)
+s16 create_POWER_missile(s32 owner, VECTOR3* rot, VECTOR3* pos, s32 damage)
 {
     s16 i = create_LOS_missile(owner, rot, pos, damage);
 
     if (i >= 0) {
         setContrailColor(i, 0xFA, 0, 0);
         mlist[i].unk48 = 3;
-        soundSetRangeAndXPositionFromWorldLoc(&pos->x);
+        soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
         uasoundStopCarWeapon(3);
         uasoundPlayCarWeaponLaunchOrInflight(
             3, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
@@ -1119,20 +1121,20 @@ s16 create_POWER_missile(s32 owner, VEC3* rot, VEC3* pos, s32 damage)
 }
 
 #ifdef NON_MATCHING
-s16 create_REAR_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 damage)
+s16 create_REAR_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, s32 damage)
 {
-    VEC3 back;
+    VECTOR3 back;
     s16 i;
 
-    back.x = rot->x;
-    back.y = rot->y;
-    back.z = (rot->z + 2048) & 0xFFF;
+    back.vx = rot->vx;
+    back.vy = rot->vy;
+    back.vz = (rot->vz + 2048) & 0xFFF;
     i = create_HOMING_missile(owner, target, &back, pos, damage);
     if (i >= 0) {
         mlist[i].unk3C = 10;
         setContrailColor(i, 0x80, 0x80, 0x80);
         mlist[i].unk48 = 5;
-        soundSetRangeAndXPositionFromWorldLoc(&pos->x);
+        soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
         uasoundStopCarWeapon(5);
         uasoundPlayCarWeaponLaunchOrInflight(
             5, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
@@ -1143,14 +1145,14 @@ s16 create_REAR_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 da
 INCLUDE_ASM("asm/nonmatchings/tm1/weapon", create_REAR_missile);
 #endif
 
-s16 create_SINGING_missile(s32 owner, VEC3* rot, VEC3* pos, s32 damage)
+s16 create_SINGING_missile(s32 owner, VECTOR3* rot, VECTOR3* pos, s32 damage)
 {
     s16 i = create_LOS_missile(owner, rot, pos, damage);
 
     if (i >= 0) {
         setContrailColor(i, 0x10, 0x80, 0x10);
         mlist[i].unk48 = 4;
-        soundSetRangeAndXPositionFromWorldLoc(&pos->x);
+        soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
         uasoundStopCarWeapon(4);
         uasoundPlayCarWeaponLaunchOrInflight(
             4, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
@@ -1158,7 +1160,7 @@ s16 create_SINGING_missile(s32 owner, VEC3* rot, VEC3* pos, s32 damage)
     return i;
 }
 
-s16 create_GHOST_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 damage)
+s16 create_GHOST_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, s32 damage)
 {
     s32 i;
     s32 launch;
@@ -1178,7 +1180,7 @@ s16 create_GHOST_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 d
         mlist[i].unk2C = 3;
         mlist[i].life = 80;
         mlist[i].unk48 = 4;
-        soundSetRangeAndXPositionFromWorldLoc(&pos->x);
+        soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
         uasoundStopCarWeapon(4);
         uasoundPlayCarWeaponLaunchOrInflight(
             4, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
@@ -1187,7 +1189,7 @@ s16 create_GHOST_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 d
 }
 
 #ifdef NON_MATCHING
-s16 create_LOS_missile(s32 owner, VEC3* rot, VEC3* pos, s32 damage)
+s16 create_LOS_missile(s32 owner, VECTOR3* rot, VECTOR3* pos, s32 damage)
 {
 
     s32 i;
@@ -1219,7 +1221,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/weapon", create_LOS_missile);
 #endif
 
 #ifdef NON_MATCHING
-s16 create_HOMING_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 damage)
+s16 create_HOMING_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, s32 damage)
 {
     s32 i;
     Missile* m;
@@ -1249,7 +1251,7 @@ s16 create_HOMING_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 
         } else {
             cs->drawMode = 0;
         }
-        soundSetRangeAndXPositionFromWorldLoc(&pos->x);
+        soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
         m->unk48 = 2;
         uasoundStopCarWeapon(2);
         uasoundPlayCarWeaponLaunchOrInflight(
@@ -1262,7 +1264,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/weapon", create_HOMING_missile);
 #endif
 
 #ifdef NON_MATCHING
-s16 create_SWARM_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 damage)
+s16 create_SWARM_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, s32 damage)
 {
     s32 i;
     Missile* m;
@@ -1300,7 +1302,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/weapon", create_SWARM_missile);
 #ifdef NON_MATCHING
 void turn_heatseeker(Missile* m)
 {
-    LVECTOR* tgt;
+    VECTOR3* tgt;
     s32 dx;
     s32 dy;
     s32 dz;
@@ -1408,8 +1410,8 @@ void move_missile(Missile* m)
     s32 i;
     VECTOR fwd;
     VECTOR d;
-    VEC3 prev;
-    VEC3 pt;
+    VECTOR3 prev;
+    VECTOR3 pt;
 
     hit = 0;
     exploded = 0;
@@ -1429,9 +1431,9 @@ void move_missile(Missile* m)
             m->unk38 = 150;
         }
         mathMulTransVec(&m->cs->mat, &fwd, &d);
-        pt.x = m->cs->pos.vx;
-        pt.y = m->cs->pos.vy;
-        pt.z = m->cs->pos.vz;
+        pt.vx = m->cs->pos.vx;
+        pt.vy = m->cs->pos.vy;
+        pt.vz = m->cs->pos.vz;
         m->cs->pos.vx += d.vx;
         m->cs->pos.vy += d.vy;
         m->cs->pos.vz += d.vz;
@@ -1447,12 +1449,12 @@ void move_missile(Missile* m)
         uasoundPlayCarWeaponLaunchOrInflight(
             m->unk48, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
         for (i = 1; i >= 0; i--) {
-            prev.x = pt.x;
-            prev.y = pt.y;
-            prev.z = pt.z;
-            pt.x = m->cs->pos.vx - ((d.vx * i) >> 1);
-            pt.y = m->cs->pos.vy - ((d.vy * i) >> 1);
-            pt.z = m->cs->pos.vz - ((d.vz * i) >> 1);
+            prev.vx = pt.vx;
+            prev.vy = pt.vy;
+            prev.vz = pt.vz;
+            pt.vx = m->cs->pos.vx - ((d.vx * i) >> 1);
+            pt.vy = m->cs->pos.vy - ((d.vy * i) >> 1);
+            pt.vz = m->cs->pos.vz - ((d.vz * i) >> 1);
             m->unk44 = CAR_HD(&pt, m->unk50, 3);
             if (m->unk44 == m->unk50) {
                 m->unk44 = 0;
@@ -1474,7 +1476,7 @@ void move_missile(Missile* m)
                 }
             }
             if (m->unk44 > 0) {
-                pt.z += 24;
+                pt.vz += 24;
                 if (m->unk44 != 8) {
                     if (m->damage >= 0) {
                         do_simple_explosion(&pt);
@@ -1496,7 +1498,8 @@ void move_missile(Missile* m)
                 kill_missile(idx, 1);
                 exploded = 1;
                 i = -1;
-                bulDispatchDamage(m->unk44, hit->tag0, hit->tag1, m->damage, (VEC3*)&d, m->unk50);
+                bulDispatchDamage(
+                    m->unk44, hit->tag0, hit->tag1, m->damage, (VECTOR3*)&d, m->unk50);
             }
         }
         if (m->unk2C != 3 && m->cs->pos.vz < 0) {
@@ -1513,7 +1516,7 @@ void move_missile(Missile* m)
                 m->cs->pos.vz = 0;
             }
             exploded = 0;
-            do_mini_explosion((VEC3*)&m->cs->pos);
+            do_mini_explosion((VECTOR3*)&m->cs->pos);
             kill_missile(idx, 0);
         }
     }
@@ -1565,7 +1568,7 @@ void bulBoltZap(VECTOR* p1, VECTOR* p2)
     EyeMat* mat;
     LINE_G2* line;
     VECTOR v;
-    VEC3 pts[16];
+    VECTOR3 pts[16];
     s32 scr[16][3];
     VECTOR delta;
     s32 cx;
@@ -1584,26 +1587,26 @@ void bulBoltZap(VECTOR* p1, VECTOR* p2)
     delta.vy = p2->vy - p1->vy;
     delta.vz = p2->vz - p1->vz;
 
-    pts[0].x = p1->vx;
-    pts[0].y = p1->vy;
-    pts[0].z = p1->vz + 30;
-    pts[15].x = p2->vx;
-    pts[15].y = p2->vy;
-    pts[15].z = p2->vz;
+    pts[0].vx = p1->vx;
+    pts[0].vy = p1->vy;
+    pts[0].vz = p1->vz + 30;
+    pts[15].vx = p2->vx;
+    pts[15].vy = p2->vy;
+    pts[15].vz = p2->vz;
 
     for (i = 1; i < 15; i++) {
-        pts[i].x = p1->vx + delta.vx * i / 16;
-        pts[i].y = p1->vy + delta.vy * i / 16;
-        pts[i].z = delta.vz * i / 16 + 30 + p1->vz;
-        pts[i].z += (rand() & 0xff) - 128;
-        pts[i].y += (rand() & 0x3f) - 32;
-        pts[i].x += (rand() & 0x3f) - 32;
+        pts[i].vx = p1->vx + delta.vx * i / 16;
+        pts[i].vy = p1->vy + delta.vy * i / 16;
+        pts[i].vz = delta.vz * i / 16 + 30 + p1->vz;
+        pts[i].vz += (rand() & 0xff) - 128;
+        pts[i].vy += (rand() & 0x3f) - 32;
+        pts[i].vx += (rand() & 0x3f) - 32;
     }
 
     for (i = 0; i < 16; i++) {
-        v.vx = pts[i].x + eye->x;
-        v.vy = pts[i].y + eye->y;
-        v.vz = pts[i].z + eye->z;
+        v.vx = pts[i].vx + eye->x;
+        v.vy = pts[i].vy + eye->y;
+        v.vz = pts[i].vz + eye->z;
         mathMulVec(mat, &v, scr[i]);
         if (scr[i][2] > 0) {
             scr[i][0] = cx + scr[i][0] * hfov / scr[i][2];
@@ -1691,7 +1694,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/weapon", DisplayFXSheet);
 #endif
 
 #ifdef NON_MATCHING
-s32 bulDispatchDamage(s32 id, s32 a, s32 b, s32 damage, VEC3* dir, s32 owner)
+s32 bulDispatchDamage(s32 id, s32 a, s32 b, s32 damage, VECTOR3* dir, s32 owner)
 {
     Target* t;
 

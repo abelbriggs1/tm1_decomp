@@ -4,7 +4,7 @@
 #include "common.h"
 #include "tm1/car.h"
 #include "tm1/cs.h"
-#include "tm1/long_vector.h"
+#include "tm1/math.h"
 #include "tm1/rt.h"
 #include <libgte.h>
 
@@ -13,16 +13,16 @@ typedef struct DrawNode {
     /*0x14*/ u8 drawFlag;
 } DrawNode;
 
-extern VEC3 zeroTrans;
+extern VECTOR3 zeroTrans;
 extern s32 carTypes[13];
 extern s16 carIndexToPlayerOrAIIndex[14];
 extern s32 carName[13];
 extern Cs* carCs[13];
-extern Car playerInfo[2];
+extern PlayerCar playerInfo[2];
 extern Cs* aiCarCs[8];
-extern CarAlt aiCarInfo[8];
+extern AICar aiCarInfo[8];
 extern s16 aiIndexToCarIndex[8];
-extern CarAlt helicoptor;
+extern AICar helicoptor;
 extern s32 gSelectedAICars[8];
 
 extern u8 gInitPlayerWeapons[4];
@@ -79,19 +79,19 @@ void PlayGame(void);
 u8 CheckPlayerHealthStand(s32 player);
 void UpdatePlayerDamageModel(s16 player);
 void UpdateAICarDamageModel(s16 ai);
-void StartDeathSequence(void* car, u8 which);
+void StartDeathSequence(Car* car, u8 isPlayer);
 u8 AnyAICarsAlive(void);
 void UpdateCamera(s16 idx);
 void UAStats(void);
-void UAPlayerUpdate(Cs* cs, Car* car);
-void UAAIUpdate(Cs* cs, CarAlt* car);
+void UAPlayerUpdate(Cs* cs, PlayerCar* car);
+void UAAIUpdate(Cs* cs, AICar* car);
 void UARemoveVehicleFromDrawList(s32 name);
-void CheckVRMode(Car* car);
+void CheckVRMode(PlayerCar* car);
 void InitHelicoptorPosition(void);
-s16 GetClosestPlayer(VEC3* pos, s16 skip);
-s16 GetClosestAICar(VEC3* pos);
-void GetPlayerPosition(s16 player, VEC3* out);
-void GetAICarPosition(s16 ai, VEC3* out);
+s16 GetClosestPlayer(VECTOR3* pos, s16 skip);
+s16 GetClosestAICar(VECTOR3* pos);
+void GetPlayerPosition(s16 player, VECTOR3* out);
+void GetAICarPosition(s16 ai, VECTOR3* out);
 void GetPlayerRot(s16 player, SVECTOR* out);
 Cs* GetPlayerCs3D(s16 player);
 Cs* GetAICs3D(s16 ai);
@@ -99,15 +99,15 @@ s16 GetAITheCameraFollows(void);
 s32 GetPlayerSpeed(s16 player);
 s32 GetAISpeed(s16 ai);
 s16 GetNumPlayers(void);
-Car* GetPlayerInfo(s16 player);
+PlayerCar* GetPlayerInfo(s16 player);
 s16 GetNumAICars(void);
-CarAlt* GetAICarInfo(s16 ai);
+AICar* GetAICarInfo(s16 ai);
 Cs* UAGetCs(s32 name);
 u8 uaIsCarCS(Cs* cs, u8* isPlayer, s16* index);
 s16 uaGetCarMatID(s16 idx, u8 isPlayer);
 s32 uaIsCarMatID(s16 matId, s8* isPlayer, u16* index);
-void UASetCameraPosition(s16 which, VEC3* pos, SVECTOR* rot);
-void UAGetCameraPosition(s16 idx, VEC3* pos, SVECTOR* rot);
+void UASetCameraPosition(s16 which, VECTOR3* pos, SVECTOR* rot);
+void UAGetCameraPosition(s16 idx, VECTOR3* pos, SVECTOR* rot);
 Cs* UAGetCameraCS(s16 idx);
 u8 uaUsingLanes(void);
 u8 uaUsingGroupGroundHeight(void);
@@ -118,7 +118,7 @@ s32 uaGetDifficulty(void);
 s32 uaGetTwoPlayerMode(void);
 void PadSetConfig(s32 cfg, s16 player);
 s32 PadGetConfig(s16 player);
-void uaPadInit(Car* car, s32 mode);
+void uaPadInit(PlayerCar* car, s32 mode);
 s16 GetPlayerCarToCarIndex(s16 player);
 s16 GetAICarToCarIndex(s16 ai);
 s32 GetAICarStrength(void);
@@ -126,7 +126,7 @@ void uaDontDrawCar(s16 idx, u8 isPlayer);
 void uaDrawCar(s16 idx, u8 isPlayer);
 s32 uaGetCurrentCar(s32 isPlayer, s16 idx);
 s16 GetPlayerTheCameraFollows(void);
-void UASetSoundFlags(s16 idx, void* car, u8 isPlayer);
+void UASetSoundFlags(s16 idx, Car* car, u8 isPlayer);
 s16 GetNumAICarsLiving(void);
 s16 GetCarNumFromCarName(s32 name);
 s32 GetCarNameFromCarNum(s16 num);

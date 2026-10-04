@@ -24,7 +24,7 @@ s16 numAICarsInBattle = 0;
 s16 aiCarsInBattle[2];
 
 #ifdef NON_MATCHING
-void AICarUpdate(CarAlt* car)
+void AICarUpdate(AICar* car)
 {
     s32 diff;
     s32 rot;
@@ -60,7 +60,7 @@ void AICarUpdate(CarAlt* car)
     car->flags[0x09] = 0;
     AICarUpdateHealthTier(car);
     if (car->driving != 0 && car->flags[0x00] == 0) {
-        UpdateBearing((Car*)car, 0);
+        UpdateBearing(car, 0);
         AICarUpdateClosestPlayer(car);
         AICarUpdatePlayerRange(car);
         AICarUpdateCurrPtRange(car);
@@ -71,15 +71,15 @@ void AICarUpdate(CarAlt* car)
         car->unk34 = 0;
     }
     AICarUpdateTransition(car);
-    UAeffectUpdateCarSpeed(car->uaIndex, car->motion.vel.y);
+    UAeffectUpdateCarSpeed(car->uaIndex, car->motion.vel.vy);
     if (car->driving != 0) {
-        CarRotUpdate((Car*)car, 0);
-        CarTransUpdate((Car*)car, 0);
+        CarRotUpdate(car, 0);
+        CarTransUpdate(car, 0);
     }
     if (car->stats.unk38 != 0 && (car->unk40 != 0 || shellGetCurrentLevel() == 5)) {
-        CheckHitDetection((Car*)car, 0);
+        CheckHitDetection(car, 0);
         if (car->collision.unk0 != 0) {
-            diff = __builtin_abs(car->motion.rot.z - car->motion.rot2.z);
+            diff = __builtin_abs(car->motion.rot.vz - car->motion.rot2.vz);
             if (diff >= 683) {
                 car->unk4B = 1;
             }
@@ -91,13 +91,13 @@ void AICarUpdate(CarAlt* car)
         car->stats.unk34 = 0;
     }
     fl = GetFieldsLastFrame();
-    sp = car->motion.vel.y;
+    sp = car->motion.vel.vy;
     if ((((fl * 0x2F8) / 100) << 5) < sp && car->flags[0x0D] == 0) {
         rot = car->unk1C4;
         rot = __builtin_abs(rot);
         if (rot < 683 || car->unk160 == 0) {
-            maxRot = __builtin_abs(car->motion.rotDelta.z);
-            if (CalcMaxRotBeforeDrift((Car*)car, 0) < maxRot) {
+            maxRot = __builtin_abs(car->motion.rotDelta.vz);
+            if (CalcMaxRotBeforeDrift(car, 0) < maxRot) {
                 goto block_46;
             }
             goto block_47;
@@ -114,7 +114,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdate);
 #endif
 
 #ifdef NON_MATCHING
-void AICarUpdateHealthTier(CarAlt* car)
+void AICarUpdateHealthTier(AICar* car)
 {
     if (car->stats.unk40 < car->unk104) {
         car->unk02 = 0;
@@ -130,22 +130,22 @@ void AICarUpdateHealthTier(CarAlt* car)
 INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdateHealthTier);
 #endif
 
-void AICarUpdateClosestPlayer(CarAlt* car)
+void AICarUpdateClosestPlayer(AICar* car)
 {
     car->unk0E = GetClosestPlayer(&car->motion.pos, -1);
 }
 
 #ifdef NON_MATCHING
-void AICarUpdatePlayerRange(CarAlt* car)
+void AICarUpdatePlayerRange(AICar* car)
 {
     VECTOR pos;
     u16 dead0;
     u16 dead1;
-    Car* info;
+    PlayerCar* info;
 
-    GetPlayerPosition(car->unk0E, (VEC3*)&pos);
-    pos.vx -= car->motion.pos.x;
-    pos.vy -= car->motion.pos.y;
+    GetPlayerPosition(car->unk0E, (VECTOR3*)&pos);
+    pos.vx -= car->motion.pos.vx;
+    pos.vy -= car->motion.pos.vy;
     car->unk34 = SquareRoot0((pos.vx * pos.vx) + (pos.vy * pos.vy));
     info = GetPlayerInfo(car->unk0E);
     dead0 = car->unk172;
@@ -217,7 +217,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdatePlayerRange);
 #endif
 
 #ifdef NON_MATCHING
-void AICarUpdateCurrPtRange(CarAlt* car)
+void AICarUpdateCurrPtRange(AICar* car)
 {
     VECTOR v;
     VECTOR out;
@@ -229,8 +229,8 @@ void AICarUpdateCurrPtRange(CarAlt* car)
     v.vz = 0;
     v.vx = (s16)distance;
     mathMulTransVec(&car->motion.mat2, &v, &out);
-    delta.vx = (car->unk1A0 + out.vx) - car->motion.pos.x;
-    delta.vy = (car->unk1A4 + out.vy) - car->motion.pos.y;
+    delta.vx = (car->unk1A0 + out.vx) - car->motion.pos.vx;
+    delta.vy = (car->unk1A4 + out.vy) - car->motion.pos.vy;
     car->unk1E4 = SquareRoot0((delta.vx * delta.vx) + (delta.vy * delta.vy));
     if (delta.vy == 0) {
         delta.vy = 1;
@@ -243,12 +243,12 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdateCurrPtRange);
 #endif
 
 #ifdef NON_MATCHING
-void AICarUpdateNextPtAngle(CarAlt* car)
+void AICarUpdateNextPtAngle(AICar* car)
 {
     VECTOR delta;
 
-    delta.vx = car->unk1A8 - car->motion.pos.x;
-    delta.vy = car->unk1AC - car->motion.pos.y;
+    delta.vx = car->unk1A8 - car->motion.pos.vx;
+    delta.vy = car->unk1AC - car->motion.pos.vy;
     car->unk1E8 = SquareRoot0((delta.vx * delta.vx) + (delta.vy * delta.vy));
     if (delta.vy == 0) {
         delta.vy = 1;
@@ -261,7 +261,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdateNextPtAngle);
 #endif
 
 #ifdef NON_MATCHING
-void AICarUpdateDrivingProfile(CarAlt* car)
+void AICarUpdateDrivingProfile(AICar* car)
 {
     s16 r;
     s32 dur;
@@ -301,7 +301,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdateDrivingProfile);
 #endif
 
 #ifdef NON_MATCHING
-void AICarInitTransition(CarAlt* car)
+void AICarInitTransition(AICar* car)
 {
     s32 d;
 
@@ -315,14 +315,14 @@ void AICarInitTransition(CarAlt* car)
         car->stats.unk22 = 0;
     }
     if (triggerPtGroups.count >= 2 && car->flags[0x0A] == 0 && car->unk34 >= 3201) {
-        d = __builtin_abs(triggerPtGroups.pos[car->unk176].y - car->motion.pos.z);
+        d = __builtin_abs(triggerPtGroups.pos[car->unk176].y - car->motion.pos.vz);
         if ((car->stats.unk6C * 2) < d) {
             car->stats.unk03 = 1;
             if (shellGetCurrentLevel() == 5) {
-                if (car->motion.pos.x >= 0x15E0) {
-                    if (car->motion.pos.x < 0x2581) {
-                        if (car->motion.pos.y >= 0x1770) {
-                            if (car->motion.pos.y < 0x1839) {
+                if (car->motion.pos.vx >= 0x15E0) {
+                    if (car->motion.pos.vx < 0x2581) {
+                        if (car->motion.pos.vy >= 0x1770) {
+                            if (car->motion.pos.vy < 0x1839) {
                                 car->stats.unk03 = 0;
                             }
                         }
@@ -350,7 +350,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarInitTransition);
 #endif
 
 #ifdef NON_MATCHING
-void AICarUpdateTransition(CarAlt* car)
+void AICarUpdateTransition(AICar* car)
 {
     InitControlPad(car->skid);
     if (car->heliFlag == 0 && car->flags[0x00] == 0) {
@@ -366,7 +366,7 @@ void AICarUpdateTransition(CarAlt* car)
         BringBackAICarInCollision(car);
     } else if (car->driving != 0 && car->flags[0x00] == 0) {
         if (car->flags[0x0D] != 0) {
-            UpdateCarOnSlickSpot((Car*)car, 0);
+            UpdateCarOnSlickSpot(car, 0);
         }
         if (car->unk160 != 0) {
             AICarTurn(car);
@@ -382,24 +382,24 @@ void AICarUpdateTransition(CarAlt* car)
             }
         }
         AICarUpdateControlPad(car);
-        CarUpdateDeltas((Car*)car, 0);
+        CarUpdateDeltas(car, 0);
     }
-    CheckSlickSpots((Car*)car, 0);
-    CheckHealthStands((Car*)car, 0);
-    CalcTireCoordinates((Car*)car, 0);
-    CheckCurbs((Car*)car, 0);
-    CheckBridges((Car*)car, 0);
-    CheckCatapults((Car*)car, 0);
-    CheckBombDamage((Car*)car, 0);
-    CheckSpikeDamage((Car*)car, 0);
-    CheckPotHoles((Car*)car, 0);
+    CheckSlickSpots(car, 0);
+    CheckHealthStands(car, 0);
+    CalcTireCoordinates(car, 0);
+    CheckCurbs(car, 0);
+    CheckBridges(car, 0);
+    CheckCatapults(car, 0);
+    CheckBombDamage(car, 0);
+    CheckSpikeDamage(car, 0);
+    CheckPotHoles(car, 0);
     if (car->flags[0x1B] != 0) {
-        CheckMonsterSmash((Car*)car, 0);
+        CheckMonsterSmash(car, 0);
     }
-    UpdateBounce((Car*)car, 0);
-    UpdateTirePositions((Car*)car, 0);
+    UpdateBounce(car, 0);
+    UpdateTirePositions(car, 0);
     if (car->flags[0x00] != 0) {
-        UpdateCarDeath((Car*)car, 0);
+        UpdateCarDeath(car, 0);
     }
 }
 #else
@@ -407,7 +407,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdateTransition);
 #endif
 
 #ifdef NON_MATCHING
-void NoBeadOnPlayer(CarAlt* car)
+void NoBeadOnPlayer(AICar* car)
 {
     if (car->heliFlag != 0 && car->uaIndex != -1) {
         GetNewPointToDriveTo(car);
@@ -419,7 +419,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", NoBeadOnPlayer);
 #endif
 
 #ifdef NON_MATCHING
-void GetNewPointToDriveTo(CarAlt* car)
+void GetNewPointToDriveTo(AICar* car)
 {
     s16 pt;
     u16 current;
@@ -450,7 +450,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", GetNewPointToDriveTo);
 #endif
 
 #ifdef NON_MATCHING
-void HelpLostCar(CarAlt* car)
+void HelpLostCar(AICar* car)
 {
     car->unk10 += GetFieldsLastFrame();
     if (car->unk10 >= 181 || car->unk180 >= 4 || car->unk4D != 0) {
@@ -463,7 +463,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", HelpLostCar);
 #endif
 
 #ifdef NON_MATCHING
-void AIInitTurnFlags(CarAlt* car)
+void AIInitTurnFlags(AICar* car)
 {
     s32 angle;
 
@@ -485,7 +485,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AIInitTurnFlags);
 #endif
 
 #ifdef NON_MATCHING
-void AICarTurn(CarAlt* car)
+void AICarTurn(AICar* car)
 {
     s32 diff;
     s32 t;
@@ -495,7 +495,7 @@ void AICarTurn(CarAlt* car)
     AICarUpdateNextPtAngle(car);
     turn = 0;
     if (GetBeadOnPlayer(car, car->unk1E8)) {
-        diff = car->motion.rot.z - car->unk30;
+        diff = car->motion.rot.vz - car->unk30;
         car->heliFlag = 1;
         if ((s8)car->stats.unk04 >= GetPlayerInfo(car->unk0E)->stats.unk108
             && (s16)(rand() % 100) < car->attack[(s8)car->unk02].unk00) {
@@ -504,7 +504,7 @@ void AICarTurn(CarAlt* car)
             car->unk48 = 0;
         }
     } else {
-        diff = car->motion.rot.z - car->unk1C8;
+        diff = car->motion.rot.vz - car->unk1C8;
         NoBeadOnPlayer(car);
     }
     BoundAngle(&diff);
@@ -527,7 +527,7 @@ void AICarTurn(CarAlt* car)
         UpdateCurrentTriggerPt(car);
         car->motion.unk00 = 0;
         if (car->unk16C != 0) {
-            car->motion.vel.y = car->stats.unkA4;
+            car->motion.vel.vy = car->stats.unkA4;
         }
         goto noDrift;
     }
@@ -555,7 +555,7 @@ noDrift:
         SetNoCarDrift(&car->motion, car->flags);
     }
 tail:
-    if (car->motion.vel.y > car->stats.unkB4) {
+    if (car->motion.vel.vy > car->stats.unkB4) {
         car->skid[5] = 1;
         car->skid[4] = 0;
     } else {
@@ -568,7 +568,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarTurn);
 #endif
 
 #ifdef NON_MATCHING
-u8 TimeToComeOutOfTurn(CarAlt* car, s32 diff)
+u8 TimeToComeOutOfTurn(AICar* car, s32 diff)
 {
     s32 rot;
     s32 d;
@@ -578,7 +578,7 @@ u8 TimeToComeOutOfTurn(CarAlt* car, s32 diff)
     s32 spd;
     u8 res;
 
-    rot = car->motion.rotDelta.z;
+    rot = car->motion.rotDelta.vz;
     d = __builtin_abs(diff);
     if (rot < 0) {
         rot = -rot;
@@ -596,12 +596,12 @@ u8 TimeToComeOutOfTurn(CarAlt* car, s32 diff)
             }
             dd = __builtin_abs(diff);
             lo = car->stats.unkD0 + (((hi - car->stats.unkD0) * dd) / 1024);
-            if (car->motion.vel.y < car->stats.unkA8) {
+            if (car->motion.vel.vy < car->stats.unkA8) {
                 spd = car->stats.unkA8;
             } else {
-                spd = car->motion.vel.y;
+                spd = car->motion.vel.vy;
             }
-            lo += ((hi - lo) * (spd - car->motion.vel.y)) / spd;
+            lo += ((hi - lo) * (spd - car->motion.vel.vy)) / spd;
             res = lo < __builtin_abs((s16)car->motion.unk00);
         } else {
             res = 1;
@@ -619,7 +619,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", TimeToComeOutOfTurn);
 #endif
 
 #ifdef NON_MATCHING
-void AICarDriveBetweenPts(CarAlt* car)
+void AICarDriveBetweenPts(AICar* car)
 {
     s32 dist;
     s32 spd;
@@ -676,7 +676,7 @@ void AICarDriveBetweenPts(CarAlt* car)
         car->heliFlag = 0;
         return;
     }
-    t = car->motion.vel.y;
+    t = car->motion.vel.vy;
     t = __builtin_abs(t);
     do {
     } while (0);
@@ -686,7 +686,7 @@ void AICarDriveBetweenPts(CarAlt* car)
     }
     if (car->unk176 != tPoints[car->unk172].type) {
         spd = GetMinSpeedNeeded(tPoints[car->unk170].type, tPoints[car->unk172].type);
-        if (car->motion.vel.y < spd) {
+        if (car->motion.vel.vy < spd) {
             car->skid[4] = 1;
             if (car->stats.unkA8 < spd) {
                 car->skid[8] = 1;
@@ -695,7 +695,7 @@ void AICarDriveBetweenPts(CarAlt* car)
         return;
     }
     half = car->stats.unkBC / 2;
-    if ((car->motion.vel.y - spd) < (((dist << 5) / car->motion.vel.y) * half)) {
+    if ((car->motion.vel.vy - spd) < (((dist << 5) / car->motion.vel.vy) * half)) {
         goto set52;
     }
     goto set53;
@@ -710,11 +710,11 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarDriveBetweenPts);
 #endif
 
 #ifdef NON_MATCHING
-void UpdateTurnStart(CarAlt* car)
+void UpdateTurnStart(AICar* car)
 {
     car->unk1B4 = car->unk1B0;
-    if (car->motion.vel.y < car->stats.unkB4) {
-        car->unk1B4 = (car->unk1B0 * car->motion.vel.y) / car->stats.unkB4;
+    if (car->motion.vel.vy < car->stats.unkB4) {
+        car->unk1B4 = (car->unk1B0 * car->motion.vel.vy) / car->stats.unkB4;
         if (car->unk1B4 < 160) {
             car->unk1B4 = 160;
         }
@@ -725,7 +725,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", UpdateTurnStart);
 #endif
 
 #ifdef NON_MATCHING
-void AICarInitSwerve(CarAlt* car)
+void AICarInitSwerve(AICar* car)
 {
     VECTOR d;
     s32 v;
@@ -784,7 +784,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarInitSwerve);
 #endif
 
 #ifdef NON_MATCHING
-void AICarUpdateSwerve(CarAlt* car)
+void AICarUpdateSwerve(AICar* car)
 {
     VECTOR d;
     s32 v;
@@ -828,7 +828,7 @@ void AICarUpdateSwerve(CarAlt* car)
             car->unk1B8 = car->unk1BC;
         }
     } else {
-        v = __builtin_abs(car->motion.rot.z - car->unk1BC);
+        v = __builtin_abs(car->motion.rot.vz - car->unk1BC);
         if (v < 22) {
             car->unk161 = 0;
         }
@@ -837,14 +837,14 @@ void AICarUpdateSwerve(CarAlt* car)
     car->unk161 = 0;
     if (car->heliFlag != 0) {
         if (GetBeadOnPlayer(car, car->unk1E4)) {
-            car->motion.rot.z = SmoothAngleValue(car->motion.rot.z, car->unk30, 0x5A);
+            car->motion.rot.vz = SmoothAngleValue(car->motion.rot.vz, car->unk30, 0x5A);
         } else {
             car->heliFlag = 0;
         }
     } else if (car->unk161 != 0) {
-        car->motion.rot.z = SmoothAngleValue(car->motion.rot.z, car->unk1B8, 0x5A);
+        car->motion.rot.vz = SmoothAngleValue(car->motion.rot.vz, car->unk1B8, 0x5A);
     } else {
-        car->motion.rot.z = SmoothAngleValue(car->motion.rot.z, car->unk1EC, 0x5A);
+        car->motion.rot.vz = SmoothAngleValue(car->motion.rot.vz, car->unk1EC, 0x5A);
     }
 }
 #else
@@ -852,9 +852,9 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdateSwerve);
 #endif
 
 #ifdef NON_MATCHING
-u8 GetBeadOnPlayer(CarAlt* car, s32 range)
+u8 GetBeadOnPlayer(AICar* car, s32 range)
 {
-    Car* info;
+    PlayerCar* info;
     s16 pt;
     s32 d;
     u8 result;
@@ -863,7 +863,7 @@ u8 GetBeadOnPlayer(CarAlt* car, s32 range)
     pt = car->unk176;
     info = GetPlayerInfo(car->unk0E);
     ppt = info->unkC0;
-    d = __builtin_abs(car->motion.pos.z - info->motion.pos.z);
+    d = __builtin_abs(car->motion.pos.vz - info->motion.pos.vz);
     result = 0;
     if (pt == (s16)ppt) {
         if (car->unk18A >= 81 && (s16)car->stats.unk22 < 6 && d < 200) {
@@ -886,26 +886,26 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", GetBeadOnPlayer);
 #endif
 
 #ifdef NON_MATCHING
-s32 GetBufferZoneSpeed(CarAlt* car)
+s32 GetBufferZoneSpeed(AICar* car)
 {
-    Car* info;
+    PlayerCar* info;
     s32 diff;
     s32 t;
     s32 spd;
 
     info = GetPlayerInfo(car->unk0E);
-    diff = car->motion.rot.z - info->motion.rot.z;
+    diff = car->motion.rot.vz - info->motion.rot.vz;
     BoundAngle(&diff);
     if (car->unk48 == 0) {
         t = diff;
         if (t < 0) {
             t = -t;
         }
-        if (t < 1024 && info->motion.vel.y > 0) {
-            return info->motion.vel.y;
+        if (t < 1024 && info->motion.vel.vy > 0) {
+            return info->motion.vel.vy;
         }
-        if (info->motion.vel.y >= 0) {
-            spd = __builtin_abs(info->motion.vel.y);
+        if (info->motion.vel.vy >= 0) {
+            spd = __builtin_abs(info->motion.vel.vy);
             if (spd < ((GetFieldsLastFrame() * 190) / 100)) {
                 return (GetFieldsLastFrame() * 190) / 100;
             }
@@ -918,7 +918,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", GetBufferZoneSpeed);
 #endif
 
 #ifdef NON_MATCHING
-void AICarUpdateControlPad(CarAlt* car)
+void AICarUpdateControlPad(AICar* car)
 {
     car->skid[3] = car->skid[3] != 0 && car->flags[0x0B] == 0;
     car->skid[2] = car->skid[2] != 0 && car->flags[0x0B] == 0;
@@ -931,7 +931,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdateControlPad);
 #endif
 
 #ifdef NON_MATCHING
-void AICarOutOfBattle(CarAlt* car)
+void AICarOutOfBattle(AICar* car)
 {
     s16 i;
     s16 j;
@@ -959,7 +959,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarOutOfBattle);
 #endif
 
 #ifdef NON_MATCHING
-void AICarInBattle(CarAlt* car)
+void AICarInBattle(AICar* car)
 {
     s16 i;
     u8 found;
@@ -1000,7 +1000,7 @@ void UpdateAICarsInBattleLaneDist(void)
     s16 i;
     s16 t;
     s32 n;
-    CarAlt* car;
+    AICar* car;
 
     i = 0;
     if (numAICarsInBattle > 0) {
@@ -1046,23 +1046,23 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", UpdateAICarsInBattleLaneDist);
 #endif
 
 #ifdef NON_MATCHING
-void AICarUpdatePlayerDir(CarAlt* car)
+void AICarUpdatePlayerDir(AICar* car)
 {
-    Car* info;
+    PlayerCar* info;
     VECTOR delta;
     s32 ang;
 
     info = GetPlayerInfo(car->unk0E);
     if (car->flags[0x0B] == 0) {
-        delta.vx = info->motion.pos.x - car->motion.pos.x;
-        delta.vy = info->motion.pos.y - car->motion.pos.y;
+        delta.vx = info->motion.pos.vx - car->motion.pos.vx;
+        delta.vy = info->motion.pos.vy - car->motion.pos.vy;
         if (delta.vy == 0) {
             delta.vy = 1;
         }
         car->unk30 = ratan2(delta.vx, delta.vy);
         BoundAngle(&car->unk30);
     }
-    car->unk2C = car->unk30 - car->motion.rot.z;
+    car->unk2C = car->unk30 - car->motion.rot.vz;
     BoundAngle(&car->unk2C);
     ang = car->unk2C;
     if (ang < 0) {
@@ -1083,7 +1083,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdatePlayerDir);
 #endif
 
 #ifdef NON_MATCHING
-void BringBackAICarInCollision(CarAlt* car)
+void BringBackAICarInCollision(AICar* car)
 {
     u8 done;
 
@@ -1096,31 +1096,31 @@ void BringBackAICarInCollision(CarAlt* car)
         if (car->flags[0x10] == 0) {
             car->unk182 = car->unk182 + GetFieldsLastFrame();
             SetNoCarDrift(&car->motion, car->flags);
-            car->motion.vel.y = SmoothValue(
-                car->motion.vel.y, ((-(GetFieldsLastFrame() * 760)) / 100) << 5, 0x5F);
+            car->motion.vel.vy = SmoothValue(
+                car->motion.vel.vy, ((-(GetFieldsLastFrame() * 760)) / 100) << 5, 0x5F);
             AICarUpdateNextPtAngle(car);
-            car->motion.rot.z = SmoothAngleValue(car->motion.rot.z, car->unk1C8, 0x5F);
+            car->motion.rot.vz = SmoothAngleValue(car->motion.rot.vz, car->unk1C8, 0x5F);
             if (car->unk182 >= 81) {
                 car->unk16D = 0;
                 car->unk4D = 0;
                 car->unk182 = 0;
-                car->motion.vel.y = 0;
+                car->motion.vel.vy = 0;
             }
         }
     } else {
         if (car->stats.unk38 == 0) {
             car->collision.count = car->collision.count - GetFieldsLastFrame();
         }
-        if ((s16)car->collision.count > 0 && car->motion.vel.y != 0) {
-            if (car->motion.vel.y > 0) {
-                car->motion.vel.y = car->motion.vel.y - (car->stats.unkBC / 2);
-                if (car->motion.vel.y < 0) {
-                    car->motion.vel.y = 0;
+        if ((s16)car->collision.count > 0 && car->motion.vel.vy != 0) {
+            if (car->motion.vel.vy > 0) {
+                car->motion.vel.vy = car->motion.vel.vy - (car->stats.unkBC / 2);
+                if (car->motion.vel.vy < 0) {
+                    car->motion.vel.vy = 0;
                 }
             } else {
-                car->motion.vel.y = (car->stats.unkBC / 2) + car->motion.vel.y;
-                if (car->motion.vel.y > 0) {
-                    car->motion.vel.y = 0;
+                car->motion.vel.vy = (car->stats.unkBC / 2) + car->motion.vel.vy;
+                if (car->motion.vel.vy > 0) {
+                    car->motion.vel.vy = 0;
                 }
             }
         } else {
@@ -1144,9 +1144,9 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", BringBackAICarInCollision);
 #endif
 
 #ifdef NON_MATCHING
-void AICarHeliUpdate(CarAlt* car)
+void AICarHeliUpdate(AICar* car)
 {
-    Car* info;
+    PlayerCar* info;
     VECTOR v;
     VECTOR out;
     VECTOR w;
@@ -1168,38 +1168,38 @@ void AICarHeliUpdate(CarAlt* car)
         v.vy = -600;
         v.vz = 0;
         mathMulTransVec(&info->motion.mat2, &v, &out);
-        w.vx = out.vx + info->motion.pos.x;
-        w.vy = out.vy + info->motion.pos.y;
-        v.vx = w.vx - car->motion.pos.x;
-        v.vy = w.vy - car->motion.pos.y;
+        w.vx = out.vx + info->motion.pos.vx;
+        w.vy = out.vy + info->motion.pos.vy;
+        v.vx = w.vx - car->motion.pos.vx;
+        v.vy = w.vy - car->motion.pos.vy;
         car->unk34 = SquareRoot0((v.vx * v.vx) + (v.vy * v.vy));
         speed = 0;
         if (car->unk34 >= 800) {
             if (car->unk34 < 1600) {
-                s32 t1 = info->motion.vel.y;
+                s32 t1 = info->motion.vel.vy;
                 t1 = __builtin_abs(t1);
                 if (t1 < car->stats.unkAC) {
                     speed = car->stats.unkAC;
                 } else {
-                    speed = __builtin_abs(info->motion.vel.y);
+                    speed = __builtin_abs(info->motion.vel.vy);
                 }
             } else {
-                s32 t2 = info->motion.vel.y;
+                s32 t2 = info->motion.vel.vy;
                 t2 = __builtin_abs(t2);
                 if ((t2 * 2) < car->stats.unkAC) {
                     speed = car->stats.unkAC;
                 } else {
-                    s32 t3 = info->motion.vel.y;
+                    s32 t3 = info->motion.vel.vy;
                     t3 = __builtin_abs(t3);
                     speed = t3 * 2;
                 }
             }
         }
         if (speed > 0) {
-            s32 cur = __builtin_abs(car->motion.vel.y);
+            s32 cur = __builtin_abs(car->motion.vel.vy);
             if (cur < ((GetFieldsLastFrame() * 380) / 100) || car->unk34 > 0x1FFFFF
-                || (car->motion.vel.y - speed)
-                    < (((car->unk34 << 5) / car->motion.vel.y) * (car->stats.unkBC / 10))) {
+                || (car->motion.vel.vy - speed)
+                    < (((car->unk34 << 5) / car->motion.vel.vy) * (car->stats.unkBC / 10))) {
                 car->skid[4] = 1;
             } else {
                 car->skid[5] = 1;
@@ -1210,23 +1210,23 @@ void AICarHeliUpdate(CarAlt* car)
         t = car->unk2C;
         t = __builtin_abs(t);
         if (t >= 1537) {
-            if (car->motion.vel.y > car->stats.unkAC) {
+            if (car->motion.vel.vy > car->stats.unkAC) {
                 car->skid[5] = 1;
                 car->skid[4] = 0;
             }
             if (car->unk2C > 0) {
-                ang = car->motion.rot.z + 341;
+                ang = car->motion.rot.vz + 341;
             } else {
-                ang = car->motion.rot.z - 227;
+                ang = car->motion.rot.vz - 227;
             }
         } else {
-            ang = SmoothAngleValue(car->motion.rot.z, car->unk30, 0x5F);
+            ang = SmoothAngleValue(car->motion.rot.vz, car->unk30, 0x5F);
         }
-        car->motion.rot.z = ang;
+        car->motion.rot.vz = ang;
     }
-    CarUpdateDeltas((Car*)car, 0);
-    CarRotUpdate((Car*)car, 0);
-    CarTransUpdate((Car*)car, 0);
+    CarUpdateDeltas(car, 0);
+    CarRotUpdate(car, 0);
+    CarTransUpdate(car, 0);
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarHeliUpdate);
@@ -1238,7 +1238,7 @@ void UpdateNumAICarsInBattle(void)
     s16 i;
     s16 t;
     s32 n;
-    CarAlt* car;
+    AICar* car;
 
     i = 0;
     if (numAICarsInBattle > 0) {
@@ -1266,7 +1266,7 @@ s16 GetNumAICarsInBattle(void)
 }
 
 #ifdef NON_MATCHING
-void StartLostCheck(CarAlt* car)
+void StartLostCheck(AICar* car)
 {
     car->stats.unkFC = car->stats.unk100 / 2;
     RecomputeCarDeltas(&car->stats);
@@ -1276,22 +1276,22 @@ void StartLostCheck(CarAlt* car)
 INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", StartLostCheck);
 #endif
 
-void* GetClosestCarToPlayer(s16 player, u8* isPlayer)
+Car* GetClosestCarToPlayer(s16 player, u8* isPlayer)
 {
-    VEC3* pos;
-    CarAlt* car;
+    VECTOR3* pos;
+    Car* car;
 
     pos = &GetPlayerInfo(player)->motion.pos;
     if (GetNumPlayers() == 1) {
         *isPlayer = 0;
         car = GetAICarInfo(GetClosestAICar(pos));
-        if (car == NULL || car->unk41 != 0) {
+        if (car == NULL || AI_CAR(car)->unk41 != 0) {
             return car;
         }
         car = NULL;
     } else {
         *isPlayer = 1;
-        car = (CarAlt*)GetPlayerInfo(GetClosestPlayer(pos, player));
+        car = GetPlayerInfo(GetClosestPlayer(pos, player));
     }
     return car;
 }
