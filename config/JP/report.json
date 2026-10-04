@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 8.858415,
+    "fuzzy_match_percent": 8.891551,
     "total_code": "470784",
-    "matched_code": "41704",
-    "matched_code_percent": 8.858415,
-    "total_data": "634000",
-    "matched_data": "78896",
-    "matched_data_percent": 12.444164,
+    "matched_code": "41860",
+    "matched_code_percent": 8.891551,
+    "total_data": "639464",
+    "matched_data": "84420",
+    "matched_data_percent": 13.201681,
     "total_functions": 1983,
-    "matched_functions": 366,
-    "matched_functions_percent": 18.456884,
-    "total_units": 122
+    "matched_functions": 372,
+    "matched_functions_percent": 18.759455,
+    "total_units": 119
   },
   "units": [
     {
@@ -47,41 +47,6 @@
           "size": "2300",
           "metadata": {},
           "address": "0"
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/hier",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "48",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".rodata",
-          "size": "48",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
         }
       ],
       "metadata": {
@@ -373,24 +338,56 @@
     {
       "name": "tm1/hier",
       "measures": {
+        "fuzzy_match_percent": 3.4031413,
         "total_code": "4584",
-        "matched_data_percent": 100.0,
+        "matched_code": "156",
+        "matched_code_percent": 3.4031413,
+        "total_data": "5576",
+        "matched_data": "5524",
+        "matched_data_percent": 99.06743,
         "total_functions": 17,
-        "complete_data_percent": 100.0,
+        "matched_functions": 6,
+        "matched_functions_percent": 35.294117,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "5460",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".common",
+          "size": "4",
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".rodata",
+          "size": "48",
+          "metadata": {}
+        },
+        {
+          "name": ".sbss",
+          "size": "48",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "4584",
+          "fuzzy_match_percent": 3.4031413,
           "metadata": {}
         }
       ],
@@ -402,49 +399,49 @@
           "address": "0"
         },
         {
-          "name": "FUN_800fd8b4",
+          "name": "hierPop",
           "size": "96",
           "metadata": {},
           "address": "216"
         },
         {
-          "name": "FUN_800fd914",
+          "name": "hierTraverse",
           "size": "1824",
           "metadata": {},
           "address": "312"
         },
         {
-          "name": "FUN_800fe034",
+          "name": "hierIsInFov",
           "size": "272",
           "metadata": {},
           "address": "2136"
         },
         {
-          "name": "FUN_800fe144",
+          "name": "hierLod",
           "size": "352",
           "metadata": {},
           "address": "2408"
         },
         {
-          "name": "FUN_800fe2a4",
+          "name": "hierCtrlNode",
           "size": "228",
           "metadata": {},
           "address": "2760"
         },
         {
-          "name": "FUN_800fe388",
+          "name": "hierInBox",
           "size": "256",
           "metadata": {},
           "address": "2988"
         },
         {
-          "name": "FUN_800fe488",
+          "name": "hierAnimate",
           "size": "112",
           "metadata": {},
           "address": "3244"
         },
         {
-          "name": "FUN_800fe4f8",
+          "name": "hierAnimateBiDirect",
           "size": "120",
           "metadata": {},
           "address": "3356"
@@ -452,6 +449,7 @@
         {
           "name": "hierSetWorldEP",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3476"
         },
@@ -470,35 +468,41 @@
         {
           "name": "hierInit",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4440"
         },
         {
-          "name": "FUN_800fe96c",
+          "name": "wordCopy",
           "size": "52",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4496"
         },
         {
           "name": "hierSetLodScale",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4548"
         },
         {
           "name": "hierSetLodShift",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4560"
         },
         {
           "name": "hierSetGroundFlag",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4572"
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/hier.c",
         "progress_categories": [
           "tm1"
         ]
@@ -15192,41 +15196,6 @@
       }
     },
     {
-      "name": "tm1/hier",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "16",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "16",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/view",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15633,41 +15602,6 @@
         {
           "name": ".sdata",
           "size": "8",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/hier",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "48",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sbss",
-          "size": "48",
           "metadata": {}
         },
         {
@@ -16896,20 +16830,30 @@
   "version": 2,
   "categories": [
     {
+      "id": "sdk",
+      "name": "sdk",
+      "measures": {
+        "total_code": "112236",
+        "total_data": "462792",
+        "total_functions": 974,
+        "total_units": 5
+      }
+    },
+    {
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 11.631357,
+        "fuzzy_match_percent": 11.674867,
         "total_code": "358548",
-        "matched_code": "41704",
-        "matched_code_percent": 11.631357,
-        "total_data": "167196",
-        "matched_data": "78896",
-        "matched_data_percent": 47.18773,
+        "matched_code": "41860",
+        "matched_code_percent": 11.674866,
+        "total_data": "172660",
+        "matched_data": "84420",
+        "matched_data_percent": 48.89378,
         "total_functions": 1009,
-        "matched_functions": 366,
-        "matched_functions_percent": 36.27354,
-        "total_units": 116
+        "matched_functions": 372,
+        "matched_functions_percent": 36.868187,
+        "total_units": 113
       }
     },
     {
@@ -16922,16 +16866,6 @@
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
-      }
-    },
-    {
-      "id": "sdk",
-      "name": "sdk",
-      "measures": {
-        "total_code": "112236",
-        "total_data": "462792",
-        "total_functions": 974,
-        "total_units": 5
       }
     }
   ]

@@ -287,6 +287,7 @@ class EnvironmentToolchain:
                 "tm1/movie": 8,
                 "tm1/interactives": 8,
                 "tm1/db": 8,
+                "tm1/hier": 8,
             }
         )
 

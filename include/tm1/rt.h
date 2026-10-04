@@ -2,6 +2,7 @@
 #define __TM1_RT_H__
 
 #include "common.h"
+#include <libgpu.h>
 
 /* a display buffer: 128 bytes */
 typedef struct Db {
@@ -9,9 +10,8 @@ typedef struct Db {
     /*0x04*/ u8* area;
     /*0x08*/ s32 unk8;
     /*0x0C*/ u8* areaEnd;
-    // TODO: Replace these with their actual types
-    /*0x10*/ u8 draw[92]; /* a DRAWENV */
-    /*0x6C*/ u8 disp[20]; /* a DISPENV */
+    /*0x10*/ DRAWENV draw;
+    /*0x6C*/ DISPENV disp;
 } Db;
 
 /* a queued "return to shell" request */
