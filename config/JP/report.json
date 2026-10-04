@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 10.4566,
+    "fuzzy_match_percent": 10.592544,
     "total_code": "470784",
-    "matched_code": "49228",
-    "matched_code_percent": 10.4566,
+    "matched_code": "49868",
+    "matched_code_percent": 10.592544,
     "total_data": "643108",
-    "matched_data": "88368",
-    "matched_data_percent": 13.740772,
+    "matched_data": "88372",
+    "matched_data_percent": 13.741393,
     "total_functions": 1983,
-    "matched_functions": 462,
-    "matched_functions_percent": 23.298033,
-    "total_units": 106
+    "matched_functions": 466,
+    "matched_functions_percent": 23.499748,
+    "total_units": 104
   },
   "units": [
     {
@@ -47,41 +47,6 @@
           "size": "2300",
           "metadata": {},
           "address": "0"
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/car_update",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "20",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".rodata",
-          "size": "20",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
         }
       ],
       "metadata": {
@@ -4002,24 +3967,44 @@
     {
       "name": "tm1/car_update",
       "measures": {
+        "fuzzy_match_percent": 2.4588904,
         "total_code": "26028",
-        "matched_data_percent": 100.0,
+        "matched_code": "640",
+        "matched_code_percent": 2.4588904,
+        "total_data": "24",
+        "matched_data": "4",
+        "matched_data_percent": 16.666668,
         "total_functions": 32,
-        "complete_data_percent": 100.0,
+        "matched_functions": 4,
+        "matched_functions_percent": 12.5,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".rodata",
+          "size": "20",
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "4",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "26028",
+          "fuzzy_match_percent": 2.4588904,
           "metadata": {}
         }
       ],
@@ -4069,6 +4054,7 @@
         {
           "name": "CheckPotHoles",
           "size": "252",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "9844"
         },
@@ -4081,6 +4067,7 @@
         {
           "name": "CheckCurbs",
           "size": "252",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10648"
         },
@@ -4135,6 +4122,7 @@
         {
           "name": "UpdateCarOnSlickSpot",
           "size": "120",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17164"
         },
@@ -4165,6 +4153,7 @@
         {
           "name": "GetTriggerPtStartPts",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17600"
         },
@@ -4218,6 +4207,7 @@
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/car_update.c",
         "progress_categories": [
           "tm1"
         ]
@@ -15295,41 +15285,6 @@
       }
     },
     {
-      "name": "tm1/car_update",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "4",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "4",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/potholes",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -16618,6 +16573,23 @@
   "version": 2,
   "categories": [
     {
+      "id": "tm1",
+      "name": "tm1",
+      "measures": {
+        "fuzzy_match_percent": 13.908319,
+        "total_code": "358548",
+        "matched_code": "49868",
+        "matched_code_percent": 13.908319,
+        "total_data": "176304",
+        "matched_data": "88372",
+        "matched_data_percent": 50.124783,
+        "total_functions": 1009,
+        "matched_functions": 466,
+        "matched_functions_percent": 46.18434,
+        "total_units": 98
+      }
+    },
+    {
       "id": "data",
       "name": "data",
       "measures": {
@@ -16627,23 +16599,6 @@
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
-      }
-    },
-    {
-      "id": "tm1",
-      "name": "tm1",
-      "measures": {
-        "fuzzy_match_percent": 13.729821,
-        "total_code": "358548",
-        "matched_code": "49228",
-        "matched_code_percent": 13.729821,
-        "total_data": "176304",
-        "matched_data": "88368",
-        "matched_data_percent": 50.122517,
-        "total_functions": 1009,
-        "matched_functions": 462,
-        "matched_functions_percent": 45.78791,
-        "total_units": 100
       }
     },
     {

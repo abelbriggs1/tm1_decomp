@@ -4,6 +4,7 @@
 
 #include "tm1/car.h"
 #include "tm1/car_init.h"
+#include "tm1/car_update.h"
 #include "tm1/cs.h"
 #include "tm1/interactives.h"
 #include "tm1/rt.h"
@@ -16,9 +17,6 @@
 extern MATRIX D_80170D94;
 
 extern void InitControlPad(u8* pad);
-extern s32 GetClosestTriggerPt(Car* car, u8 which);
-extern void InitTireInfo(CarTire* tires);
-extern void InitTireGroup(CarTire* tires, s32 group);
 
 #ifdef NON_MATCHING
 void CarInit(Car* car, s32 uaIndex, u8 which)
