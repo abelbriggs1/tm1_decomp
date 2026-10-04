@@ -7,9 +7,6 @@
 
 // TODO: Consolidate; some of these are probably SDK types.
 
-/* one entry of a parsed 3D-sprite animation table  */
-typedef GrSprite AnimFrame;
-
 /* 0x80199DB8, 20 x 36 bytes */
 typedef struct Fragment {
     /*0x00*/ VECTOR3 pos;
@@ -17,7 +14,7 @@ typedef struct Fragment {
     /*0x18*/ u8 frame;
     /*0x19*/ u8 pad19[3];
     /*0x1C*/ s32 life;
-    /*0x20*/ AnimFrame* anim;
+    /*0x20*/ GrSprite* anim;
 } Fragment;
 
 typedef struct ArmorIconInfo {
