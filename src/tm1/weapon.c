@@ -12,6 +12,7 @@
 #include "tm1/interactives.h"
 #include "tm1/math.h"
 #include "tm1/rt.h"
+#include "tm1/shell.h"
 #include "tm1/sound.h"
 #include "tm1/targets.h"
 #include "tm1/ua.h"
@@ -57,8 +58,6 @@ GrSprite* eyeWeaponInfo;
 GrSprite* contrailInfo;
 GrSprite* plasmaInfo;
 GrSprite* fireballInfo;
-
-extern s32 shellGetCurrentLevel(void);
 
 void bulSetOwnship(Cs* ownship)
 {

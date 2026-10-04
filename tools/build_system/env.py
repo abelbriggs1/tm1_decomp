@@ -291,6 +291,7 @@ class EnvironmentToolchain:
                 "tm1/hier_sub": 8,
                 "tm1/hud": 8,
                 "tm1/targets": 8,
+                "tm1/shell": 8,
             }
         )
 

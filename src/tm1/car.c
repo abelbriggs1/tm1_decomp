@@ -9,6 +9,7 @@
 #include "tm1/math.h"
 #include "tm1/potholes.h"
 #include "tm1/rt.h"
+#include "tm1/shell.h"
 #include "tm1/smooth.h"
 #include "tm1/timer.h"
 #include "tm1/ua.h"
@@ -27,7 +28,6 @@ extern void StartLostCheck(Car* car);
 extern void RecomputeCarDeltas(CarStats* s);
 extern void* sdk_memcpy();
 extern s32 GetClosestTriggerPt(Car* car, u8 which);
-extern s32 shellGetCurrentLevel(void);
 extern void UpdateCarOnSlickSpot(Car* car, u8 which);
 extern void CheckSlickSpots(Car* car, u8 which);
 extern void CheckHealthStands(Car* car, u8 which);

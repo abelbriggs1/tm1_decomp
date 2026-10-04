@@ -149,6 +149,8 @@ void soundCloseLevelSwapSounds(s32 which);
 void soundCloseGamePersistantSounds();
 void soundUnloadLevelVabFromSPURam();
 void soundShutdown();
+void soundStartPlayDA(s32 track);
+void soundResumePlayDA(void);
 void soundStopPlayDA();
 void soundInterruptPlayDA(void);
 s32 soundGetMasterDopplerDelta();

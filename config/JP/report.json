@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 9.112459,
+    "fuzzy_match_percent": 9.671527,
     "total_code": "470784",
-    "matched_code": "42900",
-    "matched_code_percent": 9.112459,
-    "total_data": "640380",
-    "matched_data": "86988",
-    "matched_data_percent": 13.583809,
+    "matched_code": "45532",
+    "matched_code_percent": 9.671526,
+    "total_data": "640536",
+    "matched_data": "87356",
+    "matched_data_percent": 13.637953,
     "total_functions": 1983,
-    "matched_functions": 388,
-    "matched_functions_percent": 19.566315,
-    "total_units": 112
+    "matched_functions": 423,
+    "matched_functions_percent": 21.331316,
+    "total_units": 108
   },
   "units": [
     {
@@ -217,41 +217,6 @@
         {
           "name": ".rodata",
           "size": "484",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/shell",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "664",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".rodata",
-          "size": "664",
           "metadata": {}
         },
         {
@@ -8328,24 +8293,63 @@
     {
       "name": "tm1/shell",
       "measures": {
+        "fuzzy_match_percent": 35.897434,
         "total_code": "7332",
-        "matched_data_percent": 100.0,
+        "matched_code": "2632",
+        "matched_code_percent": 35.897438,
+        "total_data": "1144",
+        "matched_data": "368",
+        "matched_data_percent": 32.16783,
         "total_functions": 53,
-        "complete_data_percent": 100.0,
+        "matched_functions": 35,
+        "matched_functions_percent": 66.037735,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "148",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".common",
+          "size": "4",
           "metadata": {}
         },
         {
           "name": ".data",
+          "size": "104",
+          "fuzzy_match_percent": 61.538464,
+          "metadata": {}
+        },
+        {
+          "name": ".rodata",
+          "size": "664",
+          "fuzzy_match_percent": 21.927711,
+          "metadata": {}
+        },
+        {
+          "name": ".sbss",
+          "size": "32",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".scommon",
+          "size": "4",
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "188",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "7332",
+          "fuzzy_match_percent": 35.897434,
           "metadata": {}
         }
       ],
@@ -8359,6 +8363,7 @@
         {
           "name": "timIntoVRAM",
           "size": "144",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2316"
         },
@@ -8371,12 +8376,14 @@
         {
           "name": "shellGetGameState",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2740"
         },
         {
           "name": "shellSetGameState",
           "size": "20",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2752"
         },
@@ -8419,12 +8426,14 @@
         {
           "name": "shellGetCurrentLevel",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3568"
         },
         {
           "name": "shellNextLevelChoice",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3580"
         },
@@ -8449,78 +8458,91 @@
         {
           "name": "shellGetTwoPlayerCurrentLevel",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3932"
         },
         {
           "name": "shellNextTwoPlayerLevelChoice",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3944"
         },
         {
           "name": "shellInitMachine",
           "size": "176",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4008"
         },
         {
           "name": "shellInitGraphicsSystem",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4184"
         },
         {
           "name": "shellInitGame",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4248"
         },
         {
           "name": "shellInitNewDatabase",
           "size": "244",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4312"
         },
         {
           "name": "shellInitLevel",
           "size": "40",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4556"
         },
         {
           "name": "shellLeaveLevel",
           "size": "48",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4596"
         },
         {
           "name": "shellLeaveGame",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4644"
         },
         {
           "name": "shellGetAccessCode",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4676"
         },
         {
           "name": "shellSetAccessCode",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4688"
         },
         {
           "name": "shellSoundForThisLevel",
           "size": "144",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4700"
         },
         {
           "name": "shellGetSoundtrackId",
           "size": "104",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4844"
         },
@@ -8533,18 +8555,21 @@
         {
           "name": "shellSetSoundtrackChoice",
           "size": "108",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4980"
         },
         {
           "name": "shellNextSoundtrackChoice",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5088"
         },
         {
           "name": "shellTurnCarHeadlightsOff",
           "size": "180",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5152"
         },
@@ -8563,24 +8588,28 @@
         {
           "name": "shellDrawCards",
           "size": "260",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5456"
         },
         {
           "name": "shellProcessAccessCode",
           "size": "364",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5716"
         },
         {
           "name": "shellLivesRemaining",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6080"
         },
         {
           "name": "shellSetLivesRemaining",
           "size": "28",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6092"
         },
@@ -8599,12 +8628,14 @@
         {
           "name": "shellGetTransitionState",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6540"
         },
         {
           "name": "shellSetTransitionState",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6552"
         },
@@ -8623,53 +8654,62 @@
         {
           "name": "shellGetCurrentVehicle",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7008"
         },
         {
           "name": "shellPlayCarEngineRev",
           "size": "76",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7020"
         },
         {
           "name": "shellStopCarEngineRev",
           "size": "68",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7096"
         },
         {
           "name": "shellSetGodMode",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7164"
         },
         {
           "name": "shellIsGodMode",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7220"
         },
         {
           "name": "shellSetInfiniteWeapons",
           "size": "44",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7232"
         },
         {
           "name": "shellIsInfiniteWeapons",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7276"
         },
         {
           "name": "shellIsPerfect",
           "size": "44",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7288"
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/shell.c",
         "progress_categories": [
           "tm1"
         ]
@@ -15141,37 +15181,6 @@
       }
     },
     {
-      "name": "tm1/shell",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "104",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "size": "104",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "sdk/sdk",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15483,41 +15492,6 @@
       }
     },
     {
-      "name": "tm1/shell",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "188",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "188",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/fileio",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15784,41 +15758,6 @@
         {
           "name": ".sbss",
           "size": "76",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/shell",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "32",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sbss",
-          "size": "32",
           "metadata": {}
         },
         {
@@ -16666,16 +16605,6 @@
   "version": 2,
   "categories": [
     {
-      "id": "sdk",
-      "name": "sdk",
-      "measures": {
-        "total_code": "112236",
-        "total_data": "462792",
-        "total_functions": 974,
-        "total_units": 5
-      }
-    },
-    {
       "id": "data",
       "name": "data",
       "measures": {
@@ -16691,17 +16620,27 @@
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 11.964925,
+        "fuzzy_match_percent": 12.6989975,
         "total_code": "358548",
-        "matched_code": "42900",
-        "matched_code_percent": 11.964926,
-        "total_data": "173576",
-        "matched_data": "86988",
-        "matched_data_percent": 50.115223,
+        "matched_code": "45532",
+        "matched_code_percent": 12.6989975,
+        "total_data": "173732",
+        "matched_data": "87356",
+        "matched_data_percent": 50.282043,
         "total_functions": 1009,
-        "matched_functions": 388,
-        "matched_functions_percent": 38.453915,
-        "total_units": 106
+        "matched_functions": 423,
+        "matched_functions_percent": 41.922695,
+        "total_units": 102
+      }
+    },
+    {
+      "id": "sdk",
+      "name": "sdk",
+      "measures": {
+        "total_code": "112236",
+        "total_data": "462792",
+        "total_functions": 974,
+        "total_units": 5
       }
     }
   ]
