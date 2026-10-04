@@ -11,6 +11,7 @@
 #include "tm1/font.h"
 #include "tm1/grutils.h"
 #include "tm1/rt.h"
+#include "tm1/shell.h"
 #include "tm1/smooth.h"
 #include "tm1/ua.h"
 #include "tm1/ua_dash.h"
@@ -20,7 +21,6 @@
 extern void exit(s32 code);
 extern void* sdk_memcpy();
 extern void* GetClosestCarToPlayer(s16 player, u8* isPlayer);
-extern s32 shellLivesRemaining(void);
 
 extern char* gCockpitTmsNames[12];
 extern char* gCarSignStrings[13];

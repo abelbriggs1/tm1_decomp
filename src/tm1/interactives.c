@@ -9,6 +9,7 @@
 #include "tm1/interactives.h"
 #include "tm1/math.h"
 #include "tm1/rt.h"
+#include "tm1/shell.h"
 #include "tm1/sound.h"
 #include "tm1/ua.h"
 #include "tm1/ua_dash.h"
@@ -141,8 +142,6 @@ s32 nextHealthStand = 0;
 s32 pickupTimer = 0;
 u8 healthRegenPending = 0;
 s32 healthRegenTimer = 0;
-
-extern s32 shellGetCurrentLevel(void);
 
 void carSetPowerupDelaysBySkillLevel(s32 level)
 {

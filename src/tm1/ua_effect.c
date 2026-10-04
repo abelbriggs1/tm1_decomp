@@ -7,10 +7,9 @@
 #include "tm1/cs.h"
 #include "tm1/light.h"
 #include "tm1/rt.h"
+#include "tm1/shell.h"
 #include "tm1/ua_effect.h"
 #include "tm1/ua_sw.h"
-
-extern s32 shellGetCurrentLevel(void);
 
 s32 gNumTVs = 0;
 s32 gTruckWheelAngle = 0;

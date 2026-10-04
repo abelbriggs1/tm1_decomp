@@ -12,5 +12,6 @@ s32 fileioAsyncReadCompleted(void);
 s32 fileioCloseFile(s32 fd);
 s32 fileioLoadFileIntoRam(void* dst, char* name);
 s32 fileioWriteFileFromRam(void* buf, char* name, s32 len);
+void fileioInit(void);
 
 #endif // __TM1_FILEIO_H__

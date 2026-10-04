@@ -9,6 +9,7 @@
 #include "tm1/interactives.h"
 #include "tm1/math.h"
 #include "tm1/rt.h"
+#include "tm1/shell.h"
 #include "tm1/sound.h"
 #include "tm1/targets.h"
 #include "tm1/ua.h"
@@ -21,8 +22,6 @@
 #define TGT_LONGER(a, b) (TGT_ABS(a) < TGT_ABS(b) ? (b) : (a))
 #define TGT_SHORTER(a, b) (TGT_ABS(a) < TGT_ABS(b) ? (a) : (b))
 #define TGT_DIST2(a, b) (TGT_ABS(TGT_LONGER(a, b)) + (TGT_ABS(TGT_SHORTER(a, b)) >> 1))
-
-extern s32 shellGetCurrentLevel(void);
 
 extern s32 D_801713CC[16];
 extern s32 D_8017140C[12];
