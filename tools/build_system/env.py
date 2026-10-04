@@ -375,10 +375,12 @@ class Environment:
             *self.toolchain.as_flags,
         ]
 
+        # TODO: Using POSIX pipe for MASPSX input in order to silence warnings.
+        # This will require a rework for Windows support.
         return (
             f"{self.toolchain.maspsx_cmd} --run-assembler --gnu-as-path={self.toolchain.assembler_cmd} "
             f"{' '.join(self.toolchain.maspsx_flags)} "
-            f"{' '.join(flags)} $extra_flags -o {output} {input}"
+            f"--force-stdin {' '.join(flags)} $extra_flags -o {output} < {input}"
         )
 
     def generate_assembler_cmd(self) -> str:
