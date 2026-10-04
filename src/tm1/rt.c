@@ -3,6 +3,7 @@
 #include <libgpu.h>
 
 #include "tm1/hier.h"
+#include "tm1/hud.h"
 #include "tm1/rt.h"
 #include "tm1/ua.h"
 #include "tm1/ua_effect.h"
@@ -56,7 +57,7 @@ s32 rtMainLoop(void)
         update_bullets();
         animate_explosions();
         draw_explosions(cdb, 0);
-        hudDisplayRadar(cdb->small);
+        hudDisplayRadar((u32*)cdb->small);
         hierProc(cdb, 0);
         PlayGame();
         if (split_screen) {

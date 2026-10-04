@@ -7,6 +7,7 @@
 #include "tm1/ctlpad.h"
 #include "tm1/curbs.h"
 #include "tm1/explosion.h"
+#include "tm1/hud.h"
 #include "tm1/interactives.h"
 #include "tm1/light.h"
 #include "tm1/math.h"
@@ -15,6 +16,7 @@
 #include "tm1/slick_spots.h"
 #include "tm1/smooth.h"
 #include "tm1/sound.h"
+#include "tm1/targets.h"
 #include "tm1/timer.h"
 #include "tm1/trigger_pts.h"
 #include "tm1/ua_dash.h"
@@ -168,11 +170,6 @@ static u16 gVrEnabled[2] = { 1, 1 };
 
 extern s32 bgColor[3];
 
-extern void clear_targets(void);
-extern void move_targets(void);
-extern void hudInitRadar(void);
-extern void hudRadarToggle(void);
-extern void hudAddRadarSig(s32 name, s32* d, s32 rot);
 extern void CarInit(Car* car, s32 name, u8 weapons);
 extern void CarInitStrength(CarStats* stats, s32 strength);
 extern void AICarInit(CarAlt* car, s32 name, s32 flag);

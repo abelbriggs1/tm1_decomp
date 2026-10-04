@@ -5,6 +5,7 @@
 #include "tm1/explosion.h"
 #include "tm1/grutils.h"
 #include "tm1/hdp.h"
+#include "tm1/hud.h"
 #include "tm1/interactives.h"
 #include "tm1/math.h"
 #include "tm1/rt.h"
@@ -141,7 +142,6 @@ s32 pickupTimer = 0;
 u8 healthRegenPending = 0;
 s32 healthRegenTimer = 0;
 
-extern void hudAddRadarSig(s32 obj, s32* d, s32 z);
 extern s32 shellGetCurrentLevel(void);
 
 void carSetPowerupDelaysBySkillLevel(s32 level)

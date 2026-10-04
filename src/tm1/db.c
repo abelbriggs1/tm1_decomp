@@ -4,8 +4,10 @@
 
 #include "tm1/cs.h"
 #include "tm1/explode.h"
+#include "tm1/hud.h"
 #include "tm1/interactives.h"
 #include "tm1/math.h"
+#include "tm1/targets.h"
 #include "tm1/ua.h"
 #include "tm1/ua_dash.h"
 #include "tm1/ua_effect.h"
@@ -20,12 +22,7 @@
 
 extern void exit(s32 code);
 extern char* shellGetCurrentDatabaseFileName(void);
-extern void hudStoreArrowIcon(s32 type, void* node);
-extern void init_merc(s32 type, void* node);
-extern void init_pedestrian(s32 type, void* node);
-extern void init_target(s32 type, u16 id, s32* loc);
 extern void screenInitCarOccupants(void* node);
-extern void setup_static_cop(void* node, s32* loc);
 
 s32 db3DEnvironmentTrap = 0;
 char dbOlder[] = "older";
@@ -345,7 +342,7 @@ void dbProcessInteractives(s32 type, DbNode* node, s32* loc, s32 parent, s32* pa
     case 0x50B:
     case 0x50C:
     case 0x50D:
-        hudStoreArrowIcon(type, node);
+        hudStoreArrowIcon(type, &node->gr);
         break;
     case 0x258:
     case 0x259:
@@ -364,7 +361,7 @@ void dbProcessInteractives(s32 type, DbNode* node, s32* loc, s32 parent, s32* pa
     case 0x3F2:
     case 0x3F9:
         uaswInitDbSwitch(&node->sw, type);
-        init_target(type, node->sw.sub, loc);
+        init_target(type, node->sw.sub, (VEC3*)loc);
         break;
     case 0x2CB:
     case 0x2CC:
@@ -377,7 +374,7 @@ void dbProcessInteractives(s32 type, DbNode* node, s32* loc, s32 parent, s32* pa
     case 0x3F0:
     case 0x3F7:
         uaswInitDbEditNumChildren(&node->sw, type);
-        init_target(type, node->sw.shadowSub, loc);
+        init_target(type, node->sw.shadowSub, (VEC3*)loc);
         break;
     case 0x2EE:
     case 0x2F0:
@@ -401,7 +398,7 @@ void dbProcessInteractives(s32 type, DbNode* node, s32* loc, s32 parent, s32* pa
     case 0x2F1:
     case 0x2F2:
     case 0x2F3:
-        setup_static_cop(node, loc);
+        setup_static_cop(&node->sw, (VEC3*)loc);
         break;
     case 0x398:
         set_health_stand(node->sw.sub, loc);
