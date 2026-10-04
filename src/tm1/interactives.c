@@ -407,7 +407,7 @@ u16 UpdateGuns(Car* car, u8 isPlayer)
         return pad->gunDelay;
     }
     if (!isPlayer) {
-        if (rand() % 100 + 1 > (s16)pad->unk3C) {
+        if (rand() % 100 + 1 > (s16)pad->specialChance) {
             sk[9] = 0;
         }
     }
