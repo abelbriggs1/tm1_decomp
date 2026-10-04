@@ -8,10 +8,10 @@
 
 #include "tm1/explode.h"
 
-extern AnimFrame fragmenta[4];
-extern AnimFrame fragmentb[4];
-extern AnimFrame fragmentc[4];
-extern AnimFrame fragmentd[4];
+extern GrSprite fragmenta[4];
+extern GrSprite fragmentb[4];
+extern GrSprite fragmentc[4];
+extern GrSprite fragmentd[4];
 
 extern Fragment fragment[20];
 
@@ -19,7 +19,7 @@ extern ArmorIconInfo ArmorInfo;
 
 void explodeStoreFlameAnimation(void* data)
 {
-    AnimFrame* anim = FlameInfo;
+    GrSprite* anim = FlameInfo;
     u16* p;
     s32 i;
 
@@ -32,7 +32,7 @@ void explodeStoreFlameAnimation(void* data)
 
 void explodeStoreExplosionAnimation(void* data)
 {
-    AnimFrame* anim = AburstInfo;
+    GrSprite* anim = AburstInfo;
     u16* p;
     s32 i;
 
@@ -45,7 +45,7 @@ void explodeStoreExplosionAnimation(void* data)
 
 void explodeStoreGburstAnimation(void* data)
 {
-    AnimFrame* anim = GburstInfo;
+    GrSprite* anim = GburstInfo;
     u16* p;
     s32 i;
 
@@ -58,7 +58,7 @@ void explodeStoreGburstAnimation(void* data)
 
 void explodeStoreSmokeAnimation(void* data)
 {
-    AnimFrame* anim;
+    GrSprite* anim;
     u16* p;
     s32 i;
 
@@ -73,7 +73,7 @@ void explodeStoreSmokeAnimation(void* data)
 
 void explodeStoreBurnAnimation(void* data)
 {
-    AnimFrame* anim = BurnInfo;
+    GrSprite* anim = BurnInfo;
 
     grutilsParse3DSprite(data, anim, 8);
     bulSetFireballGraphics(anim);
@@ -81,7 +81,7 @@ void explodeStoreBurnAnimation(void* data)
 
 void explodeStoreSparkAnimation(void* data)
 {
-    AnimFrame* anim = SparkInfo;
+    GrSprite* anim = SparkInfo;
     u16* p;
     s32 i;
 
@@ -94,7 +94,7 @@ void explodeStoreSparkAnimation(void* data)
 
 void explodeStoreContrailAnimation(void* data)
 {
-    AnimFrame* anim = ContrailInfo;
+    GrSprite* anim = ContrailInfo;
     u16* p;
     s32 i;
 
@@ -108,7 +108,7 @@ void explodeStoreContrailAnimation(void* data)
 
 void explodeStoreFlareAnimation(void* data)
 {
-    AnimFrame* anim = FlareInfo;
+    GrSprite* anim = FlareInfo;
 
     grutilsParse3DSprite(data, anim, 4);
     bulSetEyeWeaponGraphics(anim);
@@ -116,7 +116,7 @@ void explodeStoreFlareAnimation(void* data)
 
 void explodeStorePlasmaAnimation(void* data)
 {
-    AnimFrame* anim = PlasmaInfo;
+    GrSprite* anim = PlasmaInfo;
     u16* p;
     s32 i;
 
@@ -133,7 +133,7 @@ void explodeStorePlasmaAnimation(void* data)
 INCLUDE_ASM("asm/nonmatchings/tm1/explode", explodeStoreArmorIcon);
 // void explodeStoreArmorIcon(void *data)
 // {
-//     grutilsParse3DSprite(data, (AnimFrame *)&ArmorInfo, 1);
+//     grutilsParse3DSprite(data, (GrSprite *)&ArmorInfo, 1);
 // #ifdef NON_MATCHING
 //     ArmorInfo.u0 += 6;
 //     ArmorInfo.v0 += 2;

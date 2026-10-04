@@ -2,6 +2,7 @@
 #define __TM1_EXPLOSION_H__
 
 #include "common.h"
+#include "tm1/grutils.h"
 #include "tm1/math.h"
 
 typedef struct Explosion {
@@ -23,25 +24,20 @@ typedef struct Explosion {
     /*0x3D*/ u8 pad3D[3];
 } Explosion;
 
-typedef struct ExpFrame {
-    /*0x00*/ s32 unk0;
-    /*0x04*/ s32 unk4;
-} ExpFrame;
-
 // TODO: Determine where these are defined.
 extern Explosion pyro[80];
 
-extern ExpFrame AburstInfo[1];
-extern ExpFrame D_8019C640[15];
-extern ExpFrame SparkInfo[4];
-extern ExpFrame BurnInfo[8];
-extern ExpFrame FlareInfo[4];
-extern ExpFrame SmokeInfo[28];
-extern ExpFrame ContrailInfo[6];
-extern ExpFrame PlasmaInfo[4];
-extern ExpFrame FlameInfo[10];
-extern ExpFrame GburstInfo[12];
-extern ExpFrame SteamInfo[16];
+extern GrSprite AburstInfo[1];
+extern GrSprite D_8019C640[15];
+extern GrSprite SparkInfo[4];
+extern GrSprite BurnInfo[8];
+extern GrSprite FlareInfo[4];
+extern GrSprite SmokeInfo[28];
+extern GrSprite ContrailInfo[6];
+extern GrSprite PlasmaInfo[4];
+extern GrSprite FlameInfo[10];
+extern GrSprite GburstInfo[12];
+extern GrSprite SteamInfo[16];
 
 Explosion* init_explosion(VECTOR3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag);
 void animate_explosions(void);
