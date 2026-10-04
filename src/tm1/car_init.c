@@ -18,7 +18,7 @@
 extern MATRIX D_80170D94;
 
 #ifdef NON_MATCHING
-void CarInit(Car* car, s32 uaIndex, u8 which)
+void CarInit(PlayerCar* car, s32 uaIndex, u8 which)
 {
     car->uaIndex = uaIndex;
     car->stats.unk00 = 1;
@@ -49,29 +49,29 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_init", CarInit);
 #endif
 
 #ifdef NON_MATCHING
-void CarInitDynamics(Car* car)
+void CarInitDynamics(PlayerCar* car)
 {
     InitMotionFlags(car->flags);
     car->unk98 = 0;
     car->unk99 = 0;
-    car->motion.vel.x = 0;
-    car->motion.vel.y = 0;
-    car->motion.vel.z = 0;
-    car->motion.pos.x = 0;
-    car->motion.pos.y = 0;
-    car->motion.pos.z = car->stats.unk6C;
-    car->motion.rot.x = 0;
-    car->motion.rot.y = 0;
-    car->motion.rot.z = 0;
+    car->motion.vel.vx = 0;
+    car->motion.vel.vy = 0;
+    car->motion.vel.vz = 0;
+    car->motion.pos.vx = 0;
+    car->motion.pos.vy = 0;
+    car->motion.pos.vz = car->stats.unk6C;
+    car->motion.rot.vx = 0;
+    car->motion.rot.vy = 0;
+    car->motion.rot.vz = 0;
     car->stats.unk38 = 1;
     InitNoCollision(&car->collision);
     InitPlayerPositions(car, car->playerIdx == 0);
-    car->motion.rot2Delta.x = 0;
-    car->motion.rot2Delta.y = 0;
-    car->motion.rot2Delta.z = 0;
-    car->motion.rot2.x = 0;
-    car->motion.rot2.y = 0;
-    car->motion.rot2.z = 0;
+    car->motion.rot2Delta.vx = 0;
+    car->motion.rot2Delta.vy = 0;
+    car->motion.rot2Delta.vz = 0;
+    car->motion.rot2.vx = 0;
+    car->motion.rot2.vy = 0;
+    car->motion.rot2.vz = 0;
     car->motion.mat2.m[0][0] = D_80170D94.m[0][0];
     car->motion.mat2.m[0][1] = D_80170D94.m[0][1];
     car->motion.mat2.m[0][2] = D_80170D94.m[0][2];
@@ -150,15 +150,15 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_init", InitMotionFlags);
 #endif
 
 #ifdef NON_MATCHING
-void InitWeapons(Car* car, CarWeap* weap, u8 which)
+void InitWeapons(Car* car, CarWeap* weap, u8 isPlayer)
 {
     s32 id;
     s16 i;
 
-    if (which == 0) {
-        id = ((CarAlt*)car)->uaIndex;
+    if (isPlayer == 0) {
+        id = AI_CAR(car)->uaIndex;
     } else {
-        id = car->uaIndex;
+        id = PLAYER_CAR(car)->uaIndex;
     }
     weap->gunDelay = 0;
     weap->fireDelay = 0;
@@ -238,134 +238,134 @@ INCLUDE_ASM("asm/nonmatchings/tm1/car_init", InitWeapons);
 #endif
 
 #ifdef NON_MATCHING
-void InitPlayerPositions(Car* car, u8 isP1)
+void InitPlayerPositions(PlayerCar* car, u8 isP1)
 {
     switch (shellGetCurrentLevel()) {
     case 0:
     case 6:
     default:
         if (isP1) {
-            car->motion.pos.x = 0x460;
-            car->motion.pos.y = 0x460;
-            car->motion.rot.z = 0x200;
-            car->motion.pos.z = 0;
+            car->motion.pos.vx = 0x460;
+            car->motion.pos.vy = 0x460;
+            car->motion.rot.vz = 0x200;
+            car->motion.pos.vz = 0;
         } else {
-            car->motion.pos.x = 0xE60;
-            car->motion.pos.y = 0xE60;
-            car->motion.rot.z = -0x600;
-            car->motion.pos.z = 0;
+            car->motion.pos.vx = 0xE60;
+            car->motion.pos.vy = 0xE60;
+            car->motion.rot.vz = -0x600;
+            car->motion.pos.vz = 0;
         }
         break;
     case 1:
         if (isP1) {
-            car->motion.pos.x = -0x28A0;
-            car->motion.pos.y = -0x11D0;
-            car->motion.rot.z = 0xC1;
-            car->motion.pos.z = 0;
+            car->motion.pos.vx = -0x28A0;
+            car->motion.pos.vy = -0x11D0;
+            car->motion.rot.vz = 0xC1;
+            car->motion.pos.vz = 0;
         } else {
-            car->motion.pos.x = -0x2580;
-            car->motion.pos.y = 0x960;
-            car->motion.rot.z = -0x400;
-            car->motion.pos.z = 0;
+            car->motion.pos.vx = -0x2580;
+            car->motion.pos.vy = 0x960;
+            car->motion.rot.vz = -0x400;
+            car->motion.pos.vz = 0;
         }
         break;
     case 2:
         if (isP1) {
             if (rtIsSplitScreenOn() == 0) {
-                car->motion.pos.x = 0x1C20;
-                car->motion.pos.y = -0x2390;
-                car->motion.rot.z = 0x400;
-                car->motion.pos.z = 0;
+                car->motion.pos.vx = 0x1C20;
+                car->motion.pos.vy = -0x2390;
+                car->motion.rot.vz = 0x400;
+                car->motion.pos.vz = 0;
             } else {
-                car->motion.pos.x = -0x4110;
-                car->motion.pos.y = 0x1F40;
-                car->motion.rot.z = 0x800;
-                car->motion.pos.z = 0;
+                car->motion.pos.vx = -0x4110;
+                car->motion.pos.vy = 0x1F40;
+                car->motion.rot.vz = 0x800;
+                car->motion.pos.vz = 0;
             }
         } else {
             if (rtIsSplitScreenOn() == 0) {
-                car->motion.pos.x = 0x2BC0;
-                car->motion.pos.y = -0x2390;
-                car->motion.rot.z = -0x400;
-                car->motion.pos.z = 0;
+                car->motion.pos.vx = 0x2BC0;
+                car->motion.pos.vy = -0x2390;
+                car->motion.rot.vz = -0x400;
+                car->motion.pos.vz = 0;
             } else {
-                car->motion.pos.x = -0x40E8;
-                car->motion.pos.y = -0x17C0;
-                car->motion.rot.z = 0;
-                car->motion.pos.z = 0;
+                car->motion.pos.vx = -0x40E8;
+                car->motion.pos.vy = -0x17C0;
+                car->motion.rot.vz = 0;
+                car->motion.pos.vz = 0;
             }
         }
         break;
     case 3:
         if (isP1) {
             if (rtIsSplitScreenOn() == 0) {
-                car->motion.pos.x = 0x12C0;
-                car->motion.pos.y = -0x12C0;
-                car->motion.rot.z = 0;
-                car->motion.pos.z = 0;
+                car->motion.pos.vx = 0x12C0;
+                car->motion.pos.vy = -0x12C0;
+                car->motion.rot.vz = 0;
+                car->motion.pos.vz = 0;
             } else {
-                car->motion.pos.x = 0x2580;
-                car->motion.pos.y = 0xC0;
-                car->motion.rot.z = -0x400;
-                car->motion.pos.z = 0;
+                car->motion.pos.vx = 0x2580;
+                car->motion.pos.vy = 0xC0;
+                car->motion.rot.vz = -0x400;
+                car->motion.pos.vz = 0;
             }
         } else {
             if (rtIsSplitScreenOn() == 0) {
-                car->motion.pos.x = -0xB60;
-                car->motion.pos.y = -0x960;
-                car->motion.rot.z = -0x400;
-                car->motion.pos.z = 0;
+                car->motion.pos.vx = -0xB60;
+                car->motion.pos.vy = -0x960;
+                car->motion.rot.vz = -0x400;
+                car->motion.pos.vz = 0;
             } else {
-                car->motion.pos.x = 0x12C0;
-                car->motion.pos.y = 0xC0;
-                car->motion.rot.z = 0x400;
-                car->motion.pos.z = 0;
+                car->motion.pos.vx = 0x12C0;
+                car->motion.pos.vy = 0xC0;
+                car->motion.rot.vz = 0x400;
+                car->motion.pos.vz = 0;
             }
         }
         break;
     case 4:
         if (isP1) {
             if (rtIsSplitScreenOn() == 0) {
-                car->motion.pos.x = 0x1C20;
-                car->motion.pos.y = 0x2EE0;
-                car->motion.rot.z = 0x400;
-                car->motion.pos.z = 0;
+                car->motion.pos.vx = 0x1C20;
+                car->motion.pos.vy = 0x2EE0;
+                car->motion.rot.vz = 0x400;
+                car->motion.pos.vz = 0;
             } else {
-                car->motion.pos.x = 0x3EA0;
-                car->motion.pos.y = 0x1EF0;
-                car->motion.rot.z = 0x400;
-                car->motion.pos.z = 0;
+                car->motion.pos.vx = 0x3EA0;
+                car->motion.pos.vy = 0x1EF0;
+                car->motion.rot.vz = 0x400;
+                car->motion.pos.vz = 0;
             }
         } else {
             if (rtIsSplitScreenOn() == 0) {
-                car->motion.pos.x = 0x12C0;
-                car->motion.pos.y = 0x4B0;
-                car->motion.rot.z = 0;
-                car->motion.pos.z = 0;
+                car->motion.pos.vx = 0x12C0;
+                car->motion.pos.vy = 0x4B0;
+                car->motion.rot.vz = 0;
+                car->motion.pos.vz = 0;
             } else {
-                car->motion.pos.x = 0x3DE0;
-                car->motion.pos.y = 0x690;
-                car->motion.rot.z = 0x400;
-                car->motion.pos.z = 0;
+                car->motion.pos.vx = 0x3DE0;
+                car->motion.pos.vy = 0x690;
+                car->motion.rot.vz = 0x400;
+                car->motion.pos.vz = 0;
             }
         }
         break;
     case 5:
         if (isP1) {
-            car->motion.pos.x = 0x3CD8;
-            car->motion.pos.y = 0x250;
-            car->motion.rot.z = -0x1C7;
+            car->motion.pos.vx = 0x3CD8;
+            car->motion.pos.vy = 0x250;
+            car->motion.rot.vz = -0x1C7;
         } else {
-            car->motion.pos.x = 0x3520;
-            car->motion.pos.y = 0x640;
-            car->motion.rot.z = 0x6AA;
+            car->motion.pos.vx = 0x3520;
+            car->motion.pos.vy = 0x640;
+            car->motion.rot.vz = 0x6AA;
         }
-        car->motion.pos.z = 0x1E50;
+        car->motion.pos.vz = 0x1E50;
         break;
     }
-    car->motion.rotDelta.x = 0;
-    car->motion.rotDelta.y = 0;
-    car->motion.rotDelta.z = 0;
+    car->motion.rotDelta.vx = 0;
+    car->motion.rotDelta.vy = 0;
+    car->motion.rotDelta.vz = 0;
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/tm1/car_init", InitPlayerPositions);
@@ -378,11 +378,11 @@ void InitHitPoints(Car* car, u8 isPlayer)
     Cs* cs;
 
     if (isPlayer) {
-        stats = &car->stats;
-        cs = GetPlayerCs3D(car->playerIdx);
+        stats = &PLAYER_CAR(car)->stats;
+        cs = GetPlayerCs3D(PLAYER_CAR(car)->playerIdx);
     } else {
-        stats = &((CarAlt*)car)->stats;
-        cs = GetAICs3D(((CarAlt*)car)->playerIdx);
+        stats = &AI_CAR(car)->stats;
+        cs = GetAICs3D(AI_CAR(car)->playerIdx);
     }
     cs->nhist = 5;
     cs->hist[0].vx = -stats->unk74 / 2;
@@ -1043,87 +1043,87 @@ void GetCarName(void)
 }
 
 #ifdef NON_MATCHING
-void CarInitVRModes(Car* car)
+void CarInitVRModes(PlayerCar* car)
 {
-    car->vrPos[1].x = 0;
-    car->vrPos[1].y = -240;
-    car->vrPos[1].z = 112;
+    car->vrPos[1].vx = 0;
+    car->vrPos[1].vy = -240;
+    car->vrPos[1].vz = 112;
     car->vrRot[1].vx = 182;
     car->vrRot[1].vy = 0;
     car->vrRot[1].vz = 0;
-    car->vrPos[5].x = 0;
+    car->vrPos[5].vx = 0;
     car->vrRot[5].vy = 0;
     car->vrRot[5].vz = 0;
     car->vrRot[5].vx = 68;
     switch (car->uaIndex) {
     case 10:
-        car->vrPos[5].y = -240;
-        car->vrPos[5].z = 112;
+        car->vrPos[5].vy = -240;
+        car->vrPos[5].vz = 112;
         break;
     case 30:
-        car->vrPos[5].y = -256;
-        car->vrPos[5].z = 96;
+        car->vrPos[5].vy = -256;
+        car->vrPos[5].vz = 96;
         break;
     case 20:
-        car->vrPos[5].y = -208;
-        car->vrPos[5].z = 72;
+        car->vrPos[5].vy = -208;
+        car->vrPos[5].vz = 72;
         break;
     case 40:
-        car->vrPos[5].y = -200;
-        car->vrPos[5].z = 64;
+        car->vrPos[5].vy = -200;
+        car->vrPos[5].vz = 64;
         break;
     case 60:
-        car->vrPos[5].y = -152;
-        car->vrPos[5].z = 48;
+        car->vrPos[5].vy = -152;
+        car->vrPos[5].vz = 48;
         break;
     case 50:
-        car->vrPos[5].y = -192;
-        car->vrPos[5].z = 72;
+        car->vrPos[5].vy = -192;
+        car->vrPos[5].vz = 72;
         break;
     case 90:
-        car->vrPos[5].y = -136;
-        car->vrPos[5].z = 48;
+        car->vrPos[5].vy = -136;
+        car->vrPos[5].vz = 48;
         break;
     case 70:
-        car->vrPos[5].y = -152;
-        car->vrPos[5].z = 56;
+        car->vrPos[5].vy = -152;
+        car->vrPos[5].vz = 56;
         break;
     case 100:
-        car->vrPos[5].y = -208;
-        car->vrPos[5].z = 48;
+        car->vrPos[5].vy = -208;
+        car->vrPos[5].vz = 48;
         break;
     case 120:
-        car->vrPos[5].y = -176;
-        car->vrPos[5].z = 48;
+        car->vrPos[5].vy = -176;
+        car->vrPos[5].vz = 48;
         break;
     case 80:
-        car->vrPos[5].y = -240;
-        car->vrPos[5].z = 48;
+        car->vrPos[5].vy = -240;
+        car->vrPos[5].vz = 48;
         break;
     case 110:
-        car->vrPos[5].y = -168;
-        car->vrPos[5].z = 48;
+        car->vrPos[5].vy = -168;
+        car->vrPos[5].vz = 48;
         break;
     case 130:
     default:
         break;
     }
     if (viewGetFov() < 60) {
-        car->vrPos[1].y = 140 * car->vrPos[1].y / 100;
+        car->vrPos[1].vy = 140 * car->vrPos[1].vy / 100;
         car->vrRot[1].vx = 100 * car->vrRot[1].vx / 140;
     }
-    car->vrPos[2].y = 155 * car->vrPos[1].y / 100;
-    car->vrPos[2].z = 110 * car->vrPos[1].z / 100;
+    car->vrPos[2].vy = 155 * car->vrPos[1].vy / 100;
+    car->vrPos[2].vz = 110 * car->vrPos[1].vz / 100;
     car->vrRot[2].vx = 100 * car->vrRot[1].vx / 140;
-    car->vrPos[0].x = (s16)car->stats.dropPower;
-    car->vrPos[0].y = car->stats.unk11A;
-    car->vrPos[0].z = car->stats.unk11C;
+    car->vrPos[0].vx = (s16)car->stats.dropPower;
+    car->vrPos[0].vy = car->stats.unk11A;
+    car->vrPos[0].vz = car->stats.unk11C;
     car->vrRot[0].vx = 0;
     car->vrRot[0].vy = 0;
     car->vrRot[0].vz = 0;
-    car->vrPos[3].x = 0;
-    car->vrPos[3].y = -640;
-    car->vrPos[3].z = 320;
+    car->vrPos[3].vx = 0;
+    car->vrPos[3].vy = -640;
+    car->vrPos[3].vz = 320;
     car->vrRot[3].vx = 0;
     car->vrRot[3].vy = 0;
     car->vrRot[3].vz = 0;

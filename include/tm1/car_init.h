@@ -5,11 +5,11 @@
 
 #include "tm1/car.h"
 
-void CarInit(Car* car, s32 uaIndex, u8 which);
-void CarInitDynamics(Car* car);
+void CarInit(PlayerCar* car, s32 uaIndex, u8 which);
+void CarInitDynamics(PlayerCar* car);
 void InitMotionFlags(u8* flags);
-void InitWeapons(Car* car, CarWeap* weap, u8 which);
-void InitPlayerPositions(Car* car, u8 isP1);
+void InitWeapons(Car* car, CarWeap* weap, u8 isPlayer);
+void InitPlayerPositions(PlayerCar* car, u8 isP1);
 void InitHitPoints(Car* car, u8 isPlayer);
 void CarInitDeltas(CarStats* stats, s32 uaIndex);
 void InitIceCreamTruck(CarStats* stats);
@@ -28,7 +28,7 @@ void InitBossCar(CarStats* stats);
 void InitHeliCar(CarStats* stats);
 void CarInitTweeking(void);
 void GetCarName(void);
-void CarInitVRModes(Car* car);
+void CarInitVRModes(PlayerCar* car);
 void RecomputeCarDeltas(CarStats* stats);
 void CarInitStrength(CarStats* stats, s32 strength);
 

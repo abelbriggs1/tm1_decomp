@@ -771,9 +771,9 @@ void InitUALevel1(void)
         do {
             CarInit(&playerInfo[i], playerInfo[i].uaIndex, gInitPlayerWeapons[i]);
             if (rtIsSplitScreenOn()) {
-                playerInfo[i].vrPos[1].x = playerInfo[i].vrPos[5].x;
-                playerInfo[i].vrPos[1].y = playerInfo[i].vrPos[5].y;
-                playerInfo[i].vrPos[1].z = playerInfo[i].vrPos[5].z;
+                playerInfo[i].vrPos[1].vx = playerInfo[i].vrPos[5].vx;
+                playerInfo[i].vrPos[1].vy = playerInfo[i].vrPos[5].vy;
+                playerInfo[i].vrPos[1].vz = playerInfo[i].vrPos[5].vz;
                 playerInfo[i].vrRot[1].vx = playerInfo[i].vrRot[5].vx;
                 playerInfo[i].vrRot[1].vy = playerInfo[i].vrRot[5].vy;
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
@@ -825,9 +825,9 @@ void InitUALevel2(void)
         do {
             CarInit(&playerInfo[i], playerInfo[i].uaIndex, gInitPlayerWeapons[i]);
             if (rtIsSplitScreenOn()) {
-                playerInfo[i].vrPos[1].x = playerInfo[i].vrPos[5].x;
-                playerInfo[i].vrPos[1].y = playerInfo[i].vrPos[5].y;
-                playerInfo[i].vrPos[1].z = playerInfo[i].vrPos[5].z;
+                playerInfo[i].vrPos[1].vx = playerInfo[i].vrPos[5].vx;
+                playerInfo[i].vrPos[1].vy = playerInfo[i].vrPos[5].vy;
+                playerInfo[i].vrPos[1].vz = playerInfo[i].vrPos[5].vz;
                 playerInfo[i].vrRot[1].vx = playerInfo[i].vrRot[5].vx;
                 playerInfo[i].vrRot[1].vy = playerInfo[i].vrRot[5].vy;
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
@@ -879,9 +879,9 @@ void InitUALevel3(void)
         do {
             CarInit(&playerInfo[i], playerInfo[i].uaIndex, gInitPlayerWeapons[i]);
             if (rtIsSplitScreenOn()) {
-                playerInfo[i].vrPos[1].x = playerInfo[i].vrPos[5].x;
-                playerInfo[i].vrPos[1].y = playerInfo[i].vrPos[5].y;
-                playerInfo[i].vrPos[1].z = playerInfo[i].vrPos[5].z;
+                playerInfo[i].vrPos[1].vx = playerInfo[i].vrPos[5].vx;
+                playerInfo[i].vrPos[1].vy = playerInfo[i].vrPos[5].vy;
+                playerInfo[i].vrPos[1].vz = playerInfo[i].vrPos[5].vz;
                 playerInfo[i].vrRot[1].vx = playerInfo[i].vrRot[5].vx;
                 playerInfo[i].vrRot[1].vy = playerInfo[i].vrRot[5].vy;
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
@@ -933,9 +933,9 @@ void InitUALevel4(void)
         do {
             CarInit(&playerInfo[i], playerInfo[i].uaIndex, gInitPlayerWeapons[i]);
             if (rtIsSplitScreenOn()) {
-                playerInfo[i].vrPos[1].x = playerInfo[i].vrPos[5].x;
-                playerInfo[i].vrPos[1].y = playerInfo[i].vrPos[5].y;
-                playerInfo[i].vrPos[1].z = playerInfo[i].vrPos[5].z;
+                playerInfo[i].vrPos[1].vx = playerInfo[i].vrPos[5].vx;
+                playerInfo[i].vrPos[1].vy = playerInfo[i].vrPos[5].vy;
+                playerInfo[i].vrPos[1].vz = playerInfo[i].vrPos[5].vz;
                 playerInfo[i].vrRot[1].vx = playerInfo[i].vrRot[5].vx;
                 playerInfo[i].vrRot[1].vy = playerInfo[i].vrRot[5].vy;
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
@@ -987,9 +987,9 @@ void InitUALevel5(void)
         do {
             CarInit(&playerInfo[i], playerInfo[i].uaIndex, gInitPlayerWeapons[i]);
             if (rtIsSplitScreenOn()) {
-                playerInfo[i].vrPos[1].x = playerInfo[i].vrPos[5].x;
-                playerInfo[i].vrPos[1].y = playerInfo[i].vrPos[5].y;
-                playerInfo[i].vrPos[1].z = playerInfo[i].vrPos[5].z;
+                playerInfo[i].vrPos[1].vx = playerInfo[i].vrPos[5].vx;
+                playerInfo[i].vrPos[1].vy = playerInfo[i].vrPos[5].vy;
+                playerInfo[i].vrPos[1].vz = playerInfo[i].vrPos[5].vz;
                 playerInfo[i].vrRot[1].vx = playerInfo[i].vrRot[5].vx;
                 playerInfo[i].vrRot[1].vy = playerInfo[i].vrRot[5].vy;
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
@@ -1045,9 +1045,9 @@ void InitUALevel6(void)
         do {
             CarInit(&playerInfo[i], playerInfo[i].uaIndex, gInitPlayerWeapons[i]);
             if (rtIsSplitScreenOn()) {
-                playerInfo[i].vrPos[1].x = playerInfo[i].vrPos[5].x;
-                playerInfo[i].vrPos[1].y = playerInfo[i].vrPos[5].y;
-                playerInfo[i].vrPos[1].z = playerInfo[i].vrPos[5].z;
+                playerInfo[i].vrPos[1].vx = playerInfo[i].vrPos[5].vx;
+                playerInfo[i].vrPos[1].vy = playerInfo[i].vrPos[5].vy;
+                playerInfo[i].vrPos[1].vz = playerInfo[i].vrPos[5].vz;
                 playerInfo[i].vrRot[1].vx = playerInfo[i].vrRot[5].vx;
                 playerInfo[i].vrRot[1].vy = playerInfo[i].vrRot[5].vy;
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
@@ -1103,9 +1103,9 @@ void InitUALevel7(void)
         do {
             CarInit(&playerInfo[i], playerInfo[i].uaIndex, gInitPlayerWeapons[i]);
             if (rtIsSplitScreenOn()) {
-                playerInfo[i].vrPos[1].x = playerInfo[i].vrPos[5].x;
-                playerInfo[i].vrPos[1].y = playerInfo[i].vrPos[5].y;
-                playerInfo[i].vrPos[1].z = playerInfo[i].vrPos[5].z;
+                playerInfo[i].vrPos[1].vx = playerInfo[i].vrPos[5].vx;
+                playerInfo[i].vrPos[1].vy = playerInfo[i].vrPos[5].vy;
+                playerInfo[i].vrPos[1].vz = playerInfo[i].vrPos[5].vz;
                 playerInfo[i].vrRot[1].vx = playerInfo[i].vrRot[5].vx;
                 playerInfo[i].vrRot[1].vy = playerInfo[i].vrRot[5].vy;
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
@@ -1266,7 +1266,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ua", InitPlayerCar);
 void SetCarCsInfo(s16 slot, s16 idx, s32 car, u8 found)
 {
     VECTOR pos;
-    VEC3 rot;
+    VECTOR3 rot;
     s32 mode;
 
     playerCs[slot] = carCs[idx];
@@ -1278,21 +1278,21 @@ void SetCarCsInfo(s16 slot, s16 idx, s32 car, u8 found)
         CarInit(&playerInfo[slot], carName[idx], gInitPlayerWeapons[slot]);
         SetCarVRMode(&playerInfo[slot], 2);
     } else {
-        rot.x = playerInfo[slot].motion.rot.x;
+        rot.vx = playerInfo[slot].motion.rot.vx;
         mode = playerInfo[slot].unkF4;
-        rot.y = playerInfo[slot].motion.rot.y;
-        rot.z = playerInfo[slot].motion.rot.z;
-        pos.vx = playerInfo[slot].motion.pos.x;
-        pos.vy = playerInfo[slot].motion.pos.y;
-        pos.vz = playerInfo[slot].motion.pos.z;
+        rot.vy = playerInfo[slot].motion.rot.vy;
+        rot.vz = playerInfo[slot].motion.rot.vz;
+        pos.vx = playerInfo[slot].motion.pos.vx;
+        pos.vy = playerInfo[slot].motion.pos.vy;
+        pos.vz = playerInfo[slot].motion.pos.vz;
         CarInit(&playerInfo[slot], carName[idx], gInitPlayerWeapons[slot]);
         SetCarVRMode(&playerInfo[slot], mode);
-        playerInfo[slot].motion.rot.x = rot.x;
-        playerInfo[slot].motion.rot.y = rot.y;
-        playerInfo[slot].motion.rot.z = rot.z;
-        playerInfo[slot].motion.pos.x = pos.vx;
-        playerInfo[slot].motion.pos.y = pos.vy;
-        playerInfo[slot].motion.pos.z = pos.vz;
+        playerInfo[slot].motion.rot.vx = rot.vx;
+        playerInfo[slot].motion.rot.vy = rot.vy;
+        playerInfo[slot].motion.rot.vz = rot.vz;
+        playerInfo[slot].motion.pos.vx = pos.vx;
+        playerInfo[slot].motion.pos.vy = pos.vy;
+        playerInfo[slot].motion.pos.vz = pos.vz;
     }
     carTypes[idx] = 0;
     carCs[idx]->unkC0 = slot + 1;
@@ -1376,10 +1376,10 @@ void PlayGame(void)
         }
         if (i != 0) {
             if (playerInfo[i].stats.unk40 > 0) {
-                d[0] = playerInfo[i].motion.pos.x - playerInfo[0].motion.pos.x;
-                d[1] = playerInfo[i].motion.pos.y - playerInfo[0].motion.pos.y;
-                d[2] = playerInfo[i].motion.pos.z - playerInfo[0].motion.pos.z;
-                hudAddRadarSig(playerInfo[i].uaIndex, d, playerInfo[0].motion.rot.z);
+                d[0] = playerInfo[i].motion.pos.vx - playerInfo[0].motion.pos.vx;
+                d[1] = playerInfo[i].motion.pos.vy - playerInfo[0].motion.pos.vy;
+                d[2] = playerInfo[i].motion.pos.vz - playerInfo[0].motion.pos.vz;
+                hudAddRadarSig(playerInfo[i].uaIndex, d, playerInfo[0].motion.rot.vz);
             }
         }
         UASetSoundFlags(playerIndexToCarIndex[i], &playerInfo[i], 1);
@@ -1388,11 +1388,11 @@ void PlayGame(void)
             UpdateCamera(i);
         }
         if (gVar350) {
-            sky[0] = aiCarInfo[aiCamFollow].motion.pos.x;
-            sky[1] = aiCarInfo[aiCamFollow].motion.pos.y;
+            sky[0] = aiCarInfo[aiCamFollow].motion.pos.vx;
+            sky[1] = aiCarInfo[aiCamFollow].motion.pos.vy;
         } else if (playerCamFollow == i || twoPlayerMode) {
-            sky[0] = playerInfo[i].motion.pos.x;
-            sky[1] = playerInfo[i].motion.pos.y;
+            sky[0] = playerInfo[i].motion.pos.vx;
+            sky[1] = playerInfo[i].motion.pos.vy;
         }
         sky[2] = 0;
         viewSetSkyPosition(sky, i);
@@ -1445,10 +1445,10 @@ void PlayGame(void)
             UASetSoundFlags(aiIndexToCarIndex[i], &aiCarInfo[i], 0);
         }
         if (aiCarInfo[i].stats.unk40 > 0) {
-            d[0] = aiCarInfo[i].motion.pos.x - playerInfo[0].motion.pos.x;
-            d[1] = aiCarInfo[i].motion.pos.y - playerInfo[0].motion.pos.y;
-            d[2] = aiCarInfo[i].motion.pos.z - playerInfo[0].motion.pos.z;
-            hudAddRadarSig(aiCarInfo[i].uaIndex, d, playerInfo[0].motion.rot.z);
+            d[0] = aiCarInfo[i].motion.pos.vx - playerInfo[0].motion.pos.vx;
+            d[1] = aiCarInfo[i].motion.pos.vy - playerInfo[0].motion.pos.vy;
+            d[2] = aiCarInfo[i].motion.pos.vz - playerInfo[0].motion.pos.vz;
+            hudAddRadarSig(aiCarInfo[i].uaIndex, d, playerInfo[0].motion.rot.vz);
         }
         UpdateAICarDamageModel(i);
     }
@@ -1615,42 +1615,42 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ua", UpdateAICarDamageModel);
 #endif
 
 #ifdef NON_MATCHING
-void StartDeathSequence(void* car, u8 which)
+void StartDeathSequence(Car* car, u8 isPlayer)
 {
     u8* flags;
     CarMotion* motion;
     CarStats* stats;
-    VEC3 v;
+    VECTOR3 v;
 
-    if (which) {
-        ((Car*)car)->flags[21] = 1;
-        motion = &((Car*)car)->motion;
-        stats = &((Car*)car)->stats;
+    if (isPlayer) {
+        PLAYER_CAR(car)->flags[21] = 1;
+        motion = &PLAYER_CAR(car)->motion;
+        stats = &PLAYER_CAR(car)->stats;
         if (beatThisLevel) {
             return;
         }
-        flags = ((Car*)car)->flags;
+        flags = PLAYER_CAR(car)->flags;
     } else {
-        motion = &((CarAlt*)car)->motion;
-        stats = &((CarAlt*)car)->stats;
-        flags = ((CarAlt*)car)->flags;
-        if (((CarAlt*)car)->unk2C > 0) {
-            ((CarAlt*)car)->flags[21] = 0;
+        motion = &AI_CAR(car)->motion;
+        stats = &AI_CAR(car)->stats;
+        flags = AI_CAR(car)->flags;
+        if (AI_CAR(car)->unk2C > 0) {
+            AI_CAR(car)->flags[21] = 0;
         } else {
-            ((CarAlt*)car)->flags[21] = 1;
+            AI_CAR(car)->flags[21] = 1;
         }
     }
-    v.x = motion->pos.x;
-    v.y = motion->pos.y;
-    v.z = 0;
+    v.vx = motion->pos.vx;
+    v.vy = motion->pos.vy;
+    v.vz = 0;
     do_smoke(&v);
-    InitBombDamage(car, which, 1, 0);
+    InitBombDamage(car, isPlayer, 1, 0);
     flags[20] = 1;
     stats->deathTimer = 120;
     flags[16] = 1;
     stats->unk18 = 300;
     stats->monster = 0;
-    SetBounce(car, 0, 2, 0, which);
+    SetBounce(car, 0, 2, 0, isPlayer);
     do_bigger_explosion(&motion->pos);
     do_big_explosion(&motion->pos);
     flags[26] = 1;
@@ -1680,7 +1680,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ua", AnyAICarsAlive);
 void UpdateCamera(s16 idx)
 {
     SVECTOR rot;
-    CarAlt* h;
+    AICar* h;
     Cs** tbl;
 
     if (gVar368) {
@@ -1691,8 +1691,8 @@ void UpdateCamera(s16 idx)
     if (playerInfo[idx].unkF4 == 4) {
         h = &helicoptor;
         AICarHeliUpdate(h);
-        helicoptor.motion.pos.z
-            = SmoothValue(helicoptor.motion.pos.z, playerInfo[0].motion.pos.z + 600, 95);
+        helicoptor.motion.pos.vz
+            = SmoothValue(helicoptor.motion.pos.vz, playerInfo[0].motion.pos.vz + 600, 95);
         rot.vx = 0;
         rot.vy = 0;
         rot.vz = 0;
@@ -1734,28 +1734,28 @@ void UAStats(void)
 }
 
 #ifdef NON_MATCHING
-void UAPlayerUpdate(Cs* cs, Car* car)
+void UAPlayerUpdate(Cs* cs, PlayerCar* car)
 {
     CarUpdateControlPad(car);
     CheckVRMode(car);
     CarUpdate(car);
-    cs->rot.vx = car->motion.rot.x;
-    cs->rot.vy = car->motion.rot.y;
-    cs->rot.vz = car->motion.rot.z;
-    cs->pos.vx = car->motion.pos.x;
-    cs->pos.vy = car->motion.pos.y;
-    cs->pos.vz = car->motion.pos.z;
+    cs->rot.vx = car->motion.rot.vx;
+    cs->rot.vy = car->motion.rot.vy;
+    cs->rot.vz = car->motion.rot.vz;
+    cs->pos.vx = car->motion.pos.vx;
+    cs->pos.vy = car->motion.pos.vy;
+    cs->pos.vz = car->motion.pos.vz;
     wdCopy((s32*)&cs->mat, (s32*)&car->motion.mat2, 8);
     if (car->collision.unk16 >= 3) {
-        car->motion.lastRot.x = car->motion.rot.x;
-        car->motion.lastRot.y = car->motion.rot.y;
-        car->motion.lastRot.z = car->motion.rot.z;
-        car->motion.lastPos.x = car->motion.pos.x;
-        car->motion.lastPos.y = car->motion.pos.y;
-        car->motion.lastPos.z = car->motion.pos.z;
-        car->motion.unkA8 = car->motion.rot2.x;
-        car->motion.unkAC = car->motion.rot2.y;
-        car->motion.unkB0 = car->motion.rot2.z;
+        car->motion.lastRot.vx = car->motion.rot.vx;
+        car->motion.lastRot.vy = car->motion.rot.vy;
+        car->motion.lastRot.vz = car->motion.rot.vz;
+        car->motion.lastPos.vx = car->motion.pos.vx;
+        car->motion.lastPos.vy = car->motion.pos.vy;
+        car->motion.lastPos.vz = car->motion.pos.vz;
+        car->motion.unkA8 = car->motion.rot2.vx;
+        car->motion.unkAC = car->motion.rot2.vy;
+        car->motion.unkB0 = car->motion.rot2.vz;
         wdCopy((s32*)&car->motion.lastMat, (s32*)&car->motion.mat2, 8);
     }
 }
@@ -1764,26 +1764,26 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ua", UAPlayerUpdate);
 #endif
 
 #ifdef NON_MATCHING
-void UAAIUpdate(Cs* cs, CarAlt* car)
+void UAAIUpdate(Cs* cs, AICar* car)
 {
     AICarUpdate(car);
-    cs->rot.vx = car->motion.rot.x;
-    cs->rot.vy = car->motion.rot.y;
-    cs->rot.vz = car->motion.rot.z;
-    cs->pos.vx = car->motion.pos.x;
-    cs->pos.vy = car->motion.pos.y;
-    cs->pos.vz = car->motion.pos.z;
+    cs->rot.vx = car->motion.rot.vx;
+    cs->rot.vy = car->motion.rot.vy;
+    cs->rot.vz = car->motion.rot.vz;
+    cs->pos.vx = car->motion.pos.vx;
+    cs->pos.vy = car->motion.pos.vy;
+    cs->pos.vz = car->motion.pos.vz;
     wdCopy((s32*)&cs->mat, (s32*)&car->motion.mat2, 8);
     if (car->collision.unk16 >= 3) {
-        car->motion.lastRot.x = car->motion.rot.x;
-        car->motion.lastRot.y = car->motion.rot.y;
-        car->motion.lastRot.z = car->motion.rot.z;
-        car->motion.lastPos.x = car->motion.pos.x;
-        car->motion.lastPos.y = car->motion.pos.y;
-        car->motion.lastPos.z = car->motion.pos.z;
-        car->motion.unkA8 = car->motion.rot2.x;
-        car->motion.unkAC = car->motion.rot2.y;
-        car->motion.unkB0 = car->motion.rot2.z;
+        car->motion.lastRot.vx = car->motion.rot.vx;
+        car->motion.lastRot.vy = car->motion.rot.vy;
+        car->motion.lastRot.vz = car->motion.rot.vz;
+        car->motion.lastPos.vx = car->motion.pos.vx;
+        car->motion.lastPos.vy = car->motion.pos.vy;
+        car->motion.lastPos.vz = car->motion.pos.vz;
+        car->motion.unkA8 = car->motion.rot2.vx;
+        car->motion.unkAC = car->motion.rot2.vy;
+        car->motion.unkB0 = car->motion.rot2.vz;
         wdCopy((s32*)&car->motion.lastMat, (s32*)&car->motion.mat2, 8);
     }
 }
@@ -1808,7 +1808,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ua", UARemoveVehicleFromDrawList);
 #endif
 
 #ifdef NON_MATCHING
-void CheckVRMode(Car* car)
+void CheckVRMode(PlayerCar* car)
 {
     u16 id;
     s16 player;
@@ -1941,25 +1941,25 @@ void InitHelicoptorPosition(void)
     s32 y;
     s32 z;
 
-    v.vx = playerInfo[0].vrPos[3].x;
-    v.vy = playerInfo[0].vrPos[3].y;
-    v.vz = playerInfo[0].vrPos[3].z;
+    v.vx = playerInfo[0].vrPos[3].vx;
+    v.vy = playerInfo[0].vrPos[3].vy;
+    v.vz = playerInfo[0].vrPos[3].vz;
     mathMulTransVec(&playerInfo[0].motion.mat, &v, &out);
-    x = playerInfo[0].motion.pos.x + out.vx;
-    y = playerInfo[0].motion.pos.y + out.vy;
-    z = playerInfo[0].motion.pos.z + out.vz;
+    x = playerInfo[0].motion.pos.vx + out.vx;
+    y = playerInfo[0].motion.pos.vy + out.vy;
+    z = playerInfo[0].motion.pos.vz + out.vz;
     helicoptor.unk01 = 0;
     helicoptor.heliFlag = 1;
-    helicoptor.motion.pos.x = x;
-    helicoptor.motion.pos.y = y;
-    helicoptor.motion.pos.z = z;
+    helicoptor.motion.pos.vx = x;
+    helicoptor.motion.pos.vy = y;
+    helicoptor.motion.pos.vz = z;
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/tm1/ua", InitHelicoptorPosition);
 #endif
 
 #ifdef NON_MATCHING
-s16 GetClosestPlayer(VEC3* pos, s16 skip)
+s16 GetClosestPlayer(VECTOR3* pos, s16 skip)
 {
     s16 best;
     s16 i;
@@ -1975,10 +1975,10 @@ s16 GetClosestPlayer(VEC3* pos, s16 skip)
     best = 0;
     bestDist = 0x7FFF;
     for (i = 0; i < numPlayers; i++) {
-        px = pos->x;
-        cx = playerInfo[i].motion.pos.x;
-        py = pos->y;
-        cy = playerInfo[i].motion.pos.y;
+        px = pos->vx;
+        cx = playerInfo[i].motion.pos.vx;
+        py = pos->vy;
+        cy = playerInfo[i].motion.pos.vy;
         dx = px - cx;
         if (dx < 0) {
             dx = -dx;
@@ -2002,7 +2002,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetClosestPlayer);
 #endif
 
 #ifdef NON_MATCHING
-s16 GetClosestAICar(VEC3* pos)
+s16 GetClosestAICar(VECTOR3* pos)
 {
     s16 best;
     s16 i;
@@ -2019,10 +2019,10 @@ s16 GetClosestAICar(VEC3* pos)
     bestDist = 0x7FFF;
     for (i = 0; i < numTargets; i++) {
         if (aiCarInfo[i].stats.unk40 > 0) {
-            px = pos->x;
-            cx = aiCarInfo[i].motion.pos.x;
-            py = pos->y;
-            cy = aiCarInfo[i].motion.pos.y;
+            px = pos->vx;
+            cx = aiCarInfo[i].motion.pos.vx;
+            py = pos->vy;
+            cy = aiCarInfo[i].motion.pos.vy;
             dx = px - cx;
             if (dx < 0) {
                 dx = -dx;
@@ -2045,22 +2045,22 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetClosestAICar);
 #endif
 
 #ifdef NON_MATCHING
-void GetPlayerPosition(s16 player, VEC3* out)
+void GetPlayerPosition(s16 player, VECTOR3* out)
 {
-    out->x = playerInfo[player].motion.pos.x;
-    out->y = playerInfo[player].motion.pos.y;
-    out->z = playerInfo[player].motion.pos.z;
+    out->vx = playerInfo[player].motion.pos.vx;
+    out->vy = playerInfo[player].motion.pos.vy;
+    out->vz = playerInfo[player].motion.pos.vz;
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetPlayerPosition);
 #endif
 
 #ifdef NON_MATCHING
-void GetAICarPosition(s16 ai, VEC3* out)
+void GetAICarPosition(s16 ai, VECTOR3* out)
 {
-    out->x = aiCarInfo[ai].motion.pos.x;
-    out->y = aiCarInfo[ai].motion.pos.y;
-    out->z = aiCarInfo[ai].motion.pos.z;
+    out->vx = aiCarInfo[ai].motion.pos.vx;
+    out->vy = aiCarInfo[ai].motion.pos.vy;
+    out->vz = aiCarInfo[ai].motion.pos.vz;
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetAICarPosition);
@@ -2069,9 +2069,9 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetAICarPosition);
 #ifdef NON_MATCHING
 void GetPlayerRot(s16 player, SVECTOR* out)
 {
-    out->vx = playerInfo[player].motion.rot.x;
-    out->vy = playerInfo[player].motion.rot.y;
-    out->vz = playerInfo[player].motion.rot.z;
+    out->vx = playerInfo[player].motion.rot.vx;
+    out->vy = playerInfo[player].motion.rot.vy;
+    out->vz = playerInfo[player].motion.rot.vz;
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetPlayerRot);
@@ -2111,7 +2111,7 @@ s32 GetPlayerSpeed(s16 player)
     s32 speed;
 
     fields = GetFieldsLastFrame();
-    speed = playerInfo[player].motion.vel.y;
+    speed = playerInfo[player].motion.vel.vy;
     return ((speed / 32) * 100) / (fields * 19);
 }
 
@@ -2121,7 +2121,7 @@ s32 GetAISpeed(s16 ai)
     s32 speed;
 
     fields = GetFieldsLastFrame();
-    speed = aiCarInfo[ai].motion.vel.y;
+    speed = aiCarInfo[ai].motion.vel.vy;
     return ((speed / 32) * 100) / (fields * 19);
 }
 
@@ -2130,7 +2130,7 @@ s16 GetNumPlayers(void)
     return numPlayers;
 }
 
-Car* GetPlayerInfo(s16 player)
+PlayerCar* GetPlayerInfo(s16 player)
 {
     return &playerInfo[player];
 }
@@ -2140,7 +2140,7 @@ s16 GetNumAICars(void)
     return numTargets;
 }
 
-CarAlt* GetAICarInfo(s16 ai)
+AICar* GetAICarInfo(s16 ai)
 {
     return &aiCarInfo[ai];
 }
@@ -2235,7 +2235,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ua", uaIsCarMatID);
 #endif
 
 #ifdef NON_MATCHING
-void UASetCameraPosition(s16 which, VEC3* pos, SVECTOR* rot)
+void UASetCameraPosition(s16 which, VECTOR3* pos, SVECTOR* rot)
 {
     SVECTOR sv;
     VECTOR v;
@@ -2246,42 +2246,42 @@ void UASetCameraPosition(s16 which, VEC3* pos, SVECTOR* rot)
     s32 dz;
 
     if (gCurLevel == 6) {
-        if (pos->z < 6800) {
+        if (pos->vz < 6800) {
             if (playerInfo[which].unkF4 == 4) {
                 camera[which]->rot.vx = rot->vx;
                 camera[which]->rot.vy = rot->vy;
                 camera[which]->rot.vz = rot->vz;
-                camera[which]->pos.vx = pos->x;
-                camera[which]->pos.vy = pos->y;
+                camera[which]->pos.vx = pos->vx;
+                camera[which]->pos.vy = pos->vy;
                 if (camera[which]->pos.vz > 6800) {
-                    camera[which]->pos.vz = pos->z;
+                    camera[which]->pos.vz = pos->vz;
                 }
             } else {
                 if (playerInfo[which].unkF4 != 5) {
                     sv.vx = playerInfo[which].dRot.vx;
                     sv.vy = playerInfo[which].dRot.vy;
-                    sv.vz = playerInfo[which].motion.rot.z;
+                    sv.vz = playerInfo[which].motion.rot.vz;
                     RotMatrixYXZ(&sv, &mtx);
-                    v.vx = playerInfo[which].dTrans.x;
-                    v.vy = playerInfo[which].dTrans.y;
-                    v.vz = playerInfo[which].dTrans.z;
+                    v.vx = playerInfo[which].dTrans.vx;
+                    v.vy = playerInfo[which].dTrans.vy;
+                    v.vz = playerInfo[which].dTrans.vz;
                     mathMulTransVec(&mtx, &v, &out);
-                    camera[which]->pos.vx = playerInfo[which].motion.pos.x + out.vx;
-                    camera[which]->pos.vy = playerInfo[which].motion.pos.y + out.vy;
-                    camera[which]->pos.vz = playerInfo[which].motion.pos.z + out.vz;
+                    camera[which]->pos.vx = playerInfo[which].motion.pos.vx + out.vx;
+                    camera[which]->pos.vy = playerInfo[which].motion.pos.vy + out.vy;
+                    camera[which]->pos.vz = playerInfo[which].motion.pos.vz + out.vz;
                     SetCarVRMode(&playerInfo[which], 5);
                 }
-                dx = pos->x - camera[which]->pos.vx;
-                dy = pos->y - camera[which]->pos.vy;
-                dz = pos->z - camera[which]->pos.vz;
+                dx = pos->vx - camera[which]->pos.vx;
+                dy = pos->vy - camera[which]->pos.vy;
+                dz = pos->vz - camera[which]->pos.vz;
                 camera[which]->rot.vx = -ratan2(dz, SquareRoot0(dx * dx + dy * dy));
                 camera[which]->rot.vy = 0;
                 camera[which]->rot.vz = ratan2(dx, dy);
             }
         } else {
-            camera[which]->pos.vx = pos->x;
-            camera[which]->pos.vy = pos->y;
-            camera[which]->pos.vz = pos->z;
+            camera[which]->pos.vx = pos->vx;
+            camera[which]->pos.vy = pos->vy;
+            camera[which]->pos.vz = pos->vz;
             camera[which]->rot.vx = rot->vx;
             camera[which]->rot.vy = rot->vy;
             camera[which]->rot.vz = rot->vz;
@@ -2290,9 +2290,9 @@ void UASetCameraPosition(s16 which, VEC3* pos, SVECTOR* rot)
             }
         }
     } else {
-        camera[which]->pos.vx = pos->x;
-        camera[which]->pos.vy = pos->y;
-        camera[which]->pos.vz = pos->z;
+        camera[which]->pos.vx = pos->vx;
+        camera[which]->pos.vy = pos->vy;
+        camera[which]->pos.vz = pos->vz;
         camera[which]->rot.vx = rot->vx;
         camera[which]->rot.vy = rot->vy;
         camera[which]->rot.vz = rot->vz;
@@ -2304,11 +2304,11 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ua", UASetCameraPosition);
 #endif
 
 #ifdef NON_MATCHING
-void UAGetCameraPosition(s16 idx, VEC3* pos, SVECTOR* rot)
+void UAGetCameraPosition(s16 idx, VECTOR3* pos, SVECTOR* rot)
 {
-    pos->x = camera[idx]->pos.vx;
-    pos->y = camera[idx]->pos.vy;
-    pos->z = camera[idx]->pos.vz;
+    pos->vx = camera[idx]->pos.vx;
+    pos->vy = camera[idx]->pos.vy;
+    pos->vz = camera[idx]->pos.vz;
     rot->vx = camera[idx]->rot.vx;
     rot->vy = camera[idx]->rot.vy;
     rot->vz = camera[idx]->rot.vz;
@@ -2399,7 +2399,7 @@ s32 uaGetTwoPlayerMode(void)
 #ifdef NON_MATCHING
 void PadSetConfig(s32 cfg, s16 player)
 {
-    Car* info = GetPlayerInfo(player);
+    PlayerCar* info = GetPlayerInfo(player);
     padConfig[player] = cfg;
     uaPadInit(info, cfg);
 }
@@ -2418,7 +2418,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ua", PadGetConfig);
 #endif
 
 #ifdef NON_MATCHING
-void uaPadInit(Car* car, s32 mode)
+void uaPadInit(PlayerCar* car, s32 mode)
 {
     do {
         car->skid[40] = 12;
@@ -2754,7 +2754,7 @@ s16 GetPlayerTheCameraFollows(void)
 }
 
 #ifdef NON_MATCHING
-void UASetSoundFlags(s16 idx, void* car, u8 isPlayer)
+void UASetSoundFlags(s16 idx, Car* car, u8 isPlayer)
 {
     u8* flags;
     CarMotion* motion;
@@ -2766,19 +2766,19 @@ void UASetSoundFlags(s16 idx, void* car, u8 isPlayer)
     s32 rev;
 
     if (isPlayer) {
-        flags = ((Car*)car)->flags;
-        motion = &((Car*)car)->motion;
-        stats = &((Car*)car)->stats;
-        collision = &((Car*)car)->collision;
-        name = GetPlayerInfo((s16)((Car*)car)->playerIdx)->uaIndex;
+        flags = PLAYER_CAR(car)->flags;
+        motion = &PLAYER_CAR(car)->motion;
+        stats = &PLAYER_CAR(car)->stats;
+        collision = &PLAYER_CAR(car)->collision;
+        name = GetPlayerInfo((s16)PLAYER_CAR(car)->playerIdx)->uaIndex;
     } else {
-        flags = ((CarAlt*)car)->flags;
-        motion = &((CarAlt*)car)->motion;
-        stats = &((CarAlt*)car)->stats;
-        collision = &((CarAlt*)car)->collision;
-        name = GetAICarInfo((s16)((CarAlt*)car)->playerIdx)->uaIndex;
+        flags = AI_CAR(car)->flags;
+        motion = &AI_CAR(car)->motion;
+        stats = &AI_CAR(car)->stats;
+        collision = &AI_CAR(car)->collision;
+        name = GetAICarInfo((s16)AI_CAR(car)->playerIdx)->uaIndex;
     }
-    soundSetRangeAndXPositionFromWorldLoc(&motion->pos.x);
+    soundSetRangeAndXPositionFromWorldLoc(&motion->pos.vx);
     if (twoPlayerMode) {
         range = 0;
         xpos = 0;
@@ -2796,7 +2796,7 @@ void UASetSoundFlags(s16 idx, void* car, u8 isPlayer)
     if (flags[13] != 0 && flags[4] != 0) {
         rev = 99;
     } else {
-        s32 spd = motion->vel.y;
+        s32 spd = motion->vel.vy;
         s32 den = stats->unkA8;
         s32 gear = flags[4];
 
@@ -2963,14 +2963,14 @@ void uaInitBossCar(void)
         InitTriggerPoint(&aiCarInfo[3]);
         z = 7760;
     }
-    aiCarInfo[3].motion.pos.z = z;
-    playerInfo[0].motion.vel.x = 0;
-    playerInfo[0].motion.vel.y = 0;
-    playerInfo[0].motion.vel.z = 0;
-    playerInfo[0].motion.rotDelta.x = 0;
-    playerInfo[0].motion.rotDelta.y = 0;
-    playerInfo[0].motion.rotDelta.z = 0;
-    if (playerInfo[0].motion.pos.z < 6400) {
+    aiCarInfo[3].motion.pos.vz = z;
+    playerInfo[0].motion.vel.vx = 0;
+    playerInfo[0].motion.vel.vy = 0;
+    playerInfo[0].motion.vel.vz = 0;
+    playerInfo[0].motion.rotDelta.vx = 0;
+    playerInfo[0].motion.rotDelta.vy = 0;
+    playerInfo[0].motion.rotDelta.vz = 0;
+    if (playerInfo[0].motion.pos.vz < 6400) {
         CarInit(&playerInfo[0], playerInfo[0].uaIndex, 0);
     }
 }

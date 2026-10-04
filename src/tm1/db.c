@@ -361,7 +361,7 @@ void dbProcessInteractives(s32 type, DbNode* node, s32* loc, s32 parent, s32* pa
     case 0x3F2:
     case 0x3F9:
         uaswInitDbSwitch(&node->sw, type);
-        init_target(type, node->sw.sub, (VEC3*)loc);
+        init_target(type, node->sw.sub, (VECTOR3*)loc);
         break;
     case 0x2CB:
     case 0x2CC:
@@ -374,7 +374,7 @@ void dbProcessInteractives(s32 type, DbNode* node, s32* loc, s32 parent, s32* pa
     case 0x3F0:
     case 0x3F7:
         uaswInitDbEditNumChildren(&node->sw, type);
-        init_target(type, node->sw.shadowSub, (VEC3*)loc);
+        init_target(type, node->sw.shadowSub, (VECTOR3*)loc);
         break;
     case 0x2EE:
     case 0x2F0:
@@ -398,7 +398,7 @@ void dbProcessInteractives(s32 type, DbNode* node, s32* loc, s32 parent, s32* pa
     case 0x2F1:
     case 0x2F2:
     case 0x2F3:
-        setup_static_cop(&node->sw, (VEC3*)loc);
+        setup_static_cop(&node->sw, (VECTOR3*)loc);
         break;
     case 0x398:
         set_health_stand(node->sw.sub, loc);

@@ -7,13 +7,13 @@
 
 #include "tm1/cs.h"
 #include "tm1/grutils.h"
-#include "tm1/long_vector.h"
+#include "tm1/math.h"
 #include "tm1/rt.h"
 
 typedef struct Bullet {
-    /* 0x00 */ VEC3 pos;
-    /* 0x0C */ VEC3 prev;
-    /* 0x18 */ VEC3 vel;
+    /* 0x00 */ VECTOR3 pos;
+    /* 0x0C */ VECTOR3 prev;
+    /* 0x18 */ VECTOR3 vel;
     /* 0x24 */ s32 owner;
     /* 0x28 */ s32 life;
     /* 0x2C */ s32 damage;
@@ -66,9 +66,9 @@ typedef struct TrailPt {
 
 typedef struct Missile {
     /* 0x000 */ u8 pad00[0x18];
-    /* 0x018 */ VEC3 pos;
+    /* 0x018 */ VECTOR3 pos;
     /* 0x024 */ Cs* cs;
-    /* 0x028 */ LVECTOR* target;
+    /* 0x028 */ VECTOR3* target;
     /* 0x02C */ s32 unk2C;
     /* 0x030 */ u8 index;
     /* 0x031 */ u8 pad31[3];
@@ -97,7 +97,7 @@ typedef struct Missile {
     /* 0x118 */ s16 f118;
     /* 0x11A */ s16 f11A;
     /* 0x11C */ s32 f11C;
-    /* 0x120 */ VEC3 f120;
+    /* 0x120 */ VECTOR3 f120;
     /* 0x12C */ s32 f12C;
     /* 0x130 */ u8 pad130[0x30];
     /* 0x160 */ ContrailPt pts[18];
@@ -115,11 +115,12 @@ void bulSetFireballGraphics(GrSprite* info);
 void bulSetContrailGraphics(GrSprite* info);
 void bulAddCs(void* node, s32 id);
 void bulMakeSpecialBullet(s32 id, GrObj* obj);
-s32 CAR_HD(VEC3* pt, s32 owner, s32 flag);
+s32 CAR_HD(VECTOR3* pt, s32 owner, s32 flag);
 void init_bullets(void);
 void destroy_all_bullets(void);
-void create_bullet(s32 owner, VEC3* dir, VEC3* pos, s32 damage);
-void s_create_bullet(s32 owner, VEC3* dir, VEC3* pos, s32 kind, s32 damage, s32 life, s32 arg6);
+void create_bullet(s32 owner, VECTOR3* dir, VECTOR3* pos, s32 damage);
+void s_create_bullet(
+    s32 owner, VECTOR3* dir, VECTOR3* pos, s32 kind, s32 damage, s32 life, s32 arg6);
 void move_bullets(void);
 void display_bullets(Db* db, s32 which);
 void kill_bullet(s32 i);
@@ -134,17 +135,17 @@ void kill_missile(s16 i, s32 arg1);
 void destroy_all_missiles(void);
 s32 find_free_missile(s32 i);
 void drop_contrail(Missile* m, s32 i);
-void basic_missile_launch(Missile* m, VEC3* rot, VEC3* pos);
-s16 create_FIRE_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 damage);
-s16 create_DEATHSPEAR_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 damage);
-s16 create_FREEZE_missile(s32 owner, VEC3* rot, VEC3* pos, s32 damage);
-s16 create_POWER_missile(s32 owner, VEC3* rot, VEC3* pos, s32 damage);
-s16 create_REAR_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 damage);
-s16 create_SINGING_missile(s32 owner, VEC3* rot, VEC3* pos, s32 damage);
-s16 create_GHOST_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 damage);
-s16 create_LOS_missile(s32 owner, VEC3* rot, VEC3* pos, s32 damage);
-s16 create_HOMING_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 damage);
-s16 create_SWARM_missile(s32 owner, LVECTOR* target, VEC3* rot, VEC3* pos, s32 damage);
+void basic_missile_launch(Missile* m, VECTOR3* rot, VECTOR3* pos);
+s16 create_FIRE_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, s32 damage);
+s16 create_DEATHSPEAR_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, s32 damage);
+s16 create_FREEZE_missile(s32 owner, VECTOR3* rot, VECTOR3* pos, s32 damage);
+s16 create_POWER_missile(s32 owner, VECTOR3* rot, VECTOR3* pos, s32 damage);
+s16 create_REAR_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, s32 damage);
+s16 create_SINGING_missile(s32 owner, VECTOR3* rot, VECTOR3* pos, s32 damage);
+s16 create_GHOST_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, s32 damage);
+s16 create_LOS_missile(s32 owner, VECTOR3* rot, VECTOR3* pos, s32 damage);
+s16 create_HOMING_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, s32 damage);
+s16 create_SWARM_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, s32 damage);
 void turn_heatseeker(Missile* m);
 void move_missile(Missile* m);
 Missile* get_missile(u32 i);
@@ -152,6 +153,6 @@ void move_missiles(void);
 void bulBoltZap(VECTOR* p1, VECTOR* p2);
 void SetFXSheet(s32 count, s32 r, s32 g, s32 b);
 void DisplayFXSheet(u_long* ot);
-s32 bulDispatchDamage(s32 id, s32 a, s32 b, s32 damage, VEC3* dir, s32 owner);
+s32 bulDispatchDamage(s32 id, s32 a, s32 b, s32 damage, VECTOR3* dir, s32 owner);
 
 #endif /* __TM1_WEAPON_H__ */

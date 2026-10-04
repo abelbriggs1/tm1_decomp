@@ -6,7 +6,7 @@
 
 #include "tm1/cs.h"
 #include "tm1/hd.h"
-#include "tm1/long_vector.h"
+#include "tm1/math.h"
 
 typedef struct HdpEnt {
     /* 0x00 */ void* node;
@@ -26,7 +26,7 @@ s32 hdpPntVolume(HdVol* n, VECTOR* pos, HdCsHit* res, s32 mode);
 void hdpCtrlNode(HdpEnt* e, s16 id0, s16 id1);
 s32 hdpInCtrlBox(HdBox* b, VECTOR* pos);
 void hdpSetHitTag(HdCsHit* hit, s16 id0, s16 id1, HdpEnt* e);
-HdCsHit* HdPntTest(s32 skip0, s32 skip1, VEC3* pt, s32* hitId);
+HdCsHit* HdPntTest(s32 skip0, s32 skip1, VECTOR3* pt, s32* hitId);
 void hdpInit(HdpEnt* stack);
 
 #endif /* __TM1_HDP_H__ */

@@ -417,7 +417,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/hdp", hdpSetHitTag);
 #endif
 
 #ifdef NON_MATCHING
-HdCsHit* HdPntTest(s32 skip0, s32 skip1, VEC3* pt, s32* hitId)
+HdCsHit* HdPntTest(s32 skip0, s32 skip1, VECTOR3* pt, s32* hitId)
 {
     static HdCsHit tmpResult;
     Cs* cs;
@@ -429,7 +429,7 @@ HdCsHit* HdPntTest(s32 skip0, s32 skip1, VEC3* pt, s32* hitId)
     *hitId = 0;
     cs = csGetWorldCs();
     if (cs->epNode != 0) {
-        hdpTraverse(cs, &pt->x, &tmpResult);
+        hdpTraverse(cs, &pt->vx, &tmpResult);
         if (tmpResult.hit == 1) {
             *hitId = cs->unkC0;
         }
@@ -438,7 +438,7 @@ HdCsHit* HdPntTest(s32 skip0, s32 skip1, VEC3* pt, s32* hitId)
         for (cs = csGetCsList(); cs != NULL && *hitId == 0; cs = cs->next) {
             if (cs->drawMode != 0 && cs->unkC0 != skip0 && cs->unkC0 != skip1 && cs->unk0C != 0
                 && cs->unkC0 > 0 && cs->unkC0 < 80
-                && hdpIsPtInSphere(&cs->pos.vx, ((HdCsInfo*)cs->epNode)->radius, &pt->x) != 0) {
+                && hdpIsPtInSphere(&cs->pos.vx, ((HdCsInfo*)cs->epNode)->radius, &pt->vx) != 0) {
                 *hitId = cs->unkC0;
             }
         }

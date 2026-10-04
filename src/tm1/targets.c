@@ -141,11 +141,11 @@ void clear_targets(void)
 }
 
 #ifdef NON_MATCHING
-void init_target(s32 type, s32 instance, VEC3* pos)
+void init_target(s32 type, s32 instance, VECTOR3* pos)
 {
     s32 i;
     s32 t;
-    VEC3* d;
+    VECTOR3* d;
 
     i = find_free_target();
     if (i < 0) {
@@ -155,12 +155,12 @@ void init_target(s32 type, s32 instance, VEC3* pos)
     target[i].type = type;
     target[i].instance = instance;
     d = &target[i].pos;
-    t = pos->x;
-    d->x = t;
-    t = pos->y;
-    d->y = t;
-    t = pos->z;
-    d->z = t;
+    t = pos->vx;
+    d->vx = t;
+    t = pos->vy;
+    d->vy = t;
+    t = pos->vz;
+    d->vz = t;
     target[i].kind = 1;
     target[i].flag = 0;
     switch (type) {
@@ -237,8 +237,8 @@ Target* get_targets(void)
 #ifdef NON_MATCHING
 s32 target_takehit(s32 type, s32 instance, s32 damage)
 {
-    VEC3 p;
-    VEC3* d;
+    VECTOR3 p;
+    VECTOR3* d;
     s32 i;
     s32 which;
     s32 x;
@@ -269,28 +269,28 @@ s32 target_takehit(s32 type, s32 instance, s32 damage)
     switch (target[which].type) {
     case 611:
     case 613:
-        x = target[which].pos.x;
-        y = target[which].pos.y;
-        z = target[which].pos.z;
+        x = target[which].pos.vx;
+        y = target[which].pos.vy;
+        z = target[which].pos.vz;
         x -= 40;
         y += 40;
         z += 30;
-        target[which].pos.x = x;
-        target[which].pos.y = y;
-        target[which].pos.z = z;
+        target[which].pos.vx = x;
+        target[which].pos.vy = y;
+        target[which].pos.vz = z;
         do_bigger_explosion(&target[which].pos);
         do_simple_explosion(&target[which].pos);
         do_smoke(&target[which].pos);
         do_puff(&target[which].pos);
-        x = target[which].pos.x;
-        y = target[which].pos.y;
-        z = target[which].pos.z;
+        x = target[which].pos.vx;
+        y = target[which].pos.vy;
+        z = target[which].pos.vz;
         x += 40;
         y -= 40;
         z -= 30;
-        target[which].pos.x = x;
-        target[which].pos.y = y;
-        target[which].pos.z = z;
+        target[which].pos.vx = x;
+        target[which].pos.vy = y;
+        target[which].pos.vz = z;
         do_smoke(&target[which].pos);
         break;
     case 610:
@@ -299,7 +299,7 @@ s32 target_takehit(s32 type, s32 instance, s32 damage)
         do_flames(&target[which].pos);
         return 0;
     case 1001:
-        soundSetRangeAndXPositionFromWorldLoc(&target[which].pos.x);
+        soundSetRangeAndXPositionFromWorldLoc(&target[which].pos.vx);
         uasoundPlayGeneralExplode(
             soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition(), 99);
         do_steam(&target[which].pos);
@@ -317,13 +317,13 @@ s32 target_takehit(s32 type, s32 instance, s32 damage)
     case 730:
         do_big_explosion(&target[which].pos);
         do_flames(&target[which].pos);
-        carDropWeapon(9, 0, &target[which].pos.x, 0);
+        carDropWeapon(9, 0, &target[which].pos.vx, 0);
         break;
     case 1000:
         for (i = 0; i < 45; i++) {
-            p.x = rand() % 2400 + 9600;
-            p.y = rand() % 2400 + 4000;
-            p.z = (rand() & 0x3FF) + 8000;
+            p.vx = rand() % 2400 + 9600;
+            p.vy = rand() % 2400 + 4000;
+            p.vz = (rand() & 0x3FF) + 8000;
             do_big_smoke(&p);
             if (rand() & 1) {
                 do_mondo_explosion(&p);
@@ -373,7 +373,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/targets", D_800FC434);
 void move_mercs(void)
 {
     VECTOR pp;
-    VEC3 aim;
+    VECTOR3 aim;
     s32* table;
     s32 count;
     s32 last;
@@ -429,7 +429,7 @@ void move_mercs(void)
             hovermerc[i].timer--;
             if (hovermerc[i].timer <= 0) {
                 hovermerc[i].unk14 = 1;
-                GetPlayerPosition(0, (VEC3*)&pp);
+                GetPlayerPosition(0, (VECTOR3*)&pp);
                 best = TGT_ABS(table[0] * 8 - pp.vx) + TGT_ABS(table[1] * 8 - pp.vy);
                 k = 0;
                 for (j = 1; j < count; j++) {
@@ -481,25 +481,25 @@ void move_mercs(void)
                 }
                 continue;
             }
-            GetPlayerPosition(0, (VEC3*)&pp);
+            GetPlayerPosition(0, (VECTOR3*)&pp);
             if (hovermerc[i].state == 752) {
                 if (hovermerc[i].unk10 < 5) {
                     hovermerc[i].obj->pos.vz += 48;
                     firing = 1;
-                    aim.x = pp.vx - hovermerc[i].obj->pos.vx + rand() % gTargetUnk1048
+                    aim.vx = pp.vx - hovermerc[i].obj->pos.vx + rand() % gTargetUnk1048
                         - (gTargetUnk1048 >> 1);
-                    aim.y = pp.vy - hovermerc[i].obj->pos.vy + rand() % gTargetUnk1048
+                    aim.vy = pp.vy - hovermerc[i].obj->pos.vy + rand() % gTargetUnk1048
                         - (gTargetUnk1048 >> 1);
-                    aim.z = pp.vz - hovermerc[i].obj->pos.vz;
+                    aim.vz = pp.vz - hovermerc[i].obj->pos.vz;
                     s_create_bullet(
-                        -hovermerc[i].state, &aim, (VEC3*)&hovermerc[i].obj->pos, 2, 1, 28, 0);
+                        -hovermerc[i].state, &aim, (VECTOR3*)&hovermerc[i].obj->pos, 2, 1, 28, 0);
                     hovermerc[i].node->state = 3;
                     hovermerc[i].timer = (rand() & 0x1F) + 10;
                     hovermerc[i].unk10++;
                     if (hovermerc[i].unk10 == 5) {
                         hovermerc[i].timer += 40 + (rand() & 0x1F);
                     }
-                    do_flash((VEC3*)&hovermerc[i].obj->pos);
+                    do_flash((VECTOR3*)&hovermerc[i].obj->pos);
                     hovermerc[i].obj->pos.vz -= 48;
                     goto sound;
                 }
@@ -518,18 +518,18 @@ void move_mercs(void)
             goto sound;
         fire:
             hovermerc[i].obj->pos.vz += 62;
-            aim.x = 0;
-            aim.y = 0;
-            aim.z = ratan2(pp.vx - hovermerc[i].obj->pos.vx + rand() % gTargetUnk1048
-                            - (gTargetUnk1048 >> 1),
-                        pp.vy - hovermerc[i].obj->pos.vy)
+            aim.vx = 0;
+            aim.vy = 0;
+            aim.vz = ratan2(pp.vx - hovermerc[i].obj->pos.vx + rand() % gTargetUnk1048
+                             - (gTargetUnk1048 >> 1),
+                         pp.vy - hovermerc[i].obj->pos.vy)
                 + rand() % gTargetUnk1048 - (gTargetUnk1048 >> 1);
-            d = create_LOS_missile(-hovermerc[i].state, &aim, (VEC3*)&hovermerc[i].obj->pos, 2);
+            d = create_LOS_missile(-hovermerc[i].state, &aim, (VECTOR3*)&hovermerc[i].obj->pos, 2);
             if (d >= 0) {
                 setContrailColor(d, 10, 50, 10);
             }
-            do_flash((VEC3*)&hovermerc[i].obj->pos);
-            do_puff((VEC3*)&hovermerc[i].obj->pos);
+            do_flash((VECTOR3*)&hovermerc[i].obj->pos);
+            do_puff((VECTOR3*)&hovermerc[i].obj->pos);
             hovermerc[i].obj->pos.vz -= 62;
             hovermerc[i].node->state = 3;
             launching = 1;
@@ -564,12 +564,12 @@ void merc_takehit(s32 which, s32 who)
     i = (which != 0x2EE);
     uasoundPlayMaleScream();
     hovermerc[i].node->state = 4;
-    do_smoke((VEC3*)&hovermerc[i].obj->pos);
-    do_burn((VEC3*)&hovermerc[i].obj->pos);
-    do_steam((VEC3*)&hovermerc[i].obj->pos);
-    do_simple_explosion((VEC3*)&hovermerc[i].obj->pos);
+    do_smoke((VECTOR3*)&hovermerc[i].obj->pos);
+    do_burn((VECTOR3*)&hovermerc[i].obj->pos);
+    do_steam((VECTOR3*)&hovermerc[i].obj->pos);
+    do_simple_explosion((VECTOR3*)&hovermerc[i].obj->pos);
     hovermerc[i].obj->pos.vz = 0;
-    do_flames((VEC3*)&hovermerc[i].obj->pos);
+    do_flames((VECTOR3*)&hovermerc[i].obj->pos);
     hovermerc[i].unk14 = 0;
     hovermerc[i].timer = gTargetUnk1052 * 2 + rand() % gTargetUnk1052;
     hovermerc[i].obj->pos.vz = 1000;
@@ -617,12 +617,12 @@ void init_merc(s32 which, DbNode* ep)
 INCLUDE_ASM("asm/nonmatchings/tm1/targets", init_merc);
 #endif
 
-VEC3* get_hcop_position(s32 num)
+VECTOR3* get_hcop_position(s32 num)
 {
     if (num >= 0 && num < 2) {
         if (hovermerc[num].obj != NULL) {
             if (hovermerc[num].state > 0) {
-                return (VEC3*)&hovermerc[num].obj->pos;
+                return (VECTOR3*)&hovermerc[num].obj->pos;
             }
         }
     }
@@ -837,7 +837,7 @@ void move_pedestrians(void)
             p = 0;
             if (pedestrian[i].unk24 == 0) {
                 for (; p < GetNumPlayers(); p++) {
-                    GetPlayerPosition(p, (VEC3*)&pos);
+                    GetPlayerPosition(p, (VECTOR3*)&pos);
                     if ((TGT_MAX(TGT_ABS(pos.vx - pedestrian[i].obj->pos.vx),
                              TGT_MAX(TGT_ABS(pos.vy - pedestrian[i].obj->pos.vy),
                                  TGT_ABS(pos.vz - pedestrian[i].obj->pos.vz)))
@@ -901,7 +901,7 @@ void move_pedestrians(void)
             } else if (pedestrian[i].unk24 == 1) {
                 close = 0;
                 for (p = 0; p < GetNumPlayers(); p++) {
-                    GetPlayerPosition(p, (VEC3*)&pos);
+                    GetPlayerPosition(p, (VECTOR3*)&pos);
                     if ((TGT_MAX(TGT_ABS(pos.vx - pedestrian[i].obj->pos.vx),
                              TGT_MAX(TGT_ABS(pos.vy - pedestrian[i].obj->pos.vy),
                                  TGT_ABS(pos.vz - pedestrian[i].obj->pos.vz)))
@@ -924,9 +924,9 @@ void move_pedestrians(void)
                         aim.vx = pos.vx - pedestrian[i].obj->pos.vx;
                         aim.vy = pos.vy - pedestrian[i].obj->pos.vy;
                         aim.vz = pos.vz - pedestrian[i].obj->pos.vz;
-                        create_bullet(
-                            -pedestrian[i].id, (VEC3*)&aim, (VEC3*)&pedestrian[i].obj->pos, 1);
-                        do_mflash((VEC3*)&pedestrian[i].obj->pos);
+                        create_bullet(-pedestrian[i].id, (VECTOR3*)&aim,
+                            (VECTOR3*)&pedestrian[i].obj->pos, 1);
+                        do_mflash((VECTOR3*)&pedestrian[i].obj->pos);
                         pedestrian[i].obj->pos.vz -= 30;
                     }
                 } else {
@@ -971,7 +971,7 @@ void pedestrian_takehit(s32 id, s32 damage)
         pedestrian[i].node->state = pedestrian[i].unk10;
     }
     pedestrian[i].obj->pos.vz += 4;
-    GetPlayerRot(GetClosestPlayer((VEC3*)&pedestrian[i].obj->pos, -1), &pedestrian[i].obj->rot);
+    GetPlayerRot(GetClosestPlayer((VECTOR3*)&pedestrian[i].obj->pos, -1), &pedestrian[i].obj->rot);
     pedestrian[i].obj->rot.vx = 0;
     pedestrian[i].obj->rot.vy = 0;
     RotMatrixYXZ(&pedestrian[i].obj->rot, &pedestrian[i].obj->mat);
@@ -986,15 +986,15 @@ void ped_takehit(s32 num, s32 damage)
 }
 
 #ifdef NON_MATCHING
-s32 check_ped_hits(VEC3* pos, s32 damage)
+s32 check_ped_hits(VECTOR3* pos, s32 damage)
 {
     s32 k;
 
     for (k = 0; k < ped_made; k++) {
         if (pedestrian[k].id != 0x2F8) {
-            if ((TGT_MAX(TGT_ABS(pos->x - pedestrian[k].obj->pos.vx),
-                     TGT_MAX(TGT_ABS(pos->y - pedestrian[k].obj->pos.vy),
-                         TGT_ABS(pos->z - pedestrian[k].obj->pos.vz)))
+            if ((TGT_MAX(TGT_ABS(pos->vx - pedestrian[k].obj->pos.vx),
+                     TGT_MAX(TGT_ABS(pos->vy - pedestrian[k].obj->pos.vy),
+                         TGT_ABS(pos->vz - pedestrian[k].obj->pos.vz)))
                     >> 3)
                 < 7) {
                 pedestrian_takehit(pedestrian[k].id, damage);
@@ -1020,10 +1020,10 @@ void init_static_cops(void)
 }
 
 #ifdef NON_MATCHING
-void setup_static_cop(DbSwitch* node, VEC3* pos)
+void setup_static_cop(DbSwitch* node, VECTOR3* pos)
 {
     s32 i;
-    VEC3* d;
+    VECTOR3* d;
 
     if (node->kind != 9) {
         printf("Error! Static Cop Not At SwNode!\n");
@@ -1038,9 +1038,9 @@ void setup_static_cop(DbSwitch* node, VEC3* pos)
     scop[i].node = node;
     scop[i].state = node->id;
     d = &scop[i].pos;
-    d->x = pos->x;
-    d->y = pos->y;
-    d->z = pos->z;
+    d->vx = pos->vx;
+    d->vy = pos->vy;
+    d->vz = pos->vz;
     scop[i].kind = 6;
 }
 #else
@@ -1048,19 +1048,20 @@ INCLUDE_ASM("asm/nonmatchings/tm1/targets", setup_static_cop);
 #endif
 
 #ifdef NON_MATCHING
-void static_cop_fire(s32 num, VEC3* tgt)
+void static_cop_fire(s32 num, VECTOR3* tgt)
 {
-    VEC3 aim;
+    VECTOR3 aim;
     s16 r;
 
     scop[num].hits = 3;
     scop[num].kind = 4;
     if (scop[num].state == 754 || scop[num].state == 755) {
-        scop[num].pos.z += 52;
-        aim.x = 0;
-        aim.y = 0;
-        aim.z = ratan2(tgt->x - scop[num].pos.x + rand() % gTargetUnk1048 - (gTargetUnk1048 >> 1),
-                    tgt->y - scop[num].pos.y)
+        scop[num].pos.vz += 52;
+        aim.vx = 0;
+        aim.vy = 0;
+        aim.vz
+            = ratan2(tgt->vx - scop[num].pos.vx + rand() % gTargetUnk1048 - (gTargetUnk1048 >> 1),
+                  tgt->vy - scop[num].pos.vy)
             + rand() % gTargetUnk1048 - (gTargetUnk1048 >> 1);
         r = create_LOS_missile(-scop[num].state, &aim, &scop[num].pos, 2);
         if (r >= 0) {
@@ -1068,16 +1069,16 @@ void static_cop_fire(s32 num, VEC3* tgt)
         }
         do_flash(&scop[num].pos);
         do_puff(&scop[num].pos);
-        scop[num].pos.z -= 52;
+        scop[num].pos.vz -= 52;
         scop[num].kind = (rand() & 7) + 7;
     } else {
-        scop[num].pos.z += 40;
-        aim.x = tgt->x - scop[num].pos.x - 64 + (rand() & 0x7F);
-        aim.y = tgt->y - scop[num].pos.y - 64 + (rand() & 0x7F);
-        aim.z = tgt->z - scop[num].pos.z;
+        scop[num].pos.vz += 40;
+        aim.vx = tgt->vx - scop[num].pos.vx - 64 + (rand() & 0x7F);
+        aim.vy = tgt->vy - scop[num].pos.vy - 64 + (rand() & 0x7F);
+        aim.vz = tgt->vz - scop[num].pos.vz;
         create_bullet(-scop[num].state, &aim, &scop[num].pos, 1);
         do_flash(&scop[num].pos);
-        scop[num].pos.z -= 40;
+        scop[num].pos.vz -= 40;
     }
 }
 #else
@@ -1088,10 +1089,10 @@ INCLUDE_ASM("asm/nonmatchings/tm1/targets", static_cop_fire);
 void move_static_cops(void)
 {
     VECTOR pp;
-    VEC3* sp;
+    VECTOR3* sp;
     s32 i;
 
-    GetPlayerPosition(0, (VEC3*)&pp);
+    GetPlayerPosition(0, (VECTOR3*)&pp);
     for (i = gTargetUnk1068; i < 25; i += 6) {
         if (scop[i].state <= 0) {
             continue;
@@ -1112,12 +1113,12 @@ void move_static_cops(void)
             }
             break;
         case 0:
-            if (TGT_DIST2(pp.vx - sp->x, pp.vy - sp->y) < 1200) {
+            if (TGT_DIST2(pp.vx - sp->vx, pp.vy - sp->vy) < 1200) {
                 scop[i].hits = 1;
             }
             break;
         case 1:
-            if (TGT_DIST2(pp.vx - sp->x, pp.vy - sp->y) < 1200) {
+            if (TGT_DIST2(pp.vx - sp->vx, pp.vy - sp->vy) < 1200) {
                 scop[i].hits = 2;
                 scop[i].kind = 2;
             } else {
@@ -1127,13 +1128,13 @@ void move_static_cops(void)
         case 2:
             scop[i].kind--;
             if (scop[i].kind <= 0) {
-                static_cop_fire(i, (VEC3*)&pp);
+                static_cop_fire(i, (VECTOR3*)&pp);
             }
             break;
         case 3:
             scop[i].kind--;
             if (scop[i].kind < 3) {
-                if (TGT_DIST2(pp.vx - sp->x, pp.vy - sp->y) < 1200) {
+                if (TGT_DIST2(pp.vx - sp->vx, pp.vy - sp->vy) < 1200) {
                     scop[i].hits = 2;
                 } else {
                     scop[i].hits = 1;

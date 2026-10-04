@@ -4,24 +4,30 @@
 #include "common.h"
 #include "tm1/cs.h"
 #include "tm1/hd.h"
-#include "tm1/long_vector.h"
+#include "tm1/math.h"
 #include <libgte.h>
+
+// Helper macro to access a generic car pointer as a `PlayerCar`.
+#define PLAYER_CAR(c) ((PlayerCar*)(c))
+
+// Helper macro to access a generic car pointer as an `AICar`.
+#define AI_CAR(c) ((AICar*)(c))
 
 typedef struct CarMotion {
     /*0x00*/ u16 unk00;
     /*0x02*/ u16 unk02;
     /*0x04*/ s16 unk04;
     /*0x06*/ u8 pad06[0x2];
-    /*0x08*/ VEC3 pos;
-    /*0x14*/ VEC3 vel;
-    /*0x20*/ VEC3 rot;
-    /*0x2C*/ VEC3 rotDelta;
-    /*0x38*/ VEC3 rot2;
-    /*0x44*/ VEC3 rot2Delta;
+    /*0x08*/ VECTOR3 pos;
+    /*0x14*/ VECTOR3 vel;
+    /*0x20*/ VECTOR3 rot;
+    /*0x2C*/ VECTOR3 rotDelta;
+    /*0x38*/ VECTOR3 rot2;
+    /*0x44*/ VECTOR3 rot2Delta;
     /*0x50*/ MATRIX mat2;
     /*0x70*/ MATRIX mat;
-    /*0x90*/ VEC3 lastPos;
-    /*0x9C*/ VEC3 lastRot;
+    /*0x90*/ VECTOR3 lastPos;
+    /*0x9C*/ VECTOR3 lastRot;
     /*0xA8*/ s32 unkA8;
     /*0xAC*/ s32 unkAC;
     /*0xB0*/ s32 unkB0;
@@ -72,7 +78,7 @@ typedef struct CarTire {
     /*0x024*/ u16 unk24;
     /*0x026*/ s16 unk26;
     /*0x028*/ s32 unk28;
-    /*0x02C*/ VEC3 unk2C;
+    /*0x02C*/ VECTOR3 unk2C;
     /*0x038*/ s32 unk38;
     /*0x03C*/ s32 unk3C;
     /*0x040*/ s32 unk40;
@@ -241,14 +247,14 @@ typedef struct CarAttack {
 } CarAttack; /* 0x8 */
 
 // Player car struct.
-typedef struct Car {
+typedef struct PlayerCar {
     /*0x000*/ u8 pad00;
     /*0x001*/ s8 standId;
     /*0x002*/ u16 playerIdx;
     /*0x004*/ SVECTOR dRot;
-    /*0x00C*/ VEC3 dTrans;
+    /*0x00C*/ VECTOR3 dTrans;
     /*0x018*/ SVECTOR vrRot[6];
-    /*0x048*/ VEC3 vrPos[6];
+    /*0x048*/ VECTOR3 vrPos[6];
     /*0x090*/ s32 speedDelta;
     /*0x094*/ s32 uaIndex;
     /*0x098*/ u8 unk98;
@@ -269,10 +275,10 @@ typedef struct Car {
     /*0x270*/ CarTire tires[4];
     /*0x380*/ CarMotion motion;
     /*0x458*/ CarWeap weap;
-} Car; /* 0x4A4 */
+} PlayerCar; /* 0x4A4 */
 
 // AI car struct.
-typedef struct CarAlt {
+typedef struct AICar {
     /*0x000*/ u8 driving;
     /*0x001*/ s8 unk01;
     /*0x002*/ u8 unk02;
@@ -389,49 +395,51 @@ typedef struct CarAlt {
     /*0x32C*/ CarTire tires[4];
     /*0x43C*/ CarMotion motion;
     /*0x514*/ CarWeap weap;
-} CarAlt; /* 0x560 */
+} AICar; /* 0x560 */
 
-void CarUpdate(Car* car);
-void CarUpdateDeltas(Car* car, u8 which);
-void CarUpdateControlPad(Car* car);
-void CarRotUpdate(Car* car, u8 which);
-void CarTransUpdate(Car* car, u8 which);
-void CarCheckDynamics(Car* car);
-void CarInitMotion(Car* car, u8 which);
-void UpdateNonDriftingCar(Car* car);
+typedef void Car;
+
+void CarUpdate(PlayerCar* car);
+void CarUpdateDeltas(Car* car, u8 isPlayer);
+void CarUpdateControlPad(PlayerCar* car);
+void CarRotUpdate(Car* car, u8 isPlayer);
+void CarTransUpdate(Car* car, u8 isPlayer);
+void CarCheckDynamics(PlayerCar* car);
+void CarInitMotion(Car* car, u8 isPlayer);
+void UpdateNonDriftingCar(PlayerCar* car);
 void SetNoCarDrift(CarMotion* m, u8* f);
-s32 CalcMaxRotBeforeDrift(Car* car, u8 which);
-void SlowDownNonDriftingCar(Car* car, u8 which);
-void UpdateDriftingCar(Car* car);
+s32 CalcMaxRotBeforeDrift(Car* car, u8 isPlayer);
+void SlowDownNonDriftingCar(Car* car, u8 isPlayer);
+void UpdateDriftingCar(PlayerCar* car);
 void SetFullCarDrift(CarMotion* m);
-void BringBackDriftingCar(Car* car, u8 which);
-void SlowDownDriftingCar(Car* car, u8 which);
-void UpdateBearing(Car* car, u8 which);
-void CheckHitDetection(Car* car, u8 which);
-void CalcHitDynamics(Car* car, HdCsHit* hit, u8 which);
+void BringBackDriftingCar(Car* car, u8 isPlayer);
+void SlowDownDriftingCar(Car* car, u8 isPlayer);
+void UpdateBearing(Car* car, u8 isPlayer);
+void CheckHitDetection(Car* car, u8 isPlayer);
+void CalcHitDynamics(Car* car, HdCsHit* hit, u8 isPlayer);
 void CheckIfLostAICar(Car* car);
-u8 CheckCSHit(Car* car, u8 which, Cs* obj, s32 a, s32 b);
-void DoCsHitCalculations(Car* car, u8 which, Car* other, u8 otherWhich, s32 oang, u16 mode);
+u8 CheckCSHit(Car* car, u8 isPlayer, Cs* obj, s32 a, s32 b);
+void DoCsHitCalculations(Car* car, u8 isPlayer, Car* other, u8 otherIsPlayer, s32 oang, u16 mode);
 void RotateCarsAwayFromCollision(CarMotion* a, CarMotion* b);
-void RicochetOffObject(Car* car, u8 which, u8 doHit, s32 delta, u16 mode);
-void SetCollisionBounce(Car* car, u8 which, s32 mag);
+void RicochetOffObject(Car* car, u8 isPlayer, u8 doHit, s32 delta, u16 mode);
+void SetCollisionBounce(Car* car, u8 isPlayer, s32 mag);
 void InitNoCollision(CarCollision* c);
 void SetCollisCount(CarCollision* c);
-void CarViewUpdate(Car* car);
-void SetBounce(Car* car, s32 level, s32 a, s32 b, u8 which);
-void CarInitBounceDeltas(Car* car, u8 which);
-void UpdateBounce(Car* car, u8 which);
+void CarViewUpdate(PlayerCar* car);
+void SetBounce(Car* car, s32 level, s32 a, s32 b, u8 isPlayer);
+void CarInitBounceDeltas(Car* car, u8 isPlayer);
+void UpdateBounce(Car* car, u8 isPlayer);
 void carTakeHit(s32 id, s32 amount, s32 a, s32 flag);
-void InitCatapult(Car* car, u8 which);
-void CheckCatapults(Car* car, u8 which);
+void InitCatapult(Car* car, u8 isPlayer);
+void CheckCatapults(Car* car, u8 isPlayer);
 void UpdateCatapultedTire(CarTire* t);
-void InitBombDamage(Car* car, u8 which, s8 full, u8 noMotion);
-void CheckBombDamage(Car* car, u8 which);
+void InitBombDamage(Car* car, u8 isPlayer, s8 full, u8 noMotion);
+void CheckBombDamage(Car* car, u8 isPlayer);
 void UpdateBombDamagedTire(CarTire* t, CarMotion* m);
-void CheckSpikeDamage(Car* car, u8 which);
-void InitMonsterSmash(Car* carA, u8 whichA, Car* carB, u8 whichB, s16 unused_mode);
-void SetCarVRMode(Car* car, u32 mode);
-void UpdateCarDeath(Car* car, u8 which);
+void CheckSpikeDamage(Car* car, u8 isPlayer);
+void InitMonsterSmash(Car* carA, u8 isPlayerA, Car* carB, u8 isPlayerB, s16 unused_mode);
+void SetCarVRMode(PlayerCar* car, u32 mode);
+void UpdateCarDeath(Car* car, u8 isPlayer);
 void TermCar(void);
 
 #endif // __TM1_CAR_H__

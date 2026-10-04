@@ -16,7 +16,7 @@
 extern MATRIX D_80170D94;
 
 #ifdef NON_MATCHING
-void AICarInit(CarAlt* car, s32 uaIndex, u8 which)
+void AICarInit(AICar* car, s32 uaIndex, u8 which)
 {
     u8 found;
     s16 i;
@@ -28,7 +28,7 @@ void AICarInit(CarAlt* car, s32 uaIndex, u8 which)
     car->stats.unk00 = 0;
     AICarInitDynamics(car);
     if (which) {
-        InitWeapons((Car*)car, &car->weap, 0);
+        InitWeapons(car, &car->weap, 0);
         car->stats.unkF8 = 0;
     } else {
         car->weap.ammo[11] = 20;
@@ -64,7 +64,7 @@ void AICarInit(CarAlt* car, s32 uaIndex, u8 which)
     }
     InitTriggerPoint(car);
     InitControlPad(car->skid);
-    SetBounce((Car*)car, 2, 2, 0, 0);
+    SetBounce(car, 2, 2, 0, 0);
     AICarOutOfBattle(car);
     car->driving = 1;
 }
@@ -73,26 +73,26 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car_init", AICarInit);
 #endif
 
 #ifdef NON_MATCHING
-void AICarInitDynamics(CarAlt* car)
+void AICarInitDynamics(AICar* car)
 {
-    car->motion.pos.x = 0;
-    car->motion.pos.y = 0;
-    car->motion.pos.z = car->stats.unk6C;
-    car->motion.vel.x = 0;
-    car->motion.vel.y = 0;
-    car->motion.vel.z = 0;
-    car->motion.rot.x = 0;
-    car->motion.rot.y = 0;
-    car->motion.rot.z = 0;
-    car->motion.rotDelta.x = 0;
-    car->motion.rotDelta.y = 0;
-    car->motion.rotDelta.z = 0;
-    car->motion.rot2.x = 0;
-    car->motion.rot2.y = 0;
-    car->motion.rot2.z = 0;
-    car->motion.rot2Delta.x = 0;
-    car->motion.rot2Delta.y = 0;
-    car->motion.rot2Delta.z = 0;
+    car->motion.pos.vx = 0;
+    car->motion.pos.vy = 0;
+    car->motion.pos.vz = car->stats.unk6C;
+    car->motion.vel.vx = 0;
+    car->motion.vel.vy = 0;
+    car->motion.vel.vz = 0;
+    car->motion.rot.vx = 0;
+    car->motion.rot.vy = 0;
+    car->motion.rot.vz = 0;
+    car->motion.rotDelta.vx = 0;
+    car->motion.rotDelta.vy = 0;
+    car->motion.rotDelta.vz = 0;
+    car->motion.rot2.vx = 0;
+    car->motion.rot2.vy = 0;
+    car->motion.rot2.vz = 0;
+    car->motion.rot2Delta.vx = 0;
+    car->motion.rot2Delta.vy = 0;
+    car->motion.rot2Delta.vz = 0;
     car->motion.mat2.m[0][0] = D_80170D94.m[0][0];
     car->motion.mat2.m[0][1] = D_80170D94.m[0][1];
     car->motion.mat2.m[0][2] = D_80170D94.m[0][2];
@@ -119,7 +119,7 @@ void AICarInitDynamics(CarAlt* car)
     car->motion.mat.t[2] = D_80170D94.t[2];
     car->unk160 = 0;
     InitMotionFlags(car->flags);
-    CarInitMotion((Car*)car, 0);
+    CarInitMotion(car, 0);
     car->stats.unk38 = 1;
     InitNoCollision(&car->collision);
     car->routeVal = 0;
@@ -127,7 +127,7 @@ void AICarInitDynamics(CarAlt* car)
     car->unk0C = 0;
     CarInitStrength(&car->stats, GetAICarStrength());
     CarInitDeltas(&car->stats, car->uaIndex);
-    InitHitPoints((Car*)car, 0);
+    InitHitPoints(car, 0);
     InitTireInfo(car->tires);
     if (shellGetCurrentLevel() == 5) {
         InitTireGroup(car->tires, 8);
@@ -150,7 +150,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car_init", AICarInitDynamics);
 #endif
 
 #ifdef NON_MATCHING
-void AICarInitProfiles(CarAlt* car)
+void AICarInitProfiles(AICar* car)
 {
     car->unk104 = car->stats.unk44 / 5;
     car->unk105 = (car->stats.unk44 * 49) / 100;

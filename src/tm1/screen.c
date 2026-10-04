@@ -15,7 +15,7 @@
 #include "tm1/font.h"
 #include "tm1/hier.h"
 #include "tm1/light.h"
-#include "tm1/long_vector.h"
+#include "tm1/math.h"
 #include "tm1/movie.h"
 #include "tm1/rt.h"
 #include "tm1/screen.h"
@@ -102,8 +102,8 @@ extern DISPENV displays[2];
 extern POLY_FT4 screen_sw;
 extern u_long screen_OT[2][2];
 extern u_long gCursorImageBuf[48];
-extern LVECTOR gEyePoint;
-extern LVECTOR gDeltaTrans;
+extern VECTOR3 gEyePoint;
+extern VECTOR3 gDeltaTrans;
 extern DISPENV gCardsDisplayEnv[2];
 extern DRAWENV gCardsDrawEnv[2];
 
@@ -1107,7 +1107,7 @@ INCLUDE_RODATA("asm/nonmatchings/tm1/screen", D_800FBACC);
 s32 screenVehicleChoice(s32 players, u8 demo)
 {
     s32 selected[2];
-    LVECTOR translation = { 0, -7680, 4096 };
+    VECTOR3 translation = { 0, -7680, 4096 };
     SVECTOR rotation;
     s32 fonts[4];
     char* menuLabels[3] = { "SELECT", "CAR INFO", "EXIT" };
@@ -1493,7 +1493,7 @@ void screenSpinVehicle(Db* db, s32 carName, s32 force, s32 exclude)
     carNum = GetCarNumFromCarName(carName);
     cs = UAGetCs(carName);
     if (cs == 0) {
-        printf("Car %d\n", carName);
+        printf("PlayerCar %d\n", carName);
         return;
     }
     cs->pos.vx = (InLeft == 0 ? 7680 : -7680) - spin;

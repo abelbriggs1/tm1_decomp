@@ -165,7 +165,7 @@ void UAdashDrawInstruments(s32 player, Db* cdb)
 {
     static DR_MODE drawMode;
     static SPRT sprites[30];
-    Car* pi;
+    PlayerCar* pi;
     POLY_G4* g;
     u8 isPlayer;
     s32 i;
@@ -177,7 +177,7 @@ void UAdashDrawInstruments(s32 player, Db* cdb)
     s32 hp;
     s32 hpMax;
     s32 tier;
-    void* car;
+    Car* car;
     DR_MODE* mode;
     u32 wep;
     s32 x1v;
@@ -296,15 +296,15 @@ void UAdashDrawInstruments(s32 player, Db* cdb)
         car = GetClosestCarToPlayer(player, &isPlayer);
         if (car != NULL) {
             if (isPlayer != 0) {
-                name = ((Car*)car)->uaIndex;
-                hp = ((Car*)car)->stats.unk40;
-                hpMax = ((Car*)car)->stats.unk44;
+                name = PLAYER_CAR(car)->uaIndex;
+                hp = PLAYER_CAR(car)->stats.unk40;
+                hpMax = PLAYER_CAR(car)->stats.unk44;
                 tier = UAdashTierFromPercentageOfHealth((hp * 100) / hpMax, 0);
             } else {
-                name = ((CarAlt*)car)->uaIndex;
-                hp = ((CarAlt*)car)->stats.unk40;
-                hpMax = ((CarAlt*)car)->stats.unk44;
-                tier = ((CarAlt*)car)->unk02;
+                name = AI_CAR(car)->uaIndex;
+                hp = AI_CAR(car)->stats.unk40;
+                hpMax = AI_CAR(car)->stats.unk44;
+                tier = AI_CAR(car)->unk02;
             }
             if (hp > 0) {
                 fontSetColor(2, 0x24, 0x96, 0x24);
@@ -1018,7 +1018,7 @@ void uadashDrawSteeringWheel(u32* ot)
     VECTOR out;
     long flag;
     POLY_FT4* p;
-    Car* pi;
+    PlayerCar* pi;
     s32 rate;
     s32 i;
     s32 j;
@@ -1100,7 +1100,7 @@ void uadashDrawHarleyHandleBars(u32* ot)
     SVECTOR in;
     VECTOR out;
     long flag;
-    Car* pi;
+    PlayerCar* pi;
     s32 rate;
     s32 i;
     s32 j;
@@ -1377,7 +1377,7 @@ void uadashListRemainingCars(u32* ot)
     s32 y;
     s32 modeOfs;
     s32 i;
-    CarAlt* car;
+    AICar* car;
 
     if (gListRemainingCars) {
         fontSetColor(2, 0x24, 0x96, 0x24);

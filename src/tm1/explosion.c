@@ -2,22 +2,22 @@
 
 #include "tm1/explosion.h"
 
-Explosion* init_explosion(VEC3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag);
+Explosion* init_explosion(VECTOR3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag);
 #ifdef NON_MATCHING
-Explosion* init_explosion(VEC3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag)
+Explosion* init_explosion(VECTOR3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag)
 {
     s32 i;
     Explosion* e;
-    VEC3* v;
+    VECTOR3* v;
 
     i = find_free_explosion();
     if (i < 0) {
         return 0;
     }
     e = &pyro[i];
-    e->pos.x = pos->x;
-    e->pos.y = pos->y;
-    e->pos.z = pos->z;
+    e->pos.vx = pos->vx;
+    e->pos.vy = pos->vy;
+    e->pos.vz = pos->vz;
     pyro[i].unk14 = a2;
     pyro[i].frames = frames;
     pyro[i].life = 0;
@@ -28,9 +28,9 @@ Explosion* init_explosion(VEC3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 f
     pyro[i].unk28 = 0;
     pyro[i].unk1C = (s32)((u32)a3 * (u32)a2);
     v = &pyro[i].vel;
-    v->x = 0;
-    v->y = 0;
-    v->z = 0;
+    v->vx = 0;
+    v->vy = 0;
+    v->vz = 0;
     return e;
 }
 #else
@@ -48,9 +48,9 @@ void animate_explosions(void)
             continue;
         }
         pyro[i].life = (s32)((u32)pyro[i].life + 1u);
-        pyro[i].pos.x = (s32)((u32)pyro[i].pos.x + (u32)pyro[i].vel.x);
-        pyro[i].pos.y = (s32)((u32)pyro[i].pos.y + (u32)pyro[i].vel.y);
-        pyro[i].pos.z = (s32)((u32)pyro[i].pos.z + (u32)pyro[i].vel.z);
+        pyro[i].pos.vx = (s32)((u32)pyro[i].pos.vx + (u32)pyro[i].vel.vx);
+        pyro[i].pos.vy = (s32)((u32)pyro[i].pos.vy + (u32)pyro[i].vel.vy);
+        pyro[i].pos.vz = (s32)((u32)pyro[i].pos.vz + (u32)pyro[i].vel.vz);
         if (pyro[i].life < pyro[i].unk1C) {
             continue;
         }
@@ -139,9 +139,9 @@ s32 find_free_explosion(void)
 //         if (which > 0 && pyro[i].life == 1 && pyro[i].unk2C == 0) {
 //             continue;
 //         }
-//         v[0] = pyro[i].pos.x + eye->x;
-//         v[1] = pyro[i].pos.y + eye->y;
-//         v[2] = pyro[i].pos.z + eye->z;
+//         v[0] = pyro[i].pos.vx + eye->x;
+//         v[1] = pyro[i].pos.vy + eye->y;
+//         v[2] = pyro[i].pos.vz + eye->z;
 //         mathMulVec(mat, v, r);
 //         z = r[2];
 //         if (z < -32) {
@@ -201,9 +201,9 @@ s32 find_free_explosion(void)
 //                     p->tpage = f->tpage;
 //                     p->clut = f->clut;
 //                     if (e->unk0C == 1) {
-//                         v[0] = pyro[i].pos.x + eye->x;
-//                         v[1] = pyro[i].pos.y + eye->y;
-//                         v[2] = pyro[i].pos.z + eye->z + e->unk20;
+//                         v[0] = pyro[i].pos.vx + eye->x;
+//                         v[1] = pyro[i].pos.vy + eye->y;
+//                         v[2] = pyro[i].pos.vz + eye->z + e->unk20;
 //                         mathMulVec(mat, v, r);
 //                         ny = cy + (r[1] * vfov / zz);
 //                         nx = cx + (r[0] * hfov / zz);
@@ -240,7 +240,7 @@ s32 find_free_explosion(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/explosion", draw_explosions);
 // #endif
 
-void do_simple_spark(VEC3* pos)
+void do_simple_spark(VECTOR3* pos)
 {
     s32 range;
 
@@ -250,7 +250,7 @@ void do_simple_spark(VEC3* pos)
     init_explosion(pos, 5, 1, 4, SparkInfo, 1);
 }
 
-void do_simple_explosion(VEC3* pos)
+void do_simple_explosion(VECTOR3* pos)
 {
     s32 range;
 
@@ -260,7 +260,7 @@ void do_simple_explosion(VEC3* pos)
     init_explosion(pos, 0x10, 2, 0x10, AburstInfo, 1);
 }
 
-Explosion* do_blue_explosion(VEC3* pos)
+Explosion* do_blue_explosion(VECTOR3* pos)
 {
     s32 range;
     Explosion* e;
@@ -278,24 +278,24 @@ Explosion* do_blue_explosion(VEC3* pos)
 }
 
 #ifdef NON_MATCHING
-void do_flamethrower_burst(VEC3* pos)
+void do_flamethrower_burst(VECTOR3* pos)
 {
     Explosion* e;
 
     e = init_explosion(pos, 6, 1, 2, &D_8019C640[rand() & 3], 0);
     if (e != 0) {
-        e->vel.x = (rand() & 7) - 3;
-        e->vel.y = (rand() & 7) - 3;
+        e->vel.vx = (rand() & 7) - 3;
+        e->vel.vy = (rand() & 7) - 3;
         /* the two `(rand()&0xF)-5` are the SAME source text twice: retail funnels both
            arms into ONE `sw ...,56($s0)` via a `j`, which only the ternary produces. */
-        e->vel.z = (((rand() & 0xF) - 5) > 0) ? 0 : ((rand() & 0xF) - 5);
+        e->vel.vz = (((rand() & 0xF) - 5) > 0) ? 0 : ((rand() & 0xF) - 5);
     }
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/tm1/explosion", do_flamethrower_burst);
 #endif
 
-void do_mini_explosion(VEC3* pos)
+void do_mini_explosion(VECTOR3* pos)
 {
     s32 range;
 
@@ -305,7 +305,7 @@ void do_mini_explosion(VEC3* pos)
     init_explosion(pos, 4, 2, 0x10, AburstInfo, 1);
 }
 
-void do_big_explosion(VEC3* pos)
+void do_big_explosion(VECTOR3* pos)
 {
     s32 range;
 
@@ -315,7 +315,7 @@ void do_big_explosion(VEC3* pos)
     init_explosion(pos, 0x10, 2, 0x10, AburstInfo, 1);
 }
 
-void do_bigger_explosion(VEC3* pos)
+void do_bigger_explosion(VECTOR3* pos)
 {
     s32 range;
 
@@ -325,7 +325,7 @@ void do_bigger_explosion(VEC3* pos)
     init_explosion(pos, 0x48, 1, 0x10, AburstInfo, 1);
 }
 
-void do_mondo_explosion(VEC3* pos)
+void do_mondo_explosion(VECTOR3* pos)
 {
     s32 range;
 
@@ -335,12 +335,12 @@ void do_mondo_explosion(VEC3* pos)
     init_explosion(pos, 0x60, 1, 0x10, AburstInfo, 1);
 }
 
-void do_missile_plume(VEC3* pos)
+void do_missile_plume(VECTOR3* pos)
 {
     init_explosion(pos, 0x20, 1, 0x10, SmokeInfo, 0);
 }
 
-void do_flames(VEC3* pos)
+void do_flames(VECTOR3* pos)
 {
     Explosion* e;
 
@@ -352,7 +352,7 @@ void do_flames(VEC3* pos)
     }
 }
 
-void do_groundburst(VEC3* pos)
+void do_groundburst(VECTOR3* pos)
 {
     Explosion* e;
 
@@ -363,7 +363,7 @@ void do_groundburst(VEC3* pos)
     }
 }
 
-void do_big_flames(VEC3* pos)
+void do_big_flames(VECTOR3* pos)
 {
     Explosion* e;
 
@@ -375,77 +375,77 @@ void do_big_flames(VEC3* pos)
     }
 }
 
-void do_afterburner(VEC3* pos, VEC3* vel)
+void do_afterburner(VECTOR3* pos, VECTOR3* vel)
 {
     Explosion* e;
 
     e = init_explosion(pos, 0x10, 3, 8, BurnInfo, 0);
     if (e != 0) {
-        e->vel.x = vel->x;
-        e->vel.y = vel->y;
-        e->vel.z = vel->z;
+        e->vel.vx = vel->vx;
+        e->vel.vy = vel->vy;
+        e->vel.vz = vel->vz;
     }
 }
 
-void do_flare(VEC3* pos)
+void do_flare(VECTOR3* pos)
 {
     init_explosion(pos, 4, 6, 4, FlareInfo, 0);
 }
 
-void do_burn(VEC3* pos)
+void do_burn(VECTOR3* pos)
 {
     init_explosion(pos, 8, 1, 2, &BurnInfo[rand() % 7], 0);
 }
 
-void do_flash(VEC3* pos)
+void do_flash(VECTOR3* pos)
 {
     init_explosion(pos, 8, 1, 3, &BurnInfo[rand() % 6], 1);
 }
 
-void do_mflash(VEC3* pos)
+void do_mflash(VECTOR3* pos)
 {
     init_explosion(pos, 8, 1, 2, AburstInfo, 0);
 }
 
-void do_gun_plume(VEC3* pos)
+void do_gun_plume(VECTOR3* pos)
 {
     init_explosion(pos, 8, 1, 0x10, SmokeInfo, 0);
 }
 
-void do_smoke(VEC3* pos)
+void do_smoke(VECTOR3* pos)
 {
     Explosion* e;
 
     e = init_explosion(pos, 0x10, 2, 0xC, SmokeInfo, 0);
     if (e != 0) {
-        e->vel.z = 0xA;
+        e->vel.vz = 0xA;
         e->unk2C = 2;
     }
 }
 
-void do_steam(VEC3* pos)
+void do_steam(VECTOR3* pos)
 {
     init_explosion(pos, 8, 2, 0xC, SteamInfo, 1);
 }
 
-void do_big_smoke(VEC3* pos)
+void do_big_smoke(VECTOR3* pos)
 {
     Explosion* e;
 
     e = init_explosion(pos, 0x20, 2, 0xC, SmokeInfo, 0);
     if (e != 0) {
-        e->vel.z = 0xA;
+        e->vel.vz = 0xA;
         e->unk2C = 2;
     }
 }
 
-void do_puff(VEC3* pos)
+void do_puff(VECTOR3* pos)
 {
     Explosion* e;
 
     e = init_explosion(pos, 4, 1, 0x10, SmokeInfo, 1);
     if (e != 0) {
-        e->vel.z = 6;
+        e->vel.vz = 6;
     }
 }
 

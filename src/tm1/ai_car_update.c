@@ -79,7 +79,7 @@ extern s32 Level1ProfileFront[4];
 extern s32 Level1ProfileRear[6];
 
 #ifdef NON_MATCHING
-void AICarUpdateAttackProfile(CarAlt* car)
+void AICarUpdateAttackProfile(AICar* car)
 {
     if (car->unk40 != 0) {
         if ((s16)car->weap.fireDelay < 2) {
@@ -88,7 +88,7 @@ void AICarUpdateAttackProfile(CarAlt* car)
                 car->weap.fireDelay = rand() % 20 + 10;
             }
         }
-        UpdateWeapons((Car*)car, 0);
+        UpdateWeapons(car, 0);
     } else {
         car->weap.cur = 12;
     }
@@ -98,7 +98,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car_update", AICarUpdateAttackProfile);
 #endif
 
 #ifdef NON_MATCHING
-void AIPickAttackWeapon(CarAlt* car)
+void AIPickAttackWeapon(AICar* car)
 {
     s16 lvl;
 
@@ -132,7 +132,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car_update", AIPickAttackWeapon);
 #endif
 
 #ifdef NON_MATCHING
-u8 AIInSpecialParameters(CarAlt* car)
+u8 AIInSpecialParameters(AICar* car)
 {
     switch (car->uaIndex) {
     case 10:
@@ -165,7 +165,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car_update", AIInSpecialParameters);
 #endif
 
 #ifdef NON_MATCHING
-void AICarSetDefaultWeapons(CarAlt* car)
+void AICarSetDefaultWeapons(AICar* car)
 {
     CarWeap* w;
     s32* rear;
@@ -337,7 +337,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car_update", AICarSetDefaultWeapons);
 #endif
 
 #ifdef NON_MATCHING
-void AICarChooseForeWeapon(CarAlt* car)
+void AICarChooseForeWeapon(AICar* car)
 {
     s32 sum = 0;
     s16 roll = rand() % 100;
@@ -359,7 +359,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/ai_car_update", AICarChooseForeWeapon);
 #endif
 
 #ifdef NON_MATCHING
-void AICarChooseAftWeapon(CarAlt* car)
+void AICarChooseAftWeapon(AICar* car)
 {
     s32 sum = 0;
     s16 roll = rand() % 100;
