@@ -5,6 +5,7 @@
 
 #include "tm1/bridges.h"
 #include "tm1/car_init.h"
+#include "tm1/car_update.h"
 #include "tm1/ctlpad.h"
 #include "tm1/curbs.h"
 #include "tm1/explosion.h"
@@ -175,12 +176,9 @@ extern void AICarInit(CarAlt* car, s32 name, s32 flag);
 extern void AICarSetDefaultWeapons(CarAlt* car);
 extern void AICarUpdate(CarAlt* car);
 extern void AICarHeliUpdate(CarAlt* car);
-extern void InitTriggerPoint(CarAlt* car);
-extern s16 GetClosestTriggerPt(void* car, u8 which);
 extern void InitAICarsInBattle(void);
 extern s16 GetNumAICarsInBattle(void);
 extern void UpdateNumAICarsInBattle(void);
-extern void UpdateNumPotHoles(void);
 
 void UASetBattleMusicOn(void)
 {

@@ -2,6 +2,7 @@
 
 #include "tm1/car.h"
 #include "tm1/car_init.h"
+#include "tm1/car_update.h"
 #include "tm1/cs.h"
 #include "tm1/ctlpad.h"
 #include "tm1/explode.h"
@@ -27,18 +28,6 @@
 
 extern void StartLostCheck(Car* car);
 extern void* sdk_memcpy();
-extern s32 GetClosestTriggerPt(Car* car, u8 which);
-extern void UpdateCarOnSlickSpot(Car* car, u8 which);
-extern void CheckSlickSpots(Car* car, u8 which);
-extern void CheckHealthStands(Car* car, u8 which);
-extern void CalcTireCoordinates(Car* car, u8 which);
-extern void CheckCurbs(Car* car, u8 which);
-extern void CheckBridges(Car* car, u8 which);
-extern void CheckPotHoles(Car* car, u8 which);
-extern void CheckMonsterSmash(Car* car, u8 which);
-extern void UpdateTirePositions(Car* car, u8 which);
-extern s16 MakeFakePotHole(void);
-extern void CheckForBridge(CarTire* tire, u8 which, s32 height);
 
 #ifdef NON_MATCHING
 void CarUpdate(Car* car)

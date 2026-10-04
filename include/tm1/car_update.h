@@ -3,6 +3,9 @@
 
 #include "common.h"
 
+#include "tm1/car.h"
+#include "tm1/trigger_pts.h"
+
 typedef struct {
     s16 w; /* 0x00 */
     s16 h; /* 0x02 */
@@ -38,5 +41,38 @@ typedef struct SlickSpot {
 
 extern SlickSpot slickSpots[];
 extern s16 numSlickSpots;
+
+s16 GetClosestTriggerPt(void* car, u8 which);
+void CalcTireCoordinates(Car* car, u8 which);
+s16 GetGroupTestPointIsIn(s32 x, s32 z, s32 y);
+void CheckBridges(Car* car, u8 which);
+void CheckForBridge(CarTire* tire, u8 which, s32 height);
+u8 GetBridgeGroundHeight(CarTire* tire, s16 idx, s32 height);
+void GetBridgeTireHeight(CarTire* tire, s32 height);
+void CheckPotHoles(Car* car, u8 which);
+void CheckForPotHole(CarTire* tire, CarCollision* collision);
+void CheckCurbs(Car* car, u8 which);
+void CheckForCurb(CarTire* tire, CarCollision* collision);
+void CheckSlickSpots(Car* car, u8 which);
+void CheckHealthStands(Car* car, u8 which);
+void UpdateTirePositions(Car* car, u8 which);
+void PutAICarBackOnRoof(CarAlt* car);
+void UpdateRollingCar(Car* car, u8 which);
+void InitTireInfo(CarTire* tires);
+void InitTireGroup(CarTire* tires, s16 group);
+void UpdateCarOnSlickSpot(Car* car, u8 which);
+s32 GetMinSpeedNeeded(s16 group, s16 idx);
+s16 GetNumBridges(void);
+s16 MakeFakePotHole(void);
+void UpdateNumPotHoles(void);
+TriggerPtStartPts* GetTriggerPtStartPts(void);
+void CalcDistFromRoadCenter(CarAlt* car, s32* out, u8 which);
+void CheckMonsterSmash(Car* car, u8 which);
+void InitTriggerPoint(CarAlt* car);
+void UpdateCurrentTriggerPt(CarAlt* car);
+void CalcTurnStart(CarAlt* car, u8 which);
+void GetNextTriggerPoint(CarAlt* car, s16 pt);
+s16 GetClosestTriggerPointFromCurrPt(CarAlt* car, TriggerPt* tp, s16* dist);
+s16 GetLookAheadPos(CarAlt* car, s32* out);
 
 #endif // __TM1_CAR_UPDATE_H__

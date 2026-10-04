@@ -61,7 +61,7 @@ segments:
       - [0x307C, .rodata, tm1/view]         # 0x800FA934
       - [0x30E4, .rodata, tm1/font]         # 0x800FA99C
       - [0x3148, .rodata, tm1/car]           # 0x800FAA00
-      - [0x31EC, rodata, tm1/car_update]    # 0x800FAAA4
+      - [0x31EC, .rodata, tm1/car_update]   # 0x800FAAA4
       - [0x3200, .rodata, tm1/car_init]     # 0x800FAAB8
       - [0x3800, rodata, tm1/ai_car_init]   # 0x800FB0B8
       - [0x39E4, .rodata, tm1/interactives]  # 0x800FB29C
@@ -98,7 +98,7 @@ segments:
       - [0x147A4, c,   tm1/weapon]          # 0x8010C05C
       - [0x199A4, c,   tm1/car]             # 0x8011125C
       - [0x21C54, asm, tm1/ai_car]          # 0x8011950C
-      - [0x24A18, asm, tm1/car_update]      # 0x8011C2D0
+      - [0x24A18, c,   tm1/car_update]      # 0x8011C2D0
       - [0x2AFC4, c,   tm1/car_init]        # 0x8012287C
       - [0x2D47C, asm, tm1/ai_car_init]     # 0x80124D34
       - [0x2E308, c,   tm1/trigger_pts]     # 0x80125BC0
@@ -163,7 +163,7 @@ segments:
       - [0x946E8, .sdata, tm1/font]          # 0x8018BFA0
       - [0x946F0, .sdata, tm1/weapon]       # 0x8018BFA8
       - [0x94718, sdata, tm1/ai_car]        # 0x8018BFD0
-      - [0x9471C, sdata, tm1/car_update]    # 0x8018BFD4
+      - [0x9471C, .sdata, tm1/car_update]   # 0x8018BFD4
       - [0x94720, .sdata, tm1/bridges]      # 0x8018BFD8
       - [0x94724, sdata, tm1/potholes]      # 0x8018BFDC
       - [0x94730, .sdata, tm1/interactives]  # 0x8018BFE8

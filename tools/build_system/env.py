@@ -294,6 +294,7 @@ class EnvironmentToolchain:
                 "tm1/shell": 8,
                 "tm1/screen": 8,
                 "tm1/car_init": 8,
+                "tm1/car_update": 8,
             }
         )
 
