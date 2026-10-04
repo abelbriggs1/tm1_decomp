@@ -13,6 +13,7 @@
 #include "tm1/math.h"
 #include "tm1/rt.h"
 #include "tm1/sound.h"
+#include "tm1/targets.h"
 #include "tm1/ua.h"
 #include "tm1/ua_sound.h"
 #include "tm1/view.h"
@@ -40,16 +41,6 @@
     m->trail[k].y = m->cs->pos.vy + out.vy - m->pos.y;                                             \
     m->trail[k].z = m->cs->pos.vz + out.vz - m->pos.z;
 
-typedef struct Target {
-    /* 0x00 */ s32 owner;
-    /* 0x04 */ s32 unk04;
-    /* 0x08 */ s32 unk08;
-    /* 0x0C */ s32 unk0C;
-    /* 0x10 */ s32 x;
-    /* 0x14 */ s32 y;
-    /* 0x18 */ s32 z;
-} Target;
-
 static s32 bulletFlipFlop = 0;
 void* fire_missile_node = 0;
 void* homing_missile_node = 0;
@@ -68,15 +59,6 @@ GrSprite* plasmaInfo;
 GrSprite* fireballInfo;
 
 extern s32 shellGetCurrentLevel(void);
-extern s32 check_ped_hits(VEC3* pt, s32 arg1);
-extern VEC3* get_hcop_position(s32 num);
-extern Target* get_targets(void);
-extern void target_takehit(s32 id, s32 x, s32 who);
-extern void merc_takehit(s32 which, s32 who);
-extern void ped_takehit(s32 num, s32 damage);
-extern void pedestrian_takehit(s32 id, s32 damage);
-extern void static_cop_takehit(s32 x);
-extern void drop_box_takehit(void);
 
 void bulSetOwnship(Cs* ownship)
 {
@@ -179,8 +161,9 @@ s32 CAR_HD(VEC3* pt, s32 owner, s32 flag)
     }
     t = get_targets();
     for (i = 0; i < 50; i++, t++) {
-        if (t->unk08 > 0 && t->owner != -owner) {
-            if (ABS(BIGGER(pt->x - t->x, BIGGER(pt->y - t->y, pt->z - t->z))) >> 3 < flag + 5) {
+        if (t->kind > 0 && t->type != -owner) {
+            if (ABS(BIGGER(pt->x - t->pos.x, BIGGER(pt->y - t->pos.y, pt->z - t->pos.z))) >> 3
+                < flag + 5) {
                 return i + 500;
             }
         }
@@ -1715,8 +1698,8 @@ s32 bulDispatchDamage(s32 id, s32 a, s32 b, s32 damage, VEC3* dir, s32 owner)
 
     if (id >= 500) {
         t = get_targets();
-        a = t[id - 500].owner;
-        b = t[id - 500].unk04;
+        a = t[id - 500].type;
+        b = t[id - 500].instance;
         id = 8;
     }
     if (id > 0 && id != 8) {
