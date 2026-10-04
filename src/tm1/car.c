@@ -1,6 +1,7 @@
 #include "common.h"
 
 #include "tm1/car.h"
+#include "tm1/car_init.h"
 #include "tm1/cs.h"
 #include "tm1/ctlpad.h"
 #include "tm1/explode.h"
@@ -25,7 +26,6 @@
 #define CAR_LOST_BYTE(car) (((u8*)(car))[0x4D])
 
 extern void StartLostCheck(Car* car);
-extern void RecomputeCarDeltas(CarStats* s);
 extern void* sdk_memcpy();
 extern s32 GetClosestTriggerPt(Car* car, u8 which);
 extern void UpdateCarOnSlickSpot(Car* car, u8 which);
@@ -37,7 +37,6 @@ extern void CheckBridges(Car* car, u8 which);
 extern void CheckPotHoles(Car* car, u8 which);
 extern void CheckMonsterSmash(Car* car, u8 which);
 extern void UpdateTirePositions(Car* car, u8 which);
-extern void CarInit(Car* car, s32 uaIndex, s32 which);
 extern s16 MakeFakePotHole(void);
 extern void CheckForBridge(CarTire* tire, u8 which, s32 height);
 

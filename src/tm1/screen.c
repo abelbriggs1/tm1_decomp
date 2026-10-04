@@ -8,6 +8,7 @@
 #include <strings.h>
 
 #include "tm1/car.h"
+#include "tm1/car_init.h"
 #include "tm1/cs.h"
 #include "tm1/ctlpad.h"
 #include "tm1/fileio.h"
@@ -51,7 +52,6 @@ typedef struct ScreenVehicleFace {
 } ScreenVehicleFace; /* 0x30 */
 
 extern void SetBlockFill(BLK_FILL* p);
-extern void CarInitDeltas(CarStats* stats, s32 name);
 
 extern s32 gTitleChoice;
 extern s32 gOptionsChoice;

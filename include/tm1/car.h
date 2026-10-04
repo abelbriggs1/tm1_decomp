@@ -72,9 +72,11 @@ typedef struct CarTire {
 } CarTire; /* 0x44 */
 
 typedef struct CarStats {
-    /*0x000*/ u8 pad00[0x2];
+    /*0x000*/ u8 unk00;
+    /*0x001*/ u8 unk01;
     /*0x002*/ u8 monster;
-    /*0x003*/ u8 pad00a[0x2];
+    /*0x003*/ u8 unk03;
+    /*0x004*/ u8 unk04;
     /*0x005*/ s8 unk05;
     /*0x006*/ s8 damageLevel;
     /*0x007*/ s8 damageThreshold;
@@ -87,14 +89,15 @@ typedef struct CarStats {
     /*0x010*/ u16 updateRate;
     /*0x012*/ u16 blasts;
     /*0x014*/ u16 unk14;
-    /*0x016*/ u8 pad00c[0x2];
+    /*0x016*/ u16 unk16;
     /*0x018*/ s16 unk18;
     /*0x01A*/ u16 spikeTimer;
     /*0x01C*/ s16 unk1C;
-    /*0x01E*/ u8 pad01[0x2];
+    /*0x01E*/ u16 unk1E;
     /*0x020*/ u16 deathTimer;
     /*0x022*/ u16 unk22;
-    /*0x024*/ u8 pad01a[0x6];
+    /*0x024*/ s16 unk24;
+    /*0x026*/ u8 pad01a[0x4];
     /*0x02A*/ s16 unk2A;
     /*0x02C*/ s16 unk2C;
     /*0x02E*/ u8 pad01b[0x2];
@@ -107,7 +110,7 @@ typedef struct CarStats {
     /*0x048*/ u16 lostTimer;
     /*0x04A*/ u16 unk4A;
     /*0x04C*/ s32 unk4C;
-    /*0x050*/ u8 pad02[0x4];
+    /*0x050*/ s32 unk50;
     /*0x054*/ s32 healthRate;
     /*0x058*/ s32 healthCap;
     /*0x05C*/ s32 unk5C;
@@ -121,39 +124,49 @@ typedef struct CarStats {
     /*0x07C*/ s32 unk7C;
     /*0x080*/ s32 unk80;
     /*0x084*/ s32 unk84;
-    /*0x088*/ u8 pad03[0x18];
+    /*0x088*/ s32 unk88;
+    /*0x08C*/ s32 unk8C;
+    /*0x090*/ s32 unk90;
+    /*0x094*/ s32 unk94;
+    /*0x098*/ s32 unk98;
+    /*0x09C*/ s32 unk9C;
     /*0x0A0*/ s32 unkA0;
     /*0x0A4*/ s32 unkA4;
     /*0x0A8*/ s32 unkA8;
     /*0x0AC*/ s32 unkAC;
     /*0x0B0*/ s32 unkB0;
-    /*0x0B4*/ u8 pad05[0x4];
+    /*0x0B4*/ s32 unkB4;
     /*0x0B8*/ s32 unkB8;
     /*0x0BC*/ s32 unkBC;
     /*0x0C0*/ s32 unkC0;
-    /*0x0C4*/ u8 pad06[0x8];
+    /*0x0C4*/ s32 unkC4;
+    /*0x0C8*/ s32 unkC8;
     /*0x0CC*/ s32 unkCC;
     /*0x0D0*/ s32 unkD0;
     /*0x0D4*/ s32 unkD4;
     /*0x0D8*/ s32 unkD8;
-    /*0x0DC*/ u8 pad07[0xC];
+    /*0x0DC*/ s32 unkDC;
+    /*0x0E0*/ s32 unkE0;
+    /*0x0E4*/ s32 unkE4;
     /*0x0E8*/ s32 unkE8;
     /*0x0EC*/ s32 unkEC;
-    /*0x0F0*/ u8 pad08[0x4];
+    /*0x0F0*/ s32 unkF0;
     /*0x0F4*/ s32 unkF4;
     /*0x0F8*/ s32 unkF8;
     /*0x0FC*/ s32 unkFC;
     /*0x100*/ s32 unk100;
     /*0x104*/ s32 unk104;
     /*0x108*/ s32 unk108;
-    /*0x10C*/ u8 pad10C[0x4];
+    /*0x10C*/ s32 unk10C;
     /*0x110*/ u16 unk110;
     /*0x112*/ u16 unk112;
     /*0x114*/ u16 unk114;
     /*0x116*/ u8 pad116[0x2];
     /*0x118*/ u16 dropPower;
-    /*0x11A*/ u8 pad11A[0x2];
-} CarStats; /* 0x11C */
+    /*0x11A*/ s16 unk11A;
+    /*0x11C*/ s16 unk11C;
+    /*0x11E*/ u8 pad11E[0x2];
+} CarStats; /* 0x120 */
 
 typedef struct CarBounce {
     /*0x00*/ s32 unk00;
@@ -219,7 +232,8 @@ typedef struct Car {
     /*0x048*/ VEC3 vrPos[6];
     /*0x090*/ s32 speedDelta;
     /*0x094*/ s32 uaIndex;
-    /*0x098*/ u8 pad03[0x2];
+    /*0x098*/ u8 unk98;
+    /*0x099*/ u8 unk99;
     /*0x09A*/ u8 unk9A;
     /*0x09B*/ u8 unk9B;
     /*0x09C*/ u8 pad03b[0x4];
@@ -232,7 +246,6 @@ typedef struct Car {
     /*0x0F8*/ s32 unkF8;
     /*0x0FC*/ CarBounce bounce;
     /*0x138*/ CarStats stats;
-    /*0x254*/ u8 pad05[0x4];
     /*0x258*/ CarCollision collision;
     /*0x270*/ CarTire tires[4];
     /*0x380*/ CarMotion motion;
@@ -277,7 +290,6 @@ typedef struct CarAlt {
     /*0x16F*/ u8 pad01d[0x99];
     /*0x208*/ s32 bearing;
     /*0x20C*/ CarStats stats;
-    /*0x328*/ u8 pad02[0x4];
     /*0x32C*/ CarTire tires[4];
     /*0x43C*/ CarMotion motion;
     /*0x514*/ CarWeap weap;
