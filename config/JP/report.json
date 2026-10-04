@@ -16478,13 +16478,15 @@
   "version": 2,
   "categories": [
     {
-      "id": "sdk",
-      "name": "sdk",
+      "id": "data",
+      "name": "data",
       "measures": {
-        "total_code": "112236",
-        "total_data": "462792",
-        "total_functions": 974,
-        "total_units": 5
+        "fuzzy_match_percent": 100.0,
+        "matched_code_percent": 100.0,
+        "total_data": "4012",
+        "matched_functions_percent": 100.0,
+        "complete_code_percent": 100.0,
+        "total_units": 1
       }
     },
     {
@@ -16505,15 +16507,13 @@
       }
     },
     {
-      "id": "data",
-      "name": "data",
+      "id": "sdk",
+      "name": "sdk",
       "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "4012",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
+        "total_code": "112236",
+        "total_data": "462792",
+        "total_functions": 974,
+        "total_units": 5
       }
     }
   ]
