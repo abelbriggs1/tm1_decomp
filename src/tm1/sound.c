@@ -65,6 +65,7 @@ extern SpuVoiceAttr spuVoiceAttr;
 
 void cbready(s32 intr, u8* result);
 void cbvsync(void);
+void cdplay(s32 mode);
 
 s32 soundGetCurrentDATrack()
 {

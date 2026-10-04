@@ -10,7 +10,7 @@ u16 Load4BitClut(u32* data, int x, int y)
     rect.x = x;
     rect.y = y;
     rect.h = 1;
-    LoadImage(&rect, data);
+    LoadImage(&rect, (u_long*)data);
     DrawSync(0);
     return GetClut(x, y);
 }
