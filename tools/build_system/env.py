@@ -293,6 +293,7 @@ class EnvironmentToolchain:
                 "tm1/targets": 8,
                 "tm1/shell": 8,
                 "tm1/screen": 8,
+                "tm1/car_init": 8,
             }
         )
 

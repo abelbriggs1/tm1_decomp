@@ -10,7 +10,6 @@
 
 typedef struct ScreenCarEnding {
     /* 0x000 */ CarStats stats;
-    /* 0x11C */ s32 unk11C;
     /* 0x120 */ u_long* image;
     /* 0x124 */ s32 imageRight;
     /* 0x128 */ s32 savedIsBg;

@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 10.453201,
+    "fuzzy_match_percent": 10.4566,
     "total_code": "470784",
-    "matched_code": "49212",
-    "matched_code_percent": 10.453202,
-    "total_data": "643076",
+    "matched_code": "49228",
+    "matched_code_percent": 10.4566,
+    "total_data": "643108",
     "matched_data": "88368",
-    "matched_data_percent": 13.741454,
+    "matched_data_percent": 13.740772,
     "total_functions": 1983,
-    "matched_functions": 460,
-    "matched_functions_percent": 23.197176,
-    "total_units": 107
+    "matched_functions": 462,
+    "matched_functions_percent": 23.298033,
+    "total_units": 106
   },
   "units": [
     {
@@ -77,41 +77,6 @@
         {
           "name": ".rodata",
           "size": "20",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/car_init",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "1536",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".rodata",
-          "size": "1536",
           "metadata": {}
         },
         {
@@ -4261,24 +4226,36 @@
     {
       "name": "tm1/car_init",
       "measures": {
+        "fuzzy_match_percent": 0.17021276,
         "total_code": "9400",
-        "matched_data_percent": 100.0,
+        "matched_code": "16",
+        "matched_code_percent": 0.17021276,
+        "total_data": "1568",
         "total_functions": 26,
-        "complete_data_percent": 100.0,
+        "matched_functions": 2,
+        "matched_functions_percent": 7.692308,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "size": "32",
+          "metadata": {}
+        },
+        {
+          "name": ".rodata",
+          "size": "1536",
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "9400",
+          "fuzzy_match_percent": 0.17021276,
           "metadata": {}
         }
       ],
@@ -4412,12 +4389,14 @@
         {
           "name": "CarInitTweeking",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7144"
         },
         {
           "name": "GetCarName",
           "size": "8",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7152"
         },
@@ -4441,6 +4420,7 @@
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/car_init.c",
         "progress_categories": [
           "tm1"
         ]
@@ -16638,23 +16618,6 @@
   "version": 2,
   "categories": [
     {
-      "id": "tm1",
-      "name": "tm1",
-      "measures": {
-        "fuzzy_match_percent": 13.725359,
-        "total_code": "358548",
-        "matched_code": "49212",
-        "matched_code_percent": 13.725358,
-        "total_data": "176272",
-        "matched_data": "88368",
-        "matched_data_percent": 50.131615,
-        "total_functions": 1009,
-        "matched_functions": 460,
-        "matched_functions_percent": 45.58969,
-        "total_units": 101
-      }
-    },
-    {
       "id": "data",
       "name": "data",
       "measures": {
@@ -16664,6 +16627,23 @@
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
+      }
+    },
+    {
+      "id": "tm1",
+      "name": "tm1",
+      "measures": {
+        "fuzzy_match_percent": 13.729821,
+        "total_code": "358548",
+        "matched_code": "49228",
+        "matched_code_percent": 13.729821,
+        "total_data": "176304",
+        "matched_data": "88368",
+        "matched_data_percent": 50.122517,
+        "total_functions": 1009,
+        "matched_functions": 462,
+        "matched_functions_percent": 45.78791,
+        "total_units": 100
       }
     },
     {
