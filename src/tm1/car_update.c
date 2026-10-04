@@ -3,6 +3,7 @@
 #include <libgte.h>
 #include <rand.h>
 
+#include "tm1/ai_car.h"
 #include "tm1/bridges.h"
 #include "tm1/car.h"
 #include "tm1/car_update.h"
@@ -17,9 +18,6 @@
 #include "tm1/ua.h"
 
 static s32 potHoleTics = 0;
-
-extern void AICarInitTransition(CarAlt* car);
-extern void AICarInitSwerve(CarAlt* car);
 
 #ifdef NON_MATCHING
 s16 GetClosestTriggerPt(void* car, u8 which)

@@ -2,6 +2,7 @@
 
 #include <libgte.h>
 
+#include "tm1/ai_car.h"
 #include "tm1/car.h"
 #include "tm1/car_init.h"
 #include "tm1/car_update.h"
@@ -15,8 +16,6 @@
 #include "tm1/view.h"
 
 extern MATRIX D_80170D94;
-
-extern void InitControlPad(u8* pad);
 
 #ifdef NON_MATCHING
 void CarInit(Car* car, s32 uaIndex, u8 which)
