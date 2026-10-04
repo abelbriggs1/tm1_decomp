@@ -344,20 +344,12 @@ class Environment:
         """
         flags = [
             *[f"-I{inc}" for inc in self.directories.includes],
+            *[f"-isystem {inc}" for inc in self.directories.system_includes],
             *self.toolchain.cpp_flags,
         ]
         if m2ctx:
             flags.append("-DM2CTX")
-
-        # Modern `cpp` marks headers found via `-isystem` with the linemarker flags
-        # `3 4`. GCC 2.7.2's `cc1` predates flag `4` and warns about it on every
-        # linemarker. Directories from `C_INCLUDE_PATH` are still system
-        # directories, but only receive flag `3`.
-        system_includes = ":".join(str(inc) for inc in self.directories.system_includes)
-        return (
-            f"C_INCLUDE_PATH={system_includes} "
-            f"{self.toolchain.c_preprocessor_cmd} {' '.join(flags)}"
-        )
+        return f"{self.toolchain.c_preprocessor_cmd} {' '.join(flags)}"
 
     def generate_c_compiler_cmd(self) -> str:
         """
