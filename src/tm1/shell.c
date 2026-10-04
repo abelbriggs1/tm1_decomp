@@ -16,6 +16,7 @@
 #include "tm1/interactives.h"
 #include "tm1/light.h"
 #include "tm1/rt.h"
+#include "tm1/screen.h"
 #include "tm1/shell.h"
 #include "tm1/sound.h"
 #include "tm1/targets.h"
@@ -32,43 +33,6 @@
 #define CORE_VAB_BUFFER ((void*)0x80010000)
 
 extern void exit(s32 code);
-
-extern void screenDisplayLogos(void);
-extern void screenSetMusicVolume(void);
-extern void screenSetEffectsVolume(void);
-extern void screenPlayCinema(s32 which);
-extern s32 screenGetMusicVolume(void);
-extern s32 screenDisplayTitle(void);
-extern s32 screenMainOptions(void);
-extern s32 screenOptions(s32 split);
-extern s32 screenVehicleChoice(s32 players, u8 demo);
-extern s32 screenDisplayHistory(void);
-extern void screenAudioOptions(s32 a, s32 b);
-extern s32 screenGetWhichPad(void);
-extern void screenChooseControls(s32 a, s32 b, s32 c);
-extern void screenChooseBattleground(s32 split);
-extern s32 screenBattleOptions(s32 split);
-extern s32 screenEnterAccessCode(void);
-extern s32 screenWrongPassword(s32 state);
-extern void screenLostALife(s32 lives);
-extern void screenPrintScore(s32 who, s16 a, s16 b);
-extern s32 screenTransitionLevel(s32 level, s32 advanced);
-extern s32 screenPlayCarEnding(s32 vehicle);
-extern void screenLostGame(void);
-extern void screenDisplayCredits(void);
-extern void screenDisplayWarningScreen(void);
-extern void screenDisplaySonyLegalScreen(void);
-extern void screenDisplayDeveloperScreen(void);
-extern void screenWaitForContinue(s32 a, s32 b);
-extern void screenInit(void);
-extern void screenClearScreen(s32 x, s32 y, s32 w, s32 h);
-extern void screenSetEnv(void);
-extern void screenLoadCarSelectionBackground(void);
-extern void screenLoadCarPictures(s16 count, s32* opponents);
-extern void screenInitCardSprites(s32 level, s16 count, s32* opponents);
-extern void screenDrawCard(s32 index, s32 flip, s32 quick);
-extern void screenResetCards(s32 index);
-extern void screenBossCar(void);
 
 extern s32 gInfiniteWeapons;
 extern s32 gGodMode;
