@@ -63,7 +63,7 @@ segments:
       - [0x3148, .rodata, tm1/car]           # 0x800FAA00
       - [0x31EC, .rodata, tm1/car_update]   # 0x800FAAA4
       - [0x3200, .rodata, tm1/car_init]     # 0x800FAAB8
-      - [0x3800, rodata, tm1/ai_car_init]   # 0x800FB0B8
+      - [0x3800, .rodata, tm1/ai_car_init]  # 0x800FB0B8
       - [0x39E4, .rodata, tm1/interactives]  # 0x800FB29C
       - [0x3ECC, .rodata, tm1/explode]       # 0x800FB784
       - [0x3EF0, .rodata, tm1/screen]       # 0x800FB7A8
@@ -100,7 +100,7 @@ segments:
       - [0x21C54, c,   tm1/ai_car]          # 0x8011950C
       - [0x24A18, c,   tm1/car_update]      # 0x8011C2D0
       - [0x2AFC4, c,   tm1/car_init]        # 0x8012287C
-      - [0x2D47C, asm, tm1/ai_car_init]     # 0x80124D34
+      - [0x2D47C, c,   tm1/ai_car_init]     # 0x80124D34
       - [0x2E308, c,   tm1/trigger_pts]     # 0x80125BC0
       - [0x354C0, c  , tm1/bridges]         # 0x8012CD78
       - [0x38DB0, c  , tm1/potholes]        # 0x80130668

@@ -4,6 +4,7 @@
 #include <rand.h>
 
 #include "tm1/ai_car.h"
+#include "tm1/ai_car_init.h"
 #include "tm1/bridges.h"
 #include "tm1/car_init.h"
 #include "tm1/car_update.h"
@@ -173,7 +174,6 @@ static u16 gVrEnabled[2] = { 1, 1 };
 
 extern s32 bgColor[3];
 
-extern void AICarInit(CarAlt* car, s32 name, s32 flag);
 extern void AICarSetDefaultWeapons(CarAlt* car);
 
 void UASetBattleMusicOn(void)
