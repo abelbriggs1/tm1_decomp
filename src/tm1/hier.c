@@ -10,11 +10,12 @@
 #include "tm1/view.h"
 
 #include "tm1/hier.h"
+#include "tm1/hier_sub.h"
 
 #define SPAD_DRMODE0 ((DR_MODE*)0x1F800060)
 #define SPAD_DRMODE1 ((DR_MODE*)0x1F80006C)
 #define sdSubPolyCount (*(s32*)0x1F800038)
-#define sdSubPolyPtr (*(s32**)0x1F80004C)
+#define sdSubPolyPtr (*(SubPoly**)0x1F80004C)
 #define sdFogEnable (*(s32*)0x1F800088)
 
 static s32 fovDepth = 1200;
@@ -36,8 +37,6 @@ static s32 lodShiftValue;
 static s32 groundFlag;
 
 extern void geomProc(Db* db, ObjRec* objs, s32 nobj, MATRIX* mats, MATRIX* lights);
-extern void subPoly3(Db* db, s32* list, s32 n);
-extern void subPoly4(Db* db, s32* list, s32 n);
 
 #ifdef NON_MATCHING
 void hierPush(void* node, s32 mat, s32* pos, s32 eo)

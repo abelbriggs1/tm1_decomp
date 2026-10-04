@@ -7,6 +7,7 @@
 
 #include "tm1/cs.h"
 #include "tm1/hd.h"
+#include "tm1/hier_sub.h"
 #include "tm1/rt.h"
 
 typedef struct HierEnt {
@@ -119,7 +120,7 @@ typedef struct ObjRec {
 extern s32 worldEP;
 extern HierEnt hierStack[150];
 extern MatInfo matInfo[90];
-extern s32 subPolyList[];
+extern SubPoly subPolyList[];
 extern ObjRec objList[220];
 extern MATRIX matList[];
 extern MATRIX lightList[];

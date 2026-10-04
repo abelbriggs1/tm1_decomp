@@ -91,7 +91,7 @@ segments:
       - [0xCB3C,  c,   tm1/sound]           # 0x801043F4
       - [0xFB14,  c,   tm1/ua_sound]        # 0x801073CC
       - [0x110C4, c,   tm1/sound_req]       # 0x8010897C
-      - [0x1122C, asm, tm1/hier_sub]        # 0x80108AE4
+      - [0x1122C, c,   tm1/hier_sub]        # 0x80108AE4
       - [0x12250, c,   tm1/timer]           # 0x80109B08
       - [0x1254C, c  , tm1/view]            # 0x80109E04
       - [0x13700, c,   tm1/font]            # 0x8010AFB8
@@ -187,7 +187,7 @@ segments:
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C4C8, name: tm1/hd}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C4D4, name: tm1/hdp}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C4DC, name: tm1/sound}
-      - {start: 0x94BC8, type: sbss, vram: 0x8018C4F8, name: tm1/hier_sub}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4F8, name: tm1/hier_sub}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C508, name: tm1/view}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C524, name: tm1/weapon}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C538, name: tm1/ai_car}
