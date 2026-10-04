@@ -53,7 +53,7 @@ segments:
       - [0x8FC,  rodata, tm1/hier]          # 0x800F81B4
       - [0x92C, .rodata, tm1/cs]            # 0x800F81E4
       - [0x960, .rodata, tm1/ctlpad]        # 0x800F8218
-      - [0x9B0,  rodata, tm1/db]            # 0x800F8268
+      - [0x9B0,  .rodata, tm1/db]            # 0x800F8268
       - [0x1F78, .rodata, tm1/hd]           # 0x800F9830
       - [0x1FA8, .rodata, tm1/hdp]          # 0x800F9860
       - [0x1FD8, .rodata, tm1/sound]         # 0x800F9890
@@ -84,7 +84,7 @@ segments:
       - [0x77B8,  c,   tm1/cs]              # 0x800FF070
       - [0x7AE4,  c,   tm1/rt]              # 0x800FF39C
       - [0x8234,  c,   tm1/ctlpad]          # 0x800FFAEC
-      - [0x8790,  asm, tm1/db]              # 0x80100048
+      - [0x8790,  c,   tm1/db]              # 0x80100048
       - [0x9438,  c,   tm1/hd]              # 0x80100CF0
       - [0xB29C,  c,   tm1/hdp]             # 0x80102B54
       - [0xC1A0,  c  , tm1/light]           # 0x80103A58
@@ -154,7 +154,7 @@ segments:
       - [0x9465C, .sdata, tm1/cs]            # 0x8018BF14
       - [0x94660, .sdata, tm1/rt]            # 0x8018BF18
       - [0x9467C, .sdata, tm1/ctlpad]       # 0x8018BF34
-      - [0x94680, sdata, tm1/db]            # 0x8018BF38
+      - [0x94680, .sdata, tm1/db]            # 0x8018BF38
       - [0x94694, .sdata, tm1/hd]           # 0x8018BF4C
       - [0x946A4, .sdata, tm1/hdp]          # 0x8018BF5C
       - [0x946A8, .sdata, tm1/sound]         # 0x8018BF60
@@ -220,8 +220,8 @@ segments:
       - {start: 0x94BC8, type: bss, vram: 0x8018D864, name: tm1/hier}
       - {start: 0x94BC8, type: .bss, vram: 0x8018EDB8, name: tm1/cs}
       - {start: 0x94BC8, type: bss, vram: 0x80194BF0, name: tm1/rt}
-      - {start: 0x94BC8, type: bss, vram: 0x80194F10, name: tm1/db}
-      - {start: 0x94BC8, type: bss, vram: 0x80195EAC, name: tm1/hd}
+      - {start: 0x94BC8, type: .bss, vram: 0x80194F10, name: tm1/db}
+      - {start: 0x94BC8, type: bss, vram: 0x80195EB0, name: tm1/hd}
       - {start: 0x94BC8, type: .bss, vram: 0x80196064, name: tm1/light}
       - {start: 0x94BC8, type: bss, vram: 0x801961E8, name: tm1/sound}
       - {start: 0x94BC8, type: .bss, vram: 0x80198A4C, name: tm1/ua_sound}

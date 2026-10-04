@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 8.839723,
+    "fuzzy_match_percent": 8.858415,
     "total_code": "470784",
-    "matched_code": "41616",
-    "matched_code_percent": 8.839723,
-    "total_data": "634004",
-    "matched_data": "74880",
-    "matched_data_percent": 11.810651,
+    "matched_code": "41704",
+    "matched_code_percent": 8.858415,
+    "total_data": "634000",
+    "matched_data": "78896",
+    "matched_data_percent": 12.444164,
     "total_functions": 1983,
-    "matched_functions": 364,
-    "matched_functions_percent": 18.356028,
-    "total_units": 125
+    "matched_functions": 366,
+    "matched_functions_percent": 18.456884,
+    "total_units": 122
   },
   "units": [
     {
@@ -77,41 +77,6 @@
         {
           "name": ".rodata",
           "size": "48",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/db",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "5576",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".rodata",
-          "size": "5576",
           "metadata": {}
         },
         {
@@ -1155,24 +1120,45 @@
     {
       "name": "tm1/db",
       "measures": {
+        "fuzzy_match_percent": 2.7160494,
         "total_code": "3240",
-        "matched_data_percent": 100.0,
+        "matched_code": "88",
+        "matched_code_percent": 2.7160494,
+        "total_data": "9596",
+        "matched_data": "4020",
+        "matched_data_percent": 41.892452,
         "total_functions": 5,
-        "complete_data_percent": 100.0,
+        "matched_functions": 2,
+        "matched_functions_percent": 40.0,
         "total_units": 1
       },
       "sections": [
         {
           "name": ".bss",
+          "size": "4000",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".rodata",
+          "size": "5576",
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "20",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "3240",
+          "fuzzy_match_percent": 2.7160494,
           "metadata": {}
         }
       ],
@@ -1186,6 +1172,7 @@
         {
           "name": "dbInitCsForAModel",
           "size": "76",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "356"
         },
@@ -1204,11 +1191,13 @@
         {
           "name": "dbReset3DEnvironmentTrap",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3228"
         }
       ],
       "metadata": {
+        "source_path": "src/tm1/db.c",
         "progress_categories": [
           "tm1"
         ]
@@ -1221,9 +1210,9 @@
         "total_code": "7780",
         "matched_code": "220",
         "matched_code_percent": 2.8277636,
-        "total_data": "516",
-        "matched_data": "468",
-        "matched_data_percent": 90.69768,
+        "total_data": "512",
+        "matched_data": "464",
+        "matched_data_percent": 90.625,
         "total_functions": 13,
         "matched_functions": 3,
         "matched_functions_percent": 23.076923,
@@ -1232,7 +1221,7 @@
       "sections": [
         {
           "name": ".bss",
-          "size": "440",
+          "size": "436",
           "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
@@ -15238,41 +15227,6 @@
       }
     },
     {
-      "name": "tm1/db",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "20",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "20",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/view",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -16381,42 +16335,11 @@
       }
     },
     {
-      "name": "tm1/db",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "3996",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "size": "3996",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/hd",
       "measures": {
         "fuzzy_match_percent": 100.0,
         "matched_code_percent": 100.0,
-        "total_data": "440",
+        "total_data": "436",
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
@@ -16424,7 +16347,7 @@
       "sections": [
         {
           "name": ".bss",
-          "size": "440",
+          "size": "436",
           "metadata": {}
         },
         {
@@ -16973,13 +16896,20 @@
   "version": 2,
   "categories": [
     {
-      "id": "sdk",
-      "name": "sdk",
+      "id": "tm1",
+      "name": "tm1",
       "measures": {
-        "total_code": "112236",
-        "total_data": "462792",
-        "total_functions": 974,
-        "total_units": 5
+        "fuzzy_match_percent": 11.631357,
+        "total_code": "358548",
+        "matched_code": "41704",
+        "matched_code_percent": 11.631357,
+        "total_data": "167196",
+        "matched_data": "78896",
+        "matched_data_percent": 47.18773,
+        "total_functions": 1009,
+        "matched_functions": 366,
+        "matched_functions_percent": 36.27354,
+        "total_units": 116
       }
     },
     {
@@ -16995,20 +16925,13 @@
       }
     },
     {
-      "id": "tm1",
-      "name": "tm1",
+      "id": "sdk",
+      "name": "sdk",
       "measures": {
-        "fuzzy_match_percent": 11.606814,
-        "total_code": "358548",
-        "matched_code": "41616",
-        "matched_code_percent": 11.606814,
-        "total_data": "167200",
-        "matched_data": "74880",
-        "matched_data_percent": 44.78469,
-        "total_functions": 1009,
-        "matched_functions": 364,
-        "matched_functions_percent": 36.07532,
-        "total_units": 119
+        "total_code": "112236",
+        "total_data": "462792",
+        "total_functions": 974,
+        "total_units": 5
       }
     }
   ]

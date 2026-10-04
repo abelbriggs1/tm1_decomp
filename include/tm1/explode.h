@@ -31,6 +31,16 @@ typedef struct ArmorIconInfo {
     u8 pad2[6];
 } ArmorIconInfo;
 
+void explodeStoreFlameAnimation(void* data);
+void explodeStoreExplosionAnimation(void* data);
+void explodeStoreGburstAnimation(void* data);
+void explodeStoreSmokeAnimation(void* data);
+void explodeStoreBurnAnimation(void* data);
+void explodeStoreSparkAnimation(void* data);
+void explodeStoreContrailAnimation(void* data);
+void explodeStoreFlareAnimation(void* data);
+void explodeStorePlasmaAnimation(void* data);
+void explodeLoadFragTexture(s32 id, GrObj* data);
 void explodeCreateFragments(s32 count, VECTOR* pos);
 ArmorIconInfo* explodeGetArmorIcon(void);
 
