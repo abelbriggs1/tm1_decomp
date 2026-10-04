@@ -225,10 +225,8 @@ class EnvironmentToolchain:
             c_preprocessor_cmd=f"{_CROSS}cpp",
             cpp_flags=[
                 "-EL",
-                "-MMD",
+                "-MD",
                 "-MP",
-                "-MT",
-                "-MF",
             ],
             c_flags=[
                 "-O2",

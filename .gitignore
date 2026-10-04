@@ -17,6 +17,7 @@ ctx*
 expected/
 build.ninja
 .ninja_log
+.ninja_deps
 compile_commands.json
 .claude/
 CLAUDE.local.md
