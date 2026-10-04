@@ -194,6 +194,8 @@ class EnvironmentToolchain:
 
     # Defines a specific `-G` level for certain C compilation units.
     g_level: dict[str, int]
+    # Determines extra flags for specific TUs.
+    extra_flags: dict[str, list[str]]
 
     def get_g_level(self, tu: str) -> str:
         """
@@ -203,6 +205,12 @@ class EnvironmentToolchain:
         # `-G0` default.
         level = self.g_level.get(tu) or 0
         return f"-G{level}"
+
+    def get_extra_flags(self, tu: str) -> list[str]:
+        """
+        Retrieve any extra C flags required to compile this TU.
+        """
+        return self.extra_flags.get(tu, [])
 
     @staticmethod
     def for_version(
@@ -294,7 +302,8 @@ class EnvironmentToolchain:
                 "tm1/car_init": 8,
                 "tm1/car_update": 8,
                 "tm1/ai_car": 8,
-            }
+            },
+            extra_flags={}
         )
 
 
