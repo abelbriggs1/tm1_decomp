@@ -3,6 +3,7 @@
 #include <libgte.h>
 #include <rand.h>
 
+#include "tm1/ai_car_init.h"
 #include "tm1/car.h"
 #include "tm1/car_init.h"
 #include "tm1/car_update.h"
@@ -21,7 +22,6 @@
 s16 numAICarsInBattle = 0;
 s16 aiCarsInBattle[2];
 
-extern void AICarInit(CarAlt* car, s32 name, s32 flag);
 extern void AICarUpdateAttackProfile(CarAlt* car);
 
 #ifdef NON_MATCHING

@@ -278,7 +278,8 @@ typedef struct CarAlt {
     /*0x005*/ u8 pad05;
     /*0x006*/ u16 playerIdx;
     /*0x008*/ s16 routeVal;
-    /*0x00A*/ u8 pad0A[0x4];
+    /*0x00A*/ s16 unk0A;
+    /*0x00C*/ s16 unk0C;
     /*0x00E*/ u16 unk0E;
     /*0x010*/ s16 unk10;
     /*0x012*/ u8 pad12[0x6];
@@ -313,7 +314,7 @@ typedef struct CarAlt {
     /*0x104*/ s8 unk104;
     /*0x105*/ s8 unk105;
     /*0x106*/ s8 unk106;
-    /*0x107*/ u8 pad107;
+    /*0x107*/ u8 unk107;
     /*0x108*/ CarBounce bounce;
     /*0x144*/ s32 unk144;
     /*0x148*/ CarCollision collision;
