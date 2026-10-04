@@ -159,11 +159,12 @@ def _generate_ninja_script(
 
                 # Add the build steps to compile this module.
                 g_flag = env.toolchain.get_g_level(entry.segment.name)
+                extra_flags = env.toolchain.get_extra_flags(entry.segment.name)
                 _add_build_rule(ninja, cpp_out, "cpp", entry.src_paths)
                 if _is_c_code(segment):
-                    _add_build_rule(ninja, cc1_out, "cc", [cpp_out], [g_flag])
+                    _add_build_rule(ninja, cc1_out, "cc", [cpp_out], [g_flag, *extra_flags])
                 elif _is_cxx_code(segment):
-                    _add_build_rule(ninja, cc1_out, "cxx", [cpp_out], [g_flag])
+                    _add_build_rule(ninja, cc1_out, "cxx", [cpp_out], [g_flag, *extra_flags])
                 else:
                     raise AssertionError(f"Unknown segment type {type(segment)}!")
                 _add_build_rule(ninja, entry.object_path, "maspsx", [cc1_out], [g_flag])
