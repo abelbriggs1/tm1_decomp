@@ -50,7 +50,7 @@ segments:
       # ------------------------------------------------
       # .rodata segment
       # ------------------------------------------------
-      - [0x8FC,  rodata, tm1/hier]          # 0x800F81B4
+      - [0x8FC,  .rodata, tm1/hier]          # 0x800F81B4
       - [0x92C, .rodata, tm1/cs]            # 0x800F81E4
       - [0x960, .rodata, tm1/ctlpad]        # 0x800F8218
       - [0x9B0,  .rodata, tm1/db]            # 0x800F8268
@@ -78,7 +78,7 @@ segments:
       # ------------------------------------------------
       # .text segment (C code)
       # ------------------------------------------------
-      - [0x5F24,  asm, tm1/hier]            # 0x800FD7DC
+      - [0x5F24,  c,   tm1/hier]            # 0x800FD7DC
       - [0x710C,  c,   tm1/math]            # 0x800FE9C4
       - [0x7784,  c,   tm1/wdcopy]          # 0x800FF03C
       - [0x77B8,  c,   tm1/cs]              # 0x800FF070
@@ -150,7 +150,7 @@ segments:
       # ------------------------------------------------
       # .sdata segment
       # ------------------------------------------------
-      - [0x9464C, sdata, tm1/hier]          # 0x8018BF04
+      - [0x9464C, .sdata, tm1/hier]          # 0x8018BF04
       - [0x9465C, .sdata, tm1/cs]            # 0x8018BF14
       - [0x94660, .sdata, tm1/rt]            # 0x8018BF18
       - [0x9467C, .sdata, tm1/ctlpad]       # 0x8018BF34
@@ -181,7 +181,7 @@ segments:
       # ------------------------------------------------
       # .sbss segment
       # ------------------------------------------------
-      - {start: 0x94BC8, type: sbss, vram: 0x8018C480, name: tm1/hier}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C480, name: tm1/hier}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C4B0, name: tm1/cs}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C4BC, name: tm1/rt}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C4C8, name: tm1/hd}

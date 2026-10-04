@@ -2,6 +2,7 @@
 
 #include <libgpu.h>
 
+#include "tm1/hier.h"
 #include "tm1/rt.h"
 #include "tm1/ua.h"
 #include "tm1/ua_effect.h"
@@ -92,16 +93,16 @@ s32 rtMainLoop(void)
         rtUpdateFieldCounter(GetFieldsLastFrame());
         SetFrameStart();
         t = GetCurTics();
-        PutDrawEnv((DRAWENV*)cdb->draw);
-        PutDispEnv((DISPENV*)cdb->disp);
+        PutDrawEnv(&cdb->draw);
+        PutDispEnv(&cdb->disp);
         DrawOTag((unsigned int*)(cdb->small + 16380));
-        UAdashDrawInstruments(0, (DRAWENV*)cdb->draw);
+        UAdashDrawInstruments(0, &cdb->draw);
         if (split_screen) {
-            PutDrawEnv((DRAWENV*)curSdb->draw);
+            PutDrawEnv(&curSdb->draw);
             DrawOTag((unsigned int*)(curSdb->small + 16380));
-            UAdashDrawInstruments(1, (DRAWENV*)sdb[0].draw);
+            UAdashDrawInstruments(1, &sdb[0].draw);
         } else if (D_8018BF20) {
-            PutDrawEnv((DRAWENV*)curRdb->draw);
+            PutDrawEnv(&curRdb->draw);
             DrawOTag((unsigned int*)(curRdb->small + 16380));
         }
         screenCheckMidGameOptions();
