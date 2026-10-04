@@ -1,5 +1,6 @@
 #include "common.h"
 
+#include "tm1/ai_car.h"
 #include "tm1/car.h"
 #include "tm1/car_init.h"
 #include "tm1/car_update.h"
@@ -26,7 +27,6 @@
 
 #define CAR_LOST_BYTE(car) (((u8*)(car))[0x4D])
 
-extern void StartLostCheck(Car* car);
 extern void* sdk_memcpy();
 
 #ifdef NON_MATCHING
@@ -1496,7 +1496,7 @@ void CheckIfLostAICar(Car* car)
 {
     car->stats.lostTimer++;
     if ((s16)car->stats.lostTimer >= 4) {
-        StartLostCheck(car);
+        StartLostCheck((CarAlt*)car);
     }
     if (CAR_LOST_BYTE(car)) {
         car->stats.unk4A = 80;

@@ -6,6 +6,7 @@
 #include <rand.h>
 #include <stdio.h>
 
+#include "tm1/ai_car.h"
 #include "tm1/car.h"
 #include "tm1/fileio.h"
 #include "tm1/font.h"
@@ -20,7 +21,6 @@
 
 extern void exit(s32 code);
 extern void* sdk_memcpy();
-extern void* GetClosestCarToPlayer(s16 player, u8* isPlayer);
 
 extern char* gCockpitTmsNames[12];
 extern char* gCarSignStrings[13];

@@ -3,6 +3,7 @@
 #include <libgte.h>
 #include <rand.h>
 
+#include "tm1/ai_car.h"
 #include "tm1/bridges.h"
 #include "tm1/car_init.h"
 #include "tm1/car_update.h"
@@ -174,11 +175,6 @@ extern s32 bgColor[3];
 
 extern void AICarInit(CarAlt* car, s32 name, s32 flag);
 extern void AICarSetDefaultWeapons(CarAlt* car);
-extern void AICarUpdate(CarAlt* car);
-extern void AICarHeliUpdate(CarAlt* car);
-extern void InitAICarsInBattle(void);
-extern s16 GetNumAICarsInBattle(void);
-extern void UpdateNumAICarsInBattle(void);
 
 void UASetBattleMusicOn(void)
 {
