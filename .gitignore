@@ -21,3 +21,4 @@ build.ninja
 compile_commands.json
 .claude/
 CLAUDE.local.md
+notes.md
