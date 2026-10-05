@@ -9,6 +9,9 @@ typedef struct {
     s32 vx, vy, vz;
 } VECTOR3;
 
+// Constant for `1.0` in fixed point with 12 bits of mantissa (FXP16 - 1.3.12, FXP32 - 1.19.12)
+#define FXP_ONE 0x1000
+
 void mathMulVec(volatile MATRIX* lhs, VECTOR* rhs, volatile VECTOR* out);
 void mathMulTransVec(volatile MATRIX* lhs, VECTOR* rhs, volatile VECTOR* out);
 void mathMulVecLong(volatile MATRIX* lhs, VECTOR* rhs, volatile VECTOR* out);

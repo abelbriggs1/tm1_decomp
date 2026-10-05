@@ -7,9 +7,19 @@
 #include "tm1/light.h"
 #include "tm1/math.h"
 
+#define CS_POOL_SIZE 90
+
 extern void* sdk_memcpy();
 
-extern MATRIX unitMatrix;
+// clang-format off
+static MATRIX unitMatrix = {
+    {
+        { FXP_ONE, 0, 0 },
+        { 0, FXP_ONE, 0 },
+        { 0, 0, FXP_ONE }
+    },
+    { 0, 0, 0 }
+};
 
 static Cs* csList = NULL;
 
@@ -17,7 +27,7 @@ Cs* world;
 s32 activeCsNum;
 s32 gCurrentCS;
 
-Cs csPool[90];
+Cs csPool[CS_POOL_SIZE];
 
 #ifdef NON_MATCHING
 void csUpdMat(Cs* cs, MATRIX* out)
@@ -73,7 +83,7 @@ Cs* csCreate(void)
 {
     Cs* cs;
 
-    if (gCurrentCS < 90) {
+    if (gCurrentCS < CS_POOL_SIZE) {
         cs = &csPool[gCurrentCS];
         sdk_memcpy(&cs->mat, &unitMatrix, sizeof(MATRIX));
         sdk_memcpy(&cs->wmat, &unitMatrix, sizeof(MATRIX));
