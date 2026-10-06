@@ -100,18 +100,30 @@ To build the repository, you will need a digital copy of the Playstation game
 
 This is a list of observations about compiler and linker behavior in TM1.
 
-### `extern` data declarations influence linker order
+### Uninitialized variables
 
-`tm1/explode` defines `fragmenta` through `fragmentd`, as well as a number of `Info` sprite arrays.
-The `fragment` variables are not used outside of `tm1/explode`, while the `Info` arrays are.
+(A more detailed version of this block will be migrated to `decomp.wiki`
+in the near future.)
 
-Theoretically, this should mean the `fragment` variables are `static` and should not be exposed
-in `explode.h`. However, doing so results in a BSS mismatch, wherein the `Info` variables are
-reordered to come before the `fragment`s. This happens regardless of if the `fragment` vars are
-declared `static`.
+Symbols are placed in BSS based on whether they are `static` or not.
 
-If `fragmenta` through `fragmentd` are exposed as `extern` declarations, before the `Info` variables,
-the variable order matches.
+- Uninitialized small variables
+  - `static` -> `.sbss`
+  - non-`static` -> `.scommon`
+- Uninitialized non-small variables
+  - `static` -> `.bss`
+  - non-`static` -> `COMMON`
+
+Declaration order is not preserved by the linker in `common` sections; the
+variable order will depend on the linker's hashing algorithm. `ld` and PsyQ have different
+hashing algorithms, so they'll produce different results in this case.
+
+The PsyQ SYM format does split local symbols away from global symbols; the local
+table maps to `.sbss`/`.bss`, while the global table maps to `.scommon`/`COMMON`.
+
+This is a good way to determine which variables are `static`, since PsyQ doesn't capture
+that normally. It also allows you to double-check TU splits; if local symbols are used
+by multiple nearby functions, the functions are probably in the same TU.
 
 ## Known Issues
 

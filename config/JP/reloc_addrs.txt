@@ -1,2 +1,4 @@
 rom:0x5CEC4 reloc:MIPS_HI16 symbol:main_SBSS_START
 rom:0x5CEC8 reloc:MIPS_LO16 symbol:main_SBSS_START
+rom:0x3C238 reloc:MIPS_HI16 symbol:taser addend:0x3C
+rom:0x3C23C reloc:MIPS_LO16 symbol:taser addend:0x3C

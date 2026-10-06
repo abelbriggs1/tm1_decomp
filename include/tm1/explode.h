@@ -11,24 +11,6 @@ typedef struct ArmorIconInfo {
     u8 pad2[6];
 } ArmorIconInfo;
 
-// Note: these aren't normally accessed outside of `explode.h`, but have to be
-// exported anyways to match the linker order.
-extern GrSprite fragmenta[];
-extern GrSprite fragmentb[];
-extern GrSprite fragmentc[];
-extern GrSprite fragmentd[];
-
-extern GrSprite AburstInfo[];
-extern GrSprite SparkInfo[];
-extern GrSprite BurnInfo[];
-extern GrSprite FlareInfo[];
-extern GrSprite SmokeInfo[];
-extern GrSprite ContrailInfo[];
-extern GrSprite PlasmaInfo[];
-extern GrSprite FlameInfo[];
-extern GrSprite GburstInfo[];
-extern GrSprite SteamInfo[];
-
 void explodeStoreFlameAnimation(void* data);
 void explodeStoreExplosionAnimation(void* data);
 void explodeStoreGburstAnimation(void* data);

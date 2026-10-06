@@ -2,10 +2,10 @@
 
 #include "tm1/light.h"
 
-s32 ambient[3];
-s32 lightRot[3][3];
-s32 lightColor[3][3];
-LightEnv lightEnv[4];
+static s32 ambient[3];
+static s32 lightRot[3][3];
+static s32 lightColor[3][3];
+static LightEnv lightEnv[4];
 
 #ifdef NON_MATCHING
 void lightSetLight(s32 e, s32 j, s32 rx, s32 ry, s16 r, s16 g, s16 b)

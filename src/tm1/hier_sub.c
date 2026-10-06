@@ -10,10 +10,10 @@
 extern s32* prim2D[3];
 extern s32 pOut[5];
 
-s32* p0;
-s32* p1;
-s32* p2;
-s32* p3;
+static s32* p0;
+static s32* p1;
+static s32* p2;
+static s32* p3;
 
 #ifdef NON_MATCHING
 void subPoly3(Db* db, SubPoly* f, s32 count)

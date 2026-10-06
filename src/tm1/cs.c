@@ -23,11 +23,11 @@ static MATRIX unitMatrix = {
 
 static Cs* csList = NULL;
 
-Cs* world;
-s32 activeCsNum;
-s32 gCurrentCS;
+static Cs* world;
+static s32 activeCsNum;
+static s32 gCurrentCS;
 
-Cs csPool[CS_POOL_SIZE];
+static Cs csPool[CS_POOL_SIZE];
 
 #ifdef NON_MATCHING
 void csUpdMat(Cs* cs, MATRIX* out)

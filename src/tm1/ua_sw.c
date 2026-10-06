@@ -2,13 +2,13 @@
 
 #include "tm1/ua_sw.h"
 
-DbSwitch* hoverCopSwitch;
-DbSwitch* bazCopSwitch;
-DbSwitch* FallingBoxSwitch;
-DbSwitch* DropBoxSwitch;
-DbSwitch* BreakingWindowSwitch;
-s32 numDestroySwitches;
-s32 numDestroyGroups;
+static DbSwitch* hoverCopSwitch;
+static DbSwitch* bazCopSwitch;
+static DbSwitch* FallingBoxSwitch;
+static DbSwitch* DropBoxSwitch;
+static DbSwitch* BreakingWindowSwitch;
+static s32 numDestroySwitches;
+static s32 numDestroyGroups;
 
 #ifdef NON_MATCHING
 void uaswInitDbSwitch(DbSwitch* node, s32 type)

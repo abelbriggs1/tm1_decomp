@@ -13,8 +13,6 @@ typedef struct Star {
     /*0x0B*/ u8 phase;
 } Star;
 
-extern Star starz[100];
-extern LINE_F2 starprim[200];
 extern MATRIX starMatrix;
 
 void create_stars(void);

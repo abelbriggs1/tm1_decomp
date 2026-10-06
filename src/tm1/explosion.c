@@ -1,9 +1,41 @@
 #include "common.h"
 
+#include <libgpu.h>
+#include <libgte.h>
+#include <rand.h>
+
+#include "tm1/explode.h"
+#include "tm1/grutils.h"
+#include "tm1/rt.h"
+#include "tm1/stars.h"
+#include "tm1/view.h"
+#include "tm1/weapon.h"
+
 #include "tm1/explosion.h"
 
-Fragment fragment[MAX_FRAGMENTS];
-Explosion pyro[MAX_EXPLOSIONS];
+static Fragment fragment[MAX_FRAGMENTS];
+static Explosion pyro[MAX_EXPLOSIONS];
+
+static Star starz[100];
+static LINE_F2 starprim[200];
+
+static GrSprite fragmenta[4];
+static GrSprite fragmentb[4];
+static GrSprite fragmentc[4];
+static GrSprite fragmentd[4];
+
+static GrSprite AburstInfo[16];
+static GrSprite SparkInfo[4];
+static GrSprite BurnInfo[8];
+static GrSprite FlareInfo[4];
+static GrSprite SmokeInfo[16];
+static GrSprite ContrailInfo[8];
+static GrSprite PlasmaInfo[4];
+static GrSprite FlameInfo[10];
+static GrSprite GburstInfo[12];
+static GrSprite SteamInfo[16];
+
+extern ArmorIconInfo ArmorInfo;
 
 Explosion* init_explosion(VECTOR3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag);
 #ifdef NON_MATCHING
@@ -462,3 +494,441 @@ void clear_explosions(void)
     }
     explodeInitFragments();
 }
+
+#ifdef NON_MATCHING
+void create_stars(void)
+{
+    s32 i;
+    s32 x;
+    s32 y;
+    s32 d;
+
+    for (i = 0; i < 100; i++) {
+        starz[i].r = rand() % 100 + 105;
+        starz[i].g = rand() % 100 + 105;
+        starz[i].b = rand() % 100 + 105;
+        starz[i].pos.vy = rand() - 16000;
+        starz[i].pos.vx = rand() - 16000;
+        x = __builtin_abs(starz[i].pos.vx);
+        y = __builtin_abs(starz[i].pos.vy);
+        d = 24000 - y - x;
+        if (d < 1000) {
+            d = rand() % 3000 + 1000;
+        }
+        starz[i].pos.vz = d;
+        starz[i].phase = rand() % 512;
+    }
+    for (i = 0; i < 200; i++) {
+        SetLineF2(&starprim[i]);
+    }
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/explosion", create_stars);
+#endif
+
+#ifdef NON_MATCHING
+void display_stars(u_long* ot, s32 view)
+{
+    VECTOR pos;
+    s32 cx;
+    s32 cy;
+    long flag;
+    s32 hfov;
+    s32 vfov;
+    s32 i;
+    s32 ph;
+    s32 x;
+    s32 y;
+    LINE_F2* p;
+
+    viewGetCenter(view, &cx, &cy);
+    hfov = viewGetCurrentHorzFOVH(view);
+    vfov = viewGetCurrentVertFOVH(view);
+    SetTransMatrix(&starMatrix);
+    SetRotMatrix((MATRIX*)viewGetEyeMat(view));
+    for (i = 0; i < 100; i++) {
+        ph = starz[i].phase;
+        starz[i].phase = (ph + 1) % 512;
+        RotTrans(&starz[i].pos, &pos, &flag);
+        if (pos.vz > 0) {
+            p = &starprim[i * 2 + (starz[i].phase & 1)];
+            if (starz[i].phase != 0) {
+                p->r0 = starz[i].r;
+                p->g0 = starz[i].g;
+                p->b0 = starz[i].b;
+            } else {
+                p->r0 = 255;
+                p->g0 = 255;
+                p->b0 = 255;
+            }
+            x = cx + pos.vx * hfov / (pos.vz + 1000);
+            y = cy + pos.vy * vfov / (pos.vz + 1000);
+            if ((u32)x < 512 && (u32)y < 512) {
+                p->x0 = x;
+                p->y0 = y;
+                p->x1 = x;
+                p->y1 = y;
+                AddPrim(&ot[4090], p);
+            }
+        }
+    }
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/explosion", display_stars);
+#endif
+
+void explodeStoreFlameAnimation(void* data)
+{
+    GrSprite* anim = FlameInfo;
+    u16* p;
+    s32 i;
+
+    grutilsParse3DSprite(data, anim, 10);
+    for (i = 0, p = &anim[0].tpage; i < 10; i++) {
+        *p = (*p & 0x1F) + 32;
+        p += 4;
+    }
+}
+
+void explodeStoreExplosionAnimation(void* data)
+{
+    GrSprite* anim = AburstInfo;
+    u16* p;
+    s32 i;
+
+    grutilsParse3DSprite(data, anim, 16);
+    for (i = 0, p = &anim[0].tpage; i < 16; i++) {
+        *p = (*p & 0x1F) + 32;
+        p += 4;
+    }
+}
+
+void explodeStoreGburstAnimation(void* data)
+{
+    GrSprite* anim = GburstInfo;
+    u16* p;
+    s32 i;
+
+    grutilsParse3DSprite(data, anim, 12);
+    for (i = 0, p = &anim[0].tpage; i < 12; i++) {
+        *p = (*p & 0x1F) + 32;
+        p += 4;
+    }
+}
+
+void explodeStoreSmokeAnimation(void* data)
+{
+    GrSprite* anim;
+    u16* p;
+    s32 i;
+
+    grutilsParse3DSprite(data, SmokeInfo, 16);
+    anim = SteamInfo;
+    grutilsParse3DSprite(data, anim, 16);
+    for (i = 0, p = &anim[0].tpage; i < 16; i++) {
+        *p = (*p & 0x1F) + 32;
+        p += 4;
+    }
+}
+
+void explodeStoreBurnAnimation(void* data)
+{
+    GrSprite* anim = BurnInfo;
+
+    grutilsParse3DSprite(data, anim, 8);
+    bulSetFireballGraphics(anim);
+}
+
+void explodeStoreSparkAnimation(void* data)
+{
+    GrSprite* anim = SparkInfo;
+    u16* p;
+    s32 i;
+
+    grutilsParse3DSprite(data, anim, 4);
+    for (i = 0, p = &anim[0].tpage; i < 4; i++) {
+        *p = (*p & 0x1F) + 32;
+        p += 4;
+    }
+}
+
+void explodeStoreContrailAnimation(void* data)
+{
+    GrSprite* anim = ContrailInfo;
+    u16* p;
+    s32 i;
+
+    grutilsParse3DSprite(data, anim, 8);
+    bulSetContrailGraphics(anim);
+    for (i = 0, p = &anim[0].tpage; i < 8; i++) {
+        *p = (*p & 0x1F) + 32;
+        p += 4;
+    }
+}
+
+void explodeStoreFlareAnimation(void* data)
+{
+    GrSprite* anim = FlareInfo;
+
+    grutilsParse3DSprite(data, anim, 4);
+    bulSetEyeWeaponGraphics(anim);
+}
+
+void explodeStorePlasmaAnimation(void* data)
+{
+    GrSprite* anim = PlasmaInfo;
+    u16* p;
+    s32 i;
+
+    grutilsParse3DSprite(data, anim, 4);
+    bulSetPlasmaGraphics(anim);
+    for (i = 0, p = &anim[0].tpage; i < 4; i++) {
+        *p = (*p & 0x1F) + 32;
+        p += 4;
+    }
+}
+
+// TODO: ArmorInfo is in sbss and this would imply the TU is compiled with `-G8`,
+// but the access here isn't done via GP. Leaving commented out for now.
+INCLUDE_ASM("asm/nonmatchings/tm1/explosion", explodeStoreArmorIcon);
+// void explodeStoreArmorIcon(void *data)
+// {
+//     grutilsParse3DSprite(data, (GrSprite *)&ArmorInfo, 1);
+// #ifdef NON_MATCHING
+//     ArmorInfo.u0 += 6;
+//     ArmorInfo.v0 += 2;
+// #else
+//     ArmorInfo.unk0 += 6;
+//     ArmorInfo.unk1 += 2;
+// #endif
+// }
+
+void explodeLoadFragTexture(s32 id, GrObj* data)
+{
+    if (data->kind != 0) {
+        printf("\nError Parsing Fragment Sprite %d\n", id);
+    } else if (id == 0x29E) {
+        grutilsParse3DSprite(data, fragmenta, 4);
+    } else if (id == 0x29F) {
+        grutilsParse3DSprite(data, fragmentb, 4);
+    } else if (id == 0x2A0) {
+        grutilsParse3DSprite(data, fragmentc, 4);
+    } else if (id == 0x2A1) {
+        grutilsParse3DSprite(data, fragmentd, 4);
+    }
+}
+
+void explodeInitFragments(void)
+{
+    s32 off;
+
+    // TODO: Improve readability (the pointer arithmetic shouldn't be needed)
+    for (off = 19 * sizeof(Fragment); off >= 0; off -= sizeof(Fragment)) {
+        ((Fragment*)((u8*)fragment + off))->life = 0;
+    }
+}
+s32 findFreeFragment(void)
+{
+    s32 i;
+
+    for (i = 0; i < 20; i++) {
+        if (fragment[i].life <= 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+#ifdef NON_MATCHING
+void explodeCreateFragments(s32 count, VECTOR* pos)
+{
+    s32 i;
+    s32 idx;
+    s32 r;
+    VECTOR3* p;
+    VECTOR3* v;
+
+    for (i = 0; i < count; i++) {
+        idx = findFreeFragment();
+        if (idx < 0) {
+            break;
+        }
+        fragment[idx].frame = 0;
+        fragment[idx].life = 40;
+        p = &fragment[idx].pos;
+        p->vx = pos->vx;
+        p->vy = pos->vy;
+        p->vz = pos->vz;
+        v = &fragment[idx].vel;
+        v->vx = (rand() & 0x3F) - 32;
+        v->vy = (rand() & 0x3F) - 32;
+        v->vz = (rand() & 0x1F) + 16;
+        r = rand() & 3;
+        if (r == 0) {
+            fragment[idx].anim = fragmenta;
+        } else if (r == 1) {
+            fragment[idx].anim = fragmentb;
+        } else if (r == 2) {
+            fragment[idx].anim = fragmenta;
+        } else {
+            fragment[idx].anim = fragmentb;
+        }
+    }
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/explosion", explodeCreateFragments);
+#endif
+
+#ifdef NON_MATCHING
+void explodeUpdateFragments(void)
+{
+    s32 i;
+
+    for (i = 0; i < 20; i++) {
+        if (fragment[i].life > 0) {
+            s32 dz;
+
+            fragment[i].pos.vz = (s32)((u32)fragment[i].pos.vz + (u32)fragment[i].vel.vz);
+            fragment[i].pos.vx = (s32)((u32)fragment[i].pos.vx + (u32)fragment[i].vel.vx);
+            fragment[i].pos.vy = (s32)((u32)fragment[i].pos.vy + (u32)fragment[i].vel.vy);
+            dz = (s32)((u32)fragment[i].vel.vz - 4u);
+            fragment[i].vel.vz = dz;
+            if (fragment[i].pos.vz <= 0 && dz < 0) {
+                if (dz >= -5) {
+                    fragment[i].life = 0;
+                } else {
+                    fragment[i].vel.vz = (s32)(0u - (u32)dz) / 2;
+                }
+            }
+            if (fragment[i].life > 0) {
+                fragment[i].life--;
+                fragment[i].frame = (fragment[i].frame + 1) & 3;
+            }
+        }
+    }
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/explosion", explodeUpdateFragments);
+#endif
+
+#ifdef NON_MATCHING
+void explodeDisplayFragments(Db* cdb, s32 which)
+{
+    s32 i;
+    s32 frame;
+    s32 cx;
+    s32 cy;
+    s32 hfov;
+    s32 vfov;
+    EyeTrans* eye;
+    EyeMat* mat;
+    u32* ot;
+    s32 z;
+    s32 sx;
+    s32 sy;
+    s32 size;
+    s32 x0;
+    s32 y0;
+    s32 x1;
+    s32 y1;
+    s32 d;
+    POLY_FT4* p;
+    s32 v[3];
+    s32 r[3];
+
+    ot = (u32*)cdb->small;
+    viewGetCenter(which, &cx, &cy);
+    hfov = viewGetCurrentHorzFOVH(which);
+    vfov = viewGetCurrentVertFOVH(which);
+    eye = viewGetEyeTrans(which);
+    mat = viewGetEyeMat(which);
+    for (i = 0; i < 20; i++) {
+        if (fragment[i].life > 0) {
+            frame = fragment[i].frame;
+            v[0] = fragment[i].pos.vx + eye->x;
+            v[1] = fragment[i].pos.vy + eye->y;
+            v[2] = fragment[i].pos.vz + eye->z;
+            mathMulVec(mat, v, r);
+            z = r[2];
+            if (z >= -32) {
+                if (z < 32001) {
+                    if (z < 8) {
+                        z = 8;
+                    }
+                    sx = r[0] * hfov / z;
+                    sy = r[1] * vfov / z;
+                    size = hfov * 10 / z;
+                    z = z >> 3;
+                    sx = cx + sx;
+                    sy = cy + sy;
+                    if (sx >= -99 && sx < 1000 && sy >= -99 && sy < 1000) {
+                        p = (POLY_FT4*)cdb->unk8;
+                        if ((u8*)p + 160 <= cdb->areaEnd) {
+                            cdb->unk8 += 160;
+                            setPolyFT4(p);
+                            setShadeTex(p, 1);
+                            p->u0 = fragment[i].anim[frame].u0;
+                            p->v0 = fragment[i].anim[frame].v0;
+                            p->u1 = fragment[i].anim[frame].u0 + fragment[i].anim[frame].w;
+                            p->v1 = fragment[i].anim[frame].v0;
+                            p->u2 = fragment[i].anim[frame].u0;
+                            p->v2 = fragment[i].anim[frame].v0 + fragment[i].anim[frame].h;
+                            p->u3 = fragment[i].anim[frame].u0 + fragment[i].anim[frame].w;
+                            p->v3 = fragment[i].anim[frame].v0 + fragment[i].anim[frame].h;
+                            p->tpage = fragment[i].anim[frame].tpage;
+                            p->clut = fragment[i].anim[frame].clut;
+                            y0 = sy - size;
+                            x0 = sx - size;
+                            d = size * 2;
+                            x1 = x0 + d;
+                            p->x0 = x0;
+                            p->y0 = y0;
+                            p->x1 = x1;
+                            p->y1 = y0;
+                            y1 = y0 + d;
+                            p->x2 = x0;
+                            p->y2 = y1;
+                            p->x3 = x1;
+                            p->y3 = y1;
+                            AddPrim(ot + z, p);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/explosion", explodeDisplayFragments);
+#endif
+
+ArmorIconInfo* explodeGetArmorIcon(void)
+{
+    return &ArmorInfo;
+}
+
+#ifdef NON_MATCHING
+void explodeMakeScreenRed(void)
+{
+    Db* cdb;
+    POLY_F4* p;
+    DR_MODE* dm;
+
+    cdb = rtGetCdb();
+    p = (POLY_F4*)cdb->unk8;
+    if ((u8*)p + 144 < cdb->areaEnd) {
+        cdb->unk8 += 96;
+        setPolyF4(p);
+        setRGB0(p, 255, 0, 0);
+        setSemiTrans(p, 1);
+        setXY4(p, 0, 0, 320, 0, 0, 240, 320, 240);
+        addPrim(cdb->small, p);
+        dm = (DR_MODE*)cdb->unk8;
+        cdb->unk8 += 48;
+        SetDrawMode(dm, 0, 0, 0, NULL);
+        addPrim(cdb->small, dm);
+    }
+}
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/explosion", explodeMakeScreenRed);
+#endif

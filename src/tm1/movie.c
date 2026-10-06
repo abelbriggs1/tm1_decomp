@@ -30,22 +30,22 @@ s32 lastFrame = 0;
 s32 lastW = 0;
 s32 lastH = 0;
 
-s32 SliceSize;
-s16 SliceX;
-s16 SliceY;
-s16 SliceW;
-s16 SliceH;
-u16 gSectorsPer;
-u_long* mdec_bs;
-u_long* mdec_rl;
-u_long* mdec_image;
-u8 gIsRGB24;
-CdlLOC loc;
-s32 Rewind_Switch;
-u_long* sect_buff;
+static s32 SliceSize;
+static s16 SliceX;
+static s16 SliceY;
+static s16 SliceW;
+static s16 SliceH;
+static u16 gSectorsPer;
+static u_long* mdec_bs;
+static u_long* mdec_rl;
+static u_long* mdec_image;
+static u8 gIsRGB24;
+static CdlLOC loc;
+static s32 Rewind_Switch;
+static u_long* sect_buff;
 
-DISPENV Disp[2];
-StrEnv dec;
+static DISPENV Disp[2];
+static StrEnv dec;
 
 extern s32 StCdIntrFlag;
 

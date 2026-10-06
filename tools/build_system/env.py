@@ -250,7 +250,8 @@ class EnvironmentToolchain:
             maspsx_flags=[
                 "--aspsx-version=2.34",
                 "--expand-div",
-                "--dont-force-G0"
+                "--dont-force-G0",
+                "--use-comm-section"
             ],
             as_flags=[
                 "-EL",

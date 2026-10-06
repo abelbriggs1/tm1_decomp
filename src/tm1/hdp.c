@@ -10,8 +10,8 @@
 
 HdpEnt* fastHdpStack = (HdpEnt*)0x1F800000;
 
-HdpEnt* hdpStack;
-s32 hdp_stackIdx;
+static HdpEnt* hdpStack;
+static s32 hdp_stackIdx;
 
 void hdpPush(void* node, s32* pos, s32 id0, s32 id1);
 #ifdef NON_MATCHING

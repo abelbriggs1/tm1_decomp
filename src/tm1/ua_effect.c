@@ -18,15 +18,15 @@ s32 gLightningTick = 0;
 s32 gLightningPeriod = 0;
 s32 gLightningOn = 0;
 
-u16 gTVsTPage;
-u16 D_8018C5FA;
-s32 gLightningUoffset;
-s32 gLightningVoffset;
+static u16 gTVsTPage;
+static u16 D_8018C5FA;
+static s32 gLightningUoffset;
+static s32 gLightningVoffset;
 
-WheelNode* gTruckWheel[4];
-s32 gCarSpeed[15];
-HitLight gHitLight[6];
-u8* gTVpolyUVs[4];
+static WheelNode* gTruckWheel[4];
+static s32 gCarSpeed[15];
+static HitLight gHitLight[6];
+static u8* gTVpolyUVs[4];
 
 u8* gLightningPart[4] = { 0, 0, 0, 0 };
 

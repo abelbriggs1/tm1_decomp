@@ -41,7 +41,4 @@ void uasoundPlayHuntDA(s32 mode);
 void uasoundPlayBattleDA(s32 mode);
 void uasoundSetMusicVolume(s32 vol);
 
-extern SoundRequest GENERAL_HOVER_COPS_InflightBuffer;
-#define HOVER_REQUEST GENERAL_HOVER_COPS_InflightBuffer
-
 #endif // __TM1_UA_SOUND_H__

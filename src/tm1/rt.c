@@ -18,9 +18,9 @@ s32 split_screen = 0;
 s32 D_8018BF2C = 20; /* read only by rtMainLoop */
 s32 D_8018BF30 = 0; /* fieldCounter */
 
-Db* cdb;
-Db* curSdb;
-Db* curRdb;
+static Db* cdb;
+static Db* curSdb;
+static Db* curRdb;
 
 #ifdef NON_MATCHING
 s32 rtMainLoop(void)

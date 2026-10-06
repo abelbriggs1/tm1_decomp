@@ -20,7 +20,7 @@ options:
   find_file_boundaries: False
   gp_value: 0x8018BF04
   use_legacy_include_asm: False
-  section_order: [".asm", ".rodata", ".text", ".data", ".sdata", ".sbss", ".scommon", ".common", ".bss"]
+  section_order: [".asm", ".rodata", ".text", ".data", ".sdata", ".sbss", ".scommon", ".bss", "COMMON"]
   create_undefined_funcs_auto: False
   create_undefined_syms_auto: True
   do_c_func_detection: True
@@ -29,6 +29,9 @@ options:
   data_string_encoding: ASCII
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
+  # All of BSS is noload (not allocated in the binary on disk), even though it looks like
+  # `sbss` is loaded. This is because PsyQ pads binaries to `0x800`, so there's some extra
+  # `0x00` padding that binary analysis tools (like Ghidra) believe is actually BSS.
   ld_bss_is_noload: True
   subalign: 4
   migrate_rodata_to_functions: True
@@ -36,6 +39,7 @@ options:
   make_full_disasm_for_code: True
   # Required to prevent GCC from reordering our functions.
   include_asm_macro_style: "maspsx_hack"
+  ld_bss_contains_common: False
 
 segments:
   - name: main
@@ -65,7 +69,7 @@ segments:
       - [0x3200, .rodata, tm1/car_init]     # 0x800FAAB8
       - [0x3800, .rodata, tm1/ai_car_init]  # 0x800FB0B8
       - [0x39E4, .rodata, tm1/interactives]  # 0x800FB29C
-      - [0x3ECC, .rodata, tm1/explode]       # 0x800FB784
+      - [0x3ECC, .rodata, tm1/explosion]     # 0x800FB784
       - [0x3EF0, .rodata, tm1/screen]       # 0x800FB7A8
       - [0x4760, .rodata, tm1/ai_car_update] # 0x800FC018
       - [0x4944, .rodata, tm1/ua_dash]      # 0x800FC1FC
@@ -73,7 +77,6 @@ segments:
       - [0x4C74, .rodata, tm1/ua]           # 0x800FC52C
       - [0x4ED8, .rodata, tm1/shell]        # 0x800FC790
       - [0x5170, .rodata, tm1/movie]        # 0x800FCA28
-      # Start of SDK rodata - TODO
       - [0x51B0, rodata, sdk/sdk]           # 0x800FCA68
       # ------------------------------------------------
       # .text segment (C code)
@@ -90,7 +93,6 @@ segments:
       - [0xC1A0,  c  , tm1/light]           # 0x80103A58
       - [0xCB3C,  c,   tm1/sound]           # 0x801043F4
       - [0xFB14,  c,   tm1/ua_sound]        # 0x801073CC
-      - [0x110C4, c,   tm1/sound_req]       # 0x8010897C
       - [0x1122C, c,   tm1/hier_sub]        # 0x80108AE4
       - [0x12250, c,   tm1/timer]           # 0x80109B08
       - [0x1254C, c  , tm1/view]            # 0x80109E04
@@ -108,8 +110,6 @@ segments:
       - [0x39A40, c  , tm1/slick_spots]     # 0x801312F8
       - [0x39ABC, c,   tm1/interactives]    # 0x80131374
       - [0x3E6D8, c,   tm1/explosion]       # 0x80135F90
-      - [0x3FA04, c,   tm1/stars]           # 0x801372BC
-      - [0x3FE90, c,   tm1/explode]         # 0x80137748
       - [0x40B44, c,   tm1/grutils]         # 0x801383FC
       - [0x4108C, c,   tm1/screen]          # 0x80138944
       - [0x4969C, c,   tm1/ua_sw]           # 0x80140F54
@@ -124,7 +124,6 @@ segments:
       - [0x5A18C, c,   tm1/shell]           # 0x80151A44
       - [0x5BE30, c,   tm1/fileio]          # 0x801536E8
       - [0x5C16C, c  , tm1/movie]           # 0x80153A24
-      # Start of SDK code. TODO
       - [0x5CEBC, asm, sdk/sdk]             # 0x80154774
       # ------------------------------------------------
       # .data segment
@@ -136,7 +135,7 @@ segments:
       - [0x78EF8, data, tm1/font]           # 0x801707B0
       - [0x794DC, data, tm1/car_init]       # 0x80170D94
       - [0x794FC, data, tm1/interactives]   # 0x80170DB4
-      - [0x7954C, data, tm1/stars]          # 0x80170E04
+      - [0x7954C, data, tm1/explosion]      # 0x80170E04
       - [0x7956C, data, tm1/screen]         # 0x80170E24
       - [0x797C8, data, tm1/ai_car_update]  # 0x80171080
       - [0x799F8, data, tm1/ua_dash]        # 0x801712B0
@@ -145,7 +144,6 @@ segments:
       - [0x79EB0, .data, tm1/ua]            # 0x80171768
       - [0x79FA4, data, tm1/vehicle]        # 0x8017185C
       - [0x79FC4, .data, tm1/shell]         # 0x8017187C
-      # Start of SDK data. TODO
       - [0x7A02C, data, sdk/sdk]            # 0x801718E4
       # ------------------------------------------------
       # .sdata segment
@@ -192,7 +190,7 @@ segments:
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C524, name: tm1/weapon}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C538, name: tm1/ai_car}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C53C, name: tm1/interactives}
-      - {start: 0x94BC8, type: sbss, vram: 0x8018C55C, name: tm1/explode}
+      - {start: 0x94BC8, type: sbss, vram: 0x8018C55C, name: tm1/explosion}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C564, name: tm1/screen}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C5BC, name: tm1/ua_sw}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C5D8, name: tm1/ua_dash}
@@ -202,21 +200,26 @@ segments:
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C670, name: tm1/shell}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C690, name: tm1/movie}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C6BC, name: sdk/sdk}
+
       # ------------------------------------------------
       # .scommon segment
       # ------------------------------------------------
-      - {start: 0x94BC8, type: scommon, vram: 0x8018C6D0, name: tm1/sound}
-      - {start: 0x94BC8, type: scommon, vram: 0x8018C6D4, name: tm1/shell}
-      # ------------------------------------------------
-      # .common segment
-      # ------------------------------------------------
-      - {start: 0x94BC8, type: common, vram: 0x8018C6D8, name: tm1/hier}
-      - {start: 0x94BC8, type: common, vram: 0x8018C6DC, name: tm1/shell}
-      - {start: 0x94BC8, type: common, vram: 0x8018C6E0, name: tm1/screen}
+      # These are small, uninitialized global variables defined in headers
+      # that were included in multiple files.
+      # Keep them together in a single TU for splitting purposes.
+      - {start: 0x94BC8, type: sbss, vram: 0x8018C6D0, name: tm1/scommon}
+      # - {start: 0x94BC8, type: scommon, vram: 0x8018C6D0, name: tm1/sound}
+      # - {start: 0x94BC8, type: scommon, vram: 0x8018C6D4, name: tm1/shell}
+      # - {start: 0x94BC8, type: scommon, vram: 0x8018C6D8, name: tm1/hier}
+      # - {start: 0x94BC8, type: scommon, vram: 0x8018C6DC, name: tm1/shell}
+      # - {start: 0x94BC8, type: scommon, vram: 0x8018C6E0, name: tm1/screen}
+
       # ------------------------------------------------
       # .bss segment
       # ------------------------------------------------
-      - {start: 0x94BC8, type: bss, vram: 0x8018C8B8} # TODO: Unknown if any data exists here
+      # Seems to be a separate, data-only TU. Contains `fovNorms` and `fovNorms2`
+      # which are both uninitialized and seemingly never accessed.
+      - {start: 0x94BC8, type: bss, vram: 0x8018C6E4, name: tm1/fov}
       - {start: 0x94BC8, type: bss, vram: 0x8018D864, name: tm1/hier}
       - {start: 0x94BC8, type: .bss, vram: 0x8018EDB8, name: tm1/cs}
       - {start: 0x94BC8, type: bss, vram: 0x80194BF0, name: tm1/rt}
@@ -232,8 +235,6 @@ segments:
       - {start: 0x94BC8, type: bss, vram: 0x80198C28, name: tm1/weapon}
       - {start: 0x94BC8, type: bss, vram: 0x801996B8, name: tm1/interactives}
       - {start: 0x94BC8, type: .bss, vram: 0x80199DB8, name: tm1/explosion}
-      - {start: 0x94BC8, type: bss, vram: 0x8019B488, name: tm1/stars}
-      - {start: 0x94BC8, type: .bss, vram: 0x8019C5B8, name: tm1/explode}
       - {start: 0x94BC8, type: bss, vram: 0x8019C948, name: tm1/screen}
       - {start: 0x94BC8, type: bss, vram: 0x8019CD3C, name: tm1/ua_sw}
       - {start: 0x94BC8, type: bss, vram: 0x8019D184, name: tm1/ua_dash}
@@ -243,16 +244,15 @@ segments:
       - {start: 0x94BC8, type: bss, vram: 0x8019ED7C, name: tm1/ua}
       - {start: 0x94BC8, type: bss, vram: 0x801A2818, name: tm1/shell}
       - {start: 0x94BC8, type: .bss, vram: 0x801A28AC, name: tm1/movie}
-      # Start of SDK BSS. TODO
       - {start: 0x94BC8, type: bss, vram: 0x801A2904, name: sdk/sdk}
-      #
-      # TODO: After what seems to be the SDK BSS, there is some odd linker behavior.
-      # Many pieces of variables from the PSYQ SDK library are interspersed
-      # between more BSS data from TM1 TUs.
-      # No idea how to correctly split everything.
-      # Maybe these are shared BSS variables (header vars)?
-      # These are probably hints to extra TUs that aren't currently defined.
-      #
+
+      # ------------------------------------------------
+      # .common segment
+      # ------------------------------------------------
+      # These are uninitialized global variables defined in headers
+      # that were included in multiple files.
+      # Keep them together in a single TU for splitting purposes.
+      - {start: 0x94BC8, type: bss, vram: 0x801A99EC, name: tm1/common}
       # - {start: 0x94BC8, type: bss, vram: 0x801A99EC} # tm1/sound
       # - {start: 0x94BC8, type: bss, vram: 0x801A9A2C} # SDK sound library
       # - {start: 0x94BC8, type: bss, vram: 0x801A9A30} # tm1/car_update? first ref is `CheckForCurb()`

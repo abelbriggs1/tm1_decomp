@@ -28,8 +28,8 @@ s32 db3DEnvironmentTrap = 0;
 char dbOlder[] = "older";
 char dbNewer[] = "newer";
 
-DbNode* gHierNodes[250];
-s32 location[250][3];
+static DbNode* gHierNodes[250];
+static s32 location[250][3];
 
 #ifdef NON_MATCHING
 void dbInit(u32 tmsVersion)

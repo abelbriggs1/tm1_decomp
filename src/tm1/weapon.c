@@ -53,11 +53,11 @@ void* RAMS_HEAD_MISSILE = 0;
 void* TOWER_SPIKE_MISSILE = 0;
 static s32 fxSheetCount = 0;
 
-Cs* jays_ownship;
-GrSprite* eyeWeaponInfo;
-GrSprite* contrailInfo;
-GrSprite* plasmaInfo;
-GrSprite* fireballInfo;
+static Cs* jays_ownship;
+static GrSprite* eyeWeaponInfo;
+static GrSprite* contrailInfo;
+static GrSprite* plasmaInfo;
+static GrSprite* fireballInfo;
 
 void bulSetOwnship(Cs* ownship)
 {

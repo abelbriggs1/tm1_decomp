@@ -25,10 +25,10 @@ typedef struct Radar {
 extern Radar radar;
 extern s32 radarBuffer[];
 
-GrSprite ArrowUpInfo;
-GrSprite ArrowDownInfo;
-GrSprite ArrowLeftInfo;
-GrSprite ArrowRightInfo;
+static GrSprite ArrowUpInfo;
+static GrSprite ArrowDownInfo;
+static GrSprite ArrowLeftInfo;
+static GrSprite ArrowRightInfo;
 
 u8 radarOn = 1;
 

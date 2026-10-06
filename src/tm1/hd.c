@@ -14,9 +14,9 @@ s32* hdCsOtherPos = NULL;
 MATRIX* hdCsOtherMat = NULL;
 Cs* hdCsSelf = NULL;
 
-HdEnt* hdStack;
-s32 hd_stackIdx;
-s32 matCnt;
+static HdEnt* hdStack;
+static s32 hd_stackIdx;
+static s32 matCnt;
 
 void hdPush(void* node, s32* v, s32 matIdx, s32 id0, s16 id1)
 {

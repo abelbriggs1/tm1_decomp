@@ -21,7 +21,7 @@
 #include "tm1/ai_car.h"
 
 s16 numAICarsInBattle = 0;
-s16 aiCarsInBattle[2];
+static s16 aiCarsInBattle[2];
 
 #ifdef NON_MATCHING
 void AICarUpdate(AICar* car)

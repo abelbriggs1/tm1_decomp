@@ -31,8 +31,8 @@ extern s32 D_801714AC[24];
 extern Target target[50];
 extern HoverMerc hovermerc[2];
 
-Pedestrian pedestrian[6];
-StaticCop scop[25];
+static Pedestrian pedestrian[6];
+static StaticCop scop[25];
 
 s32 gTargetUnk1036 = 4;
 s32 gTargetUnk1040 = 240;
