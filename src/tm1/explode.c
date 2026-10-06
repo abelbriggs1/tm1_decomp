@@ -8,12 +8,20 @@
 
 #include "tm1/explode.h"
 
-extern GrSprite fragmenta[4];
-extern GrSprite fragmentb[4];
-extern GrSprite fragmentc[4];
-extern GrSprite fragmentd[4];
-
-extern Fragment fragment[20];
+GrSprite fragmenta[4];
+GrSprite fragmentb[4];
+GrSprite fragmentc[4];
+GrSprite fragmentd[4];
+GrSprite AburstInfo[16];
+GrSprite SparkInfo[4];
+GrSprite BurnInfo[8];
+GrSprite FlareInfo[4];
+GrSprite SmokeInfo[16];
+GrSprite ContrailInfo[8];
+GrSprite PlasmaInfo[4];
+GrSprite FlameInfo[10];
+GrSprite GburstInfo[12];
+GrSprite SteamInfo[16];
 
 extern ArmorIconInfo ArmorInfo;
 

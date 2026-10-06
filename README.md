@@ -96,6 +96,23 @@ To build the repository, you will need a digital copy of the Playstation game
 6. Whenever you modify the splat config, you should perform a `uv run configure.py distclean`
    before regenerating the config with `uv run configure.py generate`.
 
+## Observations
+
+This is a list of observations about compiler and linker behavior in TM1.
+
+### `extern` data declarations influence linker order
+
+`tm1/explode` defines `fragmenta` through `fragmentd`, as well as a number of `Info` sprite arrays.
+The `fragment` variables are not used outside of `tm1/explode`, while the `Info` arrays are.
+
+Theoretically, this should mean the `fragment` variables are `static` and should not be exposed
+in `explode.h`. However, doing so results in a BSS mismatch, wherein the `Info` variables are
+reordered to come before the `fragment`s. This happens regardless of if the `fragment` vars are
+declared `static`.
+
+If `fragmenta` through `fragmentd` are exposed as `extern` declarations, before the `Info` variables,
+the variable order matches.
+
 ## Known Issues
 
 This is a list of known repository-wide issues that prevent functions or data from

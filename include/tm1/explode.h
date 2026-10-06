@@ -5,23 +5,29 @@
 #include "tm1/grutils.h"
 #include "tm1/math.h"
 
-// TODO: Consolidate; some of these are probably SDK types.
-
-/* 0x80199DB8, 20 x 36 bytes */
-typedef struct Fragment {
-    /*0x00*/ VECTOR3 pos;
-    /*0x0C*/ VECTOR3 vel;
-    /*0x18*/ u8 frame;
-    /*0x19*/ u8 pad19[3];
-    /*0x1C*/ s32 life;
-    /*0x20*/ GrSprite* anim;
-} Fragment;
-
 typedef struct ArmorIconInfo {
     u8 unk0;
     u8 unk1;
     u8 pad2[6];
 } ArmorIconInfo;
+
+// Note: these aren't normally accessed outside of `explode.h`, but have to be
+// exported anyways to match the linker order.
+extern GrSprite fragmenta[];
+extern GrSprite fragmentb[];
+extern GrSprite fragmentc[];
+extern GrSprite fragmentd[];
+
+extern GrSprite AburstInfo[];
+extern GrSprite SparkInfo[];
+extern GrSprite BurnInfo[];
+extern GrSprite FlareInfo[];
+extern GrSprite SmokeInfo[];
+extern GrSprite ContrailInfo[];
+extern GrSprite PlasmaInfo[];
+extern GrSprite FlameInfo[];
+extern GrSprite GburstInfo[];
+extern GrSprite SteamInfo[];
 
 void explodeStoreFlameAnimation(void* data);
 void explodeStoreExplosionAnimation(void* data);

@@ -2,8 +2,12 @@
 #define __TM1_EXPLOSION_H__
 
 #include "common.h"
+#include "tm1/explode.h"
 #include "tm1/grutils.h"
 #include "tm1/math.h"
+
+#define MAX_FRAGMENTS 20
+#define MAX_EXPLOSIONS 80
 
 typedef struct Explosion {
     /*0x00*/ VECTOR3 pos;
@@ -24,20 +28,18 @@ typedef struct Explosion {
     /*0x3D*/ u8 pad3D[3];
 } Explosion;
 
-// TODO: Determine where these are defined.
-extern Explosion pyro[80];
+/* 0x80199DB8, 20 x 36 bytes */
+typedef struct Fragment {
+    /*0x00*/ VECTOR3 pos;
+    /*0x0C*/ VECTOR3 vel;
+    /*0x18*/ u8 frame;
+    /*0x19*/ u8 pad19[3];
+    /*0x1C*/ s32 life;
+    /*0x20*/ GrSprite* anim;
+} Fragment;
 
-extern GrSprite AburstInfo[1];
-extern GrSprite D_8019C640[15];
-extern GrSprite SparkInfo[4];
-extern GrSprite BurnInfo[8];
-extern GrSprite FlareInfo[4];
-extern GrSprite SmokeInfo[28];
-extern GrSprite ContrailInfo[6];
-extern GrSprite PlasmaInfo[4];
-extern GrSprite FlameInfo[10];
-extern GrSprite GburstInfo[12];
-extern GrSprite SteamInfo[16];
+extern Fragment fragment[MAX_FRAGMENTS];
+extern Explosion pyro[MAX_EXPLOSIONS];
 
 Explosion* init_explosion(VECTOR3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag);
 void animate_explosions(void);

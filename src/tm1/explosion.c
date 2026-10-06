@@ -2,6 +2,9 @@
 
 #include "tm1/explosion.h"
 
+Fragment fragment[MAX_FRAGMENTS];
+Explosion pyro[MAX_EXPLOSIONS];
+
 Explosion* init_explosion(VECTOR3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag);
 #ifdef NON_MATCHING
 Explosion* init_explosion(VECTOR3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag)
