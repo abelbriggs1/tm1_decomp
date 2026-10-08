@@ -94,12 +94,75 @@ matching.
   start from `asm/`.
   Absolute paths should not be committed as these are system-specific.
 
-#### Quality
+#### Comments
 
 - **Do not dump context into code comments.**
   - It is **critical** that the code in this repository stays human-readable.
     This repository moves rapidly. Comments may become outdated immediately after
     being written.
+- **In general, keep code comments to a minimum.**
+  - Do not write large comments which explain *what* is happening in the code.
+    This should not be needed if the code is human-readable.
+  - Comments that explain *why* something is necessary are useful.
+    - However, these should be minimized to code blocks that are incomprehensible
+      even for an experienced engineer, or for clear bugs/undefined behavior
+      in the original ASM code.
+- When writing comments, **avoid jargon while keeping them technical.**
+  - Example of bad comments:
+    ```
+    /* R5900 opcodes with no C spelling.  Defined in this member. */
+     #define SYNC() __asm__ __volatile__("sync" : : : "memory")
+    /* COP0 Status ($12), bit 16 = interrupts enabled.  Taken as an lvalue: the
+      wrappers mask the word in place. */
+    #define MFC0_STATUS(dst) __asm__ __volatile__("mfc0 %0, $12" : "=r"(dst))
+    #define COP0_STATUS_EIE 0x10000
+    ```
+    - "spelling" is not a common way to describe "code format" in programming.
+    - The word "member" in this context is nonsensical at first glance;
+      it presumably means `TU` (translation unit).
+      If it does mean `TU`, the phrase `Defined in this member` is tautological
+      and therefore extraneous.
+    - The `COP0_STATUS_EIE` comment is mixed up with `MFC0_STATUS`.
+    - The phrase `Taken as an lvalue` is accurate but not useful here.
+      The average reader does not know what an `lvalue` is, and the readers who do
+      know can see it very clearly.
+    - `the wrappers mask the word in place` is not a useful comment here. It
+      should go wherever the `wrappers` are (and probably shouldn't exist at all).
+  - Example of better, revised comments:
+    ```
+    /* R5900 opcodes with no C equivalent. */
+    #define SYNC() __asm__ __volatile__("sync" : : : "memory")
+    #define MFC0_STATUS(dst) __asm__ __volatile__("mfc0 %0, $12" : "=r"(dst))
+
+    /* COP0 Status, bit 16 (interrupts enabled).
+    #define COP0_STATUS_EIE 0x10000
+    ```
+- When formatting comments or documentation,
+  **prefer bulleted lists over dense comma-separated lists.**
+  - Example of a badly-formatted list:
+    ```
+    One source per unique function (Phase 35): 102,991 function bodies written once in C (3,173 of them shared headers instantiated 262,594 times); 139 duplicate copies remain in 41 ledgered classes (declaration conflicts left for the types phase); 38 functions whose bytes vary per binary share one text through the text tier (2,030 sites); 1,645 same-address copies of 377 tiny bodies inside the cross-address classes are deferred to the names phase.
+    ```
+    This list is incredibly dense and full of parenthesized text, making it difficult to parse
+    for both humans and LLMs.
+    (It's also clearly an LLM context dump, which should never be added to this repo.
+     We're ignoring that for this example.)
+  - Example of a better-formatted list:
+    ```
+    One source per unique function (Phase 35):
+
+    - 102,991 function bodies written once in C
+      - 3,173 of them shared headers instantiated 262,594 times
+    - 139 duplicate copies remain in 41 ledgered classes
+      - Declaration conflicts left for the types phase
+    - 38 functions whose bytes vary per binary share one text through the text tier
+      - 2,030 sites
+    - 1,645 same-address copies of 377 tiny bodies inside the cross-address classes
+      are deferred to the names phase
+    ```
+
+#### Quality
+
 - When decompiling assembly into matching C89 code, attempt to write the code as it may have
   been originally written. Avoid the following if possible:
   - `asm volatile` register pinning
@@ -107,6 +170,7 @@ matching.
   - Excessively complicated control flow (heavy `goto` usage)
   - Struct-to-pointer casts (struct accesses should be performed with `.` or `->`)
   - Excessive `void*` usage
+    - If it's clear the original code used `void*` for polymorphism, use it as needed.
 
 #### Organization
 
@@ -125,3 +189,18 @@ Follow this layout for newly written code.
 Note that **the definition order of functions and variables matters**.
 To match the original code, we must also match the order that variables and
 functions were defined in.
+
+### Documentation and Git
+
+- **Never run `git commit` or generate a Git commit description.**
+  - Commits must be reviewed by humans for this repository.
+- **Never create a GitHub issue/pull request, or generate an issue/pull request description.**
+  - Humans working on this repository are expected to understand the issues
+    and PRs they submit.
+- **Never generate documentation text files or Markdown files directly.**
+  - Require the user to review your output and reformat it into their
+    intended format themselves.
+- If the user overrides you to generate any of the above, please add a
+  watermark somewhere in the text: `(This text was generated via LLM.)`
+  - It is critically important for us to separate human-written docs
+    vs. LLM-written docs in this repository.

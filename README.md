@@ -29,6 +29,17 @@ will result in a subpar product that will ultimately damage and fragment
 the community.
 ```
 
+## AI Policy
+
+Before using agentic LLMs or AI on this codebase, please see [AI_POLICY.md](AI_POLICY.md)
+for our repository's standards and requirements.
+
+## Contributing
+
+If you'd like to contribute to the project, please join us in the
+`#twisted-metal-psx` channel on the [PS1/PS2 Decompilation Discord server](https://discord.gg/VwCPdfbxgm).
+Communication is key for decomp projects.
+
 ## Requirements
 
 ### Windows
@@ -132,7 +143,7 @@ that didn't actually use it in the original binary, breaking matches.
 Once no C file declares small data as `extern`, `--dont-force-G0` can be removed, and
 `maspsx` will handle `$gp` usage the way the original assembler did.
 
-# License
+## License
 
 This project is licensed under MIT, with the intent that the community will band
 together to pool their efforts for matching (and eventual porting, if desired).
@@ -150,10 +161,9 @@ make no claim of copyright on any Sony proprietary APIs or structures.
 This project exists primarily for educational and research purposes. The authors of this
 project have no desire to use this project for monetary gain.
 
-This project contains code generated with the assistance of agentic
-LLMs (AI).
+This project contains code generated with the assistance of agentic LLMs (AI).
 
-# Acknowledgements
+## Acknowledgements
 
 This project is critically reliant on tools from dedicated members of the decomp community.
 Without them, this work would be impossible.
