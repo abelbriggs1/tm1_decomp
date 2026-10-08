@@ -1,0 +1,59 @@
+name: build
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository || github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Install build dependencies
+        run: sudo apt-get update && sudo apt-get install -y $(cat tools/requirements-debian.txt)
+
+      - name: Install `uv`
+        uses: astral-sh/setup-uv@v10
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install Python dependencies
+        run: uv sync
+
+      - name: Run linters
+        run: uv run pre-commit run -a --color --show-diff-on-failure
+
+      - name: Check out baserom deps
+        uses: actions/checkout@v7
+        with:
+          repository: ${{ secrets.CI_ROM_REPO }}
+          token: ${{ secrets.CI_REPO_TOKEN }}
+          path: deps
+
+      - name: Decrypt baserom
+        run: gpg --quiet --batch --yes --decrypt --passphrase "$CI_ROM_KEY" --output SIPS_600.07 SIPS_600.07.gpg
+        env:
+          CI_ROM_KEY: ${{ secrets.CI_ROM_KEY }}
+        working-directory: deps/tm1/JP
+
+      - name: Copy decrypted ROM to repo
+        run: cp deps/tm1/JP/SIPS_600.07 disks/
+
+      - name: Split binary and generate build system
+        run: uv run configure.py generate
+
+      - name: Build project
+        run: ninja
+
+      - name: Upload progress report
+        uses: actions/upload-artifact@v7
+        with:
+          name: jp_report
+          path: config/JP/report.json
