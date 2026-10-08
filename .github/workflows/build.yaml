@@ -28,7 +28,7 @@ jobs:
         run: uv sync
 
       - name: Run linters
-        run: uv run pre-commit run -a --color --show-diff-on-failure
+        run: uv run pre-commit run --show-diff-on-failure -a
 
       - name: Check out baserom deps
         uses: actions/checkout@v7
