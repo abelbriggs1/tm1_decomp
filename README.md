@@ -96,35 +96,6 @@ To build the repository, you will need a digital copy of the Playstation game
 6. Whenever you modify the splat config, you should perform a `uv run configure.py distclean`
    before regenerating the config with `uv run configure.py generate`.
 
-## Observations
-
-This is a list of observations about compiler and linker behavior in TM1.
-
-### Uninitialized variables
-
-(A more detailed version of this block will be migrated to `decomp.wiki`
-in the near future.)
-
-Symbols are placed in BSS based on whether they are `static` or not.
-
-- Uninitialized small variables
-  - `static` -> `.sbss`
-  - non-`static` -> `.scommon`
-- Uninitialized non-small variables
-  - `static` -> `.bss`
-  - non-`static` -> `COMMON`
-
-Declaration order is not preserved by the linker in `common` sections; the
-variable order will depend on the linker's hashing algorithm. `ld` and PsyQ have different
-hashing algorithms, so they'll produce different results in this case.
-
-The PsyQ SYM format does split local symbols away from global symbols; the local
-table maps to `.sbss`/`.bss`, while the global table maps to `.scommon`/`COMMON`.
-
-This is a good way to determine which variables are `static`, since PsyQ doesn't capture
-that normally. It also allows you to double-check TU splits; if local symbols are used
-by multiple nearby functions, the functions are probably in the same TU.
-
 ## Known Issues
 
 This is a list of known repository-wide issues that prevent functions or data from
@@ -148,11 +119,6 @@ will be experimented with later on.
 It's likely that SingleTrac compiled multiple TUs in different groups
 with different compiler flags for each, but we haven't determined how
 these groups are structured.
-
-### `scommon`/`common` are unhandled
-
-These are sections which we don't know how to handle currently, so any data from these
-sections cannot be decompiled.
 
 ### Small data (`$gp`) in partially-decompiled TUs
 
