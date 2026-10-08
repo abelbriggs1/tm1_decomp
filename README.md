@@ -1,5 +1,10 @@
 # `tm_decomp`
 
+![build](https://img.shields.io/github/actions/workflow/status/abelbriggs1/tm1_decomp/build.yaml?branch=master&label=build)
+![code](https://decomp.dev/abelbriggs1/tm1_decomp/jp.svg?mode=shield&category=tm1&label=code&measure=matched_code_percent)
+![functions](https://decomp.dev/abelbriggs1/tm1_decomp/jp.svg?mode=shield&category=tm1&label=functions&measure=matched_functions)
+![data](https://decomp.dev/abelbriggs1/tm1_decomp/jp.svg?mode=shield&category=tm1&label=data&measure=matched_data_percent)
+
 This repository contains a (WIP) matching decompilation of the 1995 Playstation
 game `Twisted Metal (NTSC-J) (SIPS-60007)`.
 
