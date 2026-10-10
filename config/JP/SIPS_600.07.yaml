@@ -162,8 +162,6 @@ segments:
       - [0x946F0, .sdata, tm1/weapon]       # 0x8018BFA8
       - [0x94718, .sdata, tm1/ai_car]       # 0x8018BFD0
       - [0x9471C, .sdata, tm1/car_update]   # 0x8018BFD4
-      - [0x94720, .sdata, tm1/bridges]      # 0x8018BFD8
-      - [0x94724, sdata, tm1/potholes]      # 0x8018BFDC
       - [0x94730, .sdata, tm1/interactives]  # 0x8018BFE8
       - [0x947E4, sdata, tm1/explosion]     # 0x8018C09C
       - [0x947E8, sdata, tm1/screen]        # 0x8018C0A0
@@ -253,7 +251,7 @@ segments:
       - {start: 0x94BC8, type: bss, vram: 0x801A99EC, name: tm1/common}
       # - {start: 0x94BC8, type: bss, vram: 0x801A99EC} # tm1/sound
       # - {start: 0x94BC8, type: bss, vram: 0x801A9A2C} # SDK sound library
-      # - {start: 0x94BC8, type: bss, vram: 0x801A9A30} # tm1/car_update? first ref is `CheckForCurb()`
+      # - {start: 0x94BC8, type: bss, vram: 0x801A9A30} # tm1/curbs
       # - {start: 0x94BC8, type: bss, vram: 0x801A9C10} # tm1/weapon
       # - {start: 0x94BC8, type: bss, vram: 0x801AC320} # tm1/slick_spots
       # - {start: 0x94BC8, type: bss, vram: 0x801AC35C} # tm1/trigger_pts

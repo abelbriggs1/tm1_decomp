@@ -4,13 +4,13 @@
     "total_code": "470784",
     "matched_code": "50132",
     "matched_code_percent": 10.648621,
-    "total_data": "633064",
-    "matched_data": "94280",
-    "matched_data_percent": 14.89265,
+    "total_data": "633052",
+    "matched_data": "94272",
+    "matched_data_percent": 14.891667,
     "total_functions": 1983,
     "matched_functions": 470,
     "matched_functions_percent": 23.701462,
-    "total_units": 85
+    "total_units": 84
   },
   "units": [
     {
@@ -3881,9 +3881,7 @@
         "total_code": "26028",
         "matched_code": "640",
         "matched_code_percent": 2.4588904,
-        "total_data": "24",
-        "matched_data": "4",
-        "matched_data_percent": 16.666668,
+        "total_data": "40",
         "total_functions": 32,
         "matched_functions": 4,
         "matched_functions_percent": 12.5,
@@ -3907,8 +3905,8 @@
         },
         {
           "name": ".sdata",
-          "size": "4",
-          "fuzzy_match_percent": 100.0,
+          "size": "20",
+          "fuzzy_match_percent": 94.73685,
           "metadata": {}
         },
         {
@@ -4505,12 +4503,11 @@
         "total_code": "14576",
         "matched_code": "4272",
         "matched_code_percent": 29.308453,
-        "total_data": "4",
-        "matched_data": "4",
         "matched_data_percent": 100.0,
         "total_functions": 7,
         "matched_functions": 5,
         "matched_functions_percent": 71.42857,
+        "complete_data_percent": 100.0,
         "total_units": 1
       },
       "sections": [
@@ -4521,12 +4518,6 @@
         },
         {
           "name": ".data",
-          "fuzzy_match_percent": 100.0,
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "4",
           "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
@@ -4600,10 +4591,11 @@
         "total_code": "1060",
         "matched_code": "1060",
         "matched_code_percent": 100.0,
-        "total_data": "12",
+        "matched_data_percent": 100.0,
         "total_functions": 7,
         "matched_functions": 7,
         "matched_functions_percent": 100.0,
+        "complete_data_percent": 100.0,
         "total_units": 1
       },
       "sections": [
@@ -4615,11 +4607,6 @@
         {
           "name": ".data",
           "fuzzy_match_percent": 100.0,
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "12",
           "metadata": {}
         },
         {
@@ -14956,41 +14943,6 @@
       }
     },
     {
-      "name": "tm1/potholes",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "12",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "12",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/explosion",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15945,23 +15897,6 @@
   "version": 2,
   "categories": [
     {
-      "id": "tm1",
-      "name": "tm1",
-      "measures": {
-        "fuzzy_match_percent": 13.98195,
-        "total_code": "358548",
-        "matched_code": "50132",
-        "matched_code_percent": 13.981949,
-        "total_data": "492632",
-        "matched_data": "94280",
-        "matched_data_percent": 19.138018,
-        "total_functions": 1009,
-        "matched_functions": 470,
-        "matched_functions_percent": 46.580772,
-        "total_units": 80
-      }
-    },
-    {
       "id": "sdk",
       "name": "sdk",
       "measures": {
@@ -15969,6 +15904,23 @@
         "total_data": "140432",
         "total_functions": 974,
         "total_units": 5
+      }
+    },
+    {
+      "id": "tm1",
+      "name": "tm1",
+      "measures": {
+        "fuzzy_match_percent": 13.98195,
+        "total_code": "358548",
+        "matched_code": "50132",
+        "matched_code_percent": 13.981949,
+        "total_data": "492620",
+        "matched_data": "94272",
+        "matched_data_percent": 19.13686,
+        "total_functions": 1009,
+        "matched_functions": 470,
+        "matched_functions_percent": 46.580772,
+        "total_units": 79
       }
     }
   ]

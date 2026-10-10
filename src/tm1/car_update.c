@@ -19,6 +19,14 @@
 
 static s32 potHoleTics = 0;
 
+s16 numBridges = 0;
+s16 numCheckBridges = 0;
+s16 numPotHoles = 0;
+s16 numCheckPotHoles = 0;
+s16 numTriggerPoints = 0;
+s16 numCurbs = 0;
+s16 numSlickSpots = 0;
+
 #ifdef NON_MATCHING
 s16 GetClosestTriggerPt(Car* car, u8 isPlayer)
 {

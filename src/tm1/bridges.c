@@ -2,9 +2,6 @@
 
 #include "tm1/bridges.h"
 
-s16 numBridges = 0;
-s16 numCheckBridges = 0;
-
 Bridge* GetBridgeDat(s16 which)
 {
     return &bridges[which];
