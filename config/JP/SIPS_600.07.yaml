@@ -137,7 +137,7 @@ segments:
       - [0x794FC, .data, tm1/interactives]   # 0x80170DB4
       - [0x7954C, .data, tm1/explosion]      # 0x80170E04
       - [0x7956C, data, tm1/screen]         # 0x80170E24
-      - [0x797C8, data, tm1/ai_car_update]  # 0x80171080
+      - [0x797C8, .data, tm1/ai_car_update]  # 0x80171080
       - [0x799F8, data, tm1/ua_dash]        # 0x801712B0
       - [0x79A5C, .data, tm1/ua_effect]     # 0x80171314
       - [0x79C54, .data, tm1/targets]       # 0x8017150C
@@ -165,7 +165,7 @@ segments:
       - [0x94730, .sdata, tm1/interactives]  # 0x8018BFE8
       - [0x947E4, .sdata, tm1/explosion]     # 0x8018C09C
       - [0x947E8, sdata, tm1/screen]        # 0x8018C0A0
-      - [0x94954, sdata, tm1/ai_car_update] # 0x8018C20C
+      - [0x94954, .sdata, tm1/ai_car_update] # 0x8018C20C
       - [0x949F0, sdata, tm1/ua_dash]       # 0x8018C2A8
       - [0x94A3C, .sdata, tm1/ua_effect]    # 0x8018C2F4
       - [0x94A54, .sdata, tm1/hud]          # 0x8018C30C

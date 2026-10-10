@@ -275,6 +275,7 @@ class EnvironmentToolchain:
                 "tm1/font": 8,
                 "tm1/ctlpad": 8,
                 "tm1/trigger_pts": 8,
+                "tm1/ai_car_update": 8,
                 "tm1/bridges": 8,
                 "tm1/curbs": 8,
                 "tm1/explosion": 8,

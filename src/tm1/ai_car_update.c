@@ -9,74 +9,143 @@
 
 #include "tm1/ai_car_update.h"
 
-extern s32 IceCreamSpecialChance;
-extern s32 IceCreamForeChance;
-extern s32 IceCreamAftChance;
-extern s32 TaxiSpecialChance;
-extern s32 TaxiForeChance;
-extern s32 TaxiAftChance;
-extern s32 PoliceSpecialChance;
-extern s32 PoliceForeChance;
-extern s32 PoliceAftChance;
-extern s32 VetteSpecialChance;
-extern s32 VetteForeChance;
-extern s32 VetteAftChance;
-extern s32 MonsterSpecialChance;
-extern s32 MonsterForeChance;
-extern s32 MonsterAftChance;
-extern s32 SemiSpecialChance;
-extern s32 SemiForeChance;
-extern s32 SemiAftChance;
-extern s32 DuneBuggySpecialChance;
-extern s32 DuneBuggyForeChance;
-extern s32 DuneBuggyAftChance;
-extern s32 LamborghiniSpecialChance;
-extern s32 LamborghiniForeChance;
-extern s32 LamborghiniAftChance;
-extern s32 HumveeSpecialChance;
-extern s32 HumveeForeChance;
-extern s32 HumveeAftChance;
-extern s32 HarleySpecialChance;
-extern s32 HarleyForeChance;
-extern s32 HarleyAftChance;
-extern s32 MadMaxSpecialChance;
-extern s32 MadMaxForeChance;
-extern s32 MadMaxAftChance;
-extern s32 ImpalaSpecialChance;
-extern s32 ImpalaForeChance;
-extern s32 ImpalaAftChance;
-extern s32 BossSpecialChance;
-extern s32 BossForeChance;
-extern s32 BossAftChance;
+// clang-format off
+static CarFrontProfile IceCreamProfileFront = {
+    0x21, 0x00, 0x41, 0x02
+};
+static CarRearProfile IceCreamProfileRear = {
+    0x00, 0x5A, 0x0A, 0x00, 0x00, 0x00
+};
+static CarFrontProfile TaxiProfileFront = {
+    0x46, 0x00, 0x1E, 0x00
+};
+static CarRearProfile TaxiProfileRear = {
+    0x0A, 0x00, 0x00, 0x5A, 0x00, 0x00
+};
+static CarFrontProfile SemiProfileFront = {
+    0x14, 0x50, 0x00, 0x00
+};
+static CarRearProfile SemiProfileRear = {
+    0x14, 0x46, 0x0A, 0x00, 0x00, 0x00
+};
+static CarFrontProfile ImpalaProfileFront = {
+    0x14, 0x14, 0x00, 0x00
+};
+static CarRearProfile ImpalaProfileRear = {
+    0x23, 0x05, 0x3C, 0x00, 0x00, 0x00
+};
+static CarFrontProfile MonsterProfileFront = {
+    0x0A, 0x5A, 0x00, 0x00
+};
+static CarRearProfile MonsterProfileRear = {
+    0x00, 0x50, 0x00, 0x14, 0x00, 0x00
+};
+static CarFrontProfile DuneBuggyProfileFront = {
+    0x5A, 0x05, 0x05, 0x00
+};
+static CarRearProfile DuneBuggyProfileRear = {
+    0x32, 0x14, 0x00, 0x00, 0x00, 0x1E
+};
+static CarFrontProfile PoliceProfileFront = {
+    0x0A, 0x5A, 0x00, 0x00
+};
+static CarRearProfile PoliceProfileRear = {
+    0x00, 0x14, 0x00, 0x00, 0x50, 0x00
+};
+static CarFrontProfile MadMaxProfileFront = {
+    0x64, 0x00, 0x00, 0x00
+};
+static CarRearProfile MadMaxProfileRear = {
+    0x14, 0x00, 0x14, 0x00, 0x1E, 0x1E
+};
+static CarFrontProfile HarleyProfileFront = {
+    0x50, 0x14, 0x00, 0x00
+};
+static CarRearProfile HarleyProfileRear = {
+    0x00, 0x00, 0x0A, 0x00, 0x00, 0x5A
+};
+static CarFrontProfile HumveeProfileFront = {
+    0x5A, 0x00, 0x05, 0x05
+};
+static CarRearProfile HumveeProfileRear = {
+    0x00, 0x00, 0x64, 0x00, 0x00, 0x00
+};
+static CarFrontProfile VetteProfileFront = {
+    0x64, 0x00, 0x00, 0x00
+};
+static CarRearProfile VetteProfileRear = {
+    0x00, 0x00, 0x00, 0x64, 0x00, 0x00
+};
+static CarFrontProfile LamborghiniProfileFront = {
+    0x5F, 0x00, 0x00, 0x05
+};
+static CarRearProfile LamborghiniProfileRear = {
+    0x5A, 0x00, 0x0A, 0x00, 0x00, 0x00
+};
+static CarFrontProfile BossProfileFront = {
+    0x0F, 0x0F, 0x23, 0x23
+};
+static CarRearProfile BossProfileRear = {
+    0x14, 0x0A, 0x19, 0x14, 0x0A, 0x0F
+};
+static CarFrontProfile Level1ProfileFront = {
+    0x3C, 0x14, 0x00, 0x00
+};
+static CarRearProfile Level1ProfileRear = {
+    0x32, 0x00, 0x00, 0x1E, 0x00, 0x00
+};
 
-extern s32 IceCreamProfileFront[4];
-extern s32 IceCreamProfileRear[6];
-extern s32 TaxiProfileFront[4];
-extern s32 TaxiProfileRear[6];
-extern s32 SemiProfileFront[4];
-extern s32 SemiProfileRear[6];
-extern s32 ImpalaProfileFront[4];
-extern s32 ImpalaProfileRear[6];
-extern s32 MonsterProfileFront[4];
-extern s32 MonsterProfileRear[6];
-extern s32 DuneBuggyProfileFront[4];
-extern s32 DuneBuggyProfileRear[6];
-extern s32 PoliceProfileFront[4];
-extern s32 PoliceProfileRear[6];
-extern s32 MadMaxProfileFront[4];
-extern s32 MadMaxProfileRear[6];
-extern s32 HarleyProfileFront[4];
-extern s32 HarleyProfileRear[6];
-extern s32 HumveeProfileFront[4];
-extern s32 HumveeProfileRear[6];
-extern s32 VetteProfileFront[4];
-extern s32 VetteProfileRear[6];
-extern s32 LamborghiniProfileFront[4];
-extern s32 LamborghiniProfileRear[6];
-extern s32 BossProfileFront[4];
-extern s32 BossProfileRear[6];
-extern s32 Level1ProfileFront[4];
-extern s32 Level1ProfileRear[6];
+static s32 IceCreamSpecialChance = 35;
+static s32 IceCreamForeChance = 60;
+static s32 IceCreamAftChance = 90;
+
+static s32 TaxiSpecialChance = 90;
+static s32 TaxiForeChance = 10;
+static s32 TaxiAftChance = 75;
+
+static s32 PoliceSpecialChance = 35;
+static s32 PoliceForeChance = 25;
+static s32 PoliceAftChance = 50;
+
+static s32 VetteSpecialChance = 90;
+static s32 VetteForeChance = 30;
+static s32 VetteAftChance = 10;
+
+static s32 MonsterSpecialChance = 50;
+static s32 MonsterForeChance = 20;
+static s32 MonsterAftChance = 50;
+
+static s32 SemiSpecialChance = 35;
+static s32 SemiForeChance = 70;
+static s32 SemiAftChance = 10;
+
+static s32 DuneBuggySpecialChance = 50;
+static s32 DuneBuggyForeChance = 50;
+static s32 DuneBuggyAftChance = 90;
+
+static s32 LamborghiniSpecialChance = 95;
+static s32 LamborghiniForeChance = 30;
+static s32 LamborghiniAftChance = 80;
+
+static s32 HumveeSpecialChance = 60;
+static s32 HumveeForeChance = 60;
+static s32 HumveeAftChance = 60;
+
+static s32 HarleySpecialChance = 35;
+static s32 HarleyForeChance = 80;
+static s32 HarleyAftChance = 60;
+
+static s32 MadMaxSpecialChance = 80;
+static s32 MadMaxForeChance = 50;
+static s32 MadMaxAftChance = 20;
+
+static s32 ImpalaSpecialChance = 75;
+static s32 ImpalaForeChance = 80;
+static s32 ImpalaAftChance = 80;
+
+static s32 BossSpecialChance = 100;
+static s32 BossForeChance = 75;
+static s32 BossAftChance = 75;
 
 #ifdef NON_MATCHING
 void AICarUpdateAttackProfile(AICar* car)

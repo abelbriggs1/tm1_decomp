@@ -202,6 +202,10 @@ typedef struct CarBounce {
     /*0x38*/ s32 unk38;
 } CarBounce; /* 0x3C */
 
+// TODO: Make these into proper structs.
+typedef s32 CarFrontProfile[4];
+typedef s32 CarRearProfile[6];
+
 typedef struct CarWeap {
     /*0x00*/ u16 gunDelay;
     /*0x02*/ u16 fireDelay;
@@ -211,8 +215,8 @@ typedef struct CarWeap {
     /*0x0C*/ u16 ammo[14];
     /*0x28*/ u16 maxAmmo;
     /*0x2A*/ u8 pad2A[0x2];
-    /*0x2C*/ s32* foreProfile;
-    /*0x30*/ s32* aftProfile;
+    /*0x2C*/ CarFrontProfile* foreProfile;
+    /*0x30*/ CarRearProfile* aftProfile;
     /*0x34*/ u16 totalAmmo;
     /*0x36*/ u16 gunHeat;
     /*0x38*/ u8 gunOverheat;

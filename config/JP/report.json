@@ -4,13 +4,13 @@
     "total_code": "470784",
     "matched_code": "49540",
     "matched_code_percent": 10.522872,
-    "total_data": "631104",
-    "matched_data": "94428",
-    "matched_data_percent": 14.962351,
+    "total_data": "630388",
+    "matched_data": "95144",
+    "matched_data_percent": 15.092927,
     "total_functions": 1983,
     "matched_functions": 467,
     "matched_functions_percent": 23.550177,
-    "total_units": 78
+    "total_units": 76
   },
   "units": [
     {
@@ -6433,6 +6433,8 @@
       "measures": {
         "total_code": "2332",
         "total_data": "1200",
+        "matched_data": "716",
+        "matched_data_percent": 59.666668,
         "total_functions": 6,
         "total_units": 1
       },
@@ -6445,6 +6447,7 @@
         {
           "name": ".data",
           "size": "560",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
@@ -6455,6 +6458,7 @@
         {
           "name": ".sdata",
           "size": "156",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
@@ -14759,37 +14763,6 @@
       }
     },
     {
-      "name": "tm1/ai_car_update",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "560",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "size": "560",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/ua_dash",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -14904,41 +14877,6 @@
         {
           "name": ".sdata",
           "size": "364",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/ai_car_update",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "156",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "156",
           "metadata": {}
         },
         {
@@ -15708,13 +15646,13 @@
         "total_code": "358548",
         "matched_code": "49540",
         "matched_code_percent": 13.816839,
-        "total_data": "490672",
-        "matched_data": "94428",
-        "matched_data_percent": 19.244627,
+        "total_data": "489956",
+        "matched_data": "95144",
+        "matched_data_percent": 19.418886,
         "total_functions": 1009,
         "matched_functions": 467,
         "matched_functions_percent": 46.283447,
-        "total_units": 73
+        "total_units": 71
       }
     },
     {
