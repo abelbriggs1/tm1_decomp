@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 10.645222,
+    "fuzzy_match_percent": 10.522873,
     "total_code": "470784",
-    "matched_code": "50116",
-    "matched_code_percent": 10.645222,
-    "total_data": "633008",
-    "matched_data": "94316",
-    "matched_data_percent": 14.899653,
+    "matched_code": "49540",
+    "matched_code_percent": 10.522872,
+    "total_data": "631104",
+    "matched_data": "94428",
+    "matched_data_percent": 14.962351,
     "total_functions": 1983,
-    "matched_functions": 469,
-    "matched_functions_percent": 23.651033,
-    "total_units": 81
+    "matched_functions": 467,
+    "matched_functions_percent": 23.550177,
+    "total_units": 78
   },
   "units": [
     {
@@ -4843,16 +4843,16 @@
     {
       "name": "tm1/interactives",
       "measures": {
-        "fuzzy_match_percent": 9.607883,
+        "fuzzy_match_percent": 6.651612,
         "total_code": "19484",
-        "matched_code": "1872",
-        "matched_code_percent": 9.607883,
+        "matched_code": "1296",
+        "matched_code_percent": 6.651612,
         "total_data": "3340",
-        "matched_data": "1972",
-        "matched_data_percent": 59.041916,
+        "matched_data": "2084",
+        "matched_data_percent": 62.39521,
         "total_functions": 42,
-        "matched_functions": 20,
-        "matched_functions_percent": 47.61905,
+        "matched_functions": 18,
+        "matched_functions_percent": 42.857143,
         "total_units": 1
       },
       "sections": [
@@ -4865,6 +4865,7 @@
         {
           "name": ".data",
           "size": "80",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
@@ -4875,6 +4876,7 @@
         {
           "name": ".sbss",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
@@ -4886,7 +4888,7 @@
         {
           "name": ".text",
           "size": "19484",
-          "fuzzy_match_percent": 9.607883,
+          "fuzzy_match_percent": 6.651612,
           "metadata": {}
         }
       ],
@@ -4982,7 +4984,6 @@
         {
           "name": "carAddWeapTex",
           "size": "152",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10672"
         },
@@ -5003,7 +5004,6 @@
         {
           "name": "carDropWeapon",
           "size": "424",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10936"
         },
@@ -14728,37 +14728,6 @@
       }
     },
     {
-      "name": "tm1/interactives",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "80",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "size": "80",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/screen",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15075,41 +15044,6 @@
         {
           "name": ".sbss",
           "size": "28",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/interactives",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "32",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sbss",
-          "size": "32",
           "metadata": {}
         },
         {
@@ -15516,37 +15450,6 @@
       }
     },
     {
-      "name": "tm1/interactives",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "1792",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "size": "1792",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/screen",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15798,6 +15701,23 @@
   "version": 2,
   "categories": [
     {
+      "id": "tm1",
+      "name": "tm1",
+      "measures": {
+        "fuzzy_match_percent": 13.816839,
+        "total_code": "358548",
+        "matched_code": "49540",
+        "matched_code_percent": 13.816839,
+        "total_data": "490672",
+        "matched_data": "94428",
+        "matched_data_percent": 19.244627,
+        "total_functions": 1009,
+        "matched_functions": 467,
+        "matched_functions_percent": 46.283447,
+        "total_units": 73
+      }
+    },
+    {
       "id": "sdk",
       "name": "sdk",
       "measures": {
@@ -15805,23 +15725,6 @@
         "total_data": "140432",
         "total_functions": 974,
         "total_units": 5
-      }
-    },
-    {
-      "id": "tm1",
-      "name": "tm1",
-      "measures": {
-        "fuzzy_match_percent": 13.977487,
-        "total_code": "358548",
-        "matched_code": "50116",
-        "matched_code_percent": 13.977488,
-        "total_data": "492576",
-        "matched_data": "94316",
-        "matched_data_percent": 19.147501,
-        "total_functions": 1009,
-        "matched_functions": 469,
-        "matched_functions_percent": 46.481667,
-        "total_units": 76
       }
     }
   ]

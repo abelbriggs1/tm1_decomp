@@ -82,20 +82,14 @@ typedef struct {
     /* 0x04 */ s32 pos[3];
 } HealthStand;
 
-// TODO: Specify the proper size for these once we migrate; as externs,
-// these are generating GP accesses when they shouldn't.
-extern GrSprite spikeSprite[];
-extern GrSprite oilSprite[];
-extern GrSprite catapultSprite[];
-extern GrSprite bombSprite[];
-
-extern DropWeap dropweapon[12];
-extern FlameThrower flameThrower[5];
-extern PickupWeap pickup[50];
-extern HealthStand HStand[10];
-extern Taser taser[3];
-
-extern s32 weaponPickupAmount[14];
+// clang-format off
+static s32 weaponPickupAmount[20] = {
+    4,    2, 2, 2,
+    1,    4, 2, 2,
+    2,    2, 3, 1,
+    1, 0x78, 1, 1,
+    1,    1, 1, 1
+};
 
 s32 missileDamageFire = 7;
 s32 gunDamage = 1;
@@ -142,6 +136,17 @@ s32 nextHealthStand = 0;
 s32 pickupTimer = 0;
 u8 healthRegenPending = 0;
 s32 healthRegenTimer = 0;
+
+static GrSprite spikeSprite;
+static GrSprite oilSprite;
+static GrSprite catapultSprite;
+static GrSprite bombSprite;
+
+static DropWeap dropweapon[12];
+static FlameThrower flameThrower[5];
+static PickupWeap pickup[50];
+static HealthStand HStand[10];
+static Taser taser[3];
 
 void carSetPowerupDelaysBySkillLevel(s32 level)
 {
@@ -1262,23 +1267,29 @@ void LaunchDrops(Car* car, u8 isPlayer)
 INCLUDE_ASM("asm/nonmatchings/tm1/interactives", LaunchDrops);
 #endif
 
+// TODO: Non matching due to `maspsx` `--dont-force-G0` inducing
+// GP accesses.
+#ifdef NON_MATCHING
 void carAddWeapTex(GrObj* obj, s32 id)
 {
     switch (id) {
     case 0xD4:
-        grutilsParse3DSprite(obj, bombSprite, 1);
+        grutilsParse3DSprite(obj, &bombSprite, 1);
         break;
     case 0xD5:
-        grutilsParse3DSprite(obj, oilSprite, 1);
+        grutilsParse3DSprite(obj, &oilSprite, 1);
         break;
     case 0xD6:
-        grutilsParse3DSprite(obj, spikeSprite, 1);
+        grutilsParse3DSprite(obj, &spikeSprite, 1);
         break;
     case 0xD2:
-        grutilsParse3DSprite(obj, catapultSprite, 1);
+        grutilsParse3DSprite(obj, &catapultSprite, 1);
         break;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/interactives", carAddWeapTex);
+#endif
 
 void carInitDropWeaps(void)
 {
@@ -1302,6 +1313,9 @@ s32 FindFreeDropWeap(void)
     return -1;
 }
 
+// TODO: Non matching due to `maspsx` `--dont-force-G0` inducing
+// GP accesses.
+#ifdef NON_MATCHING
 u8 carDropWeapon(u32 kind, s32 idx, s32* pos, s32 power)
 {
     s32 i;
@@ -1327,19 +1341,19 @@ u8 carDropWeapon(u32 kind, s32 idx, s32* pos, s32 power)
     do {
         switch (kind) {
         case 8:
-            sprite = bombSprite;
+            sprite = &bombSprite;
             dropweapon[i].type = -5;
             break;
         case 6:
-            sprite = catapultSprite;
+            sprite = &catapultSprite;
             dropweapon[i].type = -4;
             break;
         case 9:
-            sprite = oilSprite;
+            sprite = &oilSprite;
             dropweapon[i].type = -2;
             break;
         case 10:
-            sprite = spikeSprite;
+            sprite = &spikeSprite;
             dropweapon[i].type = -3;
             break;
         default:
@@ -1350,6 +1364,9 @@ u8 carDropWeapon(u32 kind, s32 idx, s32* pos, s32 power)
     dropweapon[i].sprite = sprite;
     return i + 1;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/interactives", carDropWeapon);
+#endif
 
 #ifdef NON_MATCHING
 void check_dropweap_impact(s32 i)
