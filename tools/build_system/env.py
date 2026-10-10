@@ -277,6 +277,7 @@ class EnvironmentToolchain:
                 "tm1/trigger_pts": 8,
                 "tm1/bridges": 8,
                 "tm1/curbs": 8,
+                "tm1/explosion": 8,
                 "tm1/potholes": 8,
                 "tm1/slick_spots": 8,
                 "tm1/ua": 8,

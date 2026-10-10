@@ -135,7 +135,7 @@ segments:
       - [0x78EF8, .data, tm1/font]           # 0x801707B0
       - [0x794DC, data, tm1/car_init]       # 0x80170D94
       - [0x794FC, data, tm1/interactives]   # 0x80170DB4
-      - [0x7954C, data, tm1/explosion]      # 0x80170E04
+      - [0x7954C, .data, tm1/explosion]      # 0x80170E04
       - [0x7956C, data, tm1/screen]         # 0x80170E24
       - [0x797C8, data, tm1/ai_car_update]  # 0x80171080
       - [0x799F8, data, tm1/ua_dash]        # 0x801712B0
@@ -163,7 +163,7 @@ segments:
       - [0x94718, .sdata, tm1/ai_car]       # 0x8018BFD0
       - [0x9471C, .sdata, tm1/car_update]   # 0x8018BFD4
       - [0x94730, .sdata, tm1/interactives]  # 0x8018BFE8
-      - [0x947E4, sdata, tm1/explosion]     # 0x8018C09C
+      - [0x947E4, .sdata, tm1/explosion]     # 0x8018C09C
       - [0x947E8, sdata, tm1/screen]        # 0x8018C0A0
       - [0x94954, sdata, tm1/ai_car_update] # 0x8018C20C
       - [0x949F0, sdata, tm1/ua_dash]       # 0x8018C2A8
@@ -188,7 +188,7 @@ segments:
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C524, name: tm1/weapon}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C538, name: tm1/ai_car}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C53C, name: tm1/interactives}
-      - {start: 0x94BC8, type: sbss, vram: 0x8018C55C, name: tm1/explosion}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C55C, name: tm1/explosion}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C564, name: tm1/screen}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C5BC, name: tm1/ua_sw}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C5D8, name: tm1/ua_dash}

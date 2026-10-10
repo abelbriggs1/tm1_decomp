@@ -35,7 +35,13 @@ static GrSprite FlameInfo[10];
 static GrSprite GburstInfo[12];
 static GrSprite SteamInfo[16];
 
-extern ArmorIconInfo ArmorInfo;
+static MATRIX starMatrix = { 0 };
+
+static u32 D_8018C09C = 0;
+
+static ArmorIconInfo ArmorInfo;
+
+void explodeInitFragments(void);
 
 Explosion* init_explosion(VECTOR3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag);
 #ifdef NON_MATCHING
@@ -902,10 +908,15 @@ void explodeDisplayFragments(Db* cdb, s32 which)
 INCLUDE_ASM("asm/nonmatchings/tm1/explosion", explodeDisplayFragments);
 #endif
 
+// TODO: ArmorInfo is accessed without GP even though it is in SBSS.
+#ifdef NON_MATCHING
 ArmorIconInfo* explodeGetArmorIcon(void)
 {
     return &ArmorInfo;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/explosion", explodeGetArmorIcon);
+#endif
 
 #ifdef NON_MATCHING
 void explodeMakeScreenRed(void)
