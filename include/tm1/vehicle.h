@@ -25,8 +25,6 @@ typedef struct Vehicle {
     /*0x64*/ MATRIX mat;
 } Vehicle; /* 0x84 */
 
-extern MATRIX gVehicleIdentity;
-
 void VehicleInit(Vehicle* veh, s16 padId);
 void InitVehicleDynamics(Vehicle* veh);
 void InitVehiclePad(Vehicle* veh);

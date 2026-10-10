@@ -267,9 +267,7 @@ static FovDat fovDat[14] = {
     },
 };
 
-// TODO: `maspsx` aligns `view` to 8 bytes, which introduces unexpected
-// padding and prevents a match. Determine if we can work around this or
-// whether this is a problem in `maspsx`.
+// TODO: Cannot be matched yet due to `maspsx` `.sbss` misalignment.
 extern ViewNode* ownship;
 extern ViewNode* view[2];
 extern ViewDb* curViewDb[2];

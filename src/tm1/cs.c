@@ -12,14 +12,7 @@
 extern void* sdk_memcpy();
 
 // clang-format off
-static MATRIX unitMatrix = {
-    {
-        { FXP_ONE, 0, 0 },
-        { 0, FXP_ONE, 0 },
-        { 0, 0, FXP_ONE }
-    },
-    { 0, 0, 0 }
-};
+static MATRIX unitMatrix = IDENTITY_MATRIX;
 
 static Cs* csList = NULL;
 

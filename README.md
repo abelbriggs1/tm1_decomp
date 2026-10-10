@@ -148,6 +148,37 @@ that didn't actually use it in the original binary, breaking matches.
 Once no C file declares small data as `extern`, `--dont-force-G0` can be removed, and
 `maspsx` will handle `$gp` usage the way the original assembler did.
 
+### `maspsx` `.sbss` data misalignment
+
+The original binary did not strictly align SBSS variables. Take the following example
+from `view.c`:
+
+```c
+static ViewNode* ownship;
+static ViewNode* view[2];
+static ViewDb* curViewDb[2];
+```
+
+The original binary packed these together such that the arrays were not aligned.
+
+```c
+static ViewNode* ownship;    // .sbss+0x0
+static ViewNode* view[2];    // .sbss+0x4
+static ViewDb* curViewDb[2]; // .sbss+0xC
+```
+
+This is not the case currently with `maspsx`; the arrays will be strictly instructed
+to align to 8 bytes, resulting in:
+
+```c
+static ViewNode* ownship;    // .sbss+0x0
+                             // .sbss+0x4 (4 byte padding)
+static ViewNode* view[2];    // .sbss+0x8
+static ViewDb* curViewDb[2]; // .sbss+0x10
+```
+
+This leads to a non-matching `.sbss`.
+
 ## License
 
 This project is licensed under MIT, with the intent that the community will band

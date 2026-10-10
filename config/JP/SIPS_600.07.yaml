@@ -142,7 +142,7 @@ segments:
       - [0x79A5C, .data, tm1/ua_effect]     # 0x80171314
       - [0x79C54, .data, tm1/targets]       # 0x8017150C
       - [0x79EB0, .data, tm1/ua]            # 0x80171768
-      - [0x79FA4, data, tm1/vehicle]        # 0x8017185C
+      - [0x79FA4, .data, tm1/vehicle]        # 0x8017185C
       - [0x79FC4, .data, tm1/shell]         # 0x8017187C
       - [0x7A02C, data, sdk/sdk]            # 0x801718E4
       # ------------------------------------------------
@@ -235,9 +235,9 @@ segments:
       - {start: 0x94BC8, type: bss, vram: 0x8019CD3C, name: tm1/ua_sw}
       - {start: 0x94BC8, type: bss, vram: 0x8019D184, name: tm1/ua_dash}
       - {start: 0x94BC8, type: .bss, vram: 0x8019E5BC, name: tm1/ua_effect}
-      - {start: 0x94BC8, type: bss, vram: 0x8019E648, name: tm1/hud}
+      - {start: 0x94BC8, type: .bss, vram: 0x8019E648, name: tm1/hud}
       - {start: 0x94BC8, type: .bss, vram: 0x8019E9B8, name: tm1/targets}
-      - {start: 0x94BC8, type: bss, vram: 0x8019ED7C, name: tm1/ua}
+      - {start: 0x94BC8, type: .bss, vram: 0x8019ED7C, name: tm1/ua}
       - {start: 0x94BC8, type: bss, vram: 0x801A2818, name: tm1/shell}
       - {start: 0x94BC8, type: .bss, vram: 0x801A28AC, name: tm1/movie}
       - {start: 0x94BC8, type: bss, vram: 0x801A2904, name: sdk/sdk}

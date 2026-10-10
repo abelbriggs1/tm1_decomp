@@ -10,6 +10,9 @@
 
 extern void* sdk_memcpy();
 
+// clang-format off
+static MATRIX gVehicleIdentity = IDENTITY_MATRIX;
+
 #ifdef NON_MATCHING
 void VehicleInit(Vehicle* veh, s16 padId)
 {

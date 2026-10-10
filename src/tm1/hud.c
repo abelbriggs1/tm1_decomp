@@ -22,15 +22,14 @@ typedef struct Radar {
     /* 0x36C */ s32 buffer;
 } Radar; /* 0x370 */
 
-extern Radar radar;
-extern s32 radarBuffer[];
+u8 radarOn = 1;
 
 static GrSprite ArrowUpInfo;
 static GrSprite ArrowDownInfo;
 static GrSprite ArrowLeftInfo;
 static GrSprite ArrowRightInfo;
 
-u8 radarOn = 1;
+static Radar radar;
 
 #ifdef NON_MATCHING
 void hudResetRadar(void)
@@ -40,7 +39,7 @@ void hudResetRadar(void)
     radar.sigCount3 = 0;
     radar.sigCount1 = 0;
     radar.sigCount0 = 0;
-    radarBuffer[0] = (s32)(1u - (u32)radarBuffer[0]);
+    radar.buffer = (s32)(1u - (u32)radar.buffer);
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/tm1/hud", hudResetRadar);
@@ -180,7 +179,7 @@ void hudInitRadar(void)
     radar.range = 0x1F40;
     radar.scale = 0x14D555;
     radar.sigTotal = 0;
-    radarBuffer[0] = 0;
+    radar.buffer = 0;
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/tm1/hud", hudInitRadar);
@@ -202,7 +201,7 @@ void hudAddRadarSig(s32 id, s32* pos, s32 ang)
     LINE_F2* a;
     LINE_F2* b;
 
-    if (id == 0x398 && radarBuffer[0] != 0) {
+    if (id == 0x398 && radar.buffer != 0) {
         return;
     }
     x = pos[0];
@@ -232,7 +231,7 @@ void hudAddRadarSig(s32 id, s32* pos, s32 ang)
             }
         }
     } else {
-        buf = radarBuffer[0];
+        buf = radar.buffer;
         bx = sx + 53;
         by = sz + 55;
         n = radar.sigTotal * 2;

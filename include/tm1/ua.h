@@ -13,33 +13,6 @@ typedef struct DrawNode {
     /*0x14*/ u8 drawFlag;
 } DrawNode;
 
-extern VECTOR3 zeroTrans;
-extern s32 carTypes[13];
-extern s16 carIndexToPlayerOrAIIndex[14];
-extern s32 carName[13];
-extern Cs* carCs[13];
-extern PlayerCar playerInfo[2];
-extern Cs* aiCarCs[8];
-extern AICar aiCarInfo[8];
-extern s16 aiIndexToCarIndex[8];
-extern AICar helicoptor;
-extern s32 gSelectedAICars[8];
-
-extern u8 gInitPlayerWeapons[4];
-extern u8 skipLevel;
-extern SVECTOR zeroRot;
-extern Cs* playerCs[2];
-extern u16 playerIndexToCarIndex[2];
-extern s32 padConfig[2];
-extern s32 playerCar[2];
-extern s32 aiBegTics;
-extern s32 aiEndTics;
-extern Cs* camera[2];
-extern Cs* helicoptorCS;
-extern s32 playerBegTics;
-extern s32 playerEndTics;
-extern s32 gAICars;
-
 void UASetBattleMusicOn(void);
 void UAAddCs(Cs* cs, s32 name);
 void uaInit(void);

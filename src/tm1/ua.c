@@ -173,6 +173,34 @@ static s32 gVar3A4 = 0;
 static s32 gVar3A8 = 0;
 static u16 gVrEnabled[2] = { 1, 1 };
 
+// TODO: Cannot be matched yet due to `maspsx` `.sbss` misalignment.
+extern u8 gInitPlayerWeapons[4];
+extern u8 skipLevel;
+extern SVECTOR zeroRot;
+extern Cs* playerCs[2];
+extern u16 playerIndexToCarIndex[2];
+extern s32 padConfig[2];
+extern s32 playerCar[2];
+extern s32 aiBegTics;
+extern s32 aiEndTics;
+extern Cs* camera[2];
+extern Cs* helicoptorCS;
+extern s32 playerBegTics;
+extern s32 playerEndTics;
+extern s32 gAICars;
+
+static VECTOR3 zeroTrans;
+static s32 carTypes[13];
+static s16 carIndexToPlayerOrAIIndex[14];
+static s32 carName[13];
+static Cs* carCs[13];
+static PlayerCar playerInfo[2];
+static Cs* aiCarCs[8];
+static AICar aiCarInfo[8];
+static s16 aiIndexToCarIndex[8];
+static AICar helicoptor;
+
+extern s32 gSelectedAICars[8];
 extern s32 bgColor[3];
 
 void UASetBattleMusicOn(void)
