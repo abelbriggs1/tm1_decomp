@@ -153,9 +153,6 @@ typedef struct HdCsHit {
     /* 0x20 */ Cs* obj;
 } HdCsHit; /* 0x24 */
 
-extern MATRIX* matPtrs[70];
-extern s32 worldToTp[9][3];
-
 void hdPush(void* node, s32* v, s32 matIdx, s32 id0, s16 id1);
 s32 hdPop(HdEnt** out);
 void hdSetNodeIds(s16* out0, s16* out1, HdEnt* e, s16 id0, s16 id1);

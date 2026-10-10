@@ -4,9 +4,9 @@
     "total_code": "470784",
     "matched_code": "50132",
     "matched_code_percent": 10.648621,
-    "total_data": "630364",
+    "total_data": "629976",
     "matched_data": "88408",
-    "matched_data_percent": 14.024914,
+    "matched_data_percent": 14.03355,
     "total_functions": 1983,
     "matched_functions": 470,
     "matched_functions_percent": 23.701462,
@@ -965,9 +965,9 @@
         "total_code": "7780",
         "matched_code": "220",
         "matched_code_percent": 2.8277636,
-        "total_data": "512",
-        "matched_data": "464",
-        "matched_data_percent": 90.625,
+        "total_data": "464",
+        "matched_data": "416",
+        "matched_data_percent": 89.655174,
         "total_functions": 13,
         "matched_functions": 3,
         "matched_functions_percent": 23.076923,
@@ -976,7 +976,7 @@
       "sections": [
         {
           "name": ".bss",
-          "size": "436",
+          "size": "388",
           "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
@@ -1106,9 +1106,9 @@
         "total_code": "3844",
         "matched_code": "88",
         "matched_code_percent": 2.289282,
-        "total_data": "60",
-        "matched_data": "12",
-        "matched_data_percent": 20.0,
+        "total_data": "108",
+        "matched_data": "60",
+        "matched_data_percent": 55.555557,
         "total_functions": 13,
         "matched_functions": 2,
         "matched_functions_percent": 15.384616,
@@ -1117,6 +1117,7 @@
       "sections": [
         {
           "name": ".bss",
+          "size": "48",
           "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
@@ -15602,11 +15603,11 @@
       }
     },
     {
-      "name": "tm1/hd",
+      "name": "tm1/hdp",
       "measures": {
         "fuzzy_match_percent": 100.0,
         "matched_code_percent": 100.0,
-        "total_data": "436",
+        "total_data": "48",
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
@@ -15614,7 +15615,7 @@
       "sections": [
         {
           "name": ".bss",
-          "size": "436",
+          "size": "48",
           "metadata": {}
         },
         {
@@ -16039,16 +16040,6 @@
   "version": 2,
   "categories": [
     {
-      "id": "sdk",
-      "name": "sdk",
-      "measures": {
-        "total_code": "112236",
-        "total_data": "140432",
-        "total_functions": 974,
-        "total_units": 5
-      }
-    },
-    {
       "id": "tm1",
       "name": "tm1",
       "measures": {
@@ -16056,13 +16047,23 @@
         "total_code": "358548",
         "matched_code": "50132",
         "matched_code_percent": 13.981949,
-        "total_data": "489932",
+        "total_data": "489544",
         "matched_data": "88408",
-        "matched_data_percent": 18.044952,
+        "matched_data_percent": 18.059256,
         "total_functions": 1009,
         "matched_functions": 470,
         "matched_functions_percent": 46.580772,
         "total_units": 83
+      }
+    },
+    {
+      "id": "sdk",
+      "name": "sdk",
+      "measures": {
+        "total_code": "112236",
+        "total_data": "140432",
+        "total_functions": 974,
+        "total_units": 5
       }
     }
   ]

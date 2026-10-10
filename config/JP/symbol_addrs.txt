@@ -2620,8 +2620,8 @@ sdb                                      = 0x80194d10;
 rdb                                      = 0x80194e10;
 gHierNodes                               = 0x80194f10; // size:0x3E8
 location                                 = 0x801952f8; // size:0xBB8
-matPtrs                                  = 0x80195eb0;
-worldToTp                                = 0x80195fc8;
+matPtrs                                  = 0x80195eb0; // size:0x118
+worldToTp                                = 0x80195fc8; // size:0x6C
 // `tmpResult` (static local of `HdPntTest`, emitted as `tmpResult.24`)
 // TODO: restore the original name once the bss is migrated to C
 hdp_tmpResult                            = 0x80196034;

@@ -18,6 +18,9 @@ static HdEnt* hdStack;
 static s32 hd_stackIdx;
 static s32 matCnt;
 
+static MATRIX* matPtrs[70];
+static s32 worldToTp[9][3];
+
 void hdPush(void* node, s32* v, s32 matIdx, s32 id0, s16 id1)
 {
     HdEnt* e;
