@@ -4,13 +4,13 @@
     "total_code": "470784",
     "matched_code": "50132",
     "matched_code_percent": 10.648621,
-    "total_data": "629976",
-    "matched_data": "88408",
-    "matched_data_percent": 14.03355,
+    "total_data": "634456",
+    "matched_data": "92888",
+    "matched_data_percent": 14.640574,
     "total_functions": 1983,
     "matched_functions": 470,
     "matched_functions_percent": 23.701462,
-    "total_units": 88
+    "total_units": 87
   },
   "units": [
     {
@@ -97,9 +97,9 @@
         "total_code": "4584",
         "matched_code": "156",
         "matched_code_percent": 3.4031413,
-        "total_data": "5572",
-        "matched_data": "5524",
-        "matched_data_percent": 99.13855,
+        "total_data": "10052",
+        "matched_data": "10004",
+        "matched_data_percent": 99.522484,
         "total_functions": 17,
         "matched_functions": 6,
         "matched_functions_percent": 35.294117,
@@ -108,7 +108,7 @@
       "sections": [
         {
           "name": ".bss",
-          "size": "5460",
+          "size": "9940",
           "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
@@ -15510,42 +15510,11 @@
       }
     },
     {
-      "name": "tm1/fov",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "4480",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "size": "4480",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/hier",
       "measures": {
         "fuzzy_match_percent": 100.0,
         "matched_code_percent": 100.0,
-        "total_data": "5460",
+        "total_data": "9940",
         "matched_functions_percent": 100.0,
         "complete_code_percent": 100.0,
         "total_units": 1
@@ -15553,7 +15522,7 @@
       "sections": [
         {
           "name": ".bss",
-          "size": "5460",
+          "size": "9940",
           "metadata": {}
         },
         {
@@ -16047,13 +16016,13 @@
         "total_code": "358548",
         "matched_code": "50132",
         "matched_code_percent": 13.981949,
-        "total_data": "489544",
-        "matched_data": "88408",
-        "matched_data_percent": 18.059256,
+        "total_data": "494024",
+        "matched_data": "92888",
+        "matched_data_percent": 18.802326,
         "total_functions": 1009,
         "matched_functions": 470,
         "matched_functions_percent": 46.580772,
-        "total_units": 83
+        "total_units": 82
       }
     },
     {

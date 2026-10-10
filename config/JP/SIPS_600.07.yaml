@@ -217,10 +217,7 @@ segments:
       # ------------------------------------------------
       # .bss segment
       # ------------------------------------------------
-      # Seems to be a separate, data-only TU. Contains `fovNorms` and `fovNorms2`
-      # which are both uninitialized and seemingly never accessed.
-      - {start: 0x94BC8, type: bss, vram: 0x8018C6E4, name: tm1/fov}
-      - {start: 0x94BC8, type: bss, vram: 0x8018D864, name: tm1/hier}
+      - {start: 0x94BC8, type: bss, vram: 0x8018C6E4, name: tm1/hier}
       - {start: 0x94BC8, type: .bss, vram: 0x8018EDB8, name: tm1/cs}
       - {start: 0x94BC8, type: bss, vram: 0x80194BF0, name: tm1/rt}
       - {start: 0x94BC8, type: .bss, vram: 0x80194F10, name: tm1/db}
