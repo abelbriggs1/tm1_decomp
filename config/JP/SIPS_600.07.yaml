@@ -131,7 +131,7 @@ segments:
       - [0x785F4, .data, tm1/cs]             # 0x8016FEAC
       - [0x78614, data, tm1/sound]          # 0x8016FECC
       - [0x78980, .data, tm1/timer]         # 0x80170238
-      - [0x78998, data, tm1/view]           # 0x80170250
+      - [0x78998, .data, tm1/view]           # 0x80170250
       - [0x78EF8, .data, tm1/font]           # 0x801707B0
       - [0x794DC, data, tm1/car_init]       # 0x80170D94
       - [0x794FC, data, tm1/interactives]   # 0x80170DB4
@@ -157,7 +157,7 @@ segments:
       - [0x946A4, .sdata, tm1/hdp]          # 0x8018BF5C
       - [0x946A8, .sdata, tm1/sound]         # 0x8018BF60
       - [0x946D0, .sdata, tm1/ua_sound]      # 0x8018BF88
-      - [0x946D8, sdata, tm1/view]          # 0x8018BF90
+      - [0x946D8, .sdata, tm1/view]          # 0x8018BF90
       - [0x946E8, .sdata, tm1/font]          # 0x8018BFA0
       - [0x946F0, .sdata, tm1/weapon]       # 0x8018BFA8
       - [0x94718, .sdata, tm1/ai_car]       # 0x8018BFD0
