@@ -202,8 +202,10 @@ class EnvironmentToolchain:
         Determine the `-G` level this translation unit should use during C
         compilation.
         """
-        # `-G0` default.
-        level = self.g_level.get(tu) or 0
+        # `-G8` default.
+        level = self.g_level.get(tu)
+        if level is None:
+            level = 8
         return f"-G{level}"
 
     def get_extra_flags(self, tu: str) -> list[str]:
@@ -271,39 +273,7 @@ class EnvironmentToolchain:
                 "--gap-fill 0x00",
             ],
             g_level={
-                "tm1/font": 8,
-                "tm1/ctlpad": 8,
-                "tm1/trigger_pts": 8,
-                "tm1/ai_car_update": 8,
-                "tm1/bridges": 8,
-                "tm1/curbs": 8,
-                "tm1/explosion": 8,
-                "tm1/potholes": 8,
-                "tm1/slick_spots": 8,
-                "tm1/ua": 8,
-                "tm1/ua_sound": 8,
-                "tm1/ua_dash": 8,
-                "tm1/ua_effect": 8,
-                "tm1/ua_sw": 8,
-                "tm1/weapon": 8,
-                "tm1/hd": 8,
-                "tm1/hdp": 8,
-                "tm1/cs": 8,
-                "tm1/rt": 8,
-                "tm1/sound": 8,
-                "tm1/view": 8,
-                "tm1/movie": 8,
-                "tm1/interactives": 8,
-                "tm1/db": 8,
-                "tm1/hier": 8,
-                "tm1/hier_sub": 8,
-                "tm1/hud": 8,
-                "tm1/targets": 8,
-                "tm1/shell": 8,
-                "tm1/screen": 8,
-                "tm1/car_init": 8,
-                "tm1/car_update": 8,
-                "tm1/ai_car": 8,
+                "tm1/timer": 0,
             },
             extra_flags={}
         )

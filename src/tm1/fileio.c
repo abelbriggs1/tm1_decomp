@@ -5,8 +5,6 @@
 #include <stdio.h>
 #include <sys/types.h>
 
-// TODO: Strange behavior; constant string thrown into `.sdata` but not accessed via
-// `$gp`. Both `-G0` and `-G8` produce the wrong result.
 #ifdef NON_MATCHING
 s32 fileioOpenFile(char* name, s32* sizeOut)
 {
