@@ -18,8 +18,7 @@ s32 gLightningTick = 0;
 s32 gLightningPeriod = 0;
 s32 gLightningOn = 0;
 
-static u16 gTVsTPage;
-static u16 D_8018C5FA;
+static u16 gTVsTPage[2];
 static s32 gLightningUoffset;
 static s32 gLightningVoffset;
 
@@ -217,7 +216,7 @@ void UAeffectUpdateTVs(void)
     buf = rtWhichDisplayBuffer();
     for (i = 0; i < gNumTVs; i++) {
         if (gTVpolyUVs[i] != 0) {
-            ((UVWord*)gTVpolyUVs[i])->page = (&gTVsTPage)[buf];
+            ((UVWord*)gTVpolyUVs[i])->page = gTVsTPage[buf];
         }
     }
 }
@@ -253,8 +252,8 @@ void UAeffectInitTV(EffNode* node)
     gNumTVs = gNumTVs + 1;
     node->index = gNumTVs;
     if (gNumTVs == 1) {
-        gTVsTPage = GetTPage(2, 0, 64, 0);
-        D_8018C5FA = GetTPage(2, 0, 384, 0);
+        gTVsTPage[0] = GetTPage(2, 0, 64, 0);
+        gTVsTPage[1] = GetTPage(2, 0, 384, 0);
     }
 }
 #else

@@ -117,7 +117,6 @@ typedef struct ObjRec {
     /* 0x1C */ s32 eoCnt;
 } ObjRec; /* 0x20 */
 
-extern s32 worldEP;
 extern HierEnt hierStack[150];
 extern MatInfo matInfo[90];
 extern SubPoly subPolyList[];

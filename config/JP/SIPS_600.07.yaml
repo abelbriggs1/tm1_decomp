@@ -162,7 +162,9 @@ segments:
       - [0x946F0, .sdata, tm1/weapon]       # 0x8018BFA8
       - [0x94718, .sdata, tm1/ai_car]       # 0x8018BFD0
       - [0x9471C, .sdata, tm1/car_update]   # 0x8018BFD4
-      - [0x94730, .sdata, tm1/interactives]  # 0x8018BFE8
+      - [0x94720, .sdata, tm1/bridges]      # 0x8018BFD8
+      - [0x94724, .sdata, tm1/potholes]     # 0x8018BFDC
+      - [0x94728, .sdata, tm1/interactives]  # 0x8018BFE0
       - [0x947E4, .sdata, tm1/explosion]     # 0x8018C09C
       - [0x947E8, sdata, tm1/screen]        # 0x8018C0A0
       - [0x94954, .sdata, tm1/ai_car_update] # 0x8018C20C
@@ -184,7 +186,7 @@ segments:
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C4D4, name: tm1/hdp}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C4DC, name: tm1/sound}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C4F8, name: tm1/hier_sub}
-      - {start: 0x94BC8, type: sbss, vram: 0x8018C508, name: tm1/view}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C508, name: tm1/view}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C524, name: tm1/weapon}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C538, name: tm1/ai_car}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C53C, name: tm1/interactives}
@@ -194,7 +196,7 @@ segments:
       - {start: 0x94BC8, type: sbss, vram: 0x8018C5D8, name: tm1/ua_dash}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C5F8, name: tm1/ua_effect}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C604, name: tm1/hud}
-      - {start: 0x94BC8, type: sbss, vram: 0x8018C624, name: tm1/ua}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C624, name: tm1/ua}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C670, name: tm1/shell}
       - {start: 0x94BC8, type: .sbss, vram: 0x8018C690, name: tm1/movie}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C6BC, name: sdk/sdk}
@@ -204,13 +206,8 @@ segments:
       # ------------------------------------------------
       # These are small, uninitialized global variables defined in headers
       # that were included in multiple files.
-      # Keep them together in a single TU for splitting purposes.
-      - {start: 0x94BC8, type: sbss, vram: 0x8018C6D0, name: tm1/scommon}
-      # - {start: 0x94BC8, type: scommon, vram: 0x8018C6D0, name: tm1/sound}
-      # - {start: 0x94BC8, type: scommon, vram: 0x8018C6D4, name: tm1/shell}
-      # - {start: 0x94BC8, type: scommon, vram: 0x8018C6D8, name: tm1/hier}
-      # - {start: 0x94BC8, type: scommon, vram: 0x8018C6DC, name: tm1/shell}
-      # - {start: 0x94BC8, type: scommon, vram: 0x8018C6E0, name: tm1/screen}
+      # `ld` allocates these itself; see `include/scommon.h`.
+      - {start: 0x94BC8, type: scommon, vram: 0x8018C6D0, name: tm1/scommon}
 
       # ------------------------------------------------
       # .bss segment

@@ -34,8 +34,6 @@
 
 extern void exit(s32 code);
 
-extern s32 gInfiniteWeapons;
-extern s32 gGodMode;
 extern s32 opponents[13];
 
 s16 gAccessCodeDigit = 0;

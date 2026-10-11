@@ -78,7 +78,7 @@ extern SVECTOR gEyeRot;
 extern SVECTOR gDeltaRot;
 extern s32 gStartLocation;
 
-extern POLY_FT4* Face;
+POLY_FT4* Face;
 
 extern char* screenCarPictures[12];
 extern ScreenArrow screenVehicleArrows[2];
@@ -1464,16 +1464,24 @@ s32 screenGetCarsEnum(s32 which)
     return -1;
 }
 
+#ifdef NON_MATCHING
 void screenSetVehicleHeading(s32 heading)
 {
     gHeading = (heading << 12) / 360;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenSetVehicleHeading);
+#endif
 
+#ifdef NON_MATCHING
 void screenResetFrameNum(void)
 {
     gFrameNum = 0;
     InLeft = 0;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenResetFrameNum);
+#endif
 
 #ifdef NON_MATCHING
 void screenSpinVehicle(Db* db, s32 carName, s32 force, s32 exclude)
@@ -1905,6 +1913,7 @@ char* screenGetMusicLabel(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenGetMusicLabel);
 #endif
 
+#ifdef NON_MATCHING
 s32 screenNextMusicChoice(s32 delta)
 {
     ua_music_vol += delta;
@@ -1915,7 +1924,11 @@ s32 screenNextMusicChoice(s32 delta)
     }
     return ua_music_vol;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenNextMusicChoice);
+#endif
 
+#ifdef NON_MATCHING
 void screenSetMusicVolume(void)
 {
     s32 vol;
@@ -1931,7 +1944,11 @@ void screenSetMusicVolume(void)
     } while (0);
     uasoundSetMusicVolume(vol);
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenSetMusicVolume);
+#endif
 
+#ifdef NON_MATCHING
 s32 screenGetMusicVolume(void)
 {
     s32 vol;
@@ -1943,6 +1960,9 @@ s32 screenGetMusicVolume(void)
     }
     return vol;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenGetMusicVolume);
+#endif
 
 #ifdef NON_MATCHING
 char* screenGetEffectsLabel(void)
@@ -1953,6 +1973,7 @@ char* screenGetEffectsLabel(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenGetEffectsLabel);
 #endif
 
+#ifdef NON_MATCHING
 s32 screenNextEffectsChoice(s32 delta)
 {
     ua_sfx_vol += delta;
@@ -1963,7 +1984,11 @@ s32 screenNextEffectsChoice(s32 delta)
     }
     return ua_sfx_vol;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenNextEffectsChoice);
+#endif
 
+#ifdef NON_MATCHING
 void screenSetEffectsVolume(void)
 {
     s32 vol;
@@ -1979,6 +2004,9 @@ void screenSetEffectsVolume(void)
     } while (0);
     uasoundSetMusicVolume(99 - vol);
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenSetEffectsVolume);
+#endif
 
 #ifdef NON_MATCHING
 char* screenGetDifficultyLabel(void)
@@ -1989,6 +2017,7 @@ char* screenGetDifficultyLabel(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenGetDifficultyLabel);
 #endif
 
+#ifdef NON_MATCHING
 s32 screenNextDifficulty(s32 delta)
 {
     gDifficulty += delta;
@@ -1999,6 +2028,9 @@ s32 screenNextDifficulty(s32 delta)
     }
     return gDifficulty;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenNextDifficulty);
+#endif
 
 #ifdef NON_MATCHING
 void screenLostALife(s32 unused_lives)
@@ -3136,11 +3168,15 @@ void screenEraseCursor(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenEraseCursor);
 #endif
 
+#ifdef NON_MATCHING
 void screenResetCursor(void)
 {
     gCursorOn = 0;
     gCursorCount = 0;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenResetCursor);
+#endif
 
 #ifdef NON_MATCHING
 s32 screenWaitForContinue(s32 frames, s32 limit)
@@ -3168,6 +3204,7 @@ s32 screenWaitForContinue(s32 frames, s32 limit)
 INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenWaitForContinue);
 #endif
 
+#ifdef NON_MATCHING
 void SetDefaultEndingParameters(void)
 {
     gEyePoint.vx = 40;
@@ -3184,7 +3221,11 @@ void SetDefaultEndingParameters(void)
     gDeltaTrans.vz = 0;
     gStartLocation = 240;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/screen", SetDefaultEndingParameters);
+#endif
 
+#ifdef NON_MATCHING
 void SetOutlawEndingParameters(void)
 {
     gEyePoint.vx = 0;
@@ -3201,7 +3242,11 @@ void SetOutlawEndingParameters(void)
     gDeltaTrans.vz = 0;
     gStartLocation = -1280;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/screen", SetOutlawEndingParameters);
+#endif
 
+#ifdef NON_MATCHING
 void SetRoadKillEndingParameters(void)
 {
     gEyePoint.vx = 0;
@@ -3218,6 +3263,9 @@ void SetRoadKillEndingParameters(void)
     gDeltaTrans.vz = 0;
     gStartLocation = -480;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/screen", SetRoadKillEndingParameters);
+#endif
 
 #ifdef NON_MATCHING
 void screenCarEnding(s32 which)

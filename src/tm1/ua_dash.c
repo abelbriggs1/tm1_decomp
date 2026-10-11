@@ -122,6 +122,7 @@ void UAdashHealthColor(s32 tier, POLY_G4* p)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", UAdashHealthColor);
 #endif
 
+#ifdef NON_MATCHING
 s32 UAdashTierFromPercentageOfHealth(s32 pct, s32 setHoles)
 {
     if (pct < 10) {
@@ -147,16 +148,27 @@ s32 UAdashTierFromPercentageOfHealth(s32 pct, s32 setHoles)
     }
     return 3;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", UAdashTierFromPercentageOfHealth);
+#endif
 
+#ifdef NON_MATCHING
 void uadashMaxCarryCapacity(void)
 {
     gMaxCarryCapacity = 30;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", uadashMaxCarryCapacity);
+#endif
 
+#ifdef NON_MATCHING
 void uadashClearCarryCapacity(void)
 {
     gMaxCarryCapacity = 0;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", uadashClearCarryCapacity);
+#endif
 
 INCLUDE_RODATA("asm/nonmatchings/tm1/ua_dash", D_800FC1FC);
 
@@ -905,10 +917,14 @@ void uadashLoadCockpit(s32 car)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", uadashLoadCockpit);
 #endif
 
+#ifdef NON_MATCHING
 void UAdashSetDashboardDrawFlag(s32 flag)
 {
     gDisplayDashboard = flag;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", UAdashSetDashboardDrawFlag);
+#endif
 
 #ifdef NON_MATCHING
 void uadashInitSteeringWheel(GrObj* obj)
@@ -1366,11 +1382,16 @@ void UAdashDrawRearViewMirror(u32* ot)
     AddPrim(ot, &gDash[0].mirrors[3]);
 }
 
+#ifdef NON_MATCHING
 void uadashToggleRemainingCarsList(void)
 {
     gListRemainingCars ^= 1;
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", uadashToggleRemainingCarsList);
+#endif
 
+#ifdef NON_MATCHING
 void uadashListRemainingCars(u32* ot)
 {
     s32 sprOfs;
@@ -1399,6 +1420,9 @@ void uadashListRemainingCars(u32* ot)
         fontSetDefaultColor(2);
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", uadashListRemainingCars);
+#endif
 
 // TODO: This is `rodata` that requires data migration (string table),
 // and using `INCLUDE_RODATA()` (as we normally would) results in `gas` reordering

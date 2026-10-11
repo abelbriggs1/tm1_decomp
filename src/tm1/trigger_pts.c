@@ -2,6 +2,8 @@
 
 #include "tm1/trigger_pts.h"
 
+s16 numTriggerPoints;
+
 #ifdef NON_MATCHING
 void InitLevel1TriggerPoints(void)
 {

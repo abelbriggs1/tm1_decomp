@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 10.522873,
+    "fuzzy_match_percent": 10.269678,
     "total_code": "470784",
-    "matched_code": "49540",
-    "matched_code_percent": 10.522872,
-    "total_data": "614472",
-    "matched_data": "95176",
-    "matched_data_percent": 15.48907,
+    "matched_code": "48348",
+    "matched_code_percent": 10.269678,
+    "total_data": "614348",
+    "matched_data": "95420",
+    "matched_data_percent": 15.531914,
     "total_functions": 1983,
-    "matched_functions": 467,
-    "matched_functions_percent": 23.550177,
-    "total_units": 73
+    "matched_functions": 449,
+    "matched_functions_percent": 22.64246,
+    "total_units": 70
   },
   "units": [
     {
@@ -2564,8 +2564,8 @@
         "matched_code": "156",
         "matched_code_percent": 3.4421887,
         "total_data": "1644",
-        "matched_data": "1512",
-        "matched_data_percent": 91.9708,
+        "matched_data": "1540",
+        "matched_data_percent": 93.673965,
         "total_functions": 31,
         "matched_functions": 6,
         "matched_functions_percent": 19.354837,
@@ -2592,6 +2592,7 @@
         {
           "name": ".sbss",
           "size": "28",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
@@ -3881,7 +3882,9 @@
         "total_code": "26028",
         "matched_code": "640",
         "matched_code_percent": 2.4588904,
-        "total_data": "40",
+        "total_data": "24",
+        "matched_data": "4",
+        "matched_data_percent": 16.666668,
         "total_functions": 32,
         "matched_functions": 4,
         "matched_functions_percent": 12.5,
@@ -3905,8 +3908,8 @@
         },
         {
           "name": ".sdata",
-          "size": "20",
-          "fuzzy_match_percent": 94.73685,
+          "size": "4",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
@@ -4503,11 +4506,12 @@
         "total_code": "14576",
         "matched_code": "4272",
         "matched_code_percent": 29.308453,
+        "total_data": "4",
+        "matched_data": "4",
         "matched_data_percent": 100.0,
         "total_functions": 7,
         "matched_functions": 5,
         "matched_functions_percent": 71.42857,
-        "complete_data_percent": 100.0,
         "total_units": 1
       },
       "sections": [
@@ -4518,6 +4522,12 @@
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "4",
           "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
@@ -4591,11 +4601,12 @@
         "total_code": "1060",
         "matched_code": "1060",
         "matched_code_percent": 100.0,
+        "total_data": "4",
+        "matched_data": "4",
         "matched_data_percent": 100.0,
         "total_functions": 7,
         "matched_functions": 7,
         "matched_functions_percent": 100.0,
-        "complete_data_percent": 100.0,
         "total_units": 1
       },
       "sections": [
@@ -4606,6 +4617,12 @@
         },
         {
           "name": ".data",
+          "fuzzy_match_percent": 100.0,
+          "metadata": {}
+        },
+        {
+          "name": ".sdata",
+          "size": "4",
           "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
@@ -4847,9 +4864,9 @@
         "total_code": "19484",
         "matched_code": "1296",
         "matched_code_percent": 6.651612,
-        "total_data": "3340",
-        "matched_data": "2084",
-        "matched_data_percent": 62.39521,
+        "total_data": "3348",
+        "matched_data": "2092",
+        "matched_data_percent": 62.48506,
         "total_functions": 42,
         "matched_functions": 18,
         "matched_functions_percent": 42.857143,
@@ -4881,7 +4898,7 @@
         },
         {
           "name": ".sdata",
-          "size": "180",
+          "size": "188",
           "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
@@ -5624,16 +5641,16 @@
     {
       "name": "tm1/screen",
       "measures": {
-        "fuzzy_match_percent": 10.72261,
+        "fuzzy_match_percent": 8.554778,
         "total_code": "34320",
-        "matched_code": "3680",
-        "matched_code_percent": 10.72261,
+        "matched_code": "2936",
+        "matched_code_percent": 8.554778,
         "total_data": "4228",
-        "matched_data": "1012",
-        "matched_data_percent": 23.935667,
+        "matched_data": "1100",
+        "matched_data_percent": 26.017029,
         "total_functions": 95,
-        "matched_functions": 37,
-        "matched_functions_percent": 38.94737,
+        "matched_functions": 25,
+        "matched_functions_percent": 26.31579,
         "total_units": 1
       },
       "sections": [
@@ -5656,6 +5673,7 @@
         {
           "name": ".sbss",
           "size": "88",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
@@ -5666,7 +5684,7 @@
         {
           "name": ".text",
           "size": "34320",
-          "fuzzy_match_percent": 10.72261,
+          "fuzzy_match_percent": 8.554778,
           "metadata": {}
         }
       ],
@@ -5786,14 +5804,12 @@
         {
           "name": "screenSetVehicleHeading",
           "size": "48",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "12508"
         },
         {
           "name": "screenResetFrameNum",
           "size": "16",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "12556"
         },
@@ -5856,21 +5872,18 @@
         {
           "name": "screenNextMusicChoice",
           "size": "60",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "16788"
         },
         {
           "name": "screenSetMusicVolume",
           "size": "60",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "16848"
         },
         {
           "name": "screenGetMusicVolume",
           "size": "36",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "16908"
         },
@@ -5883,14 +5896,12 @@
         {
           "name": "screenNextEffectsChoice",
           "size": "60",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "16976"
         },
         {
           "name": "screenSetEffectsVolume",
           "size": "64",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17036"
         },
@@ -5903,7 +5914,6 @@
         {
           "name": "screenNextDifficulty",
           "size": "64",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17132"
         },
@@ -6093,7 +6103,6 @@
         {
           "name": "screenResetCursor",
           "size": "16",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "28116"
         },
@@ -6106,21 +6115,18 @@
         {
           "name": "SetDefaultEndingParameters",
           "size": "108",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "28300"
         },
         {
           "name": "SetOutlawEndingParameters",
           "size": "108",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "28408"
         },
         {
           "name": "SetRoadKillEndingParameters",
           "size": "104",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "28516"
         },
@@ -6515,16 +6521,16 @@
     {
       "name": "tm1/ua_dash",
       "measures": {
-        "fuzzy_match_percent": 4.724005,
+        "fuzzy_match_percent": 1.8485237,
         "total_code": "15580",
-        "matched_code": "736",
-        "matched_code_percent": 4.724005,
+        "matched_code": "288",
+        "matched_code_percent": 1.8485237,
         "total_data": "5788",
-        "matched_data": "5176",
-        "matched_data_percent": 89.4264,
+        "matched_data": "5208",
+        "matched_data_percent": 89.97926,
         "total_functions": 28,
-        "matched_functions": 9,
-        "matched_functions_percent": 32.142857,
+        "matched_functions": 3,
+        "matched_functions_percent": 10.714286,
         "total_units": 1
       },
       "sections": [
@@ -6547,6 +6553,7 @@
         {
           "name": ".sbss",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
@@ -6557,7 +6564,7 @@
         {
           "name": ".text",
           "size": "15580",
-          "fuzzy_match_percent": 4.724005,
+          "fuzzy_match_percent": 1.8485237,
           "metadata": {}
         }
       ],
@@ -6577,21 +6584,18 @@
         {
           "name": "UAdashTierFromPercentageOfHealth",
           "size": "116",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "392"
         },
         {
           "name": "uadashMaxCarryCapacity",
           "size": "16",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "508"
         },
         {
           "name": "uadashClearCarryCapacity",
           "size": "12",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "524"
         },
@@ -6660,7 +6664,6 @@
         {
           "name": "UAdashSetDashboardDrawFlag",
           "size": "12",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "9684"
         },
@@ -6728,14 +6731,12 @@
         {
           "name": "uadashToggleRemainingCarsList",
           "size": "24",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "15288"
         },
         {
           "name": "uadashListRemainingCars",
           "size": "268",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "15312"
         }
@@ -7245,8 +7246,8 @@
         "matched_code": "2424",
         "matched_code_percent": 10.309629,
         "total_data": "16060",
-        "matched_data": "15128",
-        "matched_data_percent": 94.19676,
+        "matched_data": "15204",
+        "matched_data_percent": 94.66998,
         "total_functions": 95,
         "matched_functions": 31,
         "matched_functions_percent": 32.63158,
@@ -7273,6 +7274,7 @@
         {
           "name": ".sbss",
           "size": "76",
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         },
         {
@@ -14933,41 +14935,6 @@
       }
     },
     {
-      "name": "tm1/view",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "28",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sbss",
-          "size": "28",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/screen",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15038,41 +15005,6 @@
       }
     },
     {
-      "name": "tm1/ua",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "76",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sbss",
-          "size": "76",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "sdk/sdk",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15104,41 +15036,6 @@
       "metadata": {
         "progress_categories": [
           "sdk"
-        ]
-      }
-    },
-    {
-      "name": "tm1/scommon",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "20",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sbss",
-          "size": "20",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
         ]
       }
     },
@@ -15549,23 +15446,6 @@
   "version": 2,
   "categories": [
     {
-      "id": "tm1",
-      "name": "tm1",
-      "measures": {
-        "fuzzy_match_percent": 13.816839,
-        "total_code": "358548",
-        "matched_code": "49540",
-        "matched_code_percent": 13.816839,
-        "total_data": "474040",
-        "matched_data": "95176",
-        "matched_data_percent": 20.077631,
-        "total_functions": 1009,
-        "matched_functions": 467,
-        "matched_functions_percent": 46.283447,
-        "total_units": 68
-      }
-    },
-    {
       "id": "sdk",
       "name": "sdk",
       "measures": {
@@ -15573,6 +15453,23 @@
         "total_data": "140432",
         "total_functions": 974,
         "total_units": 5
+      }
+    },
+    {
+      "id": "tm1",
+      "name": "tm1",
+      "measures": {
+        "fuzzy_match_percent": 13.484387,
+        "total_code": "358548",
+        "matched_code": "48348",
+        "matched_code_percent": 13.484387,
+        "total_data": "473916",
+        "matched_data": "95420",
+        "matched_data_percent": 20.13437,
+        "total_functions": 1009,
+        "matched_functions": 449,
+        "matched_functions_percent": 44.499504,
+        "total_units": 65
       }
     }
   ]

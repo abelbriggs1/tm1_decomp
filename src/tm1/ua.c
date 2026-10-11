@@ -173,21 +173,20 @@ static s32 gVar3A4 = 0;
 static s32 gVar3A8 = 0;
 static u16 gVrEnabled[2] = { 1, 1 };
 
-// TODO: Cannot be matched yet due to `maspsx` `.sbss` misalignment.
-extern u8 gInitPlayerWeapons[4];
-extern u8 skipLevel;
-extern SVECTOR zeroRot;
-extern Cs* playerCs[2];
-extern u16 playerIndexToCarIndex[2];
-extern s32 padConfig[2];
-extern s32 playerCar[2];
-extern s32 aiBegTics;
-extern s32 aiEndTics;
-extern Cs* camera[2];
-extern Cs* helicoptorCS;
-extern s32 playerBegTics;
-extern s32 playerEndTics;
-extern s32 gAICars;
+static u8 gInitPlayerWeapons[4];
+static u8 skipLevel;
+static SVECTOR zeroRot;
+static Cs* playerCs[2];
+static u16 playerIndexToCarIndex[2];
+static s32 padConfig[2];
+static s32 playerCar[2];
+static s32 aiBegTics;
+static s32 aiEndTics;
+static Cs* camera[2];
+static Cs* helicoptorCS;
+static s32 playerBegTics;
+static s32 playerEndTics;
+static s32 gAICars;
 
 static VECTOR3 zeroTrans;
 static s32 carTypes[13];

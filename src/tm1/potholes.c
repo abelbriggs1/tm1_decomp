@@ -4,6 +4,9 @@
 
 #include "tm1/potholes.h"
 
+s16 numPotHoles = 0;
+s16 numCheckPotHoles = 0;
+
 // TODO: Fix up the loops in this file and remove `do while`
 // barriers if possible.
 

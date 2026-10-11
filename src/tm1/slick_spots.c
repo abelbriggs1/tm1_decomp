@@ -4,6 +4,8 @@
 
 #include "tm1/slick_spots.h"
 
+s16 numSlickSpots;
+
 void InitLevel1SlickSpots(void)
 {
     numSlickSpots = 0;

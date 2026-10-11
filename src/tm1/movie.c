@@ -31,15 +31,12 @@ s32 lastW = 0;
 s32 lastH = 0;
 
 static s32 SliceSize;
-static s16 SliceX;
-static s16 SliceY;
-static s16 SliceW;
-static s16 SliceH;
+static RECT SliceRect;
 static u16 gSectorsPer;
 static u_long* mdec_bs;
 static u_long* mdec_rl;
 static u_long* mdec_image;
-static u8 gIsRGB24;
+static s32 gIsRGB24;
 static CdlLOC loc;
 static s32 Rewind_Switch;
 static u_long* sect_buff;
@@ -82,8 +79,8 @@ s32 moviePlaySingleTracLogoMovie(u_long* buf, char* name)
     nsec = gSectorsPer;
     fileioReadFile(fd, buf + 512, (nsec - 1) << 11);
     SliceSize = 0x780;
-    SliceW = 16;
-    SliceH = 240;
+    SliceRect.w = 16;
+    SliceRect.h = 240;
     pos = gSectorsPer << 11;
     SetDefDispEnv(&Disp[0], 0, 0, 320, 240);
     SetDefDispEnv(&Disp[1], 320, 0, 320, 240);
@@ -129,14 +126,14 @@ void disp_mdec(u_long* src, s32* pflip)
     }
     DecDCTvlc(mdec_bs, mdec_rl);
     DecDCTin(mdec_rl, 0);
-    SliceX = (*pflip != 0) ? 320 : 0;
-    SliceY = 0;
-    i = SliceX + 320;
-    while (SliceX < i) {
+    SliceRect.x = (*pflip != 0) ? 320 : 0;
+    SliceRect.y = 0;
+    i = SliceRect.x + 320;
+    while (SliceRect.x < i) {
         DecDCTout(mdec_image, SliceSize);
         DecDCToutSync(0);
-        LoadImage((RECT*)&SliceX, mdec_image);
-        SliceX = SliceX + SliceW;
+        LoadImage((RECT*)&SliceRect.x, mdec_image);
+        SliceRect.x = SliceRect.x + SliceRect.w;
     }
     VSync(0);
     PutDispEnv(&Disp[*pflip]);

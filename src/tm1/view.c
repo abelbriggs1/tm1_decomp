@@ -267,11 +267,10 @@ static FovDat fovDat[14] = {
     },
 };
 
-// TODO: Cannot be matched yet due to `maspsx` `.sbss` misalignment.
-extern ViewNode* ownship;
-extern ViewNode* view[2];
-extern ViewDb* curViewDb[2];
-extern s32 curFovEntry[2];
+static ViewNode* ownship;
+static ViewNode* view[2];
+static ViewDb* curViewDb[2];
+static s32 curFovEntry[2];
 
 extern MATRIX swap;
 extern EyeTrans worldSpaceTrans[2];

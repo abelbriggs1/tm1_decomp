@@ -4,6 +4,8 @@
 
 #include "tm1/curbs.h"
 
+s16 numCurbs;
+
 void InitLevel1Curbs(void)
 {
     numCurbs = 0;

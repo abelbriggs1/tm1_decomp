@@ -82,6 +82,10 @@ typedef struct {
     /* 0x04 */ s32 pos[3];
 } HealthStand;
 
+s16 numTriggerPoints = 0;
+s16 numCurbs = 0;
+s16 numSlickSpots = 0;
+
 // clang-format off
 static s32 weaponPickupAmount[20] = {
     4,    2, 2, 2,

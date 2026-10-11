@@ -45,10 +45,6 @@ static s32 CurPos;
 static s32 RepTime;
 static s32 cdInterruptLoc;
 
-// TODO: Variable in `scommon`, doesn't get linked/positioned correctly.
-// Many differences in codegen caused by this variable.
-extern s16 soundVabIds[2];
-
 extern s16 D_8016FEFC[];
 
 // extern CdlLOC toc[100];
