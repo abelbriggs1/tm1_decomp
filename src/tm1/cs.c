@@ -60,16 +60,12 @@ Cs* csGetCsList(void)
     return csList;
 }
 
-#ifdef NON_MATCHING
 void csAddToCsList(Cs* cs)
 {
     Cs* old = csList;
     csList = cs;
     cs->next = old;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/cs", csAddToCsList);
-#endif
 
 #ifdef NON_MATCHING
 Cs* csCreate(void)
@@ -119,14 +115,10 @@ Cs* csCreate(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/cs", csCreate);
 #endif
 
-#ifdef NON_MATCHING
 void csSetEpNode(Cs* cs, void* node)
 {
     cs->epNode = node;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/cs", csSetEpNode);
-#endif
 
 void csSetNumInActiveDb(s32 n)
 {
@@ -146,11 +138,7 @@ Cs* csGetWorldCs(void)
     return world;
 }
 
-#ifdef NON_MATCHING
 void csSetDrawMode(Cs* cs, s32 mode)
 {
     cs->drawMode = mode & 0xFF;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/cs", csSetDrawMode);
-#endif

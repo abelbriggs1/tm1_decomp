@@ -66,7 +66,6 @@ void UAdashDrawDashboard(DVECTOR* pos)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", UAdashDrawDashboard);
 #endif
 
-#ifdef NON_MATCHING
 void UAdashHealthColor(s32 tier, POLY_G4* p)
 {
     u8 r0, g0, b0, r1, g1, b1;
@@ -118,9 +117,6 @@ void UAdashHealthColor(s32 tier, POLY_G4* p)
     p->g3 = g1;
     p->b3 = b1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", UAdashHealthColor);
-#endif
 
 #ifdef NON_MATCHING
 s32 UAdashTierFromPercentageOfHealth(s32 pct, s32 setHoles)
@@ -828,6 +824,7 @@ void uadashReloadSteeringWheel(u_long* tim)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", uadashReloadSteeringWheel);
 #endif
 
+#ifdef NON_MATCHING
 void uadashLoadHarleyTms(u_long* tims)
 {
     s32 count;
@@ -850,6 +847,9 @@ void uadashLoadHarleyTms(u_long* tims)
         len = *tims;
     }
 }
+#else
+INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", uadashLoadHarleyTms);
+#endif
 
 #ifdef NON_MATCHING
 void uadashLoadCockpit(s32 car)
@@ -1300,16 +1300,11 @@ void uadashInitHarley(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", uadashInitHarley);
 #endif
 
-#ifdef NON_MATCHING
 char* uadashGetCarSign(s32 car)
 {
     return gCarSignStrings[GetCarNumFromCarName(car)];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", uadashGetCarSign);
-#endif
 
-#ifdef NON_MATCHING
 void uadashInitRearViewMirror(void)
 {
     POLY_F4* p;
@@ -1335,9 +1330,6 @@ void uadashInitRearViewMirror(void)
     setRGB0(p, 0, 0, 0);
     SetSemiTrans(p, 0);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_dash", uadashInitRearViewMirror);
-#endif
 
 #ifdef NON_MATCHING
 void uadashInitBulletHoles(void)

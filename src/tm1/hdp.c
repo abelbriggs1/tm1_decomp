@@ -60,7 +60,6 @@ s32 hdpPop(HdpEnt** out)
     return hdp_stackIdx;
 }
 
-#ifdef NON_MATCHING
 void hdpSetNodeIds(s16* p0, s16* p1, HdpEnt* n, s16 id0, s16 id1)
 {
     if (id0 == 0) {
@@ -71,11 +70,7 @@ void hdpSetNodeIds(s16* p0, s16* p1, HdpEnt* n, s16 id0, s16 id1)
         *p1 = id1;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/hdp", hdpSetNodeIds);
-#endif
 
-#ifdef NON_MATCHING
 s32 hdpIsPtInSphere(s32* p, s32 rad, s32* c)
 {
     s32 d[3];
@@ -94,9 +89,6 @@ s32 hdpIsPtInSphere(s32* p, s32 rad, s32* c)
     }
     return 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/hdp", hdpIsPtInSphere);
-#endif
 
 #ifdef NON_MATCHING
 void hdpTraverse(Cs* cs, s32* pt, HdCsHit* res)
@@ -287,7 +279,6 @@ void hdpLod(HdLodNode* n, HdpEnt* e)
 INCLUDE_ASM("asm/nonmatchings/tm1/hdp", hdpLod);
 #endif
 
-#ifdef NON_MATCHING
 s32 hdpPntBox(HdBox* b, VECTOR* pos, s32* hit, s32 mode)
 {
     VECTOR p;
@@ -310,11 +301,7 @@ s32 hdpPntBox(HdBox* b, VECTOR* pos, s32* hit, s32 mode)
     }
     return *hit == 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/hdp", hdpPntBox);
-#endif
 
-#ifdef NON_MATCHING
 s32 hdpPntVolume(HdVol* n, VECTOR* pos, HdCsHit* res, s32 mode)
 {
     VECTOR p;
@@ -339,9 +326,6 @@ s32 hdpPntVolume(HdVol* n, VECTOR* pos, HdCsHit* res, s32 mode)
     }
     return res->hit == 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/hdp", hdpPntVolume);
-#endif
 
 #ifdef NON_MATCHING
 void hdpCtrlNode(HdpEnt* e, s16 id0, s16 id1)
@@ -401,7 +385,6 @@ s32 hdpInCtrlBox(HdBox* b, VECTOR* pos)
 INCLUDE_ASM("asm/nonmatchings/tm1/hdp", hdpInCtrlBox);
 #endif
 
-#ifdef NON_MATCHING
 void hdpSetHitTag(HdCsHit* r, s16 id0, s16 id1, HdpEnt* n)
 {
     if (id0 == 0) {
@@ -412,9 +395,6 @@ void hdpSetHitTag(HdCsHit* r, s16 id0, s16 id1, HdpEnt* n)
         r->tag1 = id1;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/hdp", hdpSetHitTag);
-#endif
 
 #ifdef NON_MATCHING
 HdCsHit* HdPntTest(s32 skip0, s32 skip1, VECTOR3* pt, s32* hitId)

@@ -113,7 +113,6 @@ void CarInitDynamics(PlayerCar* car)
 INCLUDE_ASM("asm/nonmatchings/tm1/car_init", CarInitDynamics);
 #endif
 
-#ifdef NON_MATCHING
 void InitMotionFlags(u8* flags)
 {
     flags[0] = 0;
@@ -145,11 +144,7 @@ void InitMotionFlags(u8* flags)
     flags[27] = 0;
     flags[29] = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car_init", InitMotionFlags);
-#endif
 
-#ifdef NON_MATCHING
 void InitWeapons(Car* car, CarWeap* weap, u8 isPlayer)
 {
     s32 id;
@@ -233,9 +228,6 @@ void InitWeapons(Car* car, CarWeap* weap, u8 isPlayer)
     carInitFlamethrowers();
     carInitTasers();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car_init", InitWeapons);
-#endif
 
 #ifdef NON_MATCHING
 void InitPlayerPositions(PlayerCar* car, u8 isP1)
@@ -1179,13 +1171,9 @@ void RecomputeCarDeltas(CarStats* stats)
 INCLUDE_ASM("asm/nonmatchings/tm1/car_init", RecomputeCarDeltas);
 #endif
 
-#ifdef NON_MATCHING
 void CarInitStrength(CarStats* stats, s32 strength)
 {
     stats->unkFC = strength;
     stats->unk100 = stats->unkFC;
     RecomputeCarDeltas(stats);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car_init", CarInitStrength);
-#endif

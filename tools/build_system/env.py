@@ -243,6 +243,7 @@ class EnvironmentToolchain:
                 "-funsigned-char",
                 "-fno-builtin",
                 "-fcommon",
+                "-fvolatile",
                 "-fgnu-linker",
                 "-mgas",
                 "-msoft-float",

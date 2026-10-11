@@ -178,7 +178,6 @@ void silenceUnusedVoices(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/sound", silenceUnusedVoices);
 #endif
 
-#ifdef NON_MATCHING
 void soundOff(Tone* t)
 {
     s32 noise;
@@ -194,11 +193,7 @@ void soundOff(Tone* t)
         soundDecActiveVoiceCount();
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/sound", soundOff);
-#endif
 
-#ifdef NON_MATCHING
 void dopplerAdjustTonePitch(Tone* t, u8* noteOut, u8* fineOut)
 {
     s32 pitch;
@@ -207,9 +202,6 @@ void dopplerAdjustTonePitch(Tone* t, u8* noteOut, u8* fineOut)
     *noteOut = pitch / 128;
     *fineOut = pitch - (*noteOut << 7);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/sound", dopplerAdjustTonePitch);
-#endif
 
 #ifdef NON_MATCHING
 void soundOn(Tone* t)
@@ -337,7 +329,6 @@ void soundPlaySound(Tone* t)
 INCLUDE_ASM("asm/nonmatchings/tm1/sound", soundPlaySound);
 #endif
 
-#ifdef NON_MATCHING
 void soundPlayAllRequests(s32 count, Tone** list)
 {
     s32 i;
@@ -350,11 +341,7 @@ void soundPlayAllRequests(s32 count, Tone** list)
         list[i]->unk6E = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/sound", soundPlayAllRequests);
-#endif
 
-#ifdef NON_MATCHING
 void swapInstances(Tone** list, s32 a, s32 b)
 {
     Tone* tmp;
@@ -365,9 +352,6 @@ void swapInstances(Tone** list, s32 a, s32 b)
     list[a] = list[b];
     list[b] = tmp;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/sound", swapInstances);
-#endif
 
 void soundRangeSortInstances(Tone** list, s32 lo, s32 hi)
 {
@@ -1386,7 +1370,6 @@ void soundProcessIds(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/sound", soundProcessIds);
 #endif
 
-#ifdef NON_MATCHING
 void soundForceAllSoundsOffNow(void)
 {
     Tone* t;
@@ -1410,9 +1393,6 @@ void soundForceAllSoundsOffNow(void)
     soundIdRequestIdx = -1;
     soundInitRequestBuffers();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/sound", soundForceAllSoundsOffNow);
-#endif
 
 u8 filterIds(s32 id)
 {
@@ -1470,7 +1450,6 @@ void soundStopPlayId(u32 id, s32 a1, s32 a2, s32 unused)
     }
 }
 
-#ifdef NON_MATCHING
 void adjustTonePitchByPercent(Tone* t, s32 percent)
 {
     u32 scaled;
@@ -1488,11 +1467,7 @@ void adjustTonePitchByPercent(Tone* t, s32 percent)
     t->fine = pitch - (t->note << 7);
     t->dirty = 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/sound", adjustTonePitchByPercent);
-#endif
 
-#ifdef NON_MATCHING
 void addToneToSingleSound(Tone* t, SingleSound* ss)
 {
     Tone* p;
@@ -1508,11 +1483,7 @@ void addToneToSingleSound(Tone* t, SingleSound* ss)
         ss->tones = t;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/sound", addToneToSingleSound);
-#endif
 
-#ifdef NON_MATCHING
 void deleteToneFromSingleSound(SingleSound* ss, Tone* t)
 {
     if (t->prev == NULL && t->next == NULL) {
@@ -1535,9 +1506,6 @@ void deleteToneFromSingleSound(SingleSound* ss, Tone* t)
     t->prev = NULL;
     t->next = NULL;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/sound", deleteToneFromSingleSound);
-#endif
 
 void addToneToTonesToPlayList(Tone* t)
 {
@@ -1554,7 +1522,6 @@ void addToneToTonesToPlayList(Tone* t)
     t->prevToPlay = tail;
 }
 
-#ifdef NON_MATCHING
 void deleteToneFromTonesToPlayList(Tone* t)
 {
     if (t->prevToPlay == NULL && t->nextToPlay == NULL) {
@@ -1579,9 +1546,6 @@ void deleteToneFromTonesToPlayList(Tone* t)
     t->prevToPlay = NULL;
     t->nextToPlay = NULL;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/sound", deleteToneFromTonesToPlayList);
-#endif
 
 void turnOffAndDeleteASingleSoundsTones(SingleSound* ss)
 {
@@ -1650,7 +1614,6 @@ Tone* mallocToneInstance(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/sound", mallocToneInstance);
 #endif
 
-#ifdef NON_MATCHING
 void freeToneInstance(Tone* t)
 {
     u32 lo;
@@ -1672,9 +1635,6 @@ void freeToneInstance(Tone* t)
         gToneNumFree++;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/sound", freeToneInstance);
-#endif
 
 s16* getProgVabProgs()
 {

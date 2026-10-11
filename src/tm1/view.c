@@ -278,69 +278,41 @@ extern EyeMat worldSpaceMat[2];
 
 extern void* sdk_memcpy();
 
-#ifdef NON_MATCHING
 s32 viewGetCurrentFOVH(s32 which)
 {
     return fovDat[curFovEntry[which]].fovh;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewGetCurrentFOVH);
-#endif
 
-#ifdef NON_MATCHING
 s32 viewGetCurrentHorzFOVH(s32 which)
 {
     return fovDat[curFovEntry[which]].fovh;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewGetCurrentHorzFOVH);
-#endif
 
-#ifdef NON_MATCHING
 s32 viewGetCurrentVertFOVH(s32 which)
 {
     return fovDat[curFovEntry[which]].vertFovh;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewGetCurrentVertFOVH);
-#endif
 
-#ifdef NON_MATCHING
 s32 viewGetCurrentFOVDegrees(s32 which)
 {
     return fovDat[curFovEntry[which]].fovDegrees;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewGetCurrentFOVDegrees);
-#endif
 
-#ifdef NON_MATCHING
 s32 viewGetCurrentFOVDegreesHorz(s32 which)
 {
     return fovDat[curFovEntry[which]].fovDegrees;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewGetCurrentFOVDegreesHorz);
-#endif
 
-#ifdef NON_MATCHING
 s32 viewGetCurrentFOVDegreesVert(s32 which)
 {
     return fovDat[curFovEntry[which]].fovDegreesVert;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewGetCurrentFOVDegreesVert);
-#endif
 
-#ifdef NON_MATCHING
 void viewGetScreenSize(s32* w, s32* h)
 {
     *w = fovDat[curFovEntry[0]].screenWidth;
     *h = fovDat[curFovEntry[0]].screenHeight;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewGetScreenSize);
-#endif
 
 #ifdef NON_MATCHING
 void viewToggleView()
@@ -591,14 +563,10 @@ void viewProc(s32 which)
 INCLUDE_ASM("asm/nonmatchings/tm1/view", viewProc);
 #endif
 
-#ifdef NON_MATCHING
 s32 viewGetCurrentFovSet(s32 which)
 {
     return curFovEntry[which];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewGetCurrentFovSet);
-#endif
 
 #ifdef NON_MATCHING
 void viewSetParent(void* node, s32 which)
@@ -617,7 +585,6 @@ void viewSetParent(void* node, s32 which)
 INCLUDE_ASM("asm/nonmatchings/tm1/view", viewSetParent);
 #endif
 
-#ifdef NON_MATCHING
 void viewSetSky(ViewNode* node)
 {
     sky[0] = node;
@@ -628,20 +595,12 @@ void viewSetSky(ViewNode* node)
         csSetEpNode(sky[1], node->epNode);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewSetSky);
-#endif
 
-#ifdef NON_MATCHING
 ViewNode* viewGetSky(s32 which)
 {
     return sky[which];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewGetSky);
-#endif
 
-#ifdef NON_MATCHING
 void viewSetSkyPosition(s32* pos, s32 which)
 {
     if (sky[which] != 0) {
@@ -650,58 +609,35 @@ void viewSetSkyPosition(s32* pos, s32 which)
         sky[which]->pos.vz = pos[2];
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewSetSkyPosition);
-#endif
 
-#ifdef NON_MATCHING
 void viewGetDeltaRot(void* dst, s32 which)
 {
     sdk_memcpy(dst, &view[which]->rot, 8);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewGetDeltaRot);
-#endif
 
-#ifdef NON_MATCHING
 void viewGetDeltaTrans(void* dst, s32 which)
 {
     sdk_memcpy(dst, &view[which]->pos, 12);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewGetDeltaTrans);
-#endif
 
-#ifdef NON_MATCHING
 void viewSetDeltaRot(void* src, s32 which)
 {
     if (view[which] != 0) {
         sdk_memcpy(&view[which]->rot, src, 8);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewSetDeltaRot);
-#endif
 
-#ifdef NON_MATCHING
 void viewSetDeltaTrans(void* src, s32 which)
 {
     if (view[which] != 0) {
         sdk_memcpy(&view[which]->pos, src, 12);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewSetDeltaTrans);
-#endif
 
-#ifdef NON_MATCHING
 void* viewGetOwnship(s32 which)
 {
     return view[which]->parent;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewGetOwnship);
-#endif
 
 #ifdef NON_MATCHING
 void viewSetBgColor()
@@ -723,15 +659,11 @@ void viewSetBgColor()
 INCLUDE_ASM("asm/nonmatchings/tm1/view", viewSetBgColor);
 #endif
 
-#ifdef NON_MATCHING
 void viewGetCenter(s32 which, s32* cx, s32* cy)
 {
     *cx = fovDat[curFovEntry[which]].centerWidth / 2;
     *cy = fovDat[curFovEntry[which]].centerHeight / 2;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/view", viewGetCenter);
-#endif
 
 EyeTrans* viewGetEyeTrans(s32 which)
 {

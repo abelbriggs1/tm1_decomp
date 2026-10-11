@@ -979,7 +979,6 @@ void CheckForCurb(CarTire* tire, CarCollision* collision)
 INCLUDE_ASM("asm/nonmatchings/tm1/car_update", CheckForCurb);
 #endif
 
-#ifdef NON_MATCHING
 void CheckSlickSpots(Car* car, u8 isPlayer)
 {
     CarMotion* m;
@@ -1026,9 +1025,6 @@ void CheckSlickSpots(Car* car, u8 isPlayer)
         return;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car_update", CheckSlickSpots);
-#endif
 
 #ifdef NON_MATCHING
 void CheckHealthStands(Car* car, u8 isPlayer)
@@ -1490,7 +1486,6 @@ void UpdateRollingCar(Car* car, u8 isPlayer)
 INCLUDE_ASM("asm/nonmatchings/tm1/car_update", UpdateRollingCar);
 #endif
 
-#ifdef NON_MATCHING
 void InitTireInfo(CarTire* tires)
 {
     tires[0].unk0 = 0;
@@ -1590,11 +1585,7 @@ void InitTireInfo(CarTire* tires)
     tires[3].unk14 = 0;
     tires[3].unk40 = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car_update", InitTireInfo);
-#endif
 
-#ifdef NON_MATCHING
 void InitTireGroup(CarTire* tires, s16 group)
 {
     tires[0].unk10 = group;
@@ -1618,9 +1609,6 @@ void InitTireGroup(CarTire* tires, s16 group)
     tires[2].unk0 = 1;
     tires[3].unk0 = 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car_update", InitTireGroup);
-#endif
 
 void UpdateCarOnSlickSpot(Car* car, u8 isPlayer)
 {

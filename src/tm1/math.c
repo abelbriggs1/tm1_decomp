@@ -33,7 +33,6 @@ void mathMulVecLong(volatile MATRIX* lhs, VECTOR* rhs, volatile VECTOR* out)
         / FXP_ONE;
 }
 
-#ifdef NON_MATCHING
 void mathMulTransVecShort(volatile MATRIX* lhs, SVECTOR* rhs, volatile VECTOR* out)
 {
     out->vx = ((rhs->vx * lhs->m[0][0]) + (rhs->vy * lhs->m[1][0]) + (rhs->vz * lhs->m[2][0]))
@@ -43,9 +42,6 @@ void mathMulTransVecShort(volatile MATRIX* lhs, SVECTOR* rhs, volatile VECTOR* o
     out->vz = ((rhs->vx * lhs->m[0][2]) + (rhs->vy * lhs->m[1][2]) + (rhs->vz * lhs->m[2][2]))
         / FXP_ONE;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/math", mathMulTransVecShort);
-#endif // NON_MATCHING
 
 #ifdef NON_MATCHING
 void mathNormalizeVec(volatile VECTOR* in, volatile VECTOR* out)

@@ -71,7 +71,6 @@ s32 hdPop(HdEnt** out)
     return hd_stackIdx;
 }
 
-#ifdef NON_MATCHING
 void hdSetNodeIds(s16* out0, s16* out1, HdEnt* e, s16 id0, s16 id1)
 {
     if (id0 == 0) {
@@ -82,11 +81,7 @@ void hdSetNodeIds(s16* out0, s16* out1, HdEnt* e, s16 id0, s16 id1)
         *out1 = id1;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/hd", hdSetNodeIds);
-#endif
 
-#ifdef NON_MATCHING
 s32 hdIsPtInSphere(VECTOR* pt, s32 radius, VECTOR* centre, s32 slack)
 {
     u32 d[3];
@@ -104,9 +99,6 @@ s32 hdIsPtInSphere(VECTOR* pt, s32 radius, VECTOR* centre, s32 slack)
     }
     return 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/hd", hdIsPtInSphere);
-#endif
 
 #ifdef NON_MATCHING
 void hdTraverse(Cs* cs, s32* pt, HdCsHit* res, s32 slack)
@@ -725,7 +717,6 @@ s32 hdInCtrlBox(HdBox* box, s32* pt)
 INCLUDE_ASM("asm/nonmatchings/tm1/hd", hdInCtrlBox);
 #endif
 
-#ifdef NON_MATCHING
 void hdSetHitTag(HdCsHit* hit, s16 id0, s16 id1, HdEnt* e)
 {
     if (id0 == 0) {
@@ -736,9 +727,6 @@ void hdSetHitTag(HdCsHit* hit, s16 id0, s16 id1, HdEnt* e)
         hit->tag1 = id1;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/hd", hdSetHitTag);
-#endif
 
 #ifdef NON_MATCHING
 void HdCsTest(Cs* cs, HdCsHit* hit, s32 doWorld, MATRIX* otherMat, s32* otherPos)

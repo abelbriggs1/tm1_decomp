@@ -207,7 +207,6 @@ void UAeffectUpdateMonsterTruckWheels(s32 speed)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua_effect", UAeffectUpdateMonsterTruckWheels);
 #endif
 
-#ifdef NON_MATCHING
 void UAeffectUpdateTVs(void)
 {
     s32 buf;
@@ -220,9 +219,6 @@ void UAeffectUpdateTVs(void)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_effect", UAeffectUpdateTVs);
-#endif
 
 #ifdef NON_MATCHING
 void UAeffectInitTV(EffNode* node)
@@ -260,7 +256,6 @@ void UAeffectInitTV(EffNode* node)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua_effect", UAeffectInitTV);
 #endif
 
-#ifdef NON_MATCHING
 void UAeffectInitMonsterTruckWheel(WheelNode* node)
 {
     s32 id;
@@ -276,9 +271,6 @@ void UAeffectInitMonsterTruckWheel(WheelNode* node)
         gTruckWheel[id - 1] = node;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_effect", UAeffectInitMonsterTruckWheel);
-#endif
 
 void UAeffectUpdateSpecialEffects(void)
 {
@@ -289,7 +281,6 @@ void UAeffectUpdateSpecialEffects(void)
     UAeffectUpdateHitLights();
 }
 
-#ifdef NON_MATCHING
 void UAeffectUpdateCarSpeed(s32 carId, s32 speed)
 {
     if (carId == 40) {
@@ -305,9 +296,6 @@ void UAeffectUpdateCarSpeed(s32 carId, s32 speed)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_effect", UAeffectUpdateCarSpeed);
-#endif
 
 void UAeffectActHitLights(Cs* node, s32 count, u8* unused_rgb)
 {

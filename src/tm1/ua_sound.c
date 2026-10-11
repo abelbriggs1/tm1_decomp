@@ -1085,7 +1085,6 @@ void soundFlushRequestStopBuffers(void)
 {
 }
 
-#ifdef NON_MATCHING
 void initRequestBuffer(SoundRequest* req)
 {
     req->dist = SOUND_REQUEST_NO_DIST;
@@ -1097,9 +1096,6 @@ void initRequestBuffer(SoundRequest* req)
     req->arg5 = 0;
     req->unk1C = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_sound", initRequestBuffer);
-#endif
 
 void soundInitRequestBuffers(void)
 {

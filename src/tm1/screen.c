@@ -1039,9 +1039,6 @@ void screenShowCarBio(s32 carName, s32 pad)
     uasoundPlayMenuSelectFlush();
 }
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/screen", D_800FBA7C);
-
-#ifdef NON_MATCHING
 s32 screenHoldForTwoPlayerControl(s32* pa, s32* pb, u_long* image)
 {
     u16 blink;
@@ -1087,9 +1084,6 @@ s32 screenHoldForTwoPlayerControl(s32* pa, s32* pb, u_long* image)
     soundForceAllSoundsOffNow();
     return ret;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenHoldForTwoPlayerControl);
-#endif
 
 INCLUDE_RODATA("asm/nonmatchings/tm1/screen", D_800FBA90);
 
@@ -1566,7 +1560,6 @@ void screenSpinVehicle(Db* db, s32 carName, s32 force, s32 exclude)
 INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenSpinVehicle);
 #endif
 
-#ifdef NON_MATCHING
 void screenGrayedScreen(void)
 {
     POLY_F4 poly;
@@ -1583,9 +1576,6 @@ void screenGrayedScreen(void)
     screenSetEnv();
     DrawPrim(&poly);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenGrayedScreen);
-#endif
 
 INCLUDE_RODATA("asm/nonmatchings/tm1/screen", D_800FBB94);
 
@@ -1895,14 +1885,10 @@ char* screenChooseControls(s32 mode, s32 pad, s32 unused)
 INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenChooseControls);
 #endif
 
-#ifdef NON_MATCHING
 char* screenGetControlPadLabel(s32 which)
 {
     return screenControlPadLabels[which];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenGetControlPadLabel);
-#endif
 
 #ifdef NON_MATCHING
 char* screenGetMusicLabel(void)
@@ -2338,7 +2324,6 @@ void screenCheckMidGameOptions(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenCheckMidGameOptions);
 #endif
 
-#ifdef NON_MATCHING
 void screenClearScreen(s32 x, s32 y, s32 w, s32 h)
 {
     BLK_FILL fill;
@@ -2350,9 +2335,6 @@ void screenClearScreen(s32 x, s32 y, s32 w, s32 h)
     DrawPrim(&fill);
     DrawSync(0);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenClearScreen);
-#endif
 
 #ifdef NON_MATCHING
 void screenPrintScore(s16 who, s16 wins, s16 losses)
@@ -2620,14 +2602,10 @@ s16 screenGetNumCards(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenGetNumCards);
 #endif
 
-#ifdef NON_MATCHING
 s16 screenGetLevelNumCards(s32 level)
 {
     return screenNumCards[level];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenGetLevelNumCards);
-#endif
 
 #ifdef NON_MATCHING
 void screenLoadCardsForBattleOptions(s32 twoPlayer, s32 car0, s32 car1)
@@ -3116,14 +3094,10 @@ s32 screenAccessCodeFromPassword(char* password)
     return -1;
 }
 
-#ifdef NON_MATCHING
 char* screenPasswordFromAccessCode(s32 code)
 {
     return screenPasswords[code];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenPasswordFromAccessCode);
-#endif
 
 #ifdef NON_MATCHING
 void screenBlinkCursor(s32 font)
@@ -3356,7 +3330,6 @@ void screenCarEndingInit(ScreenCarEnding* e, s32 car, u_long* image)
 INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenCarEndingInit);
 #endif
 
-#ifdef NON_MATCHING
 void screenCarEndingReset(ScreenCarEnding* e)
 {
     if (e->cdb == e->db) {
@@ -3371,9 +3344,6 @@ void screenCarEndingReset(ScreenCarEnding* e)
     DrawSync(0);
     ClearOTagR(((u_long*)e->cdb->small), 0x1000);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenCarEndingReset);
-#endif
 
 #ifdef NON_MATCHING
 void screenCarEndingDrawCar(ScreenCarEnding* e)
@@ -3506,27 +3476,16 @@ INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenScrollTextInit);
 void screenScrollTextPrintOneLine(ScrollText* st)
 {
     s32 line;
-    s32 font;
-    s32 y;
 
     if (st->mode == 2) {
-        do {
-            line = st->line;
-            font = st->font;
-            y = st->y;
-            fontPrintCenteredXY(font, 159, y, st->lines[line]);
-        } while (0);
+        line = st->line;
+        fontPrintCenteredXY(st->font, 159, st->y, st->lines[line]);
     } else {
-        do {
-            line = st->line;
-            font = st->font;
-            y = st->y;
-            fontPrintXY(font, 15, y, st->lines[line]);
-        } while (0);
+        line = st->line;
+        fontPrintXY(st->font, 15, st->y, st->lines[line]);
     }
 }
 
-#ifdef NON_MATCHING
 s32 screenScrollTextUpdate(ScrollText* st)
 {
     if (st->speed < 6 && st->tick >= st->speed) {
@@ -3538,11 +3497,7 @@ s32 screenScrollTextUpdate(ScrollText* st)
     st->tick = st->tick + 1;
     return st->tick;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenScrollTextUpdate);
-#endif
 
-#ifdef NON_MATCHING
 s32 screenScrollTextProcessButtonPress(ScrollText* st)
 {
     s32 pad;
@@ -3567,11 +3522,7 @@ s32 screenScrollTextProcessButtonPress(ScrollText* st)
     }
     return result;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenScrollTextProcessButtonPress);
-#endif
 
-#ifdef NON_MATCHING
 void screenScrollTextOneScreenFull(ScrollText* st)
 {
     st->y = st->y0;
@@ -3586,9 +3537,6 @@ void screenScrollTextOneScreenFull(ScrollText* st)
     test:;
     } while (st->line < st->numLines);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/screen", screenScrollTextOneScreenFull);
-#endif
 
 s32 screenScrollText(char* textFile, char* bgFile, s32 font)
 {

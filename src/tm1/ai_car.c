@@ -113,7 +113,6 @@ block_47:
 INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdate);
 #endif
 
-#ifdef NON_MATCHING
 void AICarUpdateHealthTier(AICar* car)
 {
     if (car->stats.unk40 < car->unk104) {
@@ -126,16 +125,12 @@ void AICarUpdateHealthTier(AICar* car)
         car->unk02 = 3;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdateHealthTier);
-#endif
 
 void AICarUpdateClosestPlayer(AICar* car)
 {
     car->unk0E = GetClosestPlayer(&car->motion.pos, -1);
 }
 
-#ifdef NON_MATCHING
 void AICarUpdatePlayerRange(AICar* car)
 {
     VECTOR pos;
@@ -212,9 +207,6 @@ void AICarUpdatePlayerRange(AICar* car)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdatePlayerRange);
-#endif
 
 #ifdef NON_MATCHING
 void AICarUpdateCurrPtRange(AICar* car)
@@ -242,7 +234,6 @@ void AICarUpdateCurrPtRange(AICar* car)
 INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdateCurrPtRange);
 #endif
 
-#ifdef NON_MATCHING
 void AICarUpdateNextPtAngle(AICar* car)
 {
     VECTOR delta;
@@ -256,9 +247,6 @@ void AICarUpdateNextPtAngle(AICar* car)
     car->unk1C8 = ratan2(delta.vx, delta.vy);
     BoundAngle(&car->unk1C8);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdateNextPtAngle);
-#endif
 
 #ifdef NON_MATCHING
 void AICarUpdateDrivingProfile(AICar* car)
@@ -349,7 +337,6 @@ void AICarInitTransition(AICar* car)
 INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarInitTransition);
 #endif
 
-#ifdef NON_MATCHING
 void AICarUpdateTransition(AICar* car)
 {
     InitControlPad(car->skid);
@@ -402,11 +389,7 @@ void AICarUpdateTransition(AICar* car)
         UpdateCarDeath(car, 0);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdateTransition);
-#endif
 
-#ifdef NON_MATCHING
 void NoBeadOnPlayer(AICar* car)
 {
     if (car->heliFlag != 0 && car->uaIndex != -1) {
@@ -414,11 +397,7 @@ void NoBeadOnPlayer(AICar* car)
         car->heliFlag = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", NoBeadOnPlayer);
-#endif
 
-#ifdef NON_MATCHING
 void GetNewPointToDriveTo(AICar* car)
 {
     s16 pt;
@@ -445,11 +424,7 @@ void GetNewPointToDriveTo(AICar* car)
     car->unk4B = 0;
     SetNoCarDrift(&car->motion, car->flags);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", GetNewPointToDriveTo);
-#endif
 
-#ifdef NON_MATCHING
 void HelpLostCar(AICar* car)
 {
     car->unk10 += GetFieldsLastFrame();
@@ -458,11 +433,7 @@ void HelpLostCar(AICar* car)
         car->unk4D = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", HelpLostCar);
-#endif
 
-#ifdef NON_MATCHING
 void AIInitTurnFlags(AICar* car)
 {
     s32 angle;
@@ -480,9 +451,6 @@ void AIInitTurnFlags(AICar* car)
         return;
     } while (0);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AIInitTurnFlags);
-#endif
 
 #ifdef NON_MATCHING
 void AICarTurn(AICar* car)
@@ -917,7 +885,6 @@ s32 GetBufferZoneSpeed(AICar* car)
 INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", GetBufferZoneSpeed);
 #endif
 
-#ifdef NON_MATCHING
 void AICarUpdateControlPad(AICar* car)
 {
     car->skid[3] = car->skid[3] != 0 && car->flags[0x0B] == 0;
@@ -926,9 +893,6 @@ void AICarUpdateControlPad(AICar* car)
     car->skid[4] = car->skid[4] != 0 && car->flags[0x10] == 0 && car->flags[0x17] == 0;
     car->skid[1] = car->skid[1] != 0 && car->flags[0x10] == 0 && car->flags[0x17] == 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdateControlPad);
-#endif
 
 #ifdef NON_MATCHING
 void AICarOutOfBattle(AICar* car)
@@ -994,7 +958,6 @@ void AICarInBattle(AICar* car)
 INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarInBattle);
 #endif
 
-#ifdef NON_MATCHING
 void UpdateAICarsInBattleLaneDist(void)
 {
     s16 i;
@@ -1041,11 +1004,7 @@ void UpdateAICarsInBattleLaneDist(void)
         } while (t < n);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", UpdateAICarsInBattleLaneDist);
-#endif
 
-#ifdef NON_MATCHING
 void AICarUpdatePlayerDir(AICar* car)
 {
     PlayerCar* info;
@@ -1078,9 +1037,6 @@ void AICarUpdatePlayerDir(AICar* car)
         car->unk144 = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarUpdatePlayerDir);
-#endif
 
 #ifdef NON_MATCHING
 void BringBackAICarInCollision(AICar* car)
@@ -1232,7 +1188,6 @@ void AICarHeliUpdate(AICar* car)
 INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", AICarHeliUpdate);
 #endif
 
-#ifdef NON_MATCHING
 void UpdateNumAICarsInBattle(void)
 {
     s16 i;
@@ -1256,25 +1211,18 @@ void UpdateNumAICarsInBattle(void)
         } while (t < n);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", UpdateNumAICarsInBattle);
-#endif
 
 s16 GetNumAICarsInBattle(void)
 {
     return numAICarsInBattle;
 }
 
-#ifdef NON_MATCHING
 void StartLostCheck(AICar* car)
 {
     car->stats.unkFC = car->stats.unk100 / 2;
     RecomputeCarDeltas(&car->stats);
     car->unk49 = 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", StartLostCheck);
-#endif
 
 Car* GetClosestCarToPlayer(s16 player, u8* isPlayer)
 {
@@ -1296,7 +1244,6 @@ Car* GetClosestCarToPlayer(s16 player, u8* isPlayer)
     return car;
 }
 
-#ifdef NON_MATCHING
 void InitControlPad(u8* pad)
 {
     pad[0x0] = 0;
@@ -1316,9 +1263,6 @@ void InitControlPad(u8* pad)
     pad[0xE] = 0;
     pad[0xF] = 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car", InitControlPad);
-#endif
 
 void TermAICar(void)
 {

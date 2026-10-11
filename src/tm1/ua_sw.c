@@ -103,7 +103,6 @@ void uaswInitDbSwitch(DbSwitch* node, s32 type)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua_sw", uaswInitDbSwitch);
 #endif
 
-#ifdef NON_MATCHING
 void uaswSetState(s32 id, s32 num, u32 state)
 {
     switch (id) {
@@ -150,9 +149,6 @@ void uaswSetState(s32 id, s32 num, u32 state)
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_sw", uaswSetState);
-#endif
 
 void uaswSetSwitch(DbSwitch* s, u32 state)
 {
@@ -163,7 +159,6 @@ void uaswSetSwitch(DbSwitch* s, u32 state)
     }
 }
 
-#ifdef NON_MATCHING
 void uaswInitCarSwitch(Cs* cs, s32 id)
 {
     DbSwitch* p;
@@ -199,11 +194,7 @@ void uaswInitCarSwitch(Cs* cs, s32 id)
         q->state = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_sw", uaswInitCarSwitch);
-#endif
 
-#ifdef NON_MATCHING
 void uaswSetCarState(s32 id, u32 state, s8 unused)
 {
     s32 idx;
@@ -217,11 +208,7 @@ void uaswSetCarState(s32 id, u32 state, s8 unused)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_sw", uaswSetCarState);
-#endif
 
-#ifdef NON_MATCHING
 void uaswInitCarTire(DbSwitch* n)
 {
     s32 idx;
@@ -241,11 +228,7 @@ void uaswInitCarTire(DbSwitch* n)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_sw", uaswInitCarTire);
-#endif
 
-#ifdef NON_MATCHING
 void uaswToggleCarTireState(s32 idx, s32 dir)
 {
     s32 j;
@@ -270,11 +253,7 @@ void uaswToggleCarTireState(s32 idx, s32 dir)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_sw", uaswToggleCarTireState);
-#endif
 
-#ifdef NON_MATCHING
 void uaswInitCarShadow(DbSwitch* n)
 {
     s32 idx;
@@ -294,11 +273,7 @@ void uaswInitCarShadow(DbSwitch* n)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_sw", uaswInitCarShadow);
-#endif
 
-#ifdef NON_MATCHING
 void uaswSetCarShadow(s32 id, s32 on)
 {
     s32 idx;
@@ -319,11 +294,7 @@ void uaswSetCarShadow(s32 id, s32 on)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_sw", uaswSetCarShadow);
-#endif
 
-#ifdef NON_MATCHING
 void uaswInitDbEditNumChildren(DbSwitch* node, s32 type)
 {
     s32 idx;
@@ -376,11 +347,7 @@ void uaswInitDbEditNumChildren(DbSwitch* node, s32 type)
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_sw", uaswInitDbEditNumChildren);
-#endif
 
-#ifdef NON_MATCHING
 void uaswSetNumChildren(s32 id, s32 num, s32 n)
 {
     s32 idx;
@@ -424,9 +391,6 @@ void uaswSetNumChildren(s32 id, s32 num, s32 n)
         break;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_sw", uaswSetNumChildren);
-#endif
 
 void uaswSetNumGroupsChildren(DbSwitch* s, s32 n)
 {
@@ -442,7 +406,6 @@ void uaswSetNumTransChildren(DbSwitch* s, s32 n)
     }
 }
 
-#ifdef NON_MATCHING
 void uaswInit(void)
 {
     s32 i;
@@ -476,11 +439,7 @@ void uaswInit(void)
     numDestroySwitches = 0;
     numDestroyGroups = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_sw", uaswInit);
-#endif
 
-#ifdef NON_MATCHING
 void uaswCarHeadlightsOnOff(u32 id, s32 mode)
 {
     u32 idx;
@@ -499,6 +458,3 @@ void uaswCarHeadlightsOnOff(u32 id, s32 mode)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua_sw", uaswCarHeadlightsOnOff);
-#endif

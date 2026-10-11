@@ -263,7 +263,6 @@ INCLUDE_ASM("asm/nonmatchings/tm1/movie", strInit);
 // }
 INCLUDE_ASM("asm/nonmatchings/tm1/movie", strCallback);
 
-#ifdef NON_MATCHING
 s32 strNextVlc(StrEnv* env, u32 limit)
 {
     s32 n;
@@ -280,9 +279,6 @@ s32 strNextVlc(StrEnv* env, u32 limit)
     }
     return -1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/movie", strNextVlc);
-#endif
 
 #ifdef NON_MATCHING
 u_long* strNext(StrEnv* env, u32 limit)
@@ -325,7 +321,6 @@ found:
 INCLUDE_ASM("asm/nonmatchings/tm1/movie", strNext);
 #endif
 
-#ifdef NON_MATCHING
 void strSync(StrEnv* env, s32 unused)
 {
     s32 n;
@@ -345,9 +340,6 @@ void strSync(StrEnv* env, s32 unused)
     }
     env->done = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/movie", strSync);
-#endif
 
 void strKickCD(CdlLOC* pos)
 {

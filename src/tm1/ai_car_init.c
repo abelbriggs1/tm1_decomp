@@ -72,7 +72,6 @@ void AICarInit(AICar* car, s32 uaIndex, u8 which)
 INCLUDE_ASM("asm/nonmatchings/tm1/ai_car_init", AICarInit);
 #endif
 
-#ifdef NON_MATCHING
 void AICarInitDynamics(AICar* car)
 {
     car->motion.pos.vx = 0;
@@ -145,9 +144,6 @@ void AICarInitDynamics(AICar* car)
     AICarInitProfiles(car);
     car->stats.unk40 = car->stats.unk44;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car_init", AICarInitDynamics);
-#endif
 
 #ifdef NON_MATCHING
 void AICarInitProfiles(AICar* car)
@@ -595,7 +591,6 @@ void AICarInitProfiles(AICar* car)
 INCLUDE_ASM("asm/nonmatchings/tm1/ai_car_init", AICarInitProfiles);
 #endif
 
-#ifdef NON_MATCHING
 void InitAIFlags(u8* flags)
 {
     flags[0] = 0;
@@ -609,11 +604,7 @@ void InitAIFlags(u8* flags)
     flags[8] = 0;
     flags[9] = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car_init", InitAIFlags);
-#endif
 
-#ifdef NON_MATCHING
 void InitAITransDat(AITransDat* transDat)
 {
     transDat->unk10[0] = 0;
@@ -640,6 +631,3 @@ void InitAITransDat(AITransDat* transDat)
     transDat->unk00[15] = 0;
     transDat->unk10[9] = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car_init", InitAITransDat);
-#endif

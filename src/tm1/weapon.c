@@ -894,7 +894,6 @@ void animate_contrails(Missile* m)
 INCLUDE_ASM("asm/nonmatchings/tm1/weapon", animate_contrails);
 #endif
 
-#ifdef NON_MATCHING
 void init_missiles(void)
 {
     s32 i;
@@ -910,19 +909,12 @@ void init_missiles(void)
         mlist[i].cs->unk0C = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/weapon", init_missiles);
-#endif
 
-#ifdef NON_MATCHING
 void kill_missile(s16 i, s32 arg1)
 {
     mlist[i].life = -1;
     mlist[i].cs->drawMode = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/weapon", kill_missile);
-#endif
 
 void destroy_all_missiles(void)
 {
@@ -1646,7 +1638,6 @@ void bulBoltZap(VECTOR* p1, VECTOR* p2)
 INCLUDE_ASM("asm/nonmatchings/tm1/weapon", bulBoltZap);
 #endif
 
-#ifdef NON_MATCHING
 void SetFXSheet(s32 count, s32 r, s32 g, s32 b)
 {
     setPolyF4(&fxSheet[0]);
@@ -1658,9 +1649,6 @@ void SetFXSheet(s32 count, s32 r, s32 g, s32 b)
     SetSemiTrans(&fxSheet[0], 1);
     fxSheetCount = count;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/weapon", SetFXSheet);
-#endif
 
 #ifdef NON_MATCHING
 void DisplayFXSheet(u_long* ot)

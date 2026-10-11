@@ -449,15 +449,11 @@ INCLUDE_ASM("asm/nonmatchings/tm1/font", fontSpritePrintCenteredXY);
 
 INCLUDE_ASM("asm/nonmatchings/tm1/font", fontSpritePrint);
 
-#ifdef NON_MATCHING
 void fontGetCursor(u32* x, u32* y)
 {
     *x = gFontCursorX;
     *y = gFontCursorY;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/font", fontGetCursor);
-#endif // NON_MATCHING
 
 void fontSetCursor(u32 x, u32 y)
 {

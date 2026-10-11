@@ -640,7 +640,6 @@ void CarCheckDynamics(PlayerCar* car)
     }
 }
 
-#ifdef NON_MATCHING
 void CarInitMotion(Car* car, u8 isPlayer)
 {
     u8* f;
@@ -661,9 +660,6 @@ void CarInitMotion(Car* car, u8 isPlayer)
     m->rot2.vy = m->rot.vy;
     m->rot2.vz = m->rot.vz;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car", CarInitMotion);
-#endif
 
 void UpdateNonDriftingCar(PlayerCar* car)
 {
@@ -697,7 +693,6 @@ slow:
     SlowDownNonDriftingCar(car, 1);
 }
 
-#ifdef NON_MATCHING
 void SetNoCarDrift(CarMotion* m, u8* f)
 {
     f[1] = 0;
@@ -708,9 +703,6 @@ void SetNoCarDrift(CarMotion* m, u8* f)
     m->rot2.vy = m->rot.vy;
     m->rot2.vz = m->rot.vz;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car", SetNoCarDrift);
-#endif
 
 #ifdef NON_MATCHING
 s32 CalcMaxRotBeforeDrift(Car* car, u8 isPlayer)
@@ -782,7 +774,6 @@ s32 CalcMaxRotBeforeDrift(Car* car, u8 isPlayer)
 INCLUDE_ASM("asm/nonmatchings/tm1/car", CalcMaxRotBeforeDrift);
 #endif
 
-#ifdef NON_MATCHING
 void SlowDownNonDriftingCar(Car* car, u8 isPlayer)
 {
     CarStats* st;
@@ -828,9 +819,6 @@ void SlowDownNonDriftingCar(Car* car, u8 isPlayer)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car", SlowDownNonDriftingCar);
-#endif
 
 void UpdateDriftingCar(PlayerCar* car)
 {
@@ -860,14 +848,10 @@ void UpdateDriftingCar(PlayerCar* car)
     }
 }
 
-#ifdef NON_MATCHING
 void SetFullCarDrift(CarMotion* m)
 {
     m->rot2Delta.vz = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car", SetFullCarDrift);
-#endif
 
 #ifdef NON_MATCHING
 void BringBackDriftingCar(Car* car, u8 isPlayer)
@@ -962,7 +946,6 @@ void BringBackDriftingCar(Car* car, u8 isPlayer)
 INCLUDE_ASM("asm/nonmatchings/tm1/car", BringBackDriftingCar);
 #endif
 
-#ifdef NON_MATCHING
 void SlowDownDriftingCar(Car* car, u8 isPlayer)
 {
     s32 ang;
@@ -1014,11 +997,7 @@ void SlowDownDriftingCar(Car* car, u8 isPlayer)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car", SlowDownDriftingCar);
-#endif
 
-#ifdef NON_MATCHING
 void UpdateBearing(Car* car, u8 isPlayer)
 {
     s32 ang;
@@ -1058,9 +1037,6 @@ void UpdateBearing(Car* car, u8 isPlayer)
         *bearing = value;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car", UpdateBearing);
-#endif
 
 #ifdef NON_MATCHING
 
@@ -1491,7 +1467,6 @@ void CalcHitDynamics(Car* car, HdCsHit* hit, u8 isPlayer)
 INCLUDE_ASM("asm/nonmatchings/tm1/car", CalcHitDynamics);
 #endif
 
-#ifdef NON_MATCHING
 void CheckIfLostAICar(Car* car)
 {
     AI_CAR(car)->unk180++;
@@ -1502,9 +1477,6 @@ void CheckIfLostAICar(Car* car)
         AI_CAR(car)->unk182 = 80;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car", CheckIfLostAICar);
-#endif
 
 #ifdef NON_MATCHING
 u8 CheckCSHit(Car* car, u8 isPlayer, Cs* obj, s32 a, s32 b)
@@ -2251,7 +2223,6 @@ void SetCollisionBounce(Car* car, u8 isPlayer, s32 mag)
     }
 }
 
-#ifdef NON_MATCHING
 void InitNoCollision(CarCollision* c)
 {
     c->unk0 = 0;
@@ -2260,9 +2231,6 @@ void InitNoCollision(CarCollision* c)
     c->unk4 = 0;
     c->count = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car", InitNoCollision);
-#endif
 
 void SetCollisCount(CarCollision* c)
 {
@@ -2381,7 +2349,6 @@ void CarViewUpdate(PlayerCar* car)
 INCLUDE_ASM("asm/nonmatchings/tm1/car", CarViewUpdate);
 #endif
 
-#ifdef NON_MATCHING
 void SetBounce(Car* car, s32 level, s32 a, s32 b, u8 isPlayer)
 {
     CarBounce* bp;
@@ -2450,11 +2417,7 @@ void SetBounce(Car* car, s32 level, s32 a, s32 b, u8 isPlayer)
     bp->unk12 = ang - rand() % (ang >> 1);
     CarInitBounceDeltas(car, isPlayer);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car", SetBounce);
-#endif
 
-#ifdef NON_MATCHING
 void CarInitBounceDeltas(Car* car, u8 isPlayer)
 {
     CarBounce* bp;
@@ -2484,9 +2447,6 @@ void CarInitBounceDeltas(Car* car, u8 isPlayer)
         bp->unk04 = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car", CarInitBounceDeltas);
-#endif
 
 #ifdef NON_MATCHING
 void UpdateBounce(Car* car, u8 isPlayer)
@@ -2726,7 +2686,6 @@ void carTakeHit(s32 id, s32 amount, s32 a, s32 flag)
 INCLUDE_ASM("asm/nonmatchings/tm1/car", carTakeHit);
 #endif
 
-#ifdef NON_MATCHING
 void InitCatapult(Car* car, u8 isPlayer)
 {
     CarTire* t;
@@ -2777,9 +2736,6 @@ void InitCatapult(Car* car, u8 isPlayer)
         f[1] = 1;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car", InitCatapult);
-#endif
 
 void CheckCatapults(Car* car, u8 isPlayer)
 {
@@ -2960,7 +2916,6 @@ void InitBombDamage(Car* car, u8 isPlayer, s8 full, u8 noMotion)
 INCLUDE_ASM("asm/nonmatchings/tm1/car", InitBombDamage);
 #endif
 
-#ifdef NON_MATCHING
 void CheckBombDamage(Car* car, u8 isPlayer)
 {
     CarTire* t;
@@ -3006,9 +2961,6 @@ void CheckBombDamage(Car* car, u8 isPlayer)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car", CheckBombDamage);
-#endif
 
 void UpdateBombDamagedTire(CarTire* t, CarMotion* m)
 {
@@ -3018,7 +2970,6 @@ void UpdateBombDamagedTire(CarTire* t, CarMotion* m)
     }
 }
 
-#ifdef NON_MATCHING
 void CheckSpikeDamage(Car* car, u8 isPlayer)
 {
     CarStats* s;
@@ -3042,9 +2993,6 @@ void CheckSpikeDamage(Car* car, u8 isPlayer)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/car", CheckSpikeDamage);
-#endif
 
 #ifdef NON_MATCHING
 void InitMonsterSmash(Car* carA, u8 isPlayerA, Car* carB, u8 isPlayerB, s16 unused_mode)

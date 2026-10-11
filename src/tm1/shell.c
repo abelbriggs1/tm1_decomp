@@ -648,7 +648,6 @@ char* shellGetCurrentTextureFileName(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/shell", shellGetCurrentTextureFileName);
 #endif
 
-#ifdef NON_MATCHING
 char* shellGetCurrentLevelName(void)
 {
     s32 lvl = gCurrentLevel;
@@ -658,11 +657,7 @@ char* shellGetCurrentLevelName(void)
     }
     return levelNames[lvl];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/shell", shellGetCurrentLevelName);
-#endif
 
-#ifdef NON_MATCHING
 char* shellGetLevelName(s32 level)
 {
     if (level == 6) {
@@ -670,11 +665,7 @@ char* shellGetLevelName(s32 level)
     }
     return levelNames[level];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/shell", shellGetLevelName);
-#endif
 
-#ifdef NON_MATCHING
 char* shellGetNextLevelName(void)
 {
     s32 lvl = gCurrentLevel;
@@ -684,9 +675,6 @@ char* shellGetNextLevelName(void)
     }
     return levelNames[lvl + 1];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/shell", shellGetNextLevelName);
-#endif
 
 s32 shellGetCurrentLevel(void)
 {
@@ -733,11 +721,6 @@ char* shellGetCurrentTwoPlayerTextureFileName(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/shell", shellGetCurrentTwoPlayerTextureFileName);
 #endif
 
-#ifndef NON_MATCHING
-static const char sRoofTop[] = "ROOF TOP";
-#endif
-
-#ifdef NON_MATCHING
 char* shellGetTwoPlayerCurrentLevelName(void)
 {
     s32 lvl = gCurrentLevel;
@@ -750,9 +733,6 @@ char* shellGetTwoPlayerCurrentLevelName(void)
     }
     return levelNames[lvl];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/shell", shellGetTwoPlayerCurrentLevelName);
-#endif
 
 s32 shellGetTwoPlayerCurrentLevel(void)
 {
@@ -923,14 +903,10 @@ s32 shellGetSoundtrackId(void)
     }
 }
 
-#ifdef NON_MATCHING
 char* shellGetSoundtrackTitle(void)
 {
     return soundtrackTitles[gSoundtrackChoice];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/shell", shellGetSoundtrackTitle);
-#endif
 
 void shellSetSoundtrackChoice(s32 id)
 {

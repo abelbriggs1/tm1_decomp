@@ -83,7 +83,6 @@ u32 grutilsParse3DSprite(GrObj* obj, GrSprite* out, u32 max)
 INCLUDE_ASM("asm/nonmatchings/tm1/grutils", grutilsParse3DSprite);
 #endif
 
-#ifdef NON_MATCHING
 s32 grutilsParse2DSprite(GrObj* obj, GrSprite* out, u32 max)
 {
     s32 n;
@@ -97,9 +96,6 @@ s32 grutilsParse2DSprite(GrObj* obj, GrSprite* out, u32 max)
     }
     return n;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/grutils", grutilsParse2DSprite);
-#endif
 
 #ifdef NON_MATCHING
 void grutilsDrawNumberUsingSprites(s32 num, SPRT* prim, GrSprite* digits, u32* ot)

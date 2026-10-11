@@ -378,7 +378,6 @@ out:
 INCLUDE_ASM("asm/nonmatchings/tm1/hier", hierInBox);
 #endif
 
-#ifdef NON_MATCHING
 void hierAnimate(HierAnim* a)
 {
     a->timer++;
@@ -390,11 +389,7 @@ void hierAnimate(HierAnim* a)
         a->timer = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/hier", hierAnimate);
-#endif
 
-#ifdef NON_MATCHING
 void hierAnimateBiDirect(HierAnim* a)
 {
     a->timer++;
@@ -408,9 +403,6 @@ void hierAnimateBiDirect(HierAnim* a)
         a->timer = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/hier", hierAnimateBiDirect);
-#endif
 
 void hierSetWorldEP(s32 ep)
 {

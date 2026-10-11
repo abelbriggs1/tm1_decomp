@@ -1,15 +1,15 @@
 {
   "measures": {
-    "fuzzy_match_percent": 10.269678,
+    "fuzzy_match_percent": 15.714128,
     "total_code": "470784",
-    "matched_code": "48348",
-    "matched_code_percent": 10.269678,
+    "matched_code": "73816",
+    "matched_code_percent": 15.679378,
     "total_data": "614348",
     "matched_data": "95420",
     "matched_data_percent": 15.531914,
     "total_functions": 1983,
-    "matched_functions": 449,
-    "matched_functions_percent": 22.64246,
+    "matched_functions": 595,
+    "matched_functions_percent": 30.005043,
     "total_units": 70
   },
   "units": [
@@ -93,16 +93,16 @@
     {
       "name": "tm1/hier",
       "measures": {
-        "fuzzy_match_percent": 3.4031413,
+        "fuzzy_match_percent": 8.464224,
         "total_code": "4584",
-        "matched_code": "156",
-        "matched_code_percent": 3.4031413,
+        "matched_code": "388",
+        "matched_code_percent": 8.464223,
         "total_data": "10052",
         "matched_data": "10004",
         "matched_data_percent": 99.522484,
         "total_functions": 17,
-        "matched_functions": 6,
-        "matched_functions_percent": 35.294117,
+        "matched_functions": 8,
+        "matched_functions_percent": 47.058823,
         "total_units": 1
       },
       "sections": [
@@ -137,7 +137,7 @@
         {
           "name": ".text",
           "size": "4584",
-          "fuzzy_match_percent": 3.4031413,
+          "fuzzy_match_percent": 8.464224,
           "metadata": {}
         }
       ],
@@ -187,12 +187,14 @@
         {
           "name": "hierAnimate",
           "size": "112",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3244"
         },
         {
           "name": "hierAnimateBiDirect",
           "size": "120",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3356"
         },
@@ -261,14 +263,14 @@
     {
       "name": "tm1/math",
       "measures": {
-        "fuzzy_match_percent": 55.7971,
+        "fuzzy_match_percent": 78.743965,
         "total_code": "1656",
-        "matched_code": "924",
-        "matched_code_percent": 55.7971,
+        "matched_code": "1304",
+        "matched_code_percent": 78.74396,
         "matched_data_percent": 100.0,
         "total_functions": 5,
-        "matched_functions": 3,
-        "matched_functions_percent": 60.000004,
+        "matched_functions": 4,
+        "matched_functions_percent": 80.0,
         "complete_data_percent": 100.0,
         "total_units": 1
       },
@@ -286,7 +288,7 @@
         {
           "name": ".text",
           "size": "1656",
-          "fuzzy_match_percent": 55.7971,
+          "fuzzy_match_percent": 78.743965,
           "metadata": {}
         }
       ],
@@ -315,6 +317,7 @@
         {
           "name": "mathMulTransVecShort",
           "size": "380",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "924"
         },
@@ -383,16 +386,16 @@
     {
       "name": "tm1/cs",
       "measures": {
-        "fuzzy_match_percent": 10.837439,
+        "fuzzy_match_percent": 16.748768,
         "total_code": "812",
-        "matched_code": "88",
-        "matched_code_percent": 10.837439,
+        "matched_code": "136",
+        "matched_code_percent": 16.748768,
         "total_data": "24220",
         "matched_data": "24168",
         "matched_data_percent": 99.7853,
         "total_functions": 9,
-        "matched_functions": 4,
-        "matched_functions_percent": 44.444447,
+        "matched_functions": 7,
+        "matched_functions_percent": 77.77778,
         "total_units": 1
       },
       "sections": [
@@ -428,7 +431,7 @@
         {
           "name": ".text",
           "size": "812",
-          "fuzzy_match_percent": 10.837439,
+          "fuzzy_match_percent": 16.748768,
           "metadata": {}
         }
       ],
@@ -449,6 +452,7 @@
         {
           "name": "csAddToCsList",
           "size": "20",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "392"
         },
@@ -461,6 +465,7 @@
         {
           "name": "csSetEpNode",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "708"
         },
@@ -488,6 +493,7 @@
         {
           "name": "csSetDrawMode",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "796"
         }
@@ -961,16 +967,16 @@
     {
       "name": "tm1/hd",
       "measures": {
-        "fuzzy_match_percent": 2.8277636,
+        "fuzzy_match_percent": 6.580977,
         "total_code": "7780",
-        "matched_code": "220",
-        "matched_code_percent": 2.8277636,
+        "matched_code": "512",
+        "matched_code_percent": 6.580977,
         "total_data": "464",
         "matched_data": "416",
         "matched_data_percent": 89.655174,
         "total_functions": 13,
-        "matched_functions": 3,
-        "matched_functions_percent": 23.076923,
+        "matched_functions": 6,
+        "matched_functions_percent": 46.153847,
         "total_units": 1
       },
       "sections": [
@@ -1005,7 +1011,7 @@
         {
           "name": ".text",
           "size": "7780",
-          "fuzzy_match_percent": 2.8277636,
+          "fuzzy_match_percent": 6.580977,
           "metadata": {}
         }
       ],
@@ -1027,12 +1033,14 @@
         {
           "name": "hdSetNodeIds",
           "size": "68",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "208"
         },
         {
           "name": "hdIsPtInSphere",
           "size": "160",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "276"
         },
@@ -1075,6 +1083,7 @@
         {
           "name": "hdSetHitTag",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7100"
         },
@@ -1102,16 +1111,16 @@
     {
       "name": "tm1/hdp",
       "measures": {
-        "fuzzy_match_percent": 2.289282,
+        "fuzzy_match_percent": 27.575441,
         "total_code": "3844",
-        "matched_code": "88",
-        "matched_code_percent": 2.289282,
+        "matched_code": "1060",
+        "matched_code_percent": 27.575441,
         "total_data": "108",
         "matched_data": "60",
         "matched_data_percent": 55.555557,
         "total_functions": 13,
-        "matched_functions": 2,
-        "matched_functions_percent": 15.384616,
+        "matched_functions": 7,
+        "matched_functions_percent": 53.846157,
         "total_units": 1
       },
       "sections": [
@@ -1146,7 +1155,7 @@
         {
           "name": ".text",
           "size": "3844",
-          "fuzzy_match_percent": 2.289282,
+          "fuzzy_match_percent": 27.575441,
           "metadata": {}
         }
       ],
@@ -1167,12 +1176,14 @@
         {
           "name": "hdpSetNodeIds",
           "size": "68",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "204"
         },
         {
           "name": "hdpIsPtInSphere",
           "size": "156",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "272"
         },
@@ -1191,12 +1202,14 @@
         {
           "name": "hdpPntBox",
           "size": "292",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2212"
         },
         {
           "name": "hdpPntVolume",
           "size": "392",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2504"
         },
@@ -1215,6 +1228,7 @@
         {
           "name": "hdpSetHitTag",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3356"
         },
@@ -1371,16 +1385,16 @@
     {
       "name": "tm1/sound",
       "measures": {
-        "fuzzy_match_percent": 30.927498,
+        "fuzzy_match_percent": 41.149574,
         "total_code": "12248",
-        "matched_code": "3788",
-        "matched_code_percent": 30.927498,
+        "matched_code": "5040",
+        "matched_code_percent": 41.149574,
         "total_data": "11360",
         "matched_data": "10408",
         "matched_data_percent": 91.61972,
         "total_functions": 86,
-        "matched_functions": 60,
-        "matched_functions_percent": 69.76744,
+        "matched_functions": 70,
+        "matched_functions_percent": 81.39535,
         "total_units": 1
       },
       "sections": [
@@ -1415,7 +1429,7 @@
         {
           "name": ".text",
           "size": "12248",
-          "fuzzy_match_percent": 30.927498,
+          "fuzzy_match_percent": 41.149574,
           "metadata": {}
         }
       ],
@@ -1483,12 +1497,14 @@
         {
           "name": "soundOff",
           "size": "136",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1088"
         },
         {
           "name": "dopplerAdjustTonePitch",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1224"
         },
@@ -1514,12 +1530,14 @@
         {
           "name": "soundPlayAllRequests",
           "size": "148",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2252"
         },
         {
           "name": "swapInstances",
           "size": "44",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2400"
         },
@@ -1908,6 +1926,7 @@
         {
           "name": "soundForceAllSoundsOffNow",
           "size": "188",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10408"
         },
@@ -1935,18 +1954,21 @@
         {
           "name": "adjustTonePitchByPercent",
           "size": "128",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11100"
         },
         {
           "name": "addToneToSingleSound",
           "size": "92",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11228"
         },
         {
           "name": "deleteToneFromSingleSound",
           "size": "180",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11320"
         },
@@ -1960,6 +1982,7 @@
         {
           "name": "deleteToneFromTonesToPlayList",
           "size": "180",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11556"
         },
@@ -1986,6 +2009,7 @@
         {
           "name": "freeToneInstance",
           "size": "92",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "12140"
         },
@@ -2007,16 +2031,16 @@
     {
       "name": "tm1/ua_sound",
       "measures": {
-        "fuzzy_match_percent": 97.631935,
+        "fuzzy_match_percent": 98.44384,
         "total_code": "5912",
-        "matched_code": "5772",
-        "matched_code_percent": 97.631935,
+        "matched_code": "5820",
+        "matched_code_percent": 98.44384,
         "total_data": "4224",
         "matched_data": "40",
         "matched_data_percent": 0.94696975,
         "total_functions": 44,
-        "matched_functions": 42,
-        "matched_functions_percent": 95.454544,
+        "matched_functions": 43,
+        "matched_functions_percent": 97.72727,
         "total_units": 1
       },
       "sections": [
@@ -2045,7 +2069,7 @@
         {
           "name": ".text",
           "size": "5912",
-          "fuzzy_match_percent": 97.631935,
+          "fuzzy_match_percent": 98.44384,
           "metadata": {}
         }
       ],
@@ -2326,6 +2350,7 @@
         {
           "name": "initRequestBuffer",
           "size": "48",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5716"
         },
@@ -2559,16 +2584,16 @@
     {
       "name": "tm1/view",
       "measures": {
-        "fuzzy_match_percent": 3.442189,
+        "fuzzy_match_percent": 27.890556,
         "total_code": "4532",
-        "matched_code": "156",
-        "matched_code_percent": 3.4421887,
+        "matched_code": "1264",
+        "matched_code_percent": 27.890556,
         "total_data": "1644",
         "matched_data": "1540",
         "matched_data_percent": 93.673965,
         "total_functions": 31,
-        "matched_functions": 6,
-        "matched_functions_percent": 19.354837,
+        "matched_functions": 23,
+        "matched_functions_percent": 74.19355,
         "total_units": 1
       },
       "sections": [
@@ -2604,7 +2629,7 @@
         {
           "name": ".text",
           "size": "4532",
-          "fuzzy_match_percent": 3.442189,
+          "fuzzy_match_percent": 27.890556,
           "metadata": {}
         }
       ],
@@ -2612,42 +2637,49 @@
         {
           "name": "viewGetCurrentFOVH",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
         {
           "name": "viewGetCurrentHorzFOVH",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "56"
         },
         {
           "name": "viewGetCurrentVertFOVH",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "112"
         },
         {
           "name": "viewGetCurrentFOVDegrees",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "168"
         },
         {
           "name": "viewGetCurrentFOVDegreesHorz",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "224"
         },
         {
           "name": "viewGetCurrentFOVDegreesVert",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "280"
         },
         {
           "name": "viewGetScreenSize",
           "size": "88",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "336"
         },
@@ -2711,6 +2743,7 @@
         {
           "name": "viewGetCurrentFovSet",
           "size": "28",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3496"
         },
@@ -2723,48 +2756,56 @@
         {
           "name": "viewSetSky",
           "size": "104",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3636"
         },
         {
           "name": "viewGetSky",
           "size": "28",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3740"
         },
         {
           "name": "viewSetSkyPosition",
           "size": "88",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3768"
         },
         {
           "name": "viewGetDeltaRot",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3856"
         },
         {
           "name": "viewGetDeltaTrans",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3912"
         },
         {
           "name": "viewSetDeltaRot",
           "size": "80",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3968"
         },
         {
           "name": "viewSetDeltaTrans",
           "size": "80",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4048"
         },
         {
           "name": "viewGetOwnship",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4128"
         },
@@ -2777,6 +2818,7 @@
         {
           "name": "viewGetCenter",
           "size": "128",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4304"
         },
@@ -2812,16 +2854,16 @@
     {
       "name": "tm1/font",
       "measures": {
-        "fuzzy_match_percent": 7.4178405,
+        "fuzzy_match_percent": 8.169014,
         "total_code": "4260",
-        "matched_code": "316",
-        "matched_code_percent": 7.4178405,
+        "matched_code": "348",
+        "matched_code_percent": 8.169014,
         "total_data": "1896",
         "matched_data": "288",
         "matched_data_percent": 15.189873,
         "total_functions": 14,
-        "matched_functions": 5,
-        "matched_functions_percent": 35.714287,
+        "matched_functions": 6,
+        "matched_functions_percent": 42.857143,
         "total_units": 1
       },
       "sections": [
@@ -2851,7 +2893,7 @@
         {
           "name": ".text",
           "size": "4260",
-          "fuzzy_match_percent": 7.4178405,
+          "fuzzy_match_percent": 8.169014,
           "metadata": {}
         }
       ],
@@ -2911,6 +2953,7 @@
         {
           "name": "fontGetCursor",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2648"
         },
@@ -2956,16 +2999,16 @@
     {
       "name": "tm1/weapon",
       "measures": {
-        "fuzzy_match_percent": 9.984756,
+        "fuzzy_match_percent": 12.614329,
         "total_code": "20992",
-        "matched_code": "2096",
-        "matched_code_percent": 9.984756,
+        "matched_code": "2648",
+        "matched_code_percent": 12.614329,
         "total_data": "2764",
         "matched_data": "2764",
         "matched_data_percent": 100.0,
         "total_functions": 45,
-        "matched_functions": 21,
-        "matched_functions_percent": 46.666668,
+        "matched_functions": 24,
+        "matched_functions_percent": 53.333336,
         "total_units": 1
       },
       "sections": [
@@ -2995,7 +3038,7 @@
         {
           "name": ".text",
           "size": "20992",
-          "fuzzy_match_percent": 9.984756,
+          "fuzzy_match_percent": 12.614329,
           "metadata": {}
         }
       ],
@@ -3141,12 +3184,14 @@
         {
           "name": "init_missiles",
           "size": "204",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11384"
         },
         {
           "name": "kill_missile",
           "size": "68",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11588"
         },
@@ -3276,6 +3321,7 @@
         {
           "name": "SetFXSheet",
           "size": "280",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "19764"
         },
@@ -3302,14 +3348,14 @@
     {
       "name": "tm1/car",
       "measures": {
-        "fuzzy_match_percent": 3.6346245,
+        "fuzzy_match_percent": 13.295074,
         "total_code": "33456",
-        "matched_code": "1216",
-        "matched_code_percent": 3.6346245,
+        "matched_code": "4448",
+        "matched_code_percent": 13.2950735,
         "total_data": "164",
         "total_functions": 42,
-        "matched_functions": 11,
-        "matched_functions_percent": 26.190477,
+        "matched_functions": 24,
+        "matched_functions_percent": 57.14286,
         "total_units": 1
       },
       "sections": [
@@ -3331,7 +3377,7 @@
         {
           "name": ".text",
           "size": "33456",
-          "fuzzy_match_percent": 3.6346245,
+          "fuzzy_match_percent": 13.295074,
           "metadata": {}
         }
       ],
@@ -3377,6 +3423,7 @@
         {
           "name": "CarInitMotion",
           "size": "84",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6828"
         },
@@ -3390,6 +3437,7 @@
         {
           "name": "SetNoCarDrift",
           "size": "84",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7104"
         },
@@ -3402,6 +3450,7 @@
         {
           "name": "SlowDownNonDriftingCar",
           "size": "420",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7804"
         },
@@ -3415,6 +3464,7 @@
         {
           "name": "SetFullCarDrift",
           "size": "12",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8432"
         },
@@ -3427,12 +3477,14 @@
         {
           "name": "SlowDownDriftingCar",
           "size": "380",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "9160"
         },
         {
           "name": "UpdateBearing",
           "size": "184",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "9540"
         },
@@ -3451,6 +3503,7 @@
         {
           "name": "CheckIfLostAICar",
           "size": "112",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "14824"
         },
@@ -3489,6 +3542,7 @@
         {
           "name": "InitNoCollision",
           "size": "28",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "22836"
         },
@@ -3508,12 +3562,14 @@
         {
           "name": "SetBounce",
           "size": "500",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "24448"
         },
         {
           "name": "CarInitBounceDeltas",
           "size": "620",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "24948"
         },
@@ -3532,6 +3588,7 @@
         {
           "name": "InitCatapult",
           "size": "340",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "27968"
         },
@@ -3558,6 +3615,7 @@
         {
           "name": "CheckBombDamage",
           "size": "296",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "29796"
         },
@@ -3571,6 +3629,7 @@
         {
           "name": "CheckSpikeDamage",
           "size": "172",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "30124"
         },
@@ -3610,16 +3669,16 @@
     {
       "name": "tm1/ai_car",
       "measures": {
-        "fuzzy_match_percent": 2.2533288,
+        "fuzzy_match_percent": 29.020144,
         "total_code": "11716",
-        "matched_code": "264",
-        "matched_code_percent": 2.2533288,
+        "matched_code": "3400",
+        "matched_code_percent": 29.020142,
         "total_data": "8",
         "matched_data": "4",
         "matched_data_percent": 50.0,
         "total_functions": 35,
-        "matched_functions": 4,
-        "matched_functions_percent": 11.428572,
+        "matched_functions": 18,
+        "matched_functions_percent": 51.428574,
         "total_units": 1
       },
       "sections": [
@@ -3648,7 +3707,7 @@
         {
           "name": ".text",
           "size": "11716",
-          "fuzzy_match_percent": 2.2533288,
+          "fuzzy_match_percent": 29.020144,
           "metadata": {}
         }
       ],
@@ -3662,6 +3721,7 @@
         {
           "name": "AICarUpdateHealthTier",
           "size": "120",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "976"
         },
@@ -3675,6 +3735,7 @@
         {
           "name": "AICarUpdatePlayerRange",
           "size": "644",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1148"
         },
@@ -3687,6 +3748,7 @@
         {
           "name": "AICarUpdateNextPtAngle",
           "size": "156",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1996"
         },
@@ -3705,30 +3767,35 @@
         {
           "name": "AICarUpdateTransition",
           "size": "656",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3184"
         },
         {
           "name": "NoBeadOnPlayer",
           "size": "80",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3840"
         },
         {
           "name": "GetNewPointToDriveTo",
           "size": "160",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3920"
         },
         {
           "name": "HelpLostCar",
           "size": "140",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4080"
         },
         {
           "name": "AIInitTurnFlags",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4220"
         },
@@ -3783,6 +3850,7 @@
         {
           "name": "AICarUpdateControlPad",
           "size": "224",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8220"
         },
@@ -3801,12 +3869,14 @@
         {
           "name": "UpdateAICarsInBattleLaneDist",
           "size": "320",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "9040"
         },
         {
           "name": "AICarUpdatePlayerDir",
           "size": "292",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "9360"
         },
@@ -3825,6 +3895,7 @@
         {
           "name": "UpdateNumAICarsInBattle",
           "size": "156",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11124"
         },
@@ -3838,6 +3909,7 @@
         {
           "name": "StartLostCheck",
           "size": "76",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11292"
         },
@@ -3851,6 +3923,7 @@
         {
           "name": "InitControlPad",
           "size": "76",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11560"
         },
@@ -3878,16 +3951,16 @@
     {
       "name": "tm1/car_update",
       "measures": {
-        "fuzzy_match_percent": 2.4588904,
+        "fuzzy_match_percent": 6.408483,
         "total_code": "26028",
-        "matched_code": "640",
-        "matched_code_percent": 2.4588904,
+        "matched_code": "1668",
+        "matched_code_percent": 6.4084835,
         "total_data": "24",
         "matched_data": "4",
         "matched_data_percent": 16.666668,
         "total_functions": 32,
-        "matched_functions": 4,
-        "matched_functions_percent": 12.5,
+        "matched_functions": 7,
+        "matched_functions_percent": 21.875,
         "total_units": 1
       },
       "sections": [
@@ -3915,7 +3988,7 @@
         {
           "name": ".text",
           "size": "26028",
-          "fuzzy_match_percent": 2.4588904,
+          "fuzzy_match_percent": 6.408483,
           "metadata": {}
         }
       ],
@@ -3991,6 +4064,7 @@
         {
           "name": "CheckSlickSpots",
           "size": "388",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11236"
         },
@@ -4021,12 +4095,14 @@
         {
           "name": "InitTireInfo",
           "size": "396",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "16524"
         },
         {
           "name": "InitTireGroup",
           "size": "244",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "16920"
         },
@@ -4127,14 +4203,14 @@
     {
       "name": "tm1/car_init",
       "measures": {
-        "fuzzy_match_percent": 0.17021276,
+        "fuzzy_match_percent": 7.8297873,
         "total_code": "9400",
-        "matched_code": "16",
-        "matched_code_percent": 0.17021276,
+        "matched_code": "736",
+        "matched_code_percent": 7.8297877,
         "total_data": "1568",
         "total_functions": 26,
-        "matched_functions": 2,
-        "matched_functions_percent": 7.692308,
+        "matched_functions": 5,
+        "matched_functions_percent": 19.23077,
         "total_units": 1
       },
       "sections": [
@@ -4156,7 +4232,7 @@
         {
           "name": ".text",
           "size": "9400",
-          "fuzzy_match_percent": 0.17021276,
+          "fuzzy_match_percent": 7.8297873,
           "metadata": {}
         }
       ],
@@ -4176,12 +4252,14 @@
         {
           "name": "InitMotionFlags",
           "size": "124",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "904"
         },
         {
           "name": "InitWeapons",
           "size": "548",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1028"
         },
@@ -4316,6 +4394,7 @@
         {
           "name": "CarInitStrength",
           "size": "48",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "9352"
         }
@@ -4330,9 +4409,14 @@
     {
       "name": "tm1/ai_car_init",
       "measures": {
+        "fuzzy_match_percent": 23.95274,
         "total_code": "3724",
+        "matched_code": "892",
+        "matched_code_percent": 23.95274,
         "total_data": "484",
         "total_functions": 5,
+        "matched_functions": 3,
+        "matched_functions_percent": 60.000004,
         "total_units": 1
       },
       "sections": [
@@ -4354,6 +4438,7 @@
         {
           "name": ".text",
           "size": "3724",
+          "fuzzy_match_percent": 23.95274,
           "metadata": {}
         }
       ],
@@ -4367,6 +4452,7 @@
         {
           "name": "AICarInitDynamics",
           "size": "744",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "696"
         },
@@ -4379,12 +4465,14 @@
         {
           "name": "InitAIFlags",
           "size": "48",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3576"
         },
         {
           "name": "InitAITransDat",
           "size": "100",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3624"
         }
@@ -4860,16 +4948,16 @@
     {
       "name": "tm1/interactives",
       "measures": {
-        "fuzzy_match_percent": 6.651612,
+        "fuzzy_match_percent": 14.247588,
         "total_code": "19484",
-        "matched_code": "1296",
-        "matched_code_percent": 6.651612,
+        "matched_code": "2776",
+        "matched_code_percent": 14.247587,
         "total_data": "3348",
         "matched_data": "2092",
         "matched_data_percent": 62.48506,
         "total_functions": 42,
-        "matched_functions": 18,
-        "matched_functions_percent": 42.857143,
+        "matched_functions": 21,
+        "matched_functions_percent": 50.0,
         "total_units": 1
       },
       "sections": [
@@ -4905,7 +4993,7 @@
         {
           "name": ".text",
           "size": "19484",
-          "fuzzy_match_percent": 6.651612,
+          "fuzzy_match_percent": 14.247588,
           "metadata": {}
         }
       ],
@@ -4933,6 +5021,7 @@
         {
           "name": "UpdatePlayerWeaponPadStatus",
           "size": "400",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "628"
         },
@@ -5090,6 +5179,7 @@
         {
           "name": "carResetGunHeat",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17224"
         },
@@ -5116,6 +5206,7 @@
         {
           "name": "carGetPickup",
           "size": "1064",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17612"
         },
@@ -5569,14 +5660,14 @@
     {
       "name": "tm1/grutils",
       "measures": {
-        "fuzzy_match_percent": 8.284023,
+        "fuzzy_match_percent": 15.680473,
         "total_code": "1352",
-        "matched_code": "112",
-        "matched_code_percent": 8.284023,
+        "matched_code": "212",
+        "matched_code_percent": 15.680474,
         "matched_data_percent": 100.0,
         "total_functions": 5,
-        "matched_functions": 1,
-        "matched_functions_percent": 20.0,
+        "matched_functions": 2,
+        "matched_functions_percent": 40.0,
         "complete_data_percent": 100.0,
         "total_units": 1
       },
@@ -5594,7 +5685,7 @@
         {
           "name": ".text",
           "size": "1352",
-          "fuzzy_match_percent": 8.284023,
+          "fuzzy_match_percent": 15.680473,
           "metadata": {}
         }
       ],
@@ -5621,6 +5712,7 @@
         {
           "name": "grutilsParse2DSprite",
           "size": "100",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "816"
         },
@@ -5641,16 +5733,16 @@
     {
       "name": "tm1/screen",
       "measures": {
-        "fuzzy_match_percent": 8.554778,
+        "fuzzy_match_percent": 13.100233,
         "total_code": "34320",
-        "matched_code": "2936",
-        "matched_code_percent": 8.554778,
+        "matched_code": "4496",
+        "matched_code_percent": 13.100234,
         "total_data": "4228",
         "matched_data": "1100",
         "matched_data_percent": 26.017029,
         "total_functions": 95,
-        "matched_functions": 25,
-        "matched_functions_percent": 26.31579,
+        "matched_functions": 35,
+        "matched_functions_percent": 36.842106,
         "total_units": 1
       },
       "sections": [
@@ -5684,7 +5776,7 @@
         {
           "name": ".text",
           "size": "34320",
-          "fuzzy_match_percent": 8.554778,
+          "fuzzy_match_percent": 13.100233,
           "metadata": {}
         }
       ],
@@ -5785,6 +5877,7 @@
         {
           "name": "screenHoldForTwoPlayerControl",
           "size": "384",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7728"
         },
@@ -5822,6 +5915,7 @@
         {
           "name": "screenGrayedScreen",
           "size": "204",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "13220"
         },
@@ -5860,6 +5954,7 @@
         {
           "name": "screenGetControlPadLabel",
           "size": "28",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "16728"
         },
@@ -5966,6 +6061,7 @@
         {
           "name": "screenClearScreen",
           "size": "128",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20176"
         },
@@ -6008,6 +6104,7 @@
         {
           "name": "screenGetLevelNumCards",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "23728"
         },
@@ -6085,6 +6182,7 @@
         {
           "name": "screenPasswordFromAccessCode",
           "size": "28",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "27840"
         },
@@ -6145,6 +6243,7 @@
         {
           "name": "screenCarEndingReset",
           "size": "160",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "29436"
         },
@@ -6197,18 +6296,21 @@
         {
           "name": "screenScrollTextUpdate",
           "size": "124",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "31132"
         },
         {
           "name": "screenScrollTextProcessButtonPress",
           "size": "296",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "31256"
         },
         {
           "name": "screenScrollTextOneScreenFull",
           "size": "172",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "31552"
         },
@@ -6295,16 +6397,16 @@
     {
       "name": "tm1/ua_sw",
       "measures": {
-        "fuzzy_match_percent": 2.2909508,
+        "fuzzy_match_percent": 73.08133,
         "total_code": "3492",
-        "matched_code": "80",
-        "matched_code_percent": 2.2909508,
+        "matched_code": "2552",
+        "matched_code_percent": 73.08133,
         "total_data": "1124",
         "matched_data": "1124",
         "matched_data_percent": 100.0,
         "total_functions": 15,
-        "matched_functions": 3,
-        "matched_functions_percent": 20.0,
+        "matched_functions": 14,
+        "matched_functions_percent": 93.333336,
         "total_units": 1
       },
       "sections": [
@@ -6328,7 +6430,7 @@
         {
           "name": ".text",
           "size": "3492",
-          "fuzzy_match_percent": 2.2909508,
+          "fuzzy_match_percent": 73.08133,
           "metadata": {}
         }
       ],
@@ -6342,6 +6444,7 @@
         {
           "name": "uaswSetState",
           "size": "440",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "940"
         },
@@ -6355,48 +6458,56 @@
         {
           "name": "uaswInitCarSwitch",
           "size": "172",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1420"
         },
         {
           "name": "uaswSetCarState",
           "size": "116",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1592"
         },
         {
           "name": "uaswInitCarTire",
           "size": "132",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1708"
         },
         {
           "name": "uaswToggleCarTireState",
           "size": "200",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1840"
         },
         {
           "name": "uaswInitCarShadow",
           "size": "132",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2040"
         },
         {
           "name": "uaswSetCarShadow",
           "size": "132",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2172"
         },
         {
           "name": "uaswInitDbEditNumChildren",
           "size": "372",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2304"
         },
         {
           "name": "uaswSetNumChildren",
           "size": "332",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2676"
         },
@@ -6417,12 +6528,14 @@
         {
           "name": "uaswInit",
           "size": "296",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3048"
         },
         {
           "name": "uaswCarHeadlightsOnOff",
           "size": "148",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3344"
         }
@@ -6437,11 +6550,16 @@
     {
       "name": "tm1/ai_car_update",
       "measures": {
+        "fuzzy_match_percent": 8.061749,
         "total_code": "2332",
+        "matched_code": "188",
+        "matched_code_percent": 8.061749,
         "total_data": "1200",
         "matched_data": "716",
         "matched_data_percent": 59.666668,
         "total_functions": 6,
+        "matched_functions": 1,
+        "matched_functions_percent": 16.666668,
         "total_units": 1
       },
       "sections": [
@@ -6470,6 +6588,7 @@
         {
           "name": ".text",
           "size": "2332",
+          "fuzzy_match_percent": 8.061749,
           "metadata": {}
         }
       ],
@@ -6477,6 +6596,7 @@
         {
           "name": "AICarUpdateAttackProfile",
           "size": "188",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
@@ -6521,16 +6641,16 @@
     {
       "name": "tm1/ua_dash",
       "measures": {
-        "fuzzy_match_percent": 1.8485237,
+        "fuzzy_match_percent": 6.3157897,
         "total_code": "15580",
-        "matched_code": "288",
-        "matched_code_percent": 1.8485237,
+        "matched_code": "984",
+        "matched_code_percent": 6.315789,
         "total_data": "5788",
         "matched_data": "5208",
         "matched_data_percent": 89.97926,
         "total_functions": 28,
-        "matched_functions": 3,
-        "matched_functions_percent": 10.714286,
+        "matched_functions": 5,
+        "matched_functions_percent": 17.857143,
         "total_units": 1
       },
       "sections": [
@@ -6564,7 +6684,7 @@
         {
           "name": ".text",
           "size": "15580",
-          "fuzzy_match_percent": 1.8485237,
+          "fuzzy_match_percent": 6.3157897,
           "metadata": {}
         }
       ],
@@ -6578,6 +6698,7 @@
         {
           "name": "UAdashHealthColor",
           "size": "208",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "184"
         },
@@ -6651,7 +6772,6 @@
         {
           "name": "uadashLoadHarleyTms",
           "size": "176",
-          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "9000"
         },
@@ -6706,12 +6826,14 @@
         {
           "name": "uadashGetCarSign",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "14172"
         },
         {
           "name": "uadashInitRearViewMirror",
           "size": "608",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "14228"
         },
@@ -6751,16 +6873,16 @@
     {
       "name": "tm1/ua_effect",
       "measures": {
-        "fuzzy_match_percent": 30.579966,
+        "fuzzy_match_percent": 46.74868,
         "total_code": "2276",
-        "matched_code": "696",
-        "matched_code_percent": 30.579966,
+        "matched_code": "1064",
+        "matched_code_percent": 46.748684,
         "total_data": "680",
         "matched_data": "680",
         "matched_data_percent": 100.0,
         "total_functions": 15,
-        "matched_functions": 8,
-        "matched_functions_percent": 53.333336,
+        "matched_functions": 11,
+        "matched_functions_percent": 73.333336,
         "total_units": 1
       },
       "sections": [
@@ -6791,7 +6913,7 @@
         {
           "name": ".text",
           "size": "2276",
-          "fuzzy_match_percent": 30.579966,
+          "fuzzy_match_percent": 46.74868,
           "metadata": {}
         }
       ],
@@ -6812,6 +6934,7 @@
         {
           "name": "UAeffectUpdateTVs",
           "size": "124",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "456"
         },
@@ -6824,6 +6947,7 @@
         {
           "name": "UAeffectInitMonsterTruckWheel",
           "size": "80",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "816"
         },
@@ -6837,6 +6961,7 @@
         {
           "name": "UAeffectUpdateCarSpeed",
           "size": "164",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "960"
         },
@@ -7241,16 +7366,16 @@
     {
       "name": "tm1/ua",
       "measures": {
-        "fuzzy_match_percent": 10.309629,
+        "fuzzy_match_percent": 26.74379,
         "total_code": "23512",
-        "matched_code": "2424",
-        "matched_code_percent": 10.309629,
+        "matched_code": "6288",
+        "matched_code_percent": 26.74379,
         "total_data": "16060",
         "matched_data": "15204",
         "matched_data_percent": 94.66998,
         "total_functions": 95,
-        "matched_functions": 31,
-        "matched_functions_percent": 32.63158,
+        "matched_functions": 55,
+        "matched_functions_percent": 57.894737,
         "total_units": 1
       },
       "sections": [
@@ -7286,7 +7411,7 @@
         {
           "name": ".text",
           "size": "23512",
-          "fuzzy_match_percent": 10.309629,
+          "fuzzy_match_percent": 26.74379,
           "metadata": {}
         }
       ],
@@ -7332,42 +7457,49 @@
         {
           "name": "uaInitView",
           "size": "120",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1316"
         },
         {
           "name": "InitLevel1DBSpecifics",
           "size": "400",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1436"
         },
         {
           "name": "InitLevel2DBSpecifics",
           "size": "408",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1836"
         },
         {
           "name": "InitLevel3DBSpecifics",
           "size": "412",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2244"
         },
         {
           "name": "InitLevel4DBSpecifics",
           "size": "404",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2656"
         },
         {
           "name": "InitLevel5DBSpecifics",
           "size": "368",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3060"
         },
         {
           "name": "InitLevel6DBSpecifics",
           "size": "404",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3428"
         },
@@ -7443,12 +7575,14 @@
         {
           "name": "UASetPlayerCar",
           "size": "120",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8364"
         },
         {
           "name": "UAGetPlayerCar",
           "size": "40",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8484"
         },
@@ -7606,30 +7740,35 @@
         {
           "name": "GetPlayerPosition",
           "size": "96",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17396"
         },
         {
           "name": "GetAICarPosition",
           "size": "104",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17492"
         },
         {
           "name": "GetPlayerRot",
           "size": "96",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17596"
         },
         {
           "name": "GetPlayerCs3D",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17692"
         },
         {
           "name": "GetAICs3D",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17728"
         },
@@ -7715,12 +7854,14 @@
         {
           "name": "UAGetCameraPosition",
           "size": "184",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20044"
         },
         {
           "name": "UAGetCameraCS",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20228"
         },
@@ -7775,12 +7916,14 @@
         {
           "name": "PadSetConfig",
           "size": "96",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20588"
         },
         {
           "name": "PadGetConfig",
           "size": "68",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20684"
         },
@@ -7793,12 +7936,14 @@
         {
           "name": "GetPlayerCarToCarIndex",
           "size": "40",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "21292"
         },
         {
           "name": "GetAICarToCarIndex",
           "size": "40",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "21332"
         },
@@ -7812,12 +7957,14 @@
         {
           "name": "uaDontDrawCar",
           "size": "72",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "21436"
         },
         {
           "name": "uaDrawCar",
           "size": "172",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "21508"
         },
@@ -7857,6 +8004,7 @@
         {
           "name": "GetCarNameFromCarNum",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "22552"
         },
@@ -7869,6 +8017,7 @@
         {
           "name": "uaGetCarNameString",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "23212"
         },
@@ -8037,16 +8186,16 @@
     {
       "name": "tm1/vehicle",
       "measures": {
-        "fuzzy_match_percent": 15.415821,
+        "fuzzy_match_percent": 31.845842,
         "total_code": "1972",
-        "matched_code": "304",
-        "matched_code_percent": 15.415822,
+        "matched_code": "628",
+        "matched_code_percent": 31.84584,
         "total_data": "32",
         "matched_data": "32",
         "matched_data_percent": 100.0,
         "total_functions": 9,
-        "matched_functions": 4,
-        "matched_functions_percent": 44.444447,
+        "matched_functions": 7,
+        "matched_functions_percent": 77.77778,
         "total_units": 1
       },
       "sections": [
@@ -8064,7 +8213,7 @@
         {
           "name": ".text",
           "size": "1972",
-          "fuzzy_match_percent": 15.415821,
+          "fuzzy_match_percent": 31.845842,
           "metadata": {}
         }
       ],
@@ -8072,6 +8221,7 @@
         {
           "name": "VehicleInit",
           "size": "148",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
@@ -8085,6 +8235,7 @@
         {
           "name": "InitVehiclePad",
           "size": "96",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "240"
         },
@@ -8105,6 +8256,7 @@
         {
           "name": "RecomputeVehicleDeltas",
           "size": "80",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "352"
         },
@@ -8138,16 +8290,16 @@
     {
       "name": "tm1/shell",
       "measures": {
-        "fuzzy_match_percent": 35.897434,
+        "fuzzy_match_percent": 39.66176,
         "total_code": "7332",
-        "matched_code": "2632",
-        "matched_code_percent": 35.897438,
+        "matched_code": "2908",
+        "matched_code_percent": 39.661755,
         "total_data": "1136",
         "matched_data": "368",
         "matched_data_percent": 32.394367,
         "total_functions": 53,
-        "matched_functions": 35,
-        "matched_functions_percent": 66.037735,
+        "matched_functions": 40,
+        "matched_functions_percent": 75.4717,
         "total_units": 1
       },
       "sections": [
@@ -8166,7 +8318,7 @@
         {
           "name": ".rodata",
           "size": "664",
-          "fuzzy_match_percent": 21.927711,
+          "fuzzy_match_percent": 20.105421,
           "metadata": {}
         },
         {
@@ -8184,7 +8336,7 @@
         {
           "name": ".text",
           "size": "7332",
-          "fuzzy_match_percent": 35.897434,
+          "fuzzy_match_percent": 39.66176,
           "metadata": {}
         }
       ],
@@ -8243,18 +8395,21 @@
         {
           "name": "shellGetCurrentLevelName",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3404"
         },
         {
           "name": "shellGetLevelName",
           "size": "52",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3460"
         },
         {
           "name": "shellGetNextLevelName",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3512"
         },
@@ -8287,6 +8442,7 @@
         {
           "name": "shellGetTwoPlayerCurrentLevelName",
           "size": "80",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3852"
         },
@@ -8384,6 +8540,7 @@
         {
           "name": "shellGetSoundtrackTitle",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4948"
         },
@@ -8667,16 +8824,16 @@
     {
       "name": "tm1/movie",
       "measures": {
-        "fuzzy_match_percent": 4.107981,
+        "fuzzy_match_percent": 15.246479,
         "total_code": "3408",
-        "matched_code": "140",
-        "matched_code_percent": 4.107981,
+        "matched_code": "356",
+        "matched_code_percent": 10.446009,
         "total_data": "208",
         "matched_data": "144",
         "matched_data_percent": 69.230774,
         "total_functions": 12,
-        "matched_functions": 2,
-        "matched_functions_percent": 16.666668,
+        "matched_functions": 3,
+        "matched_functions_percent": 25.0,
         "total_units": 1
       },
       "sections": [
@@ -8711,7 +8868,7 @@
         {
           "name": ".text",
           "size": "3408",
-          "fuzzy_match_percent": 4.107981,
+          "fuzzy_match_percent": 15.246479,
           "metadata": {}
         }
       ],
@@ -8762,6 +8919,7 @@
         {
           "name": "strNextVlc",
           "size": "164",
+          "fuzzy_match_percent": 99.756096,
           "metadata": {},
           "address": "1876"
         },
@@ -8774,6 +8932,7 @@
         {
           "name": "strSync",
           "size": "216",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2332"
         },
@@ -15459,16 +15618,16 @@
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 13.484387,
+        "fuzzy_match_percent": 20.63311,
         "total_code": "358548",
-        "matched_code": "48348",
-        "matched_code_percent": 13.484387,
+        "matched_code": "73816",
+        "matched_code_percent": 20.58748,
         "total_data": "473916",
         "matched_data": "95420",
         "matched_data_percent": 20.13437,
         "total_functions": 1009,
-        "matched_functions": 449,
-        "matched_functions_percent": 44.499504,
+        "matched_functions": 595,
+        "matched_functions_percent": 58.969276,
         "total_units": 65
       }
     }

@@ -117,24 +117,19 @@ To build the repository, you will need a digital copy of the Playstation game
 This is a list of known repository-wide issues that prevent functions or data from
 matching when they otherwise should.
 
-### Compiler flags
+### Small data must be decompiled early
 
-It is currently unclear exactly what compiler flags were used to compile
-TM1; there are many TUs which can only be fully matched with specific
-compiler flags.
+The toolchain that we use for this repo treats the following variables
+differently when attempting to load/store to them.
 
-Here is a list of flags that we believe change most often between TUs:
+```
+extern s16 my_var;
+static s16 my_var2;
+```
 
-- `-G8` vs. `-G0`
-- `-fvolatile`
-- `-mcpu=r6000`
-
-We currently do not compile with `-fvolatile` or `-mcpu=r6000`; these
-will be experimented with later on.
-
-It's likely that SingleTrac compiled multiple TUs in different groups
-with different compiler flags for each, but we haven't determined how
-these groups are structured.
+Data in small-data sections (`.sdata`, `.sbss`) must be decompiled
+into C variables before any C code that accesses them can be matched;
+`extern` cannot be used for them.
 
 ## License
 

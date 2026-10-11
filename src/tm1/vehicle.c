@@ -13,7 +13,6 @@ extern void* sdk_memcpy();
 // clang-format off
 static MATRIX gVehicleIdentity = IDENTITY_MATRIX;
 
-#ifdef NON_MATCHING
 void VehicleInit(Vehicle* veh, s16 padId)
 {
     veh->padId = padId;
@@ -32,9 +31,6 @@ void VehicleInit(Vehicle* veh, s16 padId)
     veh->unk14 = 0;
     InitVehicleDynamics(veh);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/vehicle", VehicleInit);
-#endif
 
 void InitVehicleDynamics(Vehicle* veh)
 {
@@ -53,7 +49,6 @@ void InitVehicleDynamics(Vehicle* veh)
     sdk_memcpy(&veh->mat, &gVehicleIdentity, sizeof(MATRIX));
 }
 
-#ifdef NON_MATCHING
 void InitVehiclePad(Vehicle* veh)
 {
     veh->ctl[0] = 5;
@@ -69,9 +64,6 @@ void InitVehiclePad(Vehicle* veh)
     veh->ctl[11] = 9;
     veh->ctl[10] = 9;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/vehicle", InitVehiclePad);
-#endif
 
 void InitVehicleTweeking(void)
 {
@@ -81,16 +73,12 @@ void TermVehicle(Vehicle* veh)
 {
 }
 
-#ifdef NON_MATCHING
 void RecomputeVehicleDeltas(Vehicle* veh)
 {
     veh->moveDelta = veh->moveStep * 6;
     veh->moveMax = veh->moveStep * veh->moveMaxScale;
     veh->turnMax = veh->turnStep * veh->turnMaxScale;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/vehicle", RecomputeVehicleDeltas);
-#endif
 
 #ifdef NON_MATCHING
 void VehicleUpdate(Vehicle* veh, s16 padIdx)

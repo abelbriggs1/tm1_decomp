@@ -147,7 +147,6 @@ static s32 BossSpecialChance = 100;
 static s32 BossForeChance = 75;
 static s32 BossAftChance = 75;
 
-#ifdef NON_MATCHING
 void AICarUpdateAttackProfile(AICar* car)
 {
     if (car->unk40 != 0) {
@@ -162,9 +161,6 @@ void AICarUpdateAttackProfile(AICar* car)
         car->weap.cur = 12;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ai_car_update", AICarUpdateAttackProfile);
-#endif
 
 #ifdef NON_MATCHING
 void AIPickAttackWeapon(AICar* car)

@@ -376,7 +376,6 @@ void uaInitDB(u32 level)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua", uaInitDB);
 #endif
 
-#ifdef NON_MATCHING
 void uaInitView(Db* db, s32 entry, s32 which)
 {
     if (camera[which] == NULL) {
@@ -386,11 +385,7 @@ void uaInitView(Db* db, s32 entry, s32 which)
     }
     helicoptorCS = csCreate();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", uaInitView);
-#endif
 
-#ifdef NON_MATCHING
 void InitLevel1DBSpecifics(void)
 {
     s32* p;
@@ -440,11 +435,7 @@ void InitLevel1DBSpecifics(void)
     gVar348 = 1;
     gVar34C = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", InitLevel1DBSpecifics);
-#endif
 
-#ifdef NON_MATCHING
 void InitLevel2DBSpecifics(void)
 {
     s32* p;
@@ -494,11 +485,7 @@ void InitLevel2DBSpecifics(void)
     gVar348 = 1;
     gVar34C = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", InitLevel2DBSpecifics);
-#endif
 
-#ifdef NON_MATCHING
 void InitLevel3DBSpecifics(void)
 {
     s32* p;
@@ -548,11 +535,7 @@ void InitLevel3DBSpecifics(void)
     gVar348 = 1;
     gVar34C = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", InitLevel3DBSpecifics);
-#endif
 
-#ifdef NON_MATCHING
 void InitLevel4DBSpecifics(void)
 {
     s32* p;
@@ -602,11 +585,7 @@ void InitLevel4DBSpecifics(void)
     gVar348 = 1;
     gVar34C = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", InitLevel4DBSpecifics);
-#endif
 
-#ifdef NON_MATCHING
 void InitLevel5DBSpecifics(void)
 {
     s32* p;
@@ -650,11 +629,7 @@ void InitLevel5DBSpecifics(void)
     gVar348 = 0;
     gVar34C = 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", InitLevel5DBSpecifics);
-#endif
 
-#ifdef NON_MATCHING
 void InitLevel6DBSpecifics(void)
 {
     s32* p;
@@ -704,9 +679,6 @@ void InitLevel6DBSpecifics(void)
     gVar348 = 0;
     gVar34C = 1;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", InitLevel6DBSpecifics);
-#endif
 
 void InitLevel(u32 level)
 {
@@ -1194,7 +1166,6 @@ void uaPickAICars(s16 level)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua", uaPickAICars);
 #endif
 
-#ifdef NON_MATCHING
 void UASetPlayerCar(s16 player, s32 car, s32 mode)
 {
     s16 i;
@@ -1206,19 +1177,12 @@ void UASetPlayerCar(s16 player, s32 car, s32 mode)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", UASetPlayerCar);
-#endif
 
-#ifdef NON_MATCHING
 s16 UAGetPlayerCar(s16 player)
 {
     s32 car = playerCar[player];
     return car;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", UAGetPlayerCar);
-#endif
 
 void UASetGodMode(s16 player, u8 on)
 {
@@ -2071,50 +2035,33 @@ s16 GetClosestAICar(VECTOR3* pos)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetClosestAICar);
 #endif
 
-#ifdef NON_MATCHING
 void GetPlayerPosition(s16 player, VECTOR3* out)
 {
     out->vx = playerInfo[player].motion.pos.vx;
     out->vy = playerInfo[player].motion.pos.vy;
     out->vz = playerInfo[player].motion.pos.vz;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetPlayerPosition);
-#endif
 
-#ifdef NON_MATCHING
 void GetAICarPosition(s16 ai, VECTOR3* out)
 {
     out->vx = aiCarInfo[ai].motion.pos.vx;
     out->vy = aiCarInfo[ai].motion.pos.vy;
     out->vz = aiCarInfo[ai].motion.pos.vz;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetAICarPosition);
-#endif
 
-#ifdef NON_MATCHING
 void GetPlayerRot(s16 player, SVECTOR* out)
 {
     out->vx = playerInfo[player].motion.rot.vx;
     out->vy = playerInfo[player].motion.rot.vy;
     out->vz = playerInfo[player].motion.rot.vz;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetPlayerRot);
-#endif
 
-#ifdef NON_MATCHING
 Cs* GetPlayerCs3D(s16 player)
 {
     Cs* cs = playerCs[player];
     return playerCs[player];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetPlayerCs3D);
-#endif
 
-#ifdef NON_MATCHING
 Cs* GetAICs3D(s16 ai)
 {
     if (numTargets > ai) {
@@ -2123,9 +2070,6 @@ Cs* GetAICs3D(s16 ai)
     }
     return helicoptorCS;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetAICs3D);
-#endif
 
 s16 GetAITheCameraFollows(void)
 {
@@ -2330,7 +2274,6 @@ void UASetCameraPosition(s16 which, VECTOR3* pos, SVECTOR* rot)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua", UASetCameraPosition);
 #endif
 
-#ifdef NON_MATCHING
 void UAGetCameraPosition(s16 idx, VECTOR3* pos, SVECTOR* rot)
 {
     pos->vx = camera[idx]->pos.vx;
@@ -2341,18 +2284,11 @@ void UAGetCameraPosition(s16 idx, VECTOR3* pos, SVECTOR* rot)
     rot->vz = camera[idx]->rot.vz;
     RotMatrixYXZ(&camera[idx]->rot, &camera[idx]->mat);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", UAGetCameraPosition);
-#endif
 
-#ifdef NON_MATCHING
 Cs* UAGetCameraCS(s16 idx)
 {
     return camera[idx];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", UAGetCameraCS);
-#endif
 
 u8 uaUsingLanes(void)
 {
@@ -2423,26 +2359,18 @@ s32 uaGetTwoPlayerMode(void)
     return twoPlayerMode;
 }
 
-#ifdef NON_MATCHING
 void PadSetConfig(s32 cfg, s16 player)
 {
     PlayerCar* info = GetPlayerInfo(player);
     padConfig[player] = cfg;
     uaPadInit(info, cfg);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", PadSetConfig);
-#endif
 
-#ifdef NON_MATCHING
 s32 PadGetConfig(s16 player)
 {
     GetPlayerInfo(player);
     return padConfig[player];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", PadGetConfig);
-#endif
 
 #ifdef NON_MATCHING
 void uaPadInit(PlayerCar* car, s32 mode)
@@ -2664,23 +2592,15 @@ void uaPadInit(PlayerCar* car, s32 mode)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua", uaPadInit);
 #endif
 
-#ifdef NON_MATCHING
 s16 GetPlayerCarToCarIndex(s16 player)
 {
     return playerIndexToCarIndex[player];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetPlayerCarToCarIndex);
-#endif
 
-#ifdef NON_MATCHING
 s16 GetAICarToCarIndex(s16 ai)
 {
     return aiIndexToCarIndex[ai];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetAICarToCarIndex);
-#endif
 
 s32 GetAICarStrength(void)
 {
@@ -2701,7 +2621,6 @@ s32 GetAICarStrength(void)
     return r;
 }
 
-#ifdef NON_MATCHING
 void uaDontDrawCar(s16 idx, u8 isPlayer)
 {
     Cs* cs;
@@ -2713,11 +2632,7 @@ void uaDontDrawCar(s16 idx, u8 isPlayer)
     }
     ((DrawNode*)cs->epNode)->drawFlag = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", uaDontDrawCar);
-#endif
 
-#ifdef NON_MATCHING
 void uaDrawCar(s16 idx, u8 isPlayer)
 {
     Cs* cs;
@@ -2734,9 +2649,6 @@ void uaDrawCar(s16 idx, u8 isPlayer)
         ((DrawNode*)cs->epNode)->drawFlag = v;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", uaDrawCar);
-#endif
 
 s32 uaGetCurrentCar(s32 isPlayer, s16 idx)
 {
@@ -2876,14 +2788,10 @@ s16 GetCarNumFromCarName(s32 name)
     return i;
 }
 
-#ifdef NON_MATCHING
 s32 GetCarNameFromCarNum(s16 num)
 {
     return CarNumToCarName[num];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", GetCarNameFromCarNum);
-#endif
 
 #ifdef NON_MATCHING
 void uaSelectOpponents(s32 car, s16 level, s16* outCount, s32* outCars)
@@ -2954,14 +2862,10 @@ void uaSelectOpponents(s32 car, s16 level, s16* outCount, s32* outCars)
 INCLUDE_ASM("asm/nonmatchings/tm1/ua", uaSelectOpponents);
 #endif
 
-#ifdef NON_MATCHING
 char* uaGetCarNameString(s32 name)
 {
     return gCarNameStrings[GetCarNumFromCarName(name)];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/ua", uaGetCarNameString);
-#endif
 
 u8 uaHasPlayerBeatThisLevel(void)
 {

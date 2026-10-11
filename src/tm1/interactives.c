@@ -250,7 +250,6 @@ void UpdateWeapons(Car* car, u8 isPlayer)
 INCLUDE_ASM("asm/nonmatchings/tm1/interactives", UpdateWeapons);
 #endif
 
-#ifdef NON_MATCHING
 void UpdatePlayerWeaponPadStatus(PlayerCar* car)
 {
     u32 start;
@@ -305,9 +304,6 @@ void UpdatePlayerWeaponPadStatus(PlayerCar* car)
         car->skid[0x0F] = 1;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/interactives", UpdatePlayerWeaponPadStatus);
-#endif
 
 #ifdef NON_MATCHING
 void UpdateAIWeaponPadStatus(AICar* car)
@@ -1967,15 +1963,11 @@ void displayFlamethrowers(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/interactives", displayFlamethrowers);
 #endif
 
-#ifdef NON_MATCHING
 void carResetGunHeat(PlayerCar* car)
 {
     car->weap.gunOverheat = 0;
     car->weap.gunHeat = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/interactives", carResetGunHeat);
-#endif
 
 void carInitPickupWeapons(void)
 {
@@ -2033,7 +2025,6 @@ void regeneratePickupWeapons(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/interactives", regeneratePickupWeapons);
 #endif
 
-#ifdef NON_MATCHING
 void carGetPickup(Car* car, u8 isPlayer, s32 kind, s32 idx)
 {
     CarWeap* pad;
@@ -2162,9 +2153,6 @@ void carGetPickup(Car* car, u8 isPlayer, s32 kind, s32 idx)
         uadashMaxCarryCapacity();
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/interactives", carGetPickup);
-#endif
 
 u8 getBombDamage(void)
 {
