@@ -236,7 +236,7 @@ segments:
       - {start: 0x94BC8, type: .bss, vram: 0x8019E648, name: tm1/HUD}
       - {start: 0x94BC8, type: .bss, vram: 0x8019E9B8, name: tm1/TARGETS}
       - {start: 0x94BC8, type: .bss, vram: 0x8019ED7C, name: tm1/UA}
-      - {start: 0x94BC8, type: bss, vram: 0x801A2818, name: tm1/SHELL}
+      - {start: 0x94BC8, type: .bss, vram: 0x801A2818, name: tm1/SHELL}
       - {start: 0x94BC8, type: .bss, vram: 0x801A28AC, name: tm1/MOVIE}
       - {start: 0x94BC8, type: bss, vram: 0x801A2904, name: sdk/sdk}
 

@@ -34,8 +34,6 @@
 
 extern void exit(s32 code);
 
-extern s32 opponents[13];
-
 s16 gAccessCodeDigit = 0;
 s32 gCurrentLevel = 0;
 s32 gStartLevel = 0;
@@ -103,6 +101,8 @@ char* levelNames[6] = {
     gFinalName,
 };
 extern char* soundtrackTitles[7];
+
+static s32 opponents[13];
 
 void main(void)
 {
@@ -616,8 +616,6 @@ void shellSetAppropriateDBnames(s32 vehicle)
     }
 }
 
-/* Matches, but needs the `SHELL` data sections to be defined in C. */
-#ifdef NON_MATCHING
 char* shellGetCurrentDatabaseFileName(void)
 {
     static char buffer[24];
@@ -625,12 +623,7 @@ char* shellGetCurrentDatabaseFileName(void)
     sprintf(buffer, gDbFmt, gDbDir, dbNames[gCurrentLevel], gDbExt);
     return buffer;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SHELL", shellGetCurrentDatabaseFileName);
-#endif
 
-/* Matches, but needs the `SHELL` data sections to be defined in C. */
-#ifdef NON_MATCHING
 char* shellGetCurrentTextureFileName(void)
 {
     static char buffer[24];
@@ -638,9 +631,6 @@ char* shellGetCurrentTextureFileName(void)
     sprintf(buffer, gDbFmt, gDbDir, dbNames[gCurrentLevel], gTexExt);
     return buffer;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SHELL", shellGetCurrentTextureFileName);
-#endif
 
 char* shellGetCurrentLevelName(void)
 {
@@ -687,12 +677,6 @@ s32 shellNextLevelChoice(s32 delta)
     return gCurrentLevel;
 }
 
-#ifndef NON_MATCHING
-static const char sUa2PlayDir[] = "UA2PLAY\\";
-#endif
-
-/* Matches, but needs the `SHELL` data sections to be defined in C. */
-#ifdef NON_MATCHING
 char* shellGetCurrentTwoPlayerDatabaseFileName(void)
 {
     static char buffer[24];
@@ -700,12 +684,7 @@ char* shellGetCurrentTwoPlayerDatabaseFileName(void)
     sprintf(buffer, gDbFmt, "UA2PLAY\\", twoPlayerDbNames[gCurrentLevel], gDbExt);
     return buffer;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SHELL", shellGetCurrentTwoPlayerDatabaseFileName);
-#endif
 
-/* Matches, but needs the `SHELL` data sections to be defined in C. */
-#ifdef NON_MATCHING
 char* shellGetCurrentTwoPlayerTextureFileName(void)
 {
     static char buffer[24];
@@ -713,9 +692,6 @@ char* shellGetCurrentTwoPlayerTextureFileName(void)
     sprintf(buffer, gDbFmt, "UA2PLAY\\", twoPlayerDbNames[gCurrentLevel], gTexExt);
     return buffer;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SHELL", shellGetCurrentTwoPlayerTextureFileName);
-#endif
 
 char* shellGetTwoPlayerCurrentLevelName(void)
 {
