@@ -1554,8 +1554,8 @@ void soundIdInit(void)
 {
     /* BIOS memset(dst,fill,count): first call has count0; second fills only
      * the first0x30 bytes with0x0C. Do not turn these into whole-pool clears. */
-    sdk_memset(gSingleSounds, 0xF34, 0);
-    sdk_memset(gTonePool, 0x120C, 0x30);
+    memset(gSingleSounds, 0xF34, 0);
+    memset(gTonePool, 0x120C, 0x30);
 }
 
 #ifdef NON_MATCHING

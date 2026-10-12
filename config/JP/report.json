@@ -9154,7 +9154,7 @@
           "address": "260"
         },
         {
-          "name": "sdk_memset",
+          "name": "memset",
           "size": "12",
           "metadata": {},
           "address": "276"
@@ -11458,7 +11458,7 @@
           "address": "50040"
         },
         {
-          "name": "memset",
+          "name": "SYS_memset",
           "size": "44",
           "metadata": {},
           "address": "50048"

@@ -149,7 +149,13 @@ void shellBeginLevelTransition(void)
 When inlined, PsyQ will treat each call as if it were in a separate context.
 In this case, `opponents` will be reloaded across the two calls.
 
-### Struct operations converted to `memcpy`/`memset`
+### Inlined struct/array operations
+
+Many cross-member struct and array operations will be converted to
+function calls. As detailed above, these often can't be matched explicitly
+because they typically result in abnormal variable behavior (such as reloads).
+
+#### `memcpy()` (constant struct assignment)
 
 Struct assignments such as the following:
 
@@ -167,12 +173,18 @@ memcpy(&cs->mat, &unitMatrix, sizeof(MATRIX));
 memcpy(&cs->wmat, &unitMatrix, sizeof(MATRIX));
 ```
 
-As detailed earlier, however, since these are inlined, it means **`unixMatrix` is reloaded across calls**.
-Only the former syntax will match here. If you explicitly try to call `memcpy`
-twice here, it will result in an extra local variable.
+#### `memset()` (partial struct/array assignment)
 
-This also seems to occur with `memset`, though it's unknown how that behavior is
-brought out.
+`memset()` behavior varies greatly depending on how the assignment is performed.
+Similarly to `memcpy()`, the inlined calls here go to the BIOS `memcpy()`, not the SDK's.
+Here is a table showing the general behavior:
+
+| Source                                                     | Generated code |
+|------------------------------------------------------------|----------------|
+| `char buf[30] = "";`                                       | Copies the string literal (`lbu`/`sb`), then calls `memset(buf + 1, 0, 29)` |
+| `char buf[30] = "ab";`                                     | Copies 3 bytes, then calls `memset(buf + 3, 0, 27)` |
+| `int a[20] = {v};` (any non-constant element)              | Calls `memset(a, 0, 80)` on the whole array, then stores the elements |
+| `int a[20] = {0};`, `{1}`, `Big b = {{0}};` (all constant) | No `memset`; a copy loop from `.rodata` |
 
 ### Small data must be decompiled early
 

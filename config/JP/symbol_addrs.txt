@@ -1067,8 +1067,7 @@ strcmp                                   = 0x80154848; // type:func
 strncmp                                  = 0x80154858; // type:func
 strlen                                   = 0x80154868; // type:func
 memcpy                                   = 0x80154878; // type:func
-// TODO: resolve dupe without renaming symbol
-sdk_memset                               = 0x80154888; // type:func
+memset                                   = 0x80154888; // type:func
 rand                                     = 0x80154898; // type:func
 srand                                    = 0x801548a8; // type:func
 printf                                   = 0x801548b8; // type:func
@@ -1451,7 +1450,7 @@ SYS_OBJ_2B08                             = 0x80160a04; // type:func
 _version                                 = 0x80160a14; // type:func
 SYS_OBJ_2BF0                             = 0x80160aec; // type:func
 // TODO: resolve dupe without renaming symbol
-memset                                   = 0x80160af4; // type:func
+SYS_memset                               = 0x80160af4; // type:func
 LoadTPage                                = 0x80160b20; // type:func
 EXT_OBJ_A8                               = 0x80160bc8; // type:func
 EXT_OBJ_AC                               = 0x80160bcc; // type:func
