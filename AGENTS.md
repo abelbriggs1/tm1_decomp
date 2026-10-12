@@ -54,9 +54,15 @@ and creates a linker script that pieces them back together.
 
 ## Constraints
 
-Before beginning work, check README.md. This file contains a list of known
-issues with the repository which prevent certain functions and data from
-matching.
+### Matching
+
+When attempting to match code, check [QUIRKS.md](QUIRKS.md) to see a list of
+known compiler issues and memes/quirks for this repository which may prevent
+some code from matching without further refinement.
+
+If you come across an undocumented compiler quirk while matching code,
+ask the user to document it in this file. Avoid writing sections and summaries
+in `QUIRKS.md` directly; see the `Documentation` constraints in this file for why.
 
 ### Tooling
 
