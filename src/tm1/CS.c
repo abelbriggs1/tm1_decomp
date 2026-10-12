@@ -9,8 +9,6 @@
 
 #define CS_POOL_SIZE 90
 
-extern void* sdk_memcpy();
-
 // clang-format off
 static MATRIX unitMatrix = IDENTITY_MATRIX;
 
@@ -63,15 +61,14 @@ void csAddToCsList(Cs* cs)
     cs->next = old;
 }
 
-#ifdef NON_MATCHING
 Cs* csCreate(void)
 {
     Cs* cs;
 
     if (gCurrentCS < CS_POOL_SIZE) {
         cs = &csPool[gCurrentCS];
-        sdk_memcpy(&cs->mat, &unitMatrix, sizeof(MATRIX));
-        sdk_memcpy(&cs->wmat, &unitMatrix, sizeof(MATRIX));
+        cs->mat = unitMatrix;
+        cs->wmat = unitMatrix;
         cs->rot.vx = 0;
         cs->rot.vy = 0;
         cs->rot.vz = 0;
@@ -107,9 +104,6 @@ Cs* csCreate(void)
     printf("internal error: too many coordinate systems (%d)\n", gCurrentCS);
     return NULL;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CS", csCreate);
-#endif
 
 void csSetEpNode(Cs* cs, void* node)
 {

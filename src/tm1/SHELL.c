@@ -936,7 +936,7 @@ void shellTurnCarHeadlightsOff(void)
     uaswCarHeadlightsOnOff(134, 0);
 }
 
-void shellSelectCards(void)
+inline void shellSelectCards(void)
 {
     uaSelectOpponents(gVehicleID, gCurrentLevel, &gNumOpponents, opponents);
     screenInitCardSprites(gCurrentLevel, gNumOpponents, opponents);
@@ -1058,15 +1058,13 @@ void shellSetLivesRemaining(s32 lives)
     gLivesRemaining = lives;
 }
 
-#ifdef NON_MATCHING
 void shellBeginLevelTransition(void)
 {
     s32 size;
     char* tex;
 
     DrawSync(0);
-    uaSelectOpponents(gVehicleID, gCurrentLevel, &gNumOpponents, opponents);
-    screenInitCardSprites(gCurrentLevel, gNumOpponents, opponents);
+    shellSelectCards();
     if (rtIsSplitScreenOn() == 0) {
         shellSetAppropriateDBnames(gVehicleID);
         dbFilename = shellGetCurrentDatabaseFileName();
@@ -1079,9 +1077,6 @@ void shellBeginLevelTransition(void)
     fileioReadFileAsync(gFd, LOAD_BUFFER, size);
     gTransitionState = 5;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SHELL", shellBeginLevelTransition);
-#endif
 
 s32 shellCheckTransitionStatus(void)
 {

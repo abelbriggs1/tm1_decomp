@@ -1066,8 +1066,7 @@ exit                                     = 0x80154838; // type:func
 strcmp                                   = 0x80154848; // type:func
 strncmp                                  = 0x80154858; // type:func
 strlen                                   = 0x80154868; // type:func
-// TODO: resolve dupe without renaming symbol
-sdk_memcpy                               = 0x80154878; // type:func
+memcpy                                   = 0x80154878; // type:func
 // TODO: resolve dupe without renaming symbol
 sdk_memset                               = 0x80154888; // type:func
 rand                                     = 0x80154898; // type:func
@@ -1221,8 +1220,7 @@ ISO9660_OBJ_82C                          = 0x80159b08; // type:func
 ISO9660_OBJ_848                          = 0x80159b24; // type:func
 ISO9660_OBJ_93C                          = 0x80159c18; // type:func
 cd_read                                  = 0x80159c44; // type:func
-// TODO: resolve dupe without renaming symbol
-memcpy                                   = 0x80159cb0; // type:func
+ISO9660_memcpy                           = 0x80159cb0; // type:func
 CdRead2                                  = 0x80159ce4; // type:func
 CDREAD2_OBJ_50                           = 0x80159d34; // type:func
 StClearRing                              = 0x80159d78; // type:func

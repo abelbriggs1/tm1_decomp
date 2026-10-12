@@ -22,9 +22,8 @@
 #include "tm1/VIEW.H"
 #include "tm1/WEAPON.H"
 #include <LIBGTE.H>
+#include <MEMORY.H>
 #include <RAND.H>
-
-extern void* sdk_memcpy();
 
 #ifdef NON_MATCHING
 void CarUpdate(PlayerCar* car)
@@ -3170,8 +3169,8 @@ void SetCarVRMode(PlayerCar* car, u32 mode)
         car->dRot.vz = 0;
         break;
     default:
-        sdk_memcpy(&car->dTrans, &car->vrPos[0], 12);
-        sdk_memcpy(&car->dRot, &car->vrRot[0], 8);
+        car->dTrans = car->vrPos[0];
+        car->dRot = car->vrRot[0];
         uaDontDrawCar((s16)car->playerIdx, 1);
         UAdashSetDashboardDrawFlag(1);
         break;

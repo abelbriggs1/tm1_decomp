@@ -1,14 +1,13 @@
 #include "common.h"
 
 #include <LIBGTE.H>
+#include <MEMORY.H>
 
 #include "tm1/CTLPAD.H"
 #include "tm1/MATH.H"
 #include "tm1/SMOOTH.H"
 
 #include "tm1/VEHICLE.H"
-
-extern void* sdk_memcpy();
 
 // clang-format off
 static MATRIX gVehicleIdentity = IDENTITY_MATRIX;
@@ -46,7 +45,7 @@ void InitVehicleDynamics(Vehicle* veh)
     veh->angVel.vx = 0;
     veh->angVel.vy = 0;
     veh->angVel.vz = 0;
-    sdk_memcpy(&veh->mat, &gVehicleIdentity, sizeof(MATRIX));
+    memcpy(&veh->mat, &gVehicleIdentity, sizeof(MATRIX));
 }
 
 void InitVehiclePad(Vehicle* veh)

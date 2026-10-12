@@ -112,10 +112,67 @@ To build the repository, you will need a digital copy of the Playstation game
 6. Whenever you modify the splat config, you should perform a `uv run configure.py distclean`
    before regenerating the config with `uv run configure.py generate`.
 
-## Known Issues
+## Known Issues / Compiler Quirks
 
-This is a list of known repository-wide issues that prevent functions or data from
+This is a list of known issues or compiler quirks that prevent functions or data from
 matching when they otherwise should.
+
+### Inlining results in a variable reload
+
+If you have two functions which use the same variable:
+
+```c
+uaSelectOpponents(gVehicleID, gCurrentLevel, &gNumOpponents, opponents);
+screenInitCardSprites(gCurrentLevel, gNumOpponents, opponents);
+```
+
+By default, PsyQ will load `opponents` into a local variable, and keep it across
+the two calls.
+
+However, if these calls are placed as part of an inline function:
+
+```c
+inline void shellSelectCards(void)
+{
+    uaSelectOpponents(gVehicleID, gCurrentLevel, &gNumOpponents, opponents);
+    screenInitCardSprites(gCurrentLevel, gNumOpponents, opponents);
+}
+
+void shellBeginLevelTransition(void)
+{
+    // ...
+    shellSelectCards(); // inlined
+    // ...
+}
+```
+
+When inlined, PsyQ will treat each call as if it were in a separate context.
+In this case, `opponents` will be reloaded across the two calls.
+
+### Struct operations converted to `memcpy`/`memset`
+
+Struct assignments such as the following:
+
+```c
+// all are `MATRIX`
+cs->mat = unitMatrix;
+cs->wmat = unitMatrix;
+```
+
+PsyQ accepts this syntax, and converts this to a call to the BIOS (not the SDK!)'s
+`memcpy()`:
+
+```c
+memcpy(&cs->mat, &unitMatrix, sizeof(MATRIX));
+memcpy(&cs->wmat, &unitMatrix, sizeof(MATRIX));
+```
+
+As detailed earlier, however, since these are inlined, it means **`unixMatrix` is reloaded across calls**.
+Only the former syntax will match here. If you explicitly try to call `memcpy`
+twice here, it will result in an extra local variable.
+
+This also seems to occur with `memset`, though it's unknown how that behavior is
+brought out.
 
 ### Small data must be decompiled early
 

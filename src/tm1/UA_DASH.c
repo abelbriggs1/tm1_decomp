@@ -3,6 +3,7 @@
 #include <LIBGPU.H>
 #include <LIBGS.H>
 #include <LIBGTE.H>
+#include <MEMORY.H>
 #include <RAND.H>
 #include <STDIO.H>
 
@@ -20,7 +21,6 @@
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 extern void exit(s32 code);
-extern void* sdk_memcpy();
 
 extern char* gCockpitTmsNames[12];
 extern char* gCarSignStrings[13];
@@ -685,7 +685,7 @@ void uadashInitCockpit(u_long* tim)
         gDash[0].src[i].y = s->y;
         gDash[0].src[i].w = s->w;
         gDash[0].src[i].h = s->h;
-        sdk_memcpy(&gDash[0].dst[i], &gDash[0].src[i], 8);
+        memcpy(&gDash[0].dst[i], &gDash[0].src[i], 8);
         gDash[0].data[i] = buf.pix[i];
     }
     cnt = n - 2;
@@ -892,11 +892,11 @@ void uadashLoadCockpit(s32 car)
         switch (i) {
         case 0:
             GsGetTimInfo(p + 1, &im0);
-            sdk_memcpy(gDash[0].data[0], im0.pixel, im0.pw * (im0.ph * 2));
+            memcpy(gDash[0].data[0], im0.pixel, im0.pw * (im0.ph * 2));
             break;
         case 6:
             GsGetTimInfo(p + 1, &im1);
-            sdk_memcpy(gDash[0].data[1], im1.pixel, im1.pw * (im1.ph * 2));
+            memcpy(gDash[0].data[1], im1.pixel, im1.pw * (im1.ph * 2));
             break;
         case 7:
             uadashReloadSteeringWheel(p);

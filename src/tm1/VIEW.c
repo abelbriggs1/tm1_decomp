@@ -1,6 +1,7 @@
 #include "common.h"
 
 #include <LIBGPU.H>
+#include <MEMORY.H>
 #include <STDIO.H>
 
 #include "tm1/MATH.H"
@@ -276,7 +277,6 @@ extern MATRIX swap;
 extern EyeTrans worldSpaceTrans[2];
 extern EyeMat worldSpaceMat[2];
 
-extern void* sdk_memcpy();
 
 s32 viewGetCurrentFOVH(s32 which)
 {
@@ -592,25 +592,25 @@ void viewSetSkyPosition(s32* pos, s32 which)
 
 void viewGetDeltaRot(void* dst, s32 which)
 {
-    sdk_memcpy(dst, &view[which]->rot, 8);
+    memcpy(dst, &view[which]->rot, 8);
 }
 
 void viewGetDeltaTrans(void* dst, s32 which)
 {
-    sdk_memcpy(dst, &view[which]->pos, 12);
+    memcpy(dst, &view[which]->pos, 12);
 }
 
 void viewSetDeltaRot(void* src, s32 which)
 {
     if (view[which] != 0) {
-        sdk_memcpy(&view[which]->rot, src, 8);
+        memcpy(&view[which]->rot, src, 8);
     }
 }
 
 void viewSetDeltaTrans(void* src, s32 which)
 {
     if (view[which] != 0) {
-        sdk_memcpy(&view[which]->pos, src, 12);
+        memcpy(&view[which]->pos, src, 12);
     }
 }
 
