@@ -54,151 +54,152 @@ segments:
       # ------------------------------------------------
       # .rodata segment
       # ------------------------------------------------
-      - [0x8FC,  .rodata, tm1/hier]          # 0x800F81B4
-      - [0x92C, .rodata, tm1/cs]            # 0x800F81E4
-      - [0x960, .rodata, tm1/ctlpad]        # 0x800F8218
-      - [0x9B0,  .rodata, tm1/db]            # 0x800F8268
-      - [0x1F78, .rodata, tm1/hd]           # 0x800F9830
-      - [0x1FA8, .rodata, tm1/hdp]          # 0x800F9860
-      - [0x1FD8, .rodata, tm1/sound]         # 0x800F9890
-      - [0x2024, .rodata, tm1/ua_sound]     # 0x800F98DC
-      - [0x307C, .rodata, tm1/view]         # 0x800FA934
-      - [0x30E4, .rodata, tm1/font]         # 0x800FA99C
-      - [0x3148, .rodata, tm1/car]           # 0x800FAA00
-      - [0x31EC, .rodata, tm1/car_update]   # 0x800FAAA4
-      - [0x3200, .rodata, tm1/car_init]     # 0x800FAAB8
-      - [0x3800, .rodata, tm1/ai_car_init]  # 0x800FB0B8
-      - [0x39E4, .rodata, tm1/interactives]  # 0x800FB29C
-      - [0x3ECC, .rodata, tm1/explosion]     # 0x800FB784
-      - [0x3EF0, .rodata, tm1/screen]       # 0x800FB7A8
-      - [0x4760, .rodata, tm1/ai_car_update] # 0x800FC018
-      - [0x4944, .rodata, tm1/ua_dash]      # 0x800FC1FC
-      - [0x4AD8, .rodata, tm1/targets]      # 0x800FC390
-      - [0x4C74, .rodata, tm1/ua]           # 0x800FC52C
-      - [0x4ED8, .rodata, tm1/shell]        # 0x800FC790
-      - [0x5170, .rodata, tm1/movie]        # 0x800FCA28
+      - [0x8FC,  .rodata, tm1/HIER]          # 0x800F81B4
+      - [0x92C, .rodata, tm1/CS]            # 0x800F81E4
+      - [0x960, .rodata, tm1/CTLPAD]        # 0x800F8218
+      - [0x9B0,  .rodata, tm1/DB]            # 0x800F8268
+      - [0x1F78, .rodata, tm1/HD]           # 0x800F9830
+      - [0x1FA8, .rodata, tm1/HDP]          # 0x800F9860
+      - [0x1FD8, .rodata, tm1/SOUND]         # 0x800F9890
+      - [0x2024, .rodata, tm1/UA_SOUND]     # 0x800F98DC
+      - [0x307C, .rodata, tm1/VIEW]         # 0x800FA934
+      - [0x30E4, .rodata, tm1/FONT]         # 0x800FA99C
+      - [0x3148, .rodata, tm1/CAR]           # 0x800FAA00
+      - [0x31EC, .rodata, tm1/CARUPD]   # 0x800FAAA4
+      - [0x3200, .rodata, tm1/CAR_INIT]     # 0x800FAAB8
+      - [0x37FC, pad]                       # 0x800FB0B4
+      - [0x3800, .rodata, tm1/AICARINI]  # 0x800FB0B8
+      - [0x39E4, .rodata, tm1/INTERACT]  # 0x800FB29C
+      - [0x3ECC, .rodata, tm1/EXPLODE]     # 0x800FB784
+      - [0x3EF0, .rodata, tm1/SCREEN]       # 0x800FB7A8
+      - [0x4760, .rodata, tm1/AICARUPD] # 0x800FC018
+      - [0x4944, .rodata, tm1/UA_DASH]      # 0x800FC1FC
+      - [0x4AD8, .rodata, tm1/TARGETS]      # 0x800FC390
+      - [0x4C74, .rodata, tm1/UA]           # 0x800FC52C
+      - [0x4ED8, .rodata, tm1/SHELL]        # 0x800FC790
+      - [0x5170, .rodata, tm1/MOVIE]        # 0x800FCA28
       - [0x51B0, rodata, sdk/sdk]           # 0x800FCA68
       # ------------------------------------------------
       # .text segment (C code)
       # ------------------------------------------------
-      - [0x5F24,  c,   tm1/hier]            # 0x800FD7DC
-      - [0x710C,  c,   tm1/math]            # 0x800FE9C4
-      - [0x7784,  c,   tm1/wdcopy]          # 0x800FF03C
-      - [0x77B8,  c,   tm1/cs]              # 0x800FF070
-      - [0x7AE4,  c,   tm1/rt]              # 0x800FF39C
-      - [0x8234,  c,   tm1/ctlpad]          # 0x800FFAEC
-      - [0x8790,  c,   tm1/db]              # 0x80100048
-      - [0x9438,  c,   tm1/hd]              # 0x80100CF0
-      - [0xB29C,  c,   tm1/hdp]             # 0x80102B54
-      - [0xC1A0,  c  , tm1/light]           # 0x80103A58
-      - [0xCB3C,  c,   tm1/sound]           # 0x801043F4
-      - [0xFB14,  c,   tm1/ua_sound]        # 0x801073CC
-      - [0x1122C, c,   tm1/hier_sub]        # 0x80108AE4
-      - [0x12250, c,   tm1/timer]           # 0x80109B08
-      - [0x1254C, c  , tm1/view]            # 0x80109E04
-      - [0x13700, c,   tm1/font]            # 0x8010AFB8
-      - [0x147A4, c,   tm1/weapon]          # 0x8010C05C
-      - [0x199A4, c,   tm1/car]             # 0x8011125C
-      - [0x21C54, c,   tm1/ai_car]          # 0x8011950C
-      - [0x24A18, c,   tm1/car_update]      # 0x8011C2D0
-      - [0x2AFC4, c,   tm1/car_init]        # 0x8012287C
-      - [0x2D47C, c,   tm1/ai_car_init]     # 0x80124D34
-      - [0x2E308, c,   tm1/trigger_pts]     # 0x80125BC0
-      - [0x354C0, c  , tm1/bridges]         # 0x8012CD78
-      - [0x38DB0, c  , tm1/potholes]        # 0x80130668
-      - [0x391D4, c  , tm1/curbs]           # 0x80130A8C
-      - [0x39A40, c  , tm1/slick_spots]     # 0x801312F8
-      - [0x39ABC, c,   tm1/interactives]    # 0x80131374
-      - [0x3E6D8, c,   tm1/explosion]       # 0x80135F90
-      - [0x40B44, c,   tm1/grutils]         # 0x801383FC
-      - [0x4108C, c,   tm1/screen]          # 0x80138944
-      - [0x4969C, c,   tm1/ua_sw]           # 0x80140F54
-      - [0x4A440, c,   tm1/ai_car_update]   # 0x80141CF8
-      - [0x4AD5C, c,   tm1/ua_dash]         # 0x80142614
-      - [0x4EA38, c,   tm1/ua_effect]       # 0x801462F0
-      - [0x4F31C, c,   tm1/hud]             # 0x80146BD4
-      - [0x50294, c,   tm1/targets]         # 0x80147B4C
-      - [0x53950, c,   tm1/ua]              # 0x8014B208
-      - [0x59528, c,   tm1/smooth]          # 0x80150DE0
-      - [0x599D8, c,   tm1/vehicle]         # 0x80151290
-      - [0x5A18C, c,   tm1/shell]           # 0x80151A44
-      - [0x5BE30, c,   tm1/fileio]          # 0x801536E8
-      - [0x5C16C, c  , tm1/movie]           # 0x80153A24
+      - [0x5F24,  c,   tm1/HIER]            # 0x800FD7DC
+      - [0x710C,  c,   tm1/MATH]            # 0x800FE9C4
+      - [0x7784,  c,   tm1/WDCOPY]          # 0x800FF03C
+      - [0x77B8,  c,   tm1/CS]              # 0x800FF070
+      - [0x7AE4,  c,   tm1/RT]              # 0x800FF39C
+      - [0x8234,  c,   tm1/CTLPAD]          # 0x800FFAEC
+      - [0x8790,  c,   tm1/DB]              # 0x80100048
+      - [0x9438,  c,   tm1/HD]              # 0x80100CF0
+      - [0xB29C,  c,   tm1/HDP]             # 0x80102B54
+      - [0xC1A0,  c  , tm1/LIGHT]           # 0x80103A58
+      - [0xCB3C,  c,   tm1/SOUND]           # 0x801043F4
+      - [0xFB14,  c,   tm1/UA_SOUND]        # 0x801073CC
+      - [0x1122C, c,   tm1/HIER_SUB]        # 0x80108AE4
+      - [0x12250, c,   tm1/TIMER]           # 0x80109B08
+      - [0x1254C, c  , tm1/VIEW]            # 0x80109E04
+      - [0x13700, c,   tm1/FONT]            # 0x8010AFB8
+      - [0x147A4, c,   tm1/WEAPON]          # 0x8010C05C
+      - [0x199A4, c,   tm1/CAR]             # 0x8011125C
+      - [0x21C54, c,   tm1/AI_CAR]          # 0x8011950C
+      - [0x24A18, c,   tm1/CARUPD]      # 0x8011C2D0
+      - [0x2AFC4, c,   tm1/CAR_INIT]        # 0x8012287C
+      - [0x2D47C, c,   tm1/AICARINI]     # 0x80124D34
+      - [0x2E308, c,   tm1/TRIGPTS]     # 0x80125BC0
+      - [0x354C0, c  , tm1/BRIDGES]         # 0x8012CD78
+      - [0x38DB0, c  , tm1/POTHOLES]        # 0x80130668
+      - [0x391D4, c  , tm1/CURBS]           # 0x80130A8C
+      - [0x39A40, c  , tm1/SLICK]     # 0x801312F8
+      - [0x39ABC, c,   tm1/INTERACT]    # 0x80131374
+      - [0x3E6D8, c,   tm1/EXPLODE]       # 0x80135F90
+      - [0x40B44, c,   tm1/GRUTILS]         # 0x801383FC
+      - [0x4108C, c,   tm1/SCREEN]          # 0x80138944
+      - [0x4969C, c,   tm1/UA_SW]           # 0x80140F54
+      - [0x4A440, c,   tm1/AICARUPD]   # 0x80141CF8
+      - [0x4AD5C, c,   tm1/UA_DASH]         # 0x80142614
+      - [0x4EA38, c,   tm1/UAEFFECT]       # 0x801462F0
+      - [0x4F31C, c,   tm1/HUD]             # 0x80146BD4
+      - [0x50294, c,   tm1/TARGETS]         # 0x80147B4C
+      - [0x53950, c,   tm1/UA]              # 0x8014B208
+      - [0x59528, c,   tm1/SMOOTH]          # 0x80150DE0
+      - [0x599D8, c,   tm1/VEHICLE]         # 0x80151290
+      - [0x5A18C, c,   tm1/SHELL]           # 0x80151A44
+      - [0x5BE30, c,   tm1/FILEIO]          # 0x801536E8
+      - [0x5C16C, c  , tm1/MOVIE]           # 0x80153A24
       - [0x5CEBC, asm, sdk/sdk]             # 0x80154774
       # ------------------------------------------------
       # .data segment
       # ------------------------------------------------
-      - [0x785F4, .data, tm1/cs]             # 0x8016FEAC
-      - [0x78614, data, tm1/sound]          # 0x8016FECC
-      - [0x78980, .data, tm1/timer]         # 0x80170238
-      - [0x78998, .data, tm1/view]           # 0x80170250
-      - [0x78EF8, .data, tm1/font]           # 0x801707B0
-      - [0x794DC, data, tm1/car_init]       # 0x80170D94
-      - [0x794FC, .data, tm1/interactives]   # 0x80170DB4
-      - [0x7954C, .data, tm1/explosion]      # 0x80170E04
-      - [0x7956C, data, tm1/screen]         # 0x80170E24
-      - [0x797C8, .data, tm1/ai_car_update]  # 0x80171080
-      - [0x799F8, data, tm1/ua_dash]        # 0x801712B0
-      - [0x79A5C, .data, tm1/ua_effect]     # 0x80171314
-      - [0x79C54, .data, tm1/targets]       # 0x8017150C
-      - [0x79EB0, .data, tm1/ua]            # 0x80171768
-      - [0x79FA4, .data, tm1/vehicle]        # 0x8017185C
-      - [0x79FC4, .data, tm1/shell]         # 0x8017187C
+      - [0x785F4, .data, tm1/CS]             # 0x8016FEAC
+      - [0x78614, data, tm1/SOUND]          # 0x8016FECC
+      - [0x78980, .data, tm1/TIMER]         # 0x80170238
+      - [0x78998, .data, tm1/VIEW]           # 0x80170250
+      - [0x78EF8, .data, tm1/FONT]           # 0x801707B0
+      - [0x794DC, data, tm1/CAR_INIT]       # 0x80170D94
+      - [0x794FC, .data, tm1/INTERACT]   # 0x80170DB4
+      - [0x7954C, .data, tm1/EXPLODE]      # 0x80170E04
+      - [0x7956C, data, tm1/SCREEN]         # 0x80170E24
+      - [0x797C8, .data, tm1/AICARUPD]  # 0x80171080
+      - [0x799F8, data, tm1/UA_DASH]        # 0x801712B0
+      - [0x79A5C, .data, tm1/UAEFFECT]     # 0x80171314
+      - [0x79C54, .data, tm1/TARGETS]       # 0x8017150C
+      - [0x79EB0, .data, tm1/UA]            # 0x80171768
+      - [0x79FA4, .data, tm1/VEHICLE]        # 0x8017185C
+      - [0x79FC4, .data, tm1/SHELL]         # 0x8017187C
       - [0x7A02C, data, sdk/sdk]            # 0x801718E4
       # ------------------------------------------------
       # .sdata segment
       # ------------------------------------------------
-      - [0x9464C, .sdata, tm1/hier]          # 0x8018BF04
-      - [0x9465C, .sdata, tm1/cs]            # 0x8018BF14
-      - [0x94660, .sdata, tm1/rt]            # 0x8018BF18
-      - [0x9467C, .sdata, tm1/ctlpad]       # 0x8018BF34
-      - [0x94680, .sdata, tm1/db]            # 0x8018BF38
-      - [0x94694, .sdata, tm1/hd]           # 0x8018BF4C
-      - [0x946A4, .sdata, tm1/hdp]          # 0x8018BF5C
-      - [0x946A8, .sdata, tm1/sound]         # 0x8018BF60
-      - [0x946D0, .sdata, tm1/ua_sound]      # 0x8018BF88
-      - [0x946D8, .sdata, tm1/view]          # 0x8018BF90
-      - [0x946E8, .sdata, tm1/font]          # 0x8018BFA0
-      - [0x946F0, .sdata, tm1/weapon]       # 0x8018BFA8
-      - [0x94718, .sdata, tm1/ai_car]       # 0x8018BFD0
-      - [0x9471C, .sdata, tm1/car_update]   # 0x8018BFD4
-      - [0x94720, .sdata, tm1/bridges]      # 0x8018BFD8
-      - [0x94724, .sdata, tm1/potholes]     # 0x8018BFDC
-      - [0x94728, .sdata, tm1/interactives]  # 0x8018BFE0
-      - [0x947E4, .sdata, tm1/explosion]     # 0x8018C09C
-      - [0x947E8, sdata, tm1/screen]        # 0x8018C0A0
-      - [0x94954, .sdata, tm1/ai_car_update] # 0x8018C20C
-      - [0x949F0, sdata, tm1/ua_dash]       # 0x8018C2A8
-      - [0x94A3C, .sdata, tm1/ua_effect]    # 0x8018C2F4
-      - [0x94A54, .sdata, tm1/hud]          # 0x8018C30C
-      - [0x94A58, .sdata, tm1/targets]      # 0x8018C310
-      - [0x94A7C, .sdata, tm1/ua]           # 0x8018C334
-      - [0x94AF8, .sdata, tm1/shell]        # 0x8018C3B0
-      - [0x94BB4, sdata, tm1/fileio]        # 0x8018C46C
-      - [0x94BBC, .sdata, tm1/movie]        # 0x8018C474
+      - [0x9464C, .sdata, tm1/HIER]          # 0x8018BF04
+      - [0x9465C, .sdata, tm1/CS]            # 0x8018BF14
+      - [0x94660, .sdata, tm1/RT]            # 0x8018BF18
+      - [0x9467C, .sdata, tm1/CTLPAD]       # 0x8018BF34
+      - [0x94680, .sdata, tm1/DB]            # 0x8018BF38
+      - [0x94694, .sdata, tm1/HD]           # 0x8018BF4C
+      - [0x946A4, .sdata, tm1/HDP]          # 0x8018BF5C
+      - [0x946A8, .sdata, tm1/SOUND]         # 0x8018BF60
+      - [0x946D0, .sdata, tm1/UA_SOUND]      # 0x8018BF88
+      - [0x946D8, .sdata, tm1/VIEW]          # 0x8018BF90
+      - [0x946E8, .sdata, tm1/FONT]          # 0x8018BFA0
+      - [0x946F0, .sdata, tm1/WEAPON]       # 0x8018BFA8
+      - [0x94718, .sdata, tm1/AI_CAR]       # 0x8018BFD0
+      - [0x9471C, .sdata, tm1/CARUPD]   # 0x8018BFD4
+      - [0x94720, .sdata, tm1/BRIDGES]      # 0x8018BFD8
+      - [0x94724, .sdata, tm1/POTHOLES]     # 0x8018BFDC
+      - [0x94728, .sdata, tm1/INTERACT]  # 0x8018BFE0
+      - [0x947E4, .sdata, tm1/EXPLODE]     # 0x8018C09C
+      - [0x947E8, sdata, tm1/SCREEN]        # 0x8018C0A0
+      - [0x94954, .sdata, tm1/AICARUPD] # 0x8018C20C
+      - [0x949F0, sdata, tm1/UA_DASH]       # 0x8018C2A8
+      - [0x94A3C, .sdata, tm1/UAEFFECT]    # 0x8018C2F4
+      - [0x94A54, .sdata, tm1/HUD]          # 0x8018C30C
+      - [0x94A58, .sdata, tm1/TARGETS]      # 0x8018C310
+      - [0x94A7C, .sdata, tm1/UA]           # 0x8018C334
+      - [0x94AF8, .sdata, tm1/SHELL]        # 0x8018C3B0
+      - [0x94BB4, .sdata, tm1/FILEIO]       # 0x8018C46C
+      - [0x94BBC, .sdata, tm1/MOVIE]        # 0x8018C474
       # ------------------------------------------------
       # .sbss segment
       # ------------------------------------------------
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C480, name: tm1/hier}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4B0, name: tm1/cs}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4BC, name: tm1/rt}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4C8, name: tm1/hd}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4D4, name: tm1/hdp}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4DC, name: tm1/sound}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4F8, name: tm1/hier_sub}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C508, name: tm1/view}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C524, name: tm1/weapon}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C538, name: tm1/ai_car}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C53C, name: tm1/interactives}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C55C, name: tm1/explosion}
-      - {start: 0x94BC8, type: sbss, vram: 0x8018C564, name: tm1/screen}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C5BC, name: tm1/ua_sw}
-      - {start: 0x94BC8, type: sbss, vram: 0x8018C5D8, name: tm1/ua_dash}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C5F8, name: tm1/ua_effect}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C604, name: tm1/hud}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C624, name: tm1/ua}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C670, name: tm1/shell}
-      - {start: 0x94BC8, type: .sbss, vram: 0x8018C690, name: tm1/movie}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C480, name: tm1/HIER}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4B0, name: tm1/CS}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4BC, name: tm1/RT}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4C8, name: tm1/HD}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4D4, name: tm1/HDP}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4DC, name: tm1/SOUND}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C4F8, name: tm1/HIER_SUB}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C508, name: tm1/VIEW}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C524, name: tm1/WEAPON}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C538, name: tm1/AI_CAR}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C53C, name: tm1/INTERACT}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C55C, name: tm1/EXPLODE}
+      - {start: 0x94BC8, type: sbss, vram: 0x8018C564, name: tm1/SCREEN}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C5BC, name: tm1/UA_SW}
+      - {start: 0x94BC8, type: sbss, vram: 0x8018C5D8, name: tm1/UA_DASH}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C5F8, name: tm1/UAEFFECT}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C604, name: tm1/HUD}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C624, name: tm1/UA}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C670, name: tm1/SHELL}
+      - {start: 0x94BC8, type: .sbss, vram: 0x8018C690, name: tm1/MOVIE}
       - {start: 0x94BC8, type: sbss, vram: 0x8018C6BC, name: sdk/sdk}
 
       # ------------------------------------------------
@@ -206,37 +207,37 @@ segments:
       # ------------------------------------------------
       # These are small, uninitialized global variables defined in headers
       # that were included in multiple files.
-      # `ld` allocates these itself; see `include/scommon.h`.
+      # `ld` allocates these itself; see `include/SCOMMON.H`.
       - {start: 0x94BC8, type: scommon, vram: 0x8018C6D0, name: tm1/scommon}
 
       # ------------------------------------------------
       # .bss segment
       # ------------------------------------------------
-      - {start: 0x94BC8, type: bss, vram: 0x8018C6E4, name: tm1/hier}
-      - {start: 0x94BC8, type: .bss, vram: 0x8018EDB8, name: tm1/cs}
-      - {start: 0x94BC8, type: bss, vram: 0x80194BF0, name: tm1/rt}
-      - {start: 0x94BC8, type: .bss, vram: 0x80194F10, name: tm1/db}
-      - {start: 0x94BC8, type: .bss, vram: 0x80195EB0, name: tm1/hd}
-      - {start: 0x94BC8, type: bss, vram: 0x80196034, name: tm1/hdp}
-      - {start: 0x94BC8, type: .bss, vram: 0x80196064, name: tm1/light}
-      - {start: 0x94BC8, type: bss, vram: 0x801961E8, name: tm1/sound}
-      - {start: 0x94BC8, type: .bss, vram: 0x80198A4C, name: tm1/ua_sound}
-      - {start: 0x94BC8, type: bss, vram: 0x80198A6C, name: tm1/hier_sub}
-      - {start: 0x94BC8, type: .bss, vram: 0x80198A90, name: tm1/timer}
-      - {start: 0x94BC8, type: bss, vram: 0x80198A98, name: tm1/view}
-      - {start: 0x94BC8, type: .bss, vram: 0x80198B10, name: tm1/font}
-      - {start: 0x94BC8, type: bss, vram: 0x80198C28, name: tm1/weapon}
-      - {start: 0x94BC8, type: .bss, vram: 0x801996B8, name: tm1/interactives}
-      - {start: 0x94BC8, type: .bss, vram: 0x80199DB8, name: tm1/explosion}
-      - {start: 0x94BC8, type: bss, vram: 0x8019C948, name: tm1/screen}
-      - {start: 0x94BC8, type: bss, vram: 0x8019CD3C, name: tm1/ua_sw}
-      - {start: 0x94BC8, type: bss, vram: 0x8019D184, name: tm1/ua_dash}
-      - {start: 0x94BC8, type: .bss, vram: 0x8019E5BC, name: tm1/ua_effect}
-      - {start: 0x94BC8, type: .bss, vram: 0x8019E648, name: tm1/hud}
-      - {start: 0x94BC8, type: .bss, vram: 0x8019E9B8, name: tm1/targets}
-      - {start: 0x94BC8, type: .bss, vram: 0x8019ED7C, name: tm1/ua}
-      - {start: 0x94BC8, type: bss, vram: 0x801A2818, name: tm1/shell}
-      - {start: 0x94BC8, type: .bss, vram: 0x801A28AC, name: tm1/movie}
+      - {start: 0x94BC8, type: bss, vram: 0x8018C6E4, name: tm1/HIER}
+      - {start: 0x94BC8, type: .bss, vram: 0x8018EDB8, name: tm1/CS}
+      - {start: 0x94BC8, type: bss, vram: 0x80194BF0, name: tm1/RT}
+      - {start: 0x94BC8, type: .bss, vram: 0x80194F10, name: tm1/DB}
+      - {start: 0x94BC8, type: .bss, vram: 0x80195EB0, name: tm1/HD}
+      - {start: 0x94BC8, type: bss, vram: 0x80196034, name: tm1/HDP}
+      - {start: 0x94BC8, type: .bss, vram: 0x80196064, name: tm1/LIGHT}
+      - {start: 0x94BC8, type: bss, vram: 0x801961E8, name: tm1/SOUND}
+      - {start: 0x94BC8, type: .bss, vram: 0x80198A4C, name: tm1/UA_SOUND}
+      - {start: 0x94BC8, type: bss, vram: 0x80198A6C, name: tm1/HIER_SUB}
+      - {start: 0x94BC8, type: .bss, vram: 0x80198A90, name: tm1/TIMER}
+      - {start: 0x94BC8, type: bss, vram: 0x80198A98, name: tm1/VIEW}
+      - {start: 0x94BC8, type: .bss, vram: 0x80198B10, name: tm1/FONT}
+      - {start: 0x94BC8, type: bss, vram: 0x80198C28, name: tm1/WEAPON}
+      - {start: 0x94BC8, type: .bss, vram: 0x801996B8, name: tm1/INTERACT}
+      - {start: 0x94BC8, type: .bss, vram: 0x80199DB8, name: tm1/EXPLODE}
+      - {start: 0x94BC8, type: bss, vram: 0x8019C948, name: tm1/SCREEN}
+      - {start: 0x94BC8, type: bss, vram: 0x8019CD3C, name: tm1/UA_SW}
+      - {start: 0x94BC8, type: bss, vram: 0x8019D184, name: tm1/UA_DASH}
+      - {start: 0x94BC8, type: .bss, vram: 0x8019E5BC, name: tm1/UAEFFECT}
+      - {start: 0x94BC8, type: .bss, vram: 0x8019E648, name: tm1/HUD}
+      - {start: 0x94BC8, type: .bss, vram: 0x8019E9B8, name: tm1/TARGETS}
+      - {start: 0x94BC8, type: .bss, vram: 0x8019ED7C, name: tm1/UA}
+      - {start: 0x94BC8, type: bss, vram: 0x801A2818, name: tm1/SHELL}
+      - {start: 0x94BC8, type: .bss, vram: 0x801A28AC, name: tm1/MOVIE}
       - {start: 0x94BC8, type: bss, vram: 0x801A2904, name: sdk/sdk}
 
       # ------------------------------------------------
@@ -246,52 +247,52 @@ segments:
       # that were included in multiple files.
       # Keep them together in a single TU for splitting purposes.
       - {start: 0x94BC8, type: bss, vram: 0x801A99EC, name: tm1/common}
-      # - {start: 0x94BC8, type: bss, vram: 0x801A99EC} # tm1/sound
+      # - {start: 0x94BC8, type: bss, vram: 0x801A99EC} # tm1/SOUND
       # - {start: 0x94BC8, type: bss, vram: 0x801A9A2C} # SDK sound library
-      # - {start: 0x94BC8, type: bss, vram: 0x801A9A30} # tm1/curbs
-      # - {start: 0x94BC8, type: bss, vram: 0x801A9C10} # tm1/weapon
-      # - {start: 0x94BC8, type: bss, vram: 0x801AC320} # tm1/slick_spots
-      # - {start: 0x94BC8, type: bss, vram: 0x801AC35C} # tm1/trigger_pts
+      # - {start: 0x94BC8, type: bss, vram: 0x801A9A30} # tm1/CURBS
+      # - {start: 0x94BC8, type: bss, vram: 0x801A9C10} # tm1/WEAPON
+      # - {start: 0x94BC8, type: bss, vram: 0x801AC320} # tm1/SLICK
+      # - {start: 0x94BC8, type: bss, vram: 0x801AC35C} # tm1/TRIGPTS
       # - {start: 0x94BC8, type: bss, vram: 0x801AC910} # SDK sound library
-      # - {start: 0x94BC8, type: bss, vram: 0x801AC934} # tm1/screen
+      # - {start: 0x94BC8, type: bss, vram: 0x801AC934} # tm1/SCREEN
       # - {start: 0x94BC8, type: bss, vram: 0x801AC95C} # SDK MDEC library
-      # - {start: 0x94BC8, type: bss, vram: 0x801AC968} # tm1/targets
+      # - {start: 0x94BC8, type: bss, vram: 0x801AC968} # tm1/TARGETS
       # - {start: 0x94BC8, type: bss, vram: 0x801ACEE0} # SDK sound library
-      # - {start: 0x94BC8, type: bss, vram: 0x801ACFDC} # tm1/view
-      # - {start: 0x94BC8, type: bss, vram: 0x801ACFE8} # tm1/hier
+      # - {start: 0x94BC8, type: bss, vram: 0x801ACFDC} # tm1/VIEW
+      # - {start: 0x94BC8, type: bss, vram: 0x801ACFE8} # tm1/HIER
       # - {start: 0x94BC8, type: bss, vram: 0x801AEB68} # SDK sound library
-      # - {start: 0x94BC8, type: bss, vram: 0x801AEB70} # tm1/hier
-      # - {start: 0x94BC8, type: bss, vram: 0x801AF430} # tm1/bridges
+      # - {start: 0x94BC8, type: bss, vram: 0x801AEB70} # tm1/HIER
+      # - {start: 0x94BC8, type: bss, vram: 0x801AF430} # tm1/BRIDGES
       # - {start: 0x94BC8, type: bss, vram: 0x801AFBB0} # SDK sound library
-      # - {start: 0x94BC8, type: bss, vram: 0x801AFBE4} # tm1/sound
-      # - {start: 0x94BC8, type: bss, vram: 0x801AFC24} # tm1/trigger_pts
+      # - {start: 0x94BC8, type: bss, vram: 0x801AFBE4} # tm1/SOUND
+      # - {start: 0x94BC8, type: bss, vram: 0x801AFC24} # tm1/TRIGPTS
       # - {start: 0x94BC8, type: bss, vram: 0x801B0F48} # SDK sound library
-      # - {start: 0x94BC8, type: bss, vram: 0x801B0F50} # tm1/ua_dash
+      # - {start: 0x94BC8, type: bss, vram: 0x801B0F50} # tm1/UA_DASH
       # - {start: 0x94BC8, type: bss, vram: 0x801B2210} # SDK sound library
       # - {start: 0x94BC8, type: bss, vram: 0x801B2218} # SDK MDEC library
       # - {start: 0x94BC8, type: bss, vram: 0x801B221C} # SDK sound library
-      # - {start: 0x94BC8, type: bss, vram: 0x801B2228} # tm1/trigger_pts
-      # - {start: 0x94BC8, type: bss, vram: 0x801B225C} # tm1/screen
-      # - {start: 0x94BC8, type: bss, vram: 0x801B2314} # tm1/ua_dash
+      # - {start: 0x94BC8, type: bss, vram: 0x801B2228} # tm1/TRIGPTS
+      # - {start: 0x94BC8, type: bss, vram: 0x801B225C} # tm1/SCREEN
+      # - {start: 0x94BC8, type: bss, vram: 0x801B2314} # tm1/UA_DASH
       # - {start: 0x94BC8, type: bss, vram: 0x801B2374} # SDK pad library
       # - {start: 0x94BC8, type: bss, vram: 0x801B2378} # SDK (graphics?) library
       # - {start: 0x94BC8, type: bss, vram: 0x801B239C} # SDK sound library
       # - {start: 0x94BC8, type: bss, vram: 0x801B23A8} # SDK MDEC library
-      # - {start: 0x94BC8, type: bss, vram: 0x801B23AC} # tm1/potholes
+      # - {start: 0x94BC8, type: bss, vram: 0x801B23AC} # tm1/POTHOLES
       # - {start: 0x94BC8, type: bss, vram: 0x801B244C} # SDK (graphics) library
       # - {start: 0x94BC8, type: bss, vram: 0x801B2470} # SDK sound library
       # - {start: 0x94BC8, type: bss, vram: 0x801B24B0} # SDK CD library?
-      # - {start: 0x94BC8, type: bss, vram: 0x801B24BC} # tm1/ua_dash
-      # - {start: 0x94BC8, type: bss, vram: 0x801B74D0} # tm1/rt
+      # - {start: 0x94BC8, type: bss, vram: 0x801B24BC} # tm1/UA_DASH
+      # - {start: 0x94BC8, type: bss, vram: 0x801B74D0} # tm1/RT
       # - {start: 0x94BC8, type: bss, vram: 0x801F4C50} # SDK MDEC library
-      # - {start: 0x94BC8, type: bss, vram: 0x801F4C54} # tm1/hier
+      # - {start: 0x94BC8, type: bss, vram: 0x801F4C54} # tm1/HIER
       # - {start: 0x94BC8, type: bss, vram: 0x801F5A64} # SDK CRT?
-      # - {start: 0x94BC8, type: bss, vram: 0x801F7264} # tm1/ua
+      # - {start: 0x94BC8, type: bss, vram: 0x801F7264} # tm1/UA
       # - {start: 0x94BC8, type: bss, vram: 0x801F7284} # SDK sound library
-      # - {start: 0x94BC8, type: bss, vram: 0x801F729C} # tm1/hier
+      # - {start: 0x94BC8, type: bss, vram: 0x801F729C} # tm1/HIER
       # - {start: 0x94BC8, type: bss, vram: 0x801F7B5C} # SDK graphics library
       # - {start: 0x94BC8, type: bss, vram: 0x801F7B64} # SDK sound library
-      # - {start: 0x94BC8, type: bss, vram: 0x801F83FC} # tm1/targets
+      # - {start: 0x94BC8, type: bss, vram: 0x801F83FC} # tm1/TARGETS
       # - {start: 0x94BC8, type: bss, vram: 0x801F8434} # SDK sound library
       # - {start: 0x94BC8, type: bss, vram: 0x801F84C8} # SDK MDEC library
       # - {start: 0x94BC8, type: bss, vram: 0x801F84CC} # SDK sound library

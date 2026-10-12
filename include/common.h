@@ -2,7 +2,7 @@
 #define __COMMON_H__
 
 #include "include_asm.h"
-#include <sys/types.h>
+#include <sys/TYPES.H>
 
 #define NULL (void*)0
 #define EXTERN extern
@@ -18,6 +18,6 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 typedef unsigned long long u64;
 
-#include "scommon.h"
+#include "SCOMMON.H"
 
 #endif // __COMMON_H__

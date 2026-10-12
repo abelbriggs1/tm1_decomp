@@ -160,10 +160,11 @@ class EnvironmentToolchain:
     Dataclass for compilers and tools used in the build.
     """
 
-    # Path/CLI name of C compiler tool.
+    # Path/CLI name of the DOS emulator used to run DOS toolchain programs.
+    # The toolchain directory is mounted as C: and the repository root as D:.
+    dos_runner_cmd: str
+    # DOS path of C compiler tool, run through `dos_runner_cmd`.
     c_compiler_cmd: str
-    # Path/CLI name of C++ compiler tool.
-    cxx_compiler_cmd: str
     # Path/CLI name of `maspsx`.
     maspsx_cmd: str
     # Path/CLI name of assembler.
@@ -181,8 +182,6 @@ class EnvironmentToolchain:
     cpp_flags: list[str]
     # Base flags for C compilation, ignoring includes.
     c_flags: list[str]
-    # Base flags for C++ compilation, ignoring includes.
-    cxx_flags: list[str]
     # Base flags for the `maspsx` preprocessor.
     maspsx_flags: list[str]
     # Base flags for assembler invocation, ignoring includes.
@@ -222,11 +221,15 @@ class EnvironmentToolchain:
         Construct the toolchain variables for the build using the given
         binary version and the compiler directory in the repository.
         """
-        compiler = str(directories.tools / "gcc_2.7.2-psx/cc1")
+        dos_runner = (
+            f"{directories.tools / 'daze/daze'} "
+            "--backend unicorn "
+            f"--mount-ro {directories.tools / 'psyq3.6'} --mount {directories.root}"
+        )
 
         return EnvironmentToolchain(
-            c_compiler_cmd=compiler,
-            cxx_compiler_cmd=compiler,
+            dos_runner_cmd=dos_runner,
+            c_compiler_cmd="CC1PSX.EXE",
             maspsx_cmd=f"{sys.executable} {directories.tools}/maspsx/maspsx.py",
             assembler_cmd=f"{_CROSS}as",
             linker_cmd=f"{_CROSS}ld",
@@ -249,7 +252,6 @@ class EnvironmentToolchain:
                 "-msoft-float",
                 "-quiet"
             ],
-            cxx_flags=[],
             maspsx_flags=[
                 "--aspsx-version=2.34",
                 "--expand-div",
@@ -274,7 +276,7 @@ class EnvironmentToolchain:
                 "--gap-fill 0x00",
             ],
             g_level={
-                "tm1/timer": 0,
+                "tm1/TIMER": 0,
             },
             extra_flags={}
         )
@@ -324,19 +326,27 @@ class Environment:
             flags.append("-DM2CTX")
         return f"{self.toolchain.c_preprocessor_cmd} {' '.join(flags)}"
 
-    def generate_c_compiler_cmd(self) -> str:
+    def generate_c_compiler_cmd(self, tmp_dir: str, rsp_file: str) -> str:
         """
-        Generate the full C compiler invocation for this environment, not including
-        input/output parameters.
-        """
-        return f"{self.toolchain.c_compiler_cmd} {' '.join(self.toolchain.c_flags)}"
+        Generate the full C compiler invocation for this environment.
 
-    def generate_cxx_compiler_cmd(self) -> str:
+        The compiler is a DOS program, and DOS limits command lines to 126 characters,
+        so its arguments are passed through the response file `rsp_file`.
+        It also leaves a temporary file in `tmp_dir`, which must be unique per
+        invocation to avoid clashes between parallel builds.
+        Both paths must be relative to the repository root.
         """
-        Generate the full C++ compiler invocation for this environment, not including
-        input/output parameters.
+        return (
+            f"{self.toolchain.dos_runner_cmd} --env TMPDIR=D:/{tmp_dir} "
+            f"{self.toolchain.c_compiler_cmd} @D:/{rsp_file}"
+        )
+
+    def generate_c_compiler_args(self, input: str, output: str) -> str:
         """
-        return f"{self.toolchain.cxx_compiler_cmd} -c {' '.join(self.toolchain.cxx_flags)}"
+        Generate the C compiler arguments for the response file used by
+        `generate_c_compiler_cmd`. Both paths must be relative to the repository root.
+        """
+        return f"{' '.join(self.toolchain.c_flags)} $extra_flags D:/{input} -o D:/{output}"
 
     def generate_maspsx_cmd(self, input: str, output: str) -> str:
         """

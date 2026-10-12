@@ -53,8 +53,7 @@ def _generate_ninja_script(
     # Regardless of flags, remove any existing build script.
     env.files.build_script.unlink(missing_ok=True)
 
-    LOG.debug("C Compiler Command:    %s", env.generate_c_compiler_cmd())
-    LOG.debug("CXX Compiler Command:  %s", env.generate_cxx_compiler_cmd())
+    LOG.debug("C Compiler Command:    %s", env.generate_c_compiler_cmd("$tmp_dir", "$out.rsp"))
     LOG.debug("AS Command:            %s", env.generate_assembler_cmd())
     LOG.debug("LD Command:            %s", env.generate_linker_cmd())
 
@@ -78,12 +77,13 @@ def _generate_ninja_script(
         ninja.rule(
             name="cc",
             description="CC          $in",
-            command=f"{env.generate_c_compiler_cmd()} $extra_flags $in -o $out",
-        )
-        ninja.rule(
-            name="cxx",
-            description="CXX         $in",
-            command=f"{env.generate_cxx_compiler_cmd()} $extra_flags $in -o $out",
+            command=(
+                "rm -rf $tmp_dir && mkdir -p $tmp_dir && "
+                f"{env.generate_c_compiler_cmd('$tmp_dir', '$out.rsp')} && "
+                "rm -rf $tmp_dir"
+            ),
+            rspfile="$out.rsp",
+            rspfile_content=env.generate_c_compiler_args("$in", "$out"),
         )
         ninja.rule(
             name="maspsx",
@@ -162,9 +162,17 @@ def _generate_ninja_script(
                 extra_flags = env.toolchain.get_extra_flags(entry.segment.name)
                 _add_build_rule(ninja, cpp_out, "cpp", entry.src_paths)
                 if _is_c_code(segment):
-                    _add_build_rule(ninja, cc1_out, "cc", [cpp_out], [g_flag, *extra_flags])
-                elif _is_cxx_code(segment):
-                    _add_build_rule(ninja, cc1_out, "cxx", [cpp_out], [g_flag, *extra_flags])
+                    # The DOS compiler only accepts an 8.3 path for its temporary directory.
+                    tmp_dir = root_obj_dir / "tmp"
+                    if not all(_is_dos_name(part) for part in tmp_dir.parts):
+                        raise ValueError(
+                            f"C TU `{segment.name}` must use a DOS 8.3 file name "
+                            f"(build path `{tmp_dir}`)"
+                        )
+                    _add_build_rule(
+                        ninja, cc1_out, "cc", [cpp_out], [g_flag, *extra_flags],
+                        {"tmp_dir": str(tmp_dir)}
+                    )
                 else:
                     raise AssertionError(f"Unknown segment type {type(segment)}!")
                 _add_build_rule(ninja, entry.object_path, "maspsx", [cc1_out], [g_flag])
@@ -264,12 +272,12 @@ def generate(env: Environment, clean_first: bool = True):
 
 def _add_build_rule(
     ninja: ninja_syntax.Writer, output: Path, rule: str, inputs: list[Path],
-    extra_flags: list[str] | None = None
+    extra_flags: list[str] | None = None, variables: dict[str, str] | None = None
 ):
     """
     Add a build with the given output and inputs to the Ninja script.
     """
-    extra_vars = {}
+    extra_vars = dict(variables or {})
     if extra_flags:
         extra_vars["extra_flags"] = " ".join(extra_flags)
 
@@ -279,6 +287,14 @@ def _add_build_rule(
         inputs=[str(p) for p in inputs],
         variables=extra_vars
     )
+
+
+def _is_dos_name(name: str) -> bool:
+    """
+    Determine if a single path component is a valid DOS 8.3 name.
+    """
+    stem, _, ext = name.partition(".")
+    return 0 < len(stem) <= 8 and len(ext) <= 3 and "." not in ext
 
 
 def _is_assemblable(segment: splat_segtypes.segment.Segment) -> bool:
@@ -302,9 +318,3 @@ def _is_c_code(segment: splat_segtypes.segment.Segment) -> bool:
         segment, splat_segtypes.cpp.CommonSegCpp
     )
 
-
-def _is_cxx_code(segment: splat_segtypes.segment.Segment) -> bool:
-    """
-    Determine if the `splat` segment should be fed to the C++ compiler.
-    """
-    return isinstance(segment, splat_segtypes.cpp.CommonSegCpp)

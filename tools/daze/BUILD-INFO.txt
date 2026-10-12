@@ -1,0 +1,13 @@
+Daze version: 7f51ae15d537a665cb0bf706628ba89d495e4e9c
+Unicorn revision: 8028ec436f2d9376525352dd38ed9ed6b9f6be10
+gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Copyright (C) 2023 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+cmake version 3.28.3
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+libc6:amd64	2.39-0ubuntu8.9
+libc6-dev:amd64	2.39-0ubuntu8.9
+libgcc-13-dev:amd64	13.3.0-6ubuntu2~24.04.1

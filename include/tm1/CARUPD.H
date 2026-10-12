@@ -1,0 +1,78 @@
+#ifndef __TM1_CARUPD_H__
+#define __TM1_CARUPD_H__
+
+#include "common.h"
+
+#include "tm1/CAR.H"
+#include "tm1/TRIGPTS.H"
+
+typedef struct {
+    s16 w; /* 0x00 */
+    s16 h; /* 0x02 */
+    s16 t; /* 0x04 */
+    s16 pad; /* 0x06 */
+    s32 x; /* 0x08 */
+    s32 z; /* 0x0C */
+} Curb; /* 0x10 */
+
+extern Curb curbs[];
+extern s16 numCurbs;
+
+typedef struct {
+    u8 active; /* +0  */
+    u8 pad1;
+    s16 a; /* +2  */
+    s16 b; /* +4  */
+    s16 c; /* +6  */
+    s32 x; /* +8  */
+    s32 z; /* +12 */
+} PotHole; /* 16  */
+
+extern PotHole potHoles[];
+extern s16 numPotHoles;
+extern s16 numCheckPotHoles;
+
+typedef struct SlickSpot {
+    s16 w; /* +0 */
+    s16 h; /* +2 */
+    s32 x; /* +4 */
+    s32 z; /* +8 */
+} SlickSpot;
+
+extern SlickSpot slickSpots[];
+extern s16 numSlickSpots;
+
+s16 GetClosestTriggerPt(Car* car, u8 isPlayer);
+void CalcTireCoordinates(Car* car, u8 isPlayer);
+s16 GetGroupTestPointIsIn(s32 x, s32 z, s32 y);
+void CheckBridges(Car* car, u8 isPlayer);
+void CheckForBridge(CarTire* tire, u8 which, s32 height);
+u8 GetBridgeGroundHeight(CarTire* tire, s16 idx, s32 height);
+void GetBridgeTireHeight(CarTire* tire, s32 height);
+void CheckPotHoles(Car* car, u8 isPlayer);
+void CheckForPotHole(CarTire* tire, CarCollision* collision);
+void CheckCurbs(Car* car, u8 isPlayer);
+void CheckForCurb(CarTire* tire, CarCollision* collision);
+void CheckSlickSpots(Car* car, u8 isPlayer);
+void CheckHealthStands(Car* car, u8 isPlayer);
+void UpdateTirePositions(Car* car, u8 isPlayer);
+void PutAICarBackOnRoof(AICar* car);
+void UpdateRollingCar(Car* car, u8 isPlayer);
+void InitTireInfo(CarTire* tires);
+void InitTireGroup(CarTire* tires, s16 group);
+void UpdateCarOnSlickSpot(Car* car, u8 isPlayer);
+s32 GetMinSpeedNeeded(s16 group, s16 idx);
+s16 GetNumBridges(void);
+s16 MakeFakePotHole(void);
+void UpdateNumPotHoles(void);
+TriggerPtStartPts* GetTriggerPtStartPts(void);
+void CalcDistFromRoadCenter(AICar* car, s32* out, u8 which);
+void CheckMonsterSmash(Car* car, u8 isPlayer);
+void InitTriggerPoint(AICar* car);
+void UpdateCurrentTriggerPt(AICar* car);
+void CalcTurnStart(AICar* car, u8 which);
+void GetNextTriggerPoint(AICar* car, s16 pt);
+s16 GetClosestTriggerPointFromCurrPt(AICar* car, TriggerPt* tp, s16* dist);
+s16 GetLookAheadPos(AICar* car, s32* out);
+
+#endif // __TM1_CARUPD_H__
