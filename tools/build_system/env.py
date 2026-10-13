@@ -221,9 +221,12 @@ class EnvironmentToolchain:
         Construct the toolchain variables for the build using the given
         binary version and the compiler directory in the repository.
         """
+        # KVM is used if available. The Unicorn fallback stops after a fixed
+        # number of instructions, which is too low for our larger TUs.
         dos_runner = (
+            "DAZE_UNICORN_INSTRUCTION_LIMIT=50000000 "
             f"{directories.tools / 'daze/daze'} "
-            "--backend unicorn "
+            "--backend auto "
             f"--mount-ro {directories.tools / 'psyq3.6'} --mount {directories.root}"
         )
 
@@ -332,8 +335,8 @@ class Environment:
 
         The compiler is a DOS program, and DOS limits command lines to 126 characters,
         so its arguments are passed through the response file `rsp_file`.
-        It also leaves a temporary file in `tmp_dir`, which must be unique per
-        invocation to avoid clashes between parallel builds.
+        It also writes a temporary file with a fixed name to `tmp_dir`, which must
+        already exist and be unique per invocation to avoid clashes between parallel builds.
         Both paths must be relative to the repository root.
         """
         return (

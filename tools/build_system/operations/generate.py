@@ -77,11 +77,7 @@ def _generate_ninja_script(
         ninja.rule(
             name="cc",
             description="CC          $in",
-            command=(
-                "rm -rf $tmp_dir && mkdir -p $tmp_dir && "
-                f"{env.generate_c_compiler_cmd('$tmp_dir', '$out.rsp')} && "
-                "rm -rf $tmp_dir"
-            ),
+            command=env.generate_c_compiler_cmd('$tmp_dir', '$out.rsp'),
             rspfile="$out.rsp",
             rspfile_content=env.generate_c_compiler_args("$in", "$out"),
         )
@@ -162,8 +158,9 @@ def _generate_ninja_script(
                 extra_flags = env.toolchain.get_extra_flags(entry.segment.name)
                 _add_build_rule(ninja, cpp_out, "cpp", entry.src_paths)
                 if _is_c_code(segment):
-                    # The DOS compiler only accepts an 8.3 path for its temporary directory.
-                    tmp_dir = root_obj_dir / "tmp"
+                    # The DOS compiler only accepts 8.3 paths. Its temporary directory is
+                    # this TU's build directory, which ninja creates for the output.
+                    tmp_dir = root_obj_dir
                     if not all(_is_dos_name(part) for part in tmp_dir.parts):
                         raise ValueError(
                             f"C TU `{segment.name}` must use a DOS 8.3 file name "

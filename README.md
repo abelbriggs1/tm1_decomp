@@ -58,6 +58,11 @@ Linux distribution. If you are a Windows user, you should use
 [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/about)
 with Ubuntu.
 
+**Note:** It is highly recommended to add yourself to the `kvm` usergroup.
+This allows `daze`, our DOS emulator for the PsyQ compiler, to be more reliable and
+run at much higher speeds. If you do not do this, `daze` will fall back to the `unicorn`
+backend, which is much slower and prone to crashes when compiling large TUs.
+
 ### System Packages
 
 This repository requires several system packages which can be found in the
@@ -150,6 +155,7 @@ Special thanks go to the teams and individuals behind:
 - `spimdisasm`
 - `objdiff` and `asm-differ`
 - `m2c`
+- [`daze`](https://github.com/mkst/daze)
 - All of the helpful and skilled decompers in various decomp communities and
   Discords; PS1/PS2, GC/Wii, N64, and decomp.me servers.
 
