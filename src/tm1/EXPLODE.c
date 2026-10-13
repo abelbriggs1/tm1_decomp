@@ -1,22 +1,29 @@
 #include "common.h"
 
+#include <ABS.H>
 #include <LIBGPU.H>
 #include <LIBGTE.H>
 #include <RAND.H>
 
 #include "tm1/EXPLODE.H"
 #include "tm1/GRUTILS.H"
+#include "tm1/MATH.H"
 #include "tm1/RT.H"
 #include "tm1/STARS.H"
 #include "tm1/UA.H"
 #include "tm1/VIEW.H"
 #include "tm1/WEAPON.H"
 
+#define MAX_FRAGMENTS 20
+#define MAX_EXPLOSIONS 80
+#define MAX_STARS 100
+#define MAX_STARPRIMS 200
+
 static Fragment fragment[MAX_FRAGMENTS];
 static Explosion pyro[MAX_EXPLOSIONS];
 
-static Star starz[100];
-static LINE_F2 starprim[200];
+static Star starz[MAX_STARS];
+static LINE_F2 starprim[MAX_STARPRIMS];
 
 static GrSprite fragmenta[4];
 static GrSprite fragmentb[4];
@@ -42,82 +49,85 @@ static ArmorIconInfo ArmorInfo;
 
 void explodeInitFragments(void);
 
-Explosion* init_explosion(VECTOR3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag);
-#ifdef NON_MATCHING
 Explosion* init_explosion(VECTOR3* pos, s32 a1, s32 a2, s32 a3, void* frames, u16 flag)
 {
-    s32 i;
-    Explosion* e;
+    s32 idx;
+    Explosion* expl;
+    Explosion* list;
     VECTOR3* v;
 
-    i = find_free_explosion();
-    if (i < 0) {
-        return 0;
+    idx = find_free_explosion();
+    if (idx < 0) {
+        return NULL;
     }
-    e = &pyro[i];
-    e->pos.vx = pos->vx;
-    e->pos.vy = pos->vy;
-    e->pos.vz = pos->vz;
-    pyro[i].unk14 = a2;
-    pyro[i].frames = frames;
-    pyro[i].life = 0;
-    pyro[i].unk10 = a1;
-    pyro[i].unk2A = flag;
-    pyro[i].unk2C = 0;
-    pyro[i].unk0C = 0;
-    pyro[i].unk28 = 0;
-    pyro[i].unk1C = (s32)((u32)a3 * (u32)a2);
-    v = &pyro[i].vel;
+
+    list = pyro;
+
+    expl = &list[idx];
+    expl->pos.vx = pos->vx;
+    expl->pos.vy = pos->vy;
+    expl->pos.vz = pos->vz;
+
+    pyro[idx].unk14 = a2;
+    pyro[idx].frames = frames;
+    pyro[idx].lifetime = 0;
+    pyro[idx].unk10 = a1;
+    pyro[idx].unk2A = flag;
+    pyro[idx].unk2C = 0;
+    pyro[idx].unk0C = 0;
+    pyro[idx].unk28 = 0;
+    pyro[idx].unk1C = (s32)((u32)a3 * (u32)a2);
+
+    v = &pyro[idx].vel;
     v->vx = 0;
     v->vy = 0;
     v->vz = 0;
-    return e;
-}
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/EXPLODE", init_explosion);
-#endif
 
-#ifdef NON_MATCHING
+    return expl;
+}
+
 void animate_explosions(void)
 {
     s32 i;
 
     explodeUpdateFragments();
-    for (i = 0; i < 80; i++) {
-        if (pyro[i].life < 0) {
+    for (i = 0; i < MAX_EXPLOSIONS; i++) {
+        if (pyro[i].lifetime < 0) {
             continue;
         }
-        pyro[i].life = (s32)((u32)pyro[i].life + 1u);
-        pyro[i].pos.vx = (s32)((u32)pyro[i].pos.vx + (u32)pyro[i].vel.vx);
-        pyro[i].pos.vy = (s32)((u32)pyro[i].pos.vy + (u32)pyro[i].vel.vy);
-        pyro[i].pos.vz = (s32)((u32)pyro[i].pos.vz + (u32)pyro[i].vel.vz);
-        if (pyro[i].life < pyro[i].unk1C) {
+        pyro[i].lifetime++;
+
+        pyro[i].pos.vx = pyro[i].pos.vx + pyro[i].vel.vx;
+        pyro[i].pos.vy = pyro[i].pos.vy + pyro[i].vel.vy;
+        pyro[i].pos.vz = pyro[i].pos.vz + pyro[i].vel.vz;
+
+        if (pyro[i].lifetime < pyro[i].unk1C) {
             continue;
         }
+
         if (pyro[i].unk2C-- != 0) {
-            pyro[i].life = 0;
+            pyro[i].lifetime = 0;
         } else {
-            pyro[i].life = -1;
+            pyro[i].lifetime = -1;
         }
+
         if (pyro[i].unk2C != 1) {
             continue;
         }
+
         if (pyro[i].frames != (void*)SmokeInfo) {
             continue;
         }
-        pyro[i].unk1C = (s32)((u32)pyro[i].unk1C + 8u);
+        pyro[i].unk1C += 8;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/EXPLODE", animate_explosions);
-#endif
 
 s32 find_free_explosion(void)
 {
     s32 i;
 
-    for (i = 0; i < 80; i++) {
-        if (pyro[i].life < 0) {
+    for (i = 0; i < MAX_EXPLOSIONS; i++) {
+        if (pyro[i].lifetime < 0) {
             return i;
         }
     }
@@ -172,11 +182,11 @@ s32 find_free_explosion(void)
 //     eye = viewGetEyeTrans(which);
 //     mat = viewGetEyeMat(which);
 //     for (i = 0; i < 80; i++) {
-//         if (pyro[i].life < 0) {
+//         if (pyro[i].lifetime < 0) {
 //             continue;
 //         }
 //         e = &pyro[i];
-//         if (which > 0 && pyro[i].life == 1 && pyro[i].unk2C == 0) {
+//         if (which > 0 && pyro[i].lifetime == 1 && pyro[i].unk2C == 0) {
 //             continue;
 //         }
 //         v[0] = pyro[i].pos.vx + eye->x;
@@ -229,7 +239,7 @@ s32 find_free_explosion(void)
 //                     } else {
 //                         setShadeTex(p, 1);
 //                     }
-//                     f = &((GrSprite *)e->frames)[pyro[i].life / pyro[i].unk14];
+//                     f = &((GrSprite *)e->frames)[pyro[i].lifetime / pyro[i].unk14];
 //                     p->u0 = f->u0;
 //                     p->v0 = f->v0;
 //                     p->u1 = f->u0 + f->w;
@@ -317,23 +327,22 @@ Explosion* do_blue_explosion(VECTOR3* pos)
     return e;
 }
 
-#ifdef NON_MATCHING
 void do_flamethrower_burst(VECTOR3* pos)
 {
     Explosion* e;
 
-    e = init_explosion(pos, 6, 1, 2, &D_8019C640[rand() & 3], 0);
-    if (e != 0) {
-        e->vel.vx = (rand() & 7) - 3;
-        e->vel.vy = (rand() & 7) - 3;
-        /* the two `(rand()&0xF)-5` are the SAME source text twice: retail funnels both
-           arms into ONE `sw ...,56($s0)` via a `j`, which only the ternary produces. */
-        e->vel.vz = (((rand() & 0xF) - 5) > 0) ? 0 : ((rand() & 0xF) - 5);
+    // TODO: Confirm why the flamethrower skips the first frame of `Aburst`.
+    //
+    // This might be explained by the fact that `AburstInfo` is used for all of the
+    // explosion animations; the first frame might be blanl/too small to represent
+    // a flamethrower particle.
+    e = init_explosion(pos, 6, 1, 2, &AburstInfo[1 + RANDINT_POW2(4)], 0);
+    if (e != NULL) {
+        e->vel.vx = RANDINT_POW2(8) - 3;
+        e->vel.vy = RANDINT_POW2(8) - 3;
+        e->vel.vz = (RANDINT_POW2(16) - 5 > 0) ? 0 : RANDINT_POW2(16) - 5;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/EXPLODE", do_flamethrower_burst);
-#endif
 
 void do_mini_explosion(VECTOR3* pos)
 {
@@ -434,12 +443,12 @@ void do_flare(VECTOR3* pos)
 
 void do_burn(VECTOR3* pos)
 {
-    init_explosion(pos, 8, 1, 2, &BurnInfo[rand() % 7], 0);
+    init_explosion(pos, 8, 1, 2, &BurnInfo[RANDINT(7)], 0);
 }
 
 void do_flash(VECTOR3* pos)
 {
-    init_explosion(pos, 8, 1, 3, &BurnInfo[rand() % 6], 1);
+    init_explosion(pos, 8, 1, 3, &BurnInfo[RANDINT(6)], 1);
 }
 
 void do_mflash(VECTOR3* pos)
@@ -494,42 +503,37 @@ void clear_explosions(void)
     s32 i;
 
     for (i = 0; i < 80; i++) {
-        pyro[i].life = -1;
+        pyro[i].lifetime = -1;
         pyro[i].idx = i;
     }
     explodeInitFragments();
 }
 
-#ifdef NON_MATCHING
 void create_stars(void)
 {
     s32 i;
-    s32 x;
-    s32 y;
-    s32 d;
+    s32 dist;
 
-    for (i = 0; i < 100; i++) {
-        starz[i].r = rand() % 100 + 105;
-        starz[i].g = rand() % 100 + 105;
-        starz[i].b = rand() % 100 + 105;
+    for (i = 0; i < MAX_STARS; i++) {
+        starz[i].r = RANDINT(MAX_STARS) + 105;
+        starz[i].g = RANDINT(MAX_STARS) + 105;
+        starz[i].b = RANDINT(MAX_STARS) + 105;
+
         starz[i].pos.vy = rand() - 16000;
         starz[i].pos.vx = rand() - 16000;
-        x = __builtin_abs(starz[i].pos.vx);
-        y = __builtin_abs(starz[i].pos.vy);
-        d = 24000 - y - x;
-        if (d < 1000) {
-            d = rand() % 3000 + 1000;
+
+        dist = 24000 - ABS(starz[i].pos.vy) - ABS(starz[i].pos.vx);
+        if (dist < 1000) {
+            dist = RANDINT(3000) + 1000;
         }
-        starz[i].pos.vz = d;
-        starz[i].phase = rand() % 512;
+        starz[i].pos.vz = dist;
+        starz[i].phase = RANDINT(512);
     }
-    for (i = 0; i < 200; i++) {
+
+    for (i = 0; i < MAX_STARPRIMS; i++) {
         SetLineF2(&starprim[i]);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/EXPLODE", create_stars);
-#endif
 
 #ifdef NON_MATCHING
 void display_stars(u_long* ot, s32 view)
@@ -693,20 +697,13 @@ void explodeStorePlasmaAnimation(void* data)
     }
 }
 
-// TODO: ArmorInfo is in sbss and this would imply the TU is compiled with `-G8`,
-// but the access here isn't done via GP. Leaving commented out for now.
-INCLUDE_ASM("asm/nonmatchings/tm1/EXPLODE", explodeStoreArmorIcon);
-// void explodeStoreArmorIcon(void *data)
-// {
-//     grutilsParse3DSprite(data, (GrSprite *)&ArmorInfo, 1);
-// #ifdef NON_MATCHING
-//     ArmorInfo.u0 += 6;
-//     ArmorInfo.v0 += 2;
-// #else
-//     ArmorInfo.unk0 += 6;
-//     ArmorInfo.unk1 += 2;
-// #endif
-// }
+void explodeStoreArmorIcon(void* data)
+{
+    // TODO: Confirm if `ArmorInfo` is actually a `GrSprite`.
+    grutilsParse3DSprite(data, (GrSprite*)&ArmorInfo, 1);
+    ArmorInfo.unk0 += 6;
+    ArmorInfo.unk1 += 2;
+}
 
 void explodeLoadFragTexture(s32 id, GrObj* data)
 {
@@ -725,26 +722,25 @@ void explodeLoadFragTexture(s32 id, GrObj* data)
 
 void explodeInitFragments(void)
 {
-    s32 off;
+    s32 i;
 
-    // TODO: Improve readability (the pointer arithmetic shouldn't be needed)
-    for (off = 19 * sizeof(Fragment); off >= 0; off -= sizeof(Fragment)) {
-        ((Fragment*)((u8*)fragment + off))->life = 0;
+    for (i = 0; i < MAX_FRAGMENTS; i++) {
+        fragment[i].lifetime = 0;
     }
 }
+
 s32 findFreeFragment(void)
 {
     s32 i;
 
-    for (i = 0; i < 20; i++) {
-        if (fragment[i].life <= 0) {
+    for (i = 0; i < MAX_FRAGMENTS; i++) {
+        if (fragment[i].lifetime <= 0) {
             return i;
         }
     }
     return -1;
 }
 
-#ifdef NON_MATCHING
 void explodeCreateFragments(s32 count, VECTOR* pos)
 {
     s32 i;
@@ -758,17 +754,21 @@ void explodeCreateFragments(s32 count, VECTOR* pos)
         if (idx < 0) {
             break;
         }
+
         fragment[idx].frame = 0;
-        fragment[idx].life = 40;
+        fragment[idx].lifetime = 40;
+
         p = &fragment[idx].pos;
         p->vx = pos->vx;
         p->vy = pos->vy;
         p->vz = pos->vz;
+
         v = &fragment[idx].vel;
-        v->vx = (rand() & 0x3F) - 32;
-        v->vy = (rand() & 0x3F) - 32;
-        v->vz = (rand() & 0x1F) + 16;
-        r = rand() & 3;
+        v->vx = RANDINT_POW2(64) - 32;
+        v->vy = RANDINT_POW2(64) - 32;
+        v->vz = RANDINT_POW2(32) + 16;
+
+        r = RANDINT_POW2(4);
         if (r == 0) {
             fragment[idx].anim = fragmenta;
         } else if (r == 1) {
@@ -780,41 +780,37 @@ void explodeCreateFragments(s32 count, VECTOR* pos)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/EXPLODE", explodeCreateFragments);
-#endif
 
-#ifdef NON_MATCHING
 void explodeUpdateFragments(void)
 {
     s32 i;
+    s32 dz;
 
-    for (i = 0; i < 20; i++) {
-        if (fragment[i].life > 0) {
-            s32 dz;
+    for (i = 0; i < MAX_FRAGMENTS; i++) {
+        if (fragment[i].lifetime > 0) {
 
-            fragment[i].pos.vz = (s32)((u32)fragment[i].pos.vz + (u32)fragment[i].vel.vz);
-            fragment[i].pos.vx = (s32)((u32)fragment[i].pos.vx + (u32)fragment[i].vel.vx);
-            fragment[i].pos.vy = (s32)((u32)fragment[i].pos.vy + (u32)fragment[i].vel.vy);
-            dz = (s32)((u32)fragment[i].vel.vz - 4u);
+            fragment[i].pos.vz += fragment[i].vel.vz;
+            fragment[i].pos.vx += fragment[i].vel.vx;
+            fragment[i].pos.vy += fragment[i].vel.vy;
+
+            dz = fragment[i].vel.vz - 4;
             fragment[i].vel.vz = dz;
+
             if (fragment[i].pos.vz <= 0 && dz < 0) {
                 if (dz >= -5) {
-                    fragment[i].life = 0;
+                    fragment[i].lifetime = 0;
                 } else {
-                    fragment[i].vel.vz = (s32)(0u - (u32)dz) / 2;
+                    fragment[i].vel.vz = (0 - dz) / 2;
                 }
             }
-            if (fragment[i].life > 0) {
-                fragment[i].life--;
+
+            if (fragment[i].lifetime > 0) {
+                fragment[i].lifetime--;
                 fragment[i].frame = (fragment[i].frame + 1) & 3;
             }
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/EXPLODE", explodeUpdateFragments);
-#endif
 
 #ifdef NON_MATCHING
 void explodeDisplayFragments(Db* cdb, s32 which)
@@ -848,7 +844,7 @@ void explodeDisplayFragments(Db* cdb, s32 which)
     eye = viewGetEyeTrans(which);
     mat = viewGetEyeMat(which);
     for (i = 0; i < 20; i++) {
-        if (fragment[i].life > 0) {
+        if (fragment[i].lifetime > 0) {
             frame = fragment[i].frame;
             v[0] = fragment[i].pos.vx + eye->x;
             v[1] = fragment[i].pos.vy + eye->y;

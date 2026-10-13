@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include <LIBGTE.H>
+#include <RAND.H>
 
 /* Engine vector: three 32-bit coordinates, not PsyQ's padded 16-byte VECTOR. */
 typedef struct {
@@ -21,6 +22,20 @@ typedef struct {
     }, \
     {0, 0, 0} \
 }
+
+/* Modulo helper macros. */
+
+// Take the integer `x % val`, assuming that `val` is a power of 2.
+#define MOD_POW2(x, val) ((x) & ((val) - 1))
+
+/* `rand()` helper macros. */
+
+// Generate a random integer in the interval `[0, val)`.
+#define RANDINT(val) (rand() % (val))
+
+// Generate a random integer in the interval `[0, val)`, assuming that
+// `val` is a power of 2.
+#define RANDINT_POW2(val) MOD_POW2(rand(), val)
 
 void mathMulVec(volatile MATRIX* lhs, VECTOR* rhs, volatile VECTOR* out);
 void mathMulTransVec(volatile MATRIX* lhs, VECTOR* rhs, volatile VECTOR* out);

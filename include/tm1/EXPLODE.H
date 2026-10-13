@@ -5,9 +5,6 @@
 #include "tm1/GRUTILS.H"
 #include "tm1/MATH.H"
 
-#define MAX_FRAGMENTS 20
-#define MAX_EXPLOSIONS 80
-
 typedef struct ArmorIconInfo {
     u8 unk0;
     u8 unk1;
@@ -20,7 +17,7 @@ typedef struct Explosion {
     /*0x0D*/ u8 pad0D[3];
     /*0x10*/ s32 unk10;
     /*0x14*/ s32 unk14;
-    /*0x18*/ s32 life; /* < 0 == slot free */
+    /*0x18*/ s32 lifetime; /* < 0 == slot free */
     /*0x1C*/ s32 unk1C;
     /*0x20*/ s32 unk20;
     /*0x24*/ void* frames;
@@ -39,7 +36,7 @@ typedef struct Fragment {
     /*0x0C*/ VECTOR3 vel;
     /*0x18*/ u8 frame;
     /*0x19*/ u8 pad19[3];
-    /*0x1C*/ s32 life;
+    /*0x1C*/ s32 lifetime;
     /*0x20*/ GrSprite* anim;
 } Fragment;
 
