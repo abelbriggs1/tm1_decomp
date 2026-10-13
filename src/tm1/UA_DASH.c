@@ -1,5 +1,6 @@
 #include "common.h"
 
+#include <ABS.H>
 #include <LIBGPU.H>
 #include <LIBGS.H>
 #include <LIBGTE.H>
@@ -1348,7 +1349,7 @@ void uadashInitBulletHoles(void)
             q = base;
             c = h;
             for (j = 0; j < i; j++) {
-                if (__builtin_abs(q[0] - c[0]) >= 16 && __builtin_abs(q[6] - c[6]) >= 16) { }
+                if (ABS(q[0] - c[0]) >= 16 && ABS(q[6] - c[6]) >= 16) { }
                 q++;
             }
         }

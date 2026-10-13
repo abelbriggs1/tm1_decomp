@@ -1,5 +1,6 @@
 #include "common.h"
 
+#include <ABS.H>
 #include <LIBGPU.H>
 #include <LIBGTE.H>
 #include <RAND.H>
@@ -286,7 +287,7 @@ void UAeffectUpdateCarSpeed(s32 carId, s32 speed)
     } else {
         carId = UA_CAR_SLOT(carId);
         if (carId < 15) {
-            gCarSpeed[carId] = gCarSpeed[carId] + __builtin_abs(speed);
+            gCarSpeed[carId] = gCarSpeed[carId] + ABS(speed);
             if (gCarSpeed[carId] >= 321) {
                 uaswToggleCarTireState(carId, speed);
                 gCarSpeed[carId] = 0;

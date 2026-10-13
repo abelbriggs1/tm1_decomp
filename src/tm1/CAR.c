@@ -23,6 +23,7 @@
 #include "tm1/UA_SW.H"
 #include "tm1/VIEW.H"
 #include "tm1/WEAPON.H"
+#include <ABS.H>
 #include <LIBGTE.H>
 #include <MEMORY.H>
 #include <RAND.H>
@@ -253,7 +254,7 @@ void CarUpdateDeltas(Car* car, u8 isPlayer)
         input[3] = 0;
     }
     if (input[3] || input[2]) {
-        speed = __builtin_abs(m->vel.vy);
+        speed = ABS(m->vel.vy);
         threshold = (s32)((u32)(((s16)GetFieldsLastFrame() * 1520) / 100) << 5);
         if (threshold < speed)
             amount = st->unkCC;
@@ -276,7 +277,7 @@ void CarUpdateDeltas(Car* car, u8 isPlayer)
         }
     } else if (m->unk00) {
         amount = (s16)m->unk00;
-        if (__builtin_abs(amount) < st->unkD0)
+        if (ABS(amount) < st->unkD0)
             m->unk00 = 0;
         else if (flags[11])
             m->unk00 = (u16)((u32)m->unk00 - (u32)(amount / 16));
@@ -318,7 +319,7 @@ void CarUpdateDeltas(Car* car, u8 isPlayer)
     if (flags[5]) {
         input[4] = 0;
         if (m->vel.vy) {
-            if (__builtin_abs(m->vel.vy) < st->unkA4) {
+            if (ABS(m->vel.vy) < st->unkA4) {
                 m->vel.vy = 0;
                 st->unk14 = 0;
             }
@@ -381,8 +382,7 @@ turbo_checked:
             else {
                 amount = acceleration;
                 if ((flags[7] && m->vel.vy < 0) || (!flags[7] && m->vel.vy > 0))
-                    amount = amount
-                        - (((acceleration - st->unkA0) * __builtin_abs(m->vel.vy)) / maxSpeed);
+                    amount = amount - (((acceleration - st->unkA0) * ABS(m->vel.vy)) / maxSpeed);
             }
             if (flags[7])
                 m->vel.vy = (m->vel.vy - amount);
@@ -392,7 +392,7 @@ turbo_checked:
     } else
         flags[4] = 0;
     if (m->vel.vy && !flags[4] && !flags[8]) {
-        amount = (((st->unkBC - st->unkA0) * __builtin_abs(m->vel.vy)) / maxSpeed) / 2;
+        amount = (((st->unkBC - st->unkA0) * ABS(m->vel.vy)) / maxSpeed) / 2;
         if (amount < st->unkA0)
             amount = st->unkA0;
         if (flags[13])
@@ -870,14 +870,14 @@ void BringBackDriftingCar(Car* car, u8 isPlayer)
         sk = AI_CAR(car)->skid;
     }
 
-    if (__builtin_abs(m->vel.vy) < st->unkAC) {
+    if (ABS(m->vel.vy) < st->unkAC) {
         SetNoCarDrift(m, f);
         return;
     }
 
     ang = m->rot.vz - m->rot2.vz;
     BoundAngle(&ang);
-    if (__builtin_abs(ang) >= 1366) {
+    if (ABS(ang) >= 1366) {
         if ((s16)GetFieldsLastFrame() * 380 / 100 * 32 < m->vel.vy) {
             return;
         }
@@ -962,7 +962,7 @@ void SlowDownDriftingCar(Car* car, u8 isPlayer)
 
     ang = m->rot.vz - m->rot2.vz;
     BoundAngle(&ang);
-    t = __builtin_abs(ang);
+    t = ABS(ang);
 
     t = t & (t | (s32)sk);
     if (t < 682) {
@@ -1012,7 +1012,7 @@ void UpdateBearing(Car* car, u8 isPlayer)
         BoundAngle(&ang);
     }
 
-    t = __builtin_abs(ang);
+    t = ABS(ang);
     if (t < 512) {
         *bearing = 0;
     } else {
@@ -1092,7 +1092,7 @@ void CheckHitDetection(Car* car, u8 isPlayer)
             hit.hit = 0;
         } else if ((s16)type == UA_BARRICADE) {
             UAeffectBarricade(UA_BARRICADE, hit.tag1, bearing);
-            speed = __builtin_abs(m->vel.vy);
+            speed = ABS(m->vel.vy);
             denominator = speed < st->unkA8 ? st->unkA8 : speed;
             col->unk12 = (s32)((u32)speed * 99U) / denominator;
             hit.hit = 0;
@@ -1105,12 +1105,12 @@ void CheckHitDetection(Car* car, u8 isPlayer)
             for (i = 0; i < 4; ++i)
                 t[i].unk1 = 1;
             hole = GetPotHoleDat((s16)t[0].unk0A);
-            if (__builtin_abs(m->rot.vz) < 512) {
+            if (ABS(m->rot.vz) < 512) {
                 hole->x = t[0].unk38 - 16;
                 hole->z = t[0].unk3C - 16;
                 hole->a = st->unk74 + 32;
                 hole->b = m->vel.vy / 4;
-            } else if (__builtin_abs(m->rot.vz) >= 1537) {
+            } else if (ABS(m->rot.vz) >= 1537) {
                 hole->x = t[1].unk38 - 16;
                 hole->z = t[1].unk3C - 24;
                 hole->a = st->unk74 + 32;
@@ -1137,7 +1137,7 @@ void CheckHitDetection(Car* car, u8 isPlayer)
             height = 160;
             if (!flags[10]) {
                 speed = m->vel.vy / 32;
-                height = st->unk5C + __builtin_abs(speed);
+                height = st->unk5C + ABS(speed);
             }
             if (flags[19] || flags[15]) {
                 for (i = 0; i < 4; ++i)
@@ -1201,7 +1201,7 @@ void CheckHitDetection(Car* car, u8 isPlayer)
         } else if (col->unk1 && m->vel.vy) {
             difference = m->rot2.vz - m->rot.vz;
             BoundAngle(&difference);
-            difference = __builtin_abs(difference);
+            difference = ABS(difference);
             if (difference < 341)
                 rate = 90;
             else if (difference < 568)
@@ -1214,8 +1214,8 @@ void CheckHitDetection(Car* car, u8 isPlayer)
         }
 
         col->count = (u16)(col->count - GetFieldsLastFrame());
-        if ((s16)col->count <= 0 || __builtin_abs(m->vel.vy) < st->unkA4
-            || __builtin_abs((((s16)col->unk8) - m->rot.vz)) < 56)
+        if ((s16)col->count <= 0 || ABS(m->vel.vy) < st->unkA4
+            || ABS((((s16)col->unk8) - m->rot.vz)) < 56)
             InitNoCollision(col);
     }
     if ((s16)col->unkE < 151)
@@ -1301,8 +1301,8 @@ void CalcHitDynamics(Car* car, HdCsHit* hit, u8 isPlayer)
         }
         hitCs = 0;
         if ((s16)GetFieldsLastFrame() * 570 / 100 * 32 < mag) {
-            num = rsin(bounce / 4) * __builtin_abs(m->vel.vy);
-            dmg = __builtin_abs(num) * 10 / st->unkA8 / 4096;
+            num = rsin(bounce / 4) * ABS(m->vel.vy);
+            dmg = ABS(num) * 10 / st->unkA8 / 4096;
             if (dmg > 0) {
                 if (dmg - 3 > 0 && isPlayer) {
                     carTakeHit(
@@ -1436,11 +1436,11 @@ void CalcHitDynamics(Car* car, HdCsHit* hit, u8 isPlayer)
             spark.vz = tires[0].unk40 + st->unk6C;
             break;
         }
-        num = __builtin_abs(m->vel.vy) * 3 * 33;
-        if (__builtin_abs(m->vel.vy) < st->unkA8) {
+        num = ABS(m->vel.vy) * 3 * 33;
+        if (ABS(m->vel.vy) < st->unkA8) {
             den = st->unkA8;
         } else {
-            den = __builtin_abs(m->vel.vy);
+            den = ABS(m->vel.vy);
         }
         col->unk12 = num / den;
         mathMulTransVec(&m->mat2, &delta, &out);
@@ -1721,7 +1721,7 @@ void DoCsHitCalculations(Car* car, u8 isPlayer, Car* other, u8 otherIsPlayer, s3
                 oang /= 2;
                 m->vel.vy /= 2;
             }
-            e = __builtin_abs(rel);
+            e = ABS(rel);
             if (e < 1024) {
                 oang = -oang;
             }
@@ -1806,7 +1806,7 @@ void DoCsHitCalculations(Car* car, u8 isPlayer, Car* other, u8 otherIsPlayer, s3
                 }
             }
         } else {
-            e = __builtin_abs(rel);
+            e = ABS(rel);
             if (e < 682) {
                 a = m->vel.vy - om->vel.vy;
                 b = om->vel.vy - m->vel.vy;
@@ -2127,10 +2127,10 @@ void RicochetOffObject(Car* car, u8 isPlayer, u8 doHit, s32 delta, u16 mode)
     }
 
     if (mode < 2 || (s16)mode == 4 || skid[1]) {
-        if (c->unk2 || __builtin_abs(delta) < 682) {
+        if (c->unk2 || ABS(delta) < 682) {
             m->rot2.vz -= delta / 3;
             c->unk8 = m->rot2.vz;
-        } else if (__builtin_abs(delta) < 1365) {
+        } else if (ABS(delta) < 1365) {
             c->unk8 = m->rot2.vz - delta / 2;
         } else {
             c->unk8 = m->rot2.vz - 2048;
@@ -2184,9 +2184,9 @@ void RicochetOffObject(Car* car, u8 isPlayer, u8 doHit, s32 delta, u16 mode)
     if (m->vel.vy < 0) {
         sub = m->vel.vy * 3 / 4;
     } else if (m->vel.vy >= (s16)GetFieldsLastFrame() * 570 / 100 * 32) {
-        if (__builtin_abs(delta) < 512) {
+        if (ABS(delta) < 512) {
             sub = m->vel.vy / 4;
-        } else if (__builtin_abs(delta) < 1024) {
+        } else if (ABS(delta) < 1024) {
             sub = m->vel.vy / 3;
         } else {
             sub = m->vel.vy / 2;
@@ -2201,7 +2201,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/CAR", RicochetOffObject);
 
 void SetCollisionBounce(Car* car, u8 isPlayer, s32 mag)
 {
-    mag = __builtin_abs(mag);
+    mag = ABS(mag);
     if (mag < 227) {
         SetBounce(car, 1, 2, 2, isPlayer);
     } else if (mag < 512) {
@@ -2250,7 +2250,7 @@ void CarViewUpdate(PlayerCar* car)
     if ((u32)car->unkF4 < VR_MODE_HELICOPTER) {
         GetUpdateRate();
         if (car->unkF4 == VR_MODE_UNK_1) {
-            if (__builtin_abs(car->dTrans.vy - car->vrPos[0].vy) >= 17) {
+            if (ABS(car->dTrans.vy - car->vrPos[0].vy) >= 17) {
                 car->dTrans.vx = SmoothValue(car->dTrans.vx, car->vrPos[0].vx, 0x5A);
                 car->dTrans.vy = SmoothValue(car->dTrans.vy, car->vrPos[0].vy, 0x5A);
                 car->dTrans.vz = SmoothValue(car->dTrans.vz, car->vrPos[0].vz, 0x5A);
@@ -2271,7 +2271,7 @@ void CarViewUpdate(PlayerCar* car)
                 }
             }
         } else if (car->unkF4 == VR_MODE_UNK_2) {
-            if (__builtin_abs(car->dTrans.vy - car->vrPos[1].vy) >= 17) {
+            if (ABS(car->dTrans.vy - car->vrPos[1].vy) >= 17) {
                 car->dTrans.vy = SmoothValue(car->dTrans.vy, car->vrPos[1].vy, 0x5A);
                 car->dTrans.vz = SmoothValue(car->dTrans.vz, car->vrPos[1].vz, 0x5A);
                 car->dRot.vx = SmoothValue(car->dRot.vx, car->vrRot[1].vx, 0x5A);
@@ -2293,7 +2293,7 @@ void CarViewUpdate(PlayerCar* car)
             }
             car->dTrans.vx = SmoothValue(car->dTrans.vx, tilt, 0x5A);
         } else {
-            if (__builtin_abs(car->dTrans.vy - car->vrPos[2].vy) >= 17) {
+            if (ABS(car->dTrans.vy - car->vrPos[2].vy) >= 17) {
                 car->dTrans.vy = SmoothValue(car->dTrans.vy, car->vrPos[2].vy, 0x5A);
                 car->dTrans.vz = SmoothValue(car->dTrans.vz, car->vrPos[2].vz, 0x5A);
                 car->dRot.vx = SmoothValue(car->dRot.vx, car->vrRot[2].vx, 0x5A);
@@ -2471,7 +2471,7 @@ void UpdateBounce(Car* car, u8 isPlayer)
     q = m->rotDelta.vz * st->unkF4 / d;
     qs = (s16)q;
     v = q;
-    if (__builtin_abs(st->unkF4) < __builtin_abs(qs)) {
+    if (ABS(st->unkF4) < ABS(qs)) {
         if (st->unkF4 > 0) {
             if (qs > 0) {
                 v = st->unkF4;

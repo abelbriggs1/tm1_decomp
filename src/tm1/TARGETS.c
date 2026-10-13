@@ -1,4 +1,5 @@
 #include "common.h"
+#include <ABS.H>
 #include <LIBGTE.H>
 #include <RAND.H>
 #include <STDIO.H>
@@ -18,11 +19,10 @@
 #include "tm1/UA_SW.H"
 #include "tm1/WEAPON.H"
 
-#define TGT_ABS(a) __builtin_abs(a)
 #define TGT_MAX(a, b) ((a) < (b) ? (b) : (a))
-#define TGT_LONGER(a, b) (TGT_ABS(a) < TGT_ABS(b) ? (b) : (a))
-#define TGT_SHORTER(a, b) (TGT_ABS(a) < TGT_ABS(b) ? (a) : (b))
-#define TGT_DIST2(a, b) (TGT_ABS(TGT_LONGER(a, b)) + (TGT_ABS(TGT_SHORTER(a, b)) >> 1))
+#define TGT_LONGER(a, b) (ABS(a) < ABS(b) ? (b) : (a))
+#define TGT_SHORTER(a, b) (ABS(a) < ABS(b) ? (a) : (b))
+#define TGT_DIST2(a, b) (ABS(TGT_LONGER(a, b)) + (ABS(TGT_SHORTER(a, b)) >> 1))
 
 extern s32 D_801713CC[16];
 extern s32 D_8017140C[12];
@@ -423,10 +423,10 @@ void move_mercs(void)
             if (hovermerc[i].timer <= 0) {
                 hovermerc[i].unk14 = 1;
                 GetPlayerPosition(0, (VECTOR3*)&pp);
-                best = TGT_ABS(table[0] * 8 - pp.vx) + TGT_ABS(table[1] * 8 - pp.vy);
+                best = ABS(table[0] * 8 - pp.vx) + ABS(table[1] * 8 - pp.vy);
                 k = 0;
                 for (j = 1; j < count; j++) {
-                    d = TGT_ABS(table[j * 2] * 8 - pp.vx) + TGT_ABS(table[j * 2 + 1] * 8 - pp.vy);
+                    d = ABS(table[j * 2] * 8 - pp.vx) + ABS(table[j * 2 + 1] * 8 - pp.vy);
                     if (d < best && hovermerc[1 - i].unk16 != j) {
                         best = d;
                         k = j;
@@ -823,9 +823,9 @@ void move_pedestrians(void)
             if (pedestrian[i].unk24 == 0) {
                 for (; p < GetNumPlayers(); p++) {
                     GetPlayerPosition(p, (VECTOR3*)&pos);
-                    if ((TGT_MAX(TGT_ABS(pos.vx - pedestrian[i].obj->pos.vx),
-                             TGT_MAX(TGT_ABS(pos.vy - pedestrian[i].obj->pos.vy),
-                                 TGT_ABS(pos.vz - pedestrian[i].obj->pos.vz)))
+                    if ((TGT_MAX(ABS(pos.vx - pedestrian[i].obj->pos.vx),
+                             TGT_MAX(ABS(pos.vy - pedestrian[i].obj->pos.vy),
+                                 ABS(pos.vz - pedestrian[i].obj->pos.vz)))
                             >> 3)
                         < 60) {
                         if (pedestrian[i].id != UA_UNK_760) {
@@ -869,14 +869,14 @@ void move_pedestrians(void)
                     pedestrian[i].obj->rot.vz = (pedestrian[i].obj->rot.vz + 0x800) & 0xFFF;
                     RotMatrixYXZ(&pedestrian[i].obj->rot, &pedestrian[i].obj->mat);
                 }
-                if (TGT_ABS(pedestrian[i].obj->pos.vx - pos.vx) < 6) {
+                if (ABS(pedestrian[i].obj->pos.vx - pos.vx) < 6) {
                     pedestrian[i].obj->pos.vx = pos.vx;
                 } else if (pedestrian[i].obj->pos.vx < pos.vx) {
                     pedestrian[i].obj->pos.vx += 6;
                 } else {
                     pedestrian[i].obj->pos.vx -= 6;
                 }
-                if (TGT_ABS(pedestrian[i].obj->pos.vy - pos.vy) < 6) {
+                if (ABS(pedestrian[i].obj->pos.vy - pos.vy) < 6) {
                     pedestrian[i].obj->pos.vy = pos.vy;
                 } else if (pedestrian[i].obj->pos.vy < pos.vy) {
                     pedestrian[i].obj->pos.vy += 6;
@@ -887,9 +887,9 @@ void move_pedestrians(void)
                 close = 0;
                 for (p = 0; p < GetNumPlayers(); p++) {
                     GetPlayerPosition(p, (VECTOR3*)&pos);
-                    if ((TGT_MAX(TGT_ABS(pos.vx - pedestrian[i].obj->pos.vx),
-                             TGT_MAX(TGT_ABS(pos.vy - pedestrian[i].obj->pos.vy),
-                                 TGT_ABS(pos.vz - pedestrian[i].obj->pos.vz)))
+                    if ((TGT_MAX(ABS(pos.vx - pedestrian[i].obj->pos.vx),
+                             TGT_MAX(ABS(pos.vy - pedestrian[i].obj->pos.vy),
+                                 ABS(pos.vz - pedestrian[i].obj->pos.vz)))
                             >> 3)
                         < 120) {
                         close = 1;
@@ -973,9 +973,9 @@ s32 check_ped_hits(VECTOR3* pos, s32 damage)
 
     for (k = 0; k < ped_made; k++) {
         if (pedestrian[k].id != UA_UNK_760) {
-            if ((TGT_MAX(TGT_ABS(pos->vx - pedestrian[k].obj->pos.vx),
-                     TGT_MAX(TGT_ABS(pos->vy - pedestrian[k].obj->pos.vy),
-                         TGT_ABS(pos->vz - pedestrian[k].obj->pos.vz)))
+            if ((TGT_MAX(ABS(pos->vx - pedestrian[k].obj->pos.vx),
+                     TGT_MAX(ABS(pos->vy - pedestrian[k].obj->pos.vy),
+                         ABS(pos->vz - pedestrian[k].obj->pos.vz)))
                     >> 3)
                 < 7) {
                 pedestrian_takehit(pedestrian[k].id, damage);

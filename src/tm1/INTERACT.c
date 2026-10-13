@@ -19,6 +19,7 @@
 #include "tm1/UA_SW.H"
 #include "tm1/VIEW.H"
 #include "tm1/WEAPON.H"
+#include <ABS.H>
 #include <LIBGPU.H>
 #include <LIBGTE.H>
 #include <RAND.H>
@@ -1633,7 +1634,7 @@ void carLockon(u8 who, VECTOR3** out)
             z = r[1];
             if (z >= 12) {
                 ax = r[0];
-                az = __builtin_abs(z);
+                az = ABS(z);
                 if (ax < 0) {
                     ax = -ax;
                 }
@@ -1658,7 +1659,7 @@ void carLockon(u8 who, VECTOR3** out)
                 z = r[1];
                 if (z >= 12) {
                     ax = r[0];
-                    az = __builtin_abs(z);
+                    az = ABS(z);
                     if (ax < 0) {
                         ax = -ax;
                     }

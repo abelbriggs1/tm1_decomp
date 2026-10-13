@@ -1,5 +1,6 @@
 #include "common.h"
 
+#include <ABS.H>
 #include <LIBGTE.H>
 #include <RAND.H>
 
@@ -2676,7 +2677,7 @@ void UASetSoundFlags(s16 idx, Car* car, u8 isPlayer)
         s32 den = stats->unkA8;
         s32 gear = flags[4];
 
-        rev = (__builtin_abs(spd) * 49) / den;
+        rev = (ABS(spd) * 49) / den;
         if (gear) {
             rev += 49;
         }

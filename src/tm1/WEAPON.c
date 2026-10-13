@@ -1,5 +1,6 @@
 #include "common.h"
 
+#include <ABS.H>
 #include <LIBGPU.H>
 #include <LIBGTE.H>
 #include <RAND.H>
@@ -22,7 +23,6 @@
 
 #include "tm1/WEAPON.H"
 
-#define ABS(a) __builtin_abs(a)
 #define BIGGER(a, b) (ABS(a) < ABS(b) ? (b) : (a))
 
 #define CONTRAIL_UV(p, q)                                                                          \

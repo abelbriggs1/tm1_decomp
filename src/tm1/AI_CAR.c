@@ -1,5 +1,6 @@
 #include "common.h"
 
+#include <ABS.H>
 #include <LIBGTE.H>
 #include <RAND.H>
 
@@ -94,7 +95,7 @@ void AICarUpdate(AICar* car)
     sp = car->motion.vel.vy;
     if ((((fl * 0x2F8) / 100) << 5) < sp && car->flags[0x0D] == 0) {
         rot = car->unk1C4;
-        rot = __builtin_abs(rot);
+        rot = ABS(rot);
         if (rot < 683 || car->unk160 == 0) {
             maxRot = __builtin_abs(car->motion.rotDelta.vz);
             if (CalcMaxRotBeforeDrift(car, 0) < maxRot) {
@@ -464,7 +465,7 @@ void AICarTurn(AICar* car)
         NoBeadOnPlayer(car);
     }
     BoundAngle(&diff);
-    t = __builtin_abs(diff);
+    t = ABS(diff);
     if (t < 57) {
         turn = 1;
     } else if (t < 342) {
@@ -531,7 +532,7 @@ u8 TimeToComeOutOfTurn(AICar* car, s32 diff)
     u8 res;
 
     rot = car->motion.rotDelta.vz;
-    d = __builtin_abs(diff);
+    d = ABS(diff);
     if (rot < 0) {
         rot = -rot;
     }
@@ -546,7 +547,7 @@ u8 TimeToComeOutOfTurn(AICar* car, s32 diff)
             } else {
                 hi = car->stats.unkD4 * 2;
             }
-            dd = __builtin_abs(diff);
+            dd = ABS(diff);
             lo = car->stats.unkD0 + (((hi - car->stats.unkD0) * dd) / 1024);
             if (car->motion.vel.vy < car->stats.unkA8) {
                 spd = car->stats.unkA8;
@@ -613,7 +614,7 @@ void AICarDriveBetweenPts(AICar* car)
     }
     if (dist <= 0) {
         s32 a = car->unk2C;
-        a = __builtin_abs(a);
+        a = ABS(a);
         if (a < 113) {
             goto set53;
         }
@@ -625,7 +626,7 @@ void AICarDriveBetweenPts(AICar* car)
         return;
     }
     t = car->motion.vel.vy;
-    t = __builtin_abs(t);
+    t = ABS(t);
     do {
     } while (0);
     fields = GetFieldsLastFrame();
@@ -709,7 +710,7 @@ void AICarInitSwerve(AICar* car)
     } else if (v < -240) {
         v = -240;
     }
-    amt = (__builtin_abs(v) * 170) / 240;
+    amt = (ABS(v) * 170) / 240;
     AICarUpdateCurrPtRange(car);
     if (car->unk162 != 0) {
         car->unk1B8 = car->unk1EC - amt;
@@ -834,7 +835,7 @@ s32 GetBufferZoneSpeed(AICar* car)
             return info->motion.vel.vy;
         }
         if (info->motion.vel.vy >= 0) {
-            spd = __builtin_abs(info->motion.vel.vy);
+            spd = ABS(info->motion.vel.vy);
             if (spd < ((GetFieldsLastFrame() * 190) / 100)) {
                 return (GetFieldsLastFrame() * 190) / 100;
             }
@@ -1085,7 +1086,7 @@ void AICarHeliUpdate(AICar* car)
         if (car->unk34 >= 800) {
             if (car->unk34 < 1600) {
                 s32 t1 = info->motion.vel.vy;
-                t1 = __builtin_abs(t1);
+                t1 = ABS(t1);
                 if (t1 < car->stats.unkAC) {
                     speed = car->stats.unkAC;
                 } else {
@@ -1093,12 +1094,12 @@ void AICarHeliUpdate(AICar* car)
                 }
             } else {
                 s32 t2 = info->motion.vel.vy;
-                t2 = __builtin_abs(t2);
+                t2 = ABS(t2);
                 if ((t2 * 2) < car->stats.unkAC) {
                     speed = car->stats.unkAC;
                 } else {
                     s32 t3 = info->motion.vel.vy;
-                    t3 = __builtin_abs(t3);
+                    t3 = ABS(t3);
                     speed = t3 * 2;
                 }
             }
@@ -1116,7 +1117,7 @@ void AICarHeliUpdate(AICar* car)
             car->skid[5] = 1;
         }
         t = car->unk2C;
-        t = __builtin_abs(t);
+        t = ABS(t);
         if (t >= 1537) {
             if (car->motion.vel.vy > car->stats.unkAC) {
                 car->skid[5] = 1;

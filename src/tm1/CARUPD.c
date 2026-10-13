@@ -1,5 +1,6 @@
 #include "common.h"
 
+#include <ABS.H>
 #include <LIBGTE.H>
 #include <RAND.H>
 
@@ -356,7 +357,7 @@ void CheckBridges(Car* car, u8 isPlayer)
     }
     d = m->vel.vy / 32;
     if (flags[10] == 0) {
-        h = st->unk5C + __builtin_abs(d);
+        h = st->unk5C + ABS(d);
     } else {
         h = 0xA0;
     }
@@ -1433,11 +1434,11 @@ void UpdateRollingCar(Car* car, u8 isPlayer)
         }
     }
     if (m->rotDelta.vy > 0) {
-        v = __builtin_abs(rsin(m->rot.vy));
+        v = ABS(rsin(m->rot.vy));
         d = r + v * r / 4096;
         m->rot.vy = m->rot.vy + d;
     } else {
-        v = __builtin_abs(rsin(m->rot.vy));
+        v = ABS(rsin(m->rot.vy));
         d = r + v * r / 4096;
         m->rot.vy = m->rot.vy - d;
     }
@@ -1622,7 +1623,7 @@ void UpdateCarOnSlickSpot(Car* car, u8 isPlayer)
     }
     v = m->vel.vy;
     lim = st->unkA4;
-    v = __builtin_abs(v);
+    v = ABS(v);
     if (lim < v) {
         SetFullCarDrift(m);
         return;
