@@ -7,6 +7,7 @@
 #include "tm1/DB.H"
 #include "tm1/EXPLODE.H"
 #include "tm1/INTERACT.H"
+#include "tm1/LEVELS.H"
 #include "tm1/MATH.H"
 #include "tm1/RT.H"
 #include "tm1/SHELL.H"
@@ -163,63 +164,63 @@ void init_target(s32 type, s32 instance, VECTOR3* pos)
     target[i].kind = 1;
     target[i].flag = 0;
     switch (type) {
-    case 0x258:
-    case 0x25B:
-    case 0x3F9:
+    case UA_UNK_600:
+    case UA_UNK_603:
+    case UA_UNK_1017:
         target[i].kind = 8;
         target[i].flag = 1;
         break;
-    case 0x259:
+    case UA_UNK_601:
         target[i].kind = 3;
         target[i].flag = 1;
         break;
-    case 0x262:
+    case UA_UNK_610:
         target[i].kind = 5;
         target[i].flag = 1;
         break;
-    case 0x263:
+    case UA_UNK_611:
         target[i].kind = 15;
         target[i].flag = 1;
         break;
-    case 0x264:
+    case UA_UNK_612:
         target[i].kind = 10;
         target[i].flag = 1;
         break;
-    case 0x265:
+    case UA_UNK_613:
         target[i].kind = 20;
         target[i].flag = 1;
         break;
-    case 0x3F7:
+    case UA_UNK_1015:
         target[i].kind = 2;
         break;
-    case 0x2BE:
+    case UA_UNK_702:
         target[i].kind = 2;
         break;
-    case 0x2CB:
+    case UA_UNK_715:
         target[i].kind = 12;
         break;
-    case 0x2CC:
+    case UA_UNK_716:
         target[i].kind = 3;
         break;
-    case 0x2D0:
+    case UA_UNK_720:
         target[i].kind = 3;
         break;
-    case 0x386:
+    case UA_UNK_902:
         target[i].kind = 25;
         target[i].flag = 1;
         break;
-    case 0x3E8:
+    case UA_UNK_1000:
         target[i].kind = 100;
         target[i].flag = 1;
         break;
-    case 0x3EA:
-    case 0x3F1:
-    case 0x3F2:
+    case UA_UNK_1002:
+    case UA_UNK_1009:
+    case UA_UNK_1010:
         target[i].kind = 4;
         target[i].flag = 1;
         break;
-    case 0x302:
-    case 0x3E9:
+    case UA_UNK_770:
+    case UA_UNK_1001:
         target[i].flag = 1;
         break;
     }
@@ -263,8 +264,8 @@ s32 target_takehit(s32 type, s32 instance, s32 damage)
         uaswSetNumChildren(target[which].type, target[which].instance, 0);
     }
     switch (target[which].type) {
-    case 611:
-    case 613:
+    case UA_UNK_611:
+    case UA_UNK_613:
         x = target[which].pos.vx;
         y = target[which].pos.vy;
         z = target[which].pos.vz;
@@ -289,33 +290,33 @@ s32 target_takehit(s32 type, s32 instance, s32 damage)
         target[which].pos.vz = z;
         do_smoke(&target[which].pos);
         break;
-    case 610:
-    case 612:
+    case UA_UNK_610:
+    case UA_UNK_612:
         do_simple_explosion(&target[which].pos);
         do_flames(&target[which].pos);
         return 0;
-    case 1001:
+    case UA_UNK_1001:
         soundSetRangeAndXPositionFromWorldLoc(&target[which].pos.vx);
         uasoundPlayGeneralExplode(
             soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition(), 99);
         do_steam(&target[which].pos);
         window_takehit();
         break;
-    case 600:
-    case 601:
+    case UA_UNK_600:
+    case UA_UNK_601:
         do_simple_explosion(&target[which].pos);
         do_flames(&target[which].pos);
         break;
-    case 1017:
+    case UA_UNK_1017:
         do_simple_explosion(&target[which].pos);
         do_flames(&target[which].pos);
         break;
-    case 730:
+    case UA_UNK_730:
         do_big_explosion(&target[which].pos);
         do_flames(&target[which].pos);
-        carDropWeapon(9, 0, &target[which].pos.vx, 0);
+        carDropWeapon(WEAPON_OIL, 0, &target[which].pos.vx, 0);
         break;
-    case 1000:
+    case UA_UNK_1000:
         for (i = 0; i < 45; i++) {
             p.vx = rand() % 2400 + 9600;
             p.vy = rand() % 2400 + 4000;
@@ -326,8 +327,8 @@ s32 target_takehit(s32 type, s32 instance, s32 damage)
             }
         }
         break;
-    case 720:
-    case 770:
+    case UA_UNK_720:
+    case UA_UNK_770:
         uasoundPlayMaleScream();
         break;
     }
@@ -343,13 +344,13 @@ void turnOnHoverCopSounds(s32* loc, u8 firing, u8 launching)
     uasoundPlayHoverCops(soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
     if (firing) {
         uasoundFireCarMachineGuns(
-            0x2F0, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
+            UA_HOVER_COP, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
     } else {
-        uasoundStopCarMachineGuns(0x2F0);
+        uasoundStopCarMachineGuns(UA_HOVER_COP);
     }
     if (launching) {
-        uasoundPlayCarWeaponLaunchOrInflight(
-            0, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
+        uasoundPlayCarWeaponLaunchOrInflight(WEAPON_FIRE_MISSILE, soundGetCalculatedSoundRange(),
+            soundGetCalculatedSoundXPosition());
     }
 }
 
@@ -382,31 +383,31 @@ void move_mercs(void)
     firing = 0;
     launching = 0;
     switch (shellGetCurrentLevel()) {
-    case 1:
+    case LEVEL2_WAREHOUSE:
         table = D_801713CC;
         count = 8;
         i = 1;
         last = 2;
         break;
-    case 2:
+    case LEVEL3_FREEWAY:
         table = D_8017140C;
         count = 6;
         i = 0;
         last = 1;
         break;
-    case 3:
+    case LEVEL4_CITY_PARK:
         table = D_8017143C;
         count = 14;
         i = 1;
         last = 2;
         break;
-    case 4:
+    case LEVEL5_CYBURBIA:
         table = D_801714AC;
         count = 12;
         i = 0;
         last = 1;
         break;
-    case 5:
+    case LEVEL6_ROOFTOPS:
         table = D_8017150C;
         count = 5;
         i = 0;
@@ -436,7 +437,7 @@ void move_mercs(void)
                 hovermerc[i].obj->pos.vy = table[k * 2 + 1] * 8;
                 hovermerc[i].obj->pos.vz = 400;
                 hovermerc[i].unk18 = 0;
-                if (shellGetCurrentLevel() == 5) {
+                if (shellGetCurrentLevel() == LEVEL6_ROOFTOPS) {
                     hovermerc[i].obj->pos.vz += D_80171534[k] * 8;
                     hovermerc[i].unk18 = D_80171534[k] * 8;
                 }
@@ -474,7 +475,7 @@ void move_mercs(void)
                 continue;
             }
             GetPlayerPosition(0, (VECTOR3*)&pp);
-            if (hovermerc[i].state == 752) {
+            if (hovermerc[i].state == UA_HOVER_COP) {
                 if (hovermerc[i].unk10 < 5) {
                     hovermerc[i].obj->pos.vz += 48;
                     firing = 1;
@@ -497,7 +498,7 @@ void move_mercs(void)
                 }
             } else {
                 k = hovermerc[i].unk10;
-                if (shellGetCurrentLevel() == 5) {
+                if (shellGetCurrentLevel() == LEVEL6_ROOFTOPS) {
                     if (k < 3) {
                         goto fire;
                     }
@@ -552,7 +553,7 @@ void merc_takehit(s32 which, s32 who)
 {
     s32 i;
 
-    i = (which != 0x2EE);
+    i = (which != UA_BAZ_COP);
     uasoundPlayMaleScream();
     hovermerc[i].node->state = 4;
     do_smoke((VECTOR3*)&hovermerc[i].obj->pos);
@@ -573,7 +574,7 @@ void init_merc(s32 which, DbNode* ep)
     DbNode* n;
     DbSwitch* sw;
 
-    i = (which != 0x2EE);
+    i = (which != UA_BAZ_COP);
     hovermerc[i].state = which;
     hovermerc[i].timer = i * 200 + 200;
     hovermerc[i].unk10 = 0;
@@ -644,27 +645,27 @@ void choose_ped_path(Pedestrian* ped)
     s32 dy;
 
     switch (shellGetCurrentLevel()) {
-    case 1:
+    case LEVEL2_WAREHOUSE:
         table = pedPathLevel1;
         count = 3;
         break;
-    case 2:
+    case LEVEL3_FREEWAY:
         table = pedPathLevel2;
         count = 5;
         break;
-    case 3:
+    case LEVEL4_CITY_PARK:
         table = pedPathLevel3;
         count = 9;
-        if (ped->id == 0x305) {
+        if (ped->id == UA_UNK_773) {
             table = pedPathLevel3b;
             count = 1;
         }
         break;
-    case 4:
+    case LEVEL5_CYBURBIA:
         table = pedPathLevel4;
         count = 14;
         break;
-    case 5:
+    case LEVEL6_ROOFTOPS:
         table = pedPathLevel5;
         count = 2;
         break;
@@ -700,7 +701,7 @@ void choose_ped_path(Pedestrian* ped)
     if (dy < 0) {
         ped->obj->rot.vz = 0x800;
     }
-    if (shellGetCurrentLevel() == 5) {
+    if (shellGetCurrentLevel() == LEVEL6_ROOFTOPS) {
         ped->obj->pos.vz = 0x3CA;
     }
     RotMatrixYXZ(&ped->obj->rot, &ped->obj->mat);
@@ -738,28 +739,28 @@ void init_pedestrian(s32 id, DbNode* ep)
                 pedestrian[ped_made].unk10 = 0;
                 choose_ped_path(&pedestrian[ped_made]);
                 switch (id) {
-                case 0x2F4:
-                case 0x30A:
+                case UA_UNK_756:
+                case UA_UNK_778:
                     pedestrian[ped_made].unk26 = 3;
                     pedestrian[ped_made].unk28 = 4;
                     pedestrian[ped_made].unk2A = 5;
                     break;
-                case 0x2EF:
+                case UA_UNK_751:
                     pedestrian[ped_made].unk26 = 1;
                     pedestrian[ped_made].unk28 = 5;
                     pedestrian[ped_made].unk2A = 7;
                     break;
-                case 0x2F8:
+                case UA_UNK_760:
                     pedestrian[ped_made].unk26 = 5;
                     pedestrian[ped_made].unk28 = 5;
                     pedestrian[ped_made].unk2A = 5;
                     break;
-                case 0x305:
+                case UA_UNK_773:
                     pedestrian[ped_made].unk26 = 5;
                     pedestrian[ped_made].unk28 = 5;
                     pedestrian[ped_made].unk2A = 6;
                     break;
-                case 0x30E:
+                case UA_UNK_782:
                 default:
                     pedestrian[ped_made].unk26 = 2;
                     pedestrian[ped_made].unk28 = 4;
@@ -827,7 +828,7 @@ void move_pedestrians(void)
                                  TGT_ABS(pos.vz - pedestrian[i].obj->pos.vz)))
                             >> 3)
                         < 60) {
-                        if (pedestrian[i].id != 0x2F8) {
+                        if (pedestrian[i].id != UA_UNK_760) {
                             pedestrian[i].unk24 = 1;
                             if (pedestrian[i].unk26 < pedestrian[i].unk28) {
                                 pedestrian[i].unk10 = pedestrian[i].unk26 + 1;
@@ -902,7 +903,7 @@ void move_pedestrians(void)
                     if (pedestrian[i].unk10 < pedestrian[i].node->numStates) {
                         pedestrian[i].node->state = pedestrian[i].unk10;
                     }
-                    if ((pedestrian[i].id == 0x2F4 || pedestrian[i].id == 0x2EF)
+                    if ((pedestrian[i].id == UA_UNK_756 || pedestrian[i].id == UA_UNK_751)
                         && !(rand() & 0xF)) {
                         pedestrian[i].obj->pos.vz += 30;
                         aim.vx = pos.vx - pedestrian[i].obj->pos.vx;
@@ -933,7 +934,7 @@ void pedestrian_takehit(s32 id, s32 damage)
     s32 k;
 
     i = -1;
-    if (id == 0x2F8) {
+    if (id == UA_UNK_760) {
         return;
     }
     for (k = 0; k < ped_made; k++) {
@@ -971,7 +972,7 @@ s32 check_ped_hits(VECTOR3* pos, s32 damage)
     s32 k;
 
     for (k = 0; k < ped_made; k++) {
-        if (pedestrian[k].id != 0x2F8) {
+        if (pedestrian[k].id != UA_UNK_760) {
             if ((TGT_MAX(TGT_ABS(pos->vx - pedestrian[k].obj->pos.vx),
                      TGT_MAX(TGT_ABS(pos->vy - pedestrian[k].obj->pos.vy),
                          TGT_ABS(pos->vz - pedestrian[k].obj->pos.vz)))
@@ -1035,7 +1036,7 @@ void static_cop_fire(s32 num, VECTOR3* tgt)
 
     scop[num].hits = 3;
     scop[num].kind = 4;
-    if (scop[num].state == 754 || scop[num].state == 755) {
+    if (scop[num].state == UA_UNK_754 || scop[num].state == UA_UNK_755) {
         scop[num].pos.vz += 52;
         aim.vx = 0;
         aim.vy = 0;
@@ -1156,10 +1157,10 @@ void move_drop_box(void)
 {
     if (drop_box_state > 0) {
         if (drop_box_state < 11) {
-            uaswSetState(0x3FA, 0, drop_box_state - 1);
+            uaswSetState(UA_FALLING_BOX, 0, drop_box_state - 1);
             drop_box_state++;
             if (drop_box_state == 10) {
-                uaswSetState(0x3FA, 0, 9);
+                uaswSetState(UA_FALLING_BOX, 0, 9);
                 drop_box_state = 0;
             }
         }
@@ -1170,10 +1171,10 @@ void move_breaking_window(void)
 {
     if (window_state > 0) {
         if (window_state < 11) {
-            uaswSetState(0x3FB, 0, window_state - 1);
+            uaswSetState(UA_BREAKING_WINDOW, 0, window_state - 1);
             window_state++;
             if (window_state == 10) {
-                uaswSetState(0x3FB, 0, 9);
+                uaswSetState(UA_BREAKING_WINDOW, 0, 9);
                 window_state = 0;
             }
         }
@@ -1182,7 +1183,7 @@ void move_breaking_window(void)
 
 void drop_box_takehit(void)
 {
-    uaswSetState(0x3F8, 0, 1);
+    uaswSetState(UA_DROP_BOX, 0, 1);
     drop_box_state = 1;
 }
 
@@ -1193,7 +1194,7 @@ void window_takehit(void)
 
 void move_targets(void)
 {
-    if (shellGetCurrentLevel() == 5) {
+    if (shellGetCurrentLevel() == LEVEL6_ROOFTOPS) {
         move_drop_box();
         move_breaking_window();
     }

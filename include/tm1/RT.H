@@ -14,10 +14,18 @@ typedef struct Db {
     /*0x6C*/ DISPENV disp;
 } Db;
 
+// Codes returned by `rtMainLoop()`.
+#define RT_RETURN_NONE 0
+#define RT_RETURN_PLAYER_DIED 1
+#define RT_RETURN_ABORTED 2
+// In two-player mode, this means player 1 won the round.
+#define RT_RETURN_WON 3
+#define RT_RETURN_P2_WON 4
+
 /* a queued "return to shell" request */
 typedef struct RtReturn {
-    /*0x0*/ s32 arg;
-    /*0x4*/ s32 mode;
+    /*0x0*/ s32 delay;
+    /*0x4*/ s32 code;
 } RtReturn;
 
 /* .bss objects */
@@ -47,7 +55,7 @@ extern Db* curSdb; /* gp+1468 */
 extern Db* curRdb; /* gp+1472 */
 
 s32 rtMainLoop(void);
-void rtReturnToShell(s32 arg, s32 mode);
+void rtReturnToShell(s32 code, s32 delay);
 void rtClearPendingReturns(void);
 s32 rtTimeToReturnToShell(void);
 void rtUpdateFieldCounter(s32 n);

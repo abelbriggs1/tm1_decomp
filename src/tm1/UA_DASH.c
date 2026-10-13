@@ -199,7 +199,7 @@ void UAdashDrawInstruments(s32 player, Db* cdb)
     ClearOTagR((u_long*)ot, 2);
     pi = GetPlayerInfo(player);
     sel = 0;
-    if (gDisplayDashboard != 0 && pi->uaIndex != 0x50) {
+    if (gDisplayDashboard != 0 && pi->uaIndex != UA_HARLEY) {
         UAdashDrawDashboard((DVECTOR*)cdb);
         uadashDrawSteeringWheel(ot);
     }
@@ -209,7 +209,7 @@ void UAdashDrawInstruments(s32 player, Db* cdb)
     for (i = sel; i < gDash[player].lifeCnt; i++) {
         AddPrim(ot, &gDash[player].lifeSpr[i]);
     }
-    n = (s16)pi->weap.ammo[11] / (s8)pi->weap.unk48;
+    n = (s16)pi->weap.ammo[WEAPON_SPECIAL] / (s8)pi->weap.unk48;
     if (n >= 6) {
         n = 5;
     }
@@ -349,7 +349,7 @@ void UAdashDrawInstruments(s32 player, Db* cdb)
             GetNumAICars() - n, &gDash[player].totSpr, gDash[player].dig, ot);
         AddPrim(ot, &gDash[player].numMode);
         if (gDisplayDashboard != 0) {
-            if (pi->uaIndex != 0x50) {
+            if (pi->uaIndex != UA_HARLEY) {
                 for (i = 0; i < gDash[player].count; i++) {
                     AddPrim(ot, &gDash[player].elems[i]);
                     AddPrim(ot, &gDash[player].dmode[i]);

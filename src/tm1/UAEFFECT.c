@@ -5,9 +5,11 @@
 #include <RAND.H>
 
 #include "tm1/CS.H"
+#include "tm1/LEVELS.H"
 #include "tm1/LIGHT.H"
 #include "tm1/RT.H"
 #include "tm1/SHELL.H"
+#include "tm1/UA.H"
 #include "tm1/UAEFFECT.H"
 #include "tm1/UA_SW.H"
 
@@ -270,7 +272,7 @@ void UAeffectInitMonsterTruckWheel(WheelNode* node)
 
 void UAeffectUpdateSpecialEffects(void)
 {
-    if (shellGetCurrentLevel() > 0) {
+    if (shellGetCurrentLevel() > LEVEL1_ARENA) {
         UAeffectUpdateHealthStandLightning();
     }
     UAeffectUpdateTVs();
@@ -279,10 +281,10 @@ void UAeffectUpdateSpecialEffects(void)
 
 void UAeffectUpdateCarSpeed(s32 carId, s32 speed)
 {
-    if (carId == 40) {
+    if (carId == UA_MONSTER_TRUCK) {
         UAeffectUpdateMonsterTruckWheels(speed);
     } else {
-        carId = carId / 10;
+        carId = UA_CAR_SLOT(carId);
         if (carId < 15) {
             gCarSpeed[carId] = gCarSpeed[carId] + __builtin_abs(speed);
             if (gCarSpeed[carId] >= 321) {

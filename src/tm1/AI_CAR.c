@@ -8,6 +8,7 @@
 #include "tm1/CAR.H"
 #include "tm1/CARUPD.H"
 #include "tm1/CAR_INIT.H"
+#include "tm1/LEVELS.H"
 #include "tm1/MATH.H"
 #include "tm1/SHELL.H"
 #include "tm1/SMOOTH.H"
@@ -46,12 +47,12 @@ void AICarUpdate(AICar* car)
     }
     if (car->flags[0x19] != 0) {
         if (car->flags[0x0A] != 0 || car->flags[0x17] != 0 || car->flags[0x1B] != 0
-            || car->flags[0x00] != 0 || shellGetCurrentLevel() == 5) {
+            || car->flags[0x00] != 0 || shellGetCurrentLevel() == LEVEL6_ROOFTOPS) {
             car->flags[0x19] = 0;
             uaswSetCarShadow(car->uaIndex, 0);
         }
     } else if (car->flags[0x0A] == 0 && car->flags[0x17] == 0 && car->flags[0x1B] == 0
-        && car->flags[0x00] == 0 && shellGetCurrentLevel() != 5) {
+        && car->flags[0x00] == 0 && shellGetCurrentLevel() != LEVEL6_ROOFTOPS) {
         car->flags[0x19] = 1;
         uaswSetCarShadow(car->uaIndex, 1);
     }
@@ -75,7 +76,7 @@ void AICarUpdate(AICar* car)
         CarRotUpdate(car, 0);
         CarTransUpdate(car, 0);
     }
-    if (car->stats.unk38 != 0 && (car->unk40 != 0 || shellGetCurrentLevel() == 5)) {
+    if (car->stats.unk38 != 0 && (car->unk40 != 0 || shellGetCurrentLevel() == LEVEL6_ROOFTOPS)) {
         CheckHitDetection(car, 0);
         if (car->collision.unk0 != 0) {
             diff = __builtin_abs(car->motion.rot.vz - car->motion.rot2.vz);
@@ -297,7 +298,7 @@ void AICarInitTransition(AICar* car)
         d = __builtin_abs(triggerPtGroups.pos[car->unk176].y - car->motion.pos.vz);
         if ((car->stats.unk6C * 2) < d) {
             car->stats.unk03 = 1;
-            if (shellGetCurrentLevel() == 5) {
+            if (shellGetCurrentLevel() == LEVEL6_ROOFTOPS) {
                 if (car->motion.pos.vx >= 0x15E0) {
                     if (car->motion.pos.vx < 0x2581) {
                         if (car->motion.pos.vy >= 0x1770) {
@@ -349,7 +350,7 @@ void AICarUpdateTransition(AICar* car)
             AICarDriveBetweenPts(car);
             AICarUpdateSwerve(car);
             if (car->unk41 != 0 && car->unk01 == 0 && car->unk178 > (s16)car->stats.unk1E
-                && car->unk144 == 1 && car->unk18A >= 81) {
+                && car->direction == DIRECTION_REAR && car->unk18A >= 81) {
                 AIInitTurnFlags(car);
                 GetNextTriggerPoint(car, car->unk170);
                 AICarInitTransition(car);
@@ -380,7 +381,7 @@ void AICarUpdateTransition(AICar* car)
 
 void NoBeadOnPlayer(AICar* car)
 {
-    if (car->heliFlag != 0 && car->uaIndex != -1) {
+    if (car->heliFlag != 0 && car->uaIndex != UA_NONE) {
         GetNewPointToDriveTo(car);
         car->heliFlag = 0;
     }
@@ -406,7 +407,7 @@ void GetNewPointToDriveTo(AICar* car)
     do {
         car->unk160 = 1;
     } while (0);
-    if (car->uaIndex != -1) {
+    if (car->uaIndex != UA_NONE) {
         car->heliFlag = 0;
     }
     car->unk4B = 0;
@@ -616,7 +617,7 @@ void AICarDriveBetweenPts(AICar* car)
         if (a < 113) {
             goto set53;
         }
-        if (car->uaIndex == -1) {
+        if (car->uaIndex == UA_NONE) {
             goto set53;
         }
         car->skid[4] = 1;
@@ -807,7 +808,7 @@ u8 GetBeadOnPlayer(AICar* car, s32 range)
             }
         }
     }
-    if (car->uaIndex == -1) {
+    if (car->uaIndex == UA_NONE) {
         result = 1;
     }
     return result;
@@ -901,7 +902,7 @@ void AICarInBattle(AICar* car)
         }
     } else {
         AICarOutOfBattle(car);
-        if (car->unk01 == 1 && car->unk144 == 0) {
+        if (car->unk01 == 1 && car->direction == DIRECTION_FRONT) {
             AIInitTurnFlags(car);
             GetNextTriggerPoint(car, car->unk170);
             AICarInitTransition(car);
@@ -980,13 +981,13 @@ void AICarUpdatePlayerDir(AICar* car)
         ang = -ang;
     }
     if (ang >= 1537) {
-        car->unk144 = 1;
+        car->direction = DIRECTION_REAR;
     } else if (car->unk2C >= 513) {
-        car->unk144 = 3;
+        car->direction = DIRECTION_RIGHT;
     } else if (car->unk2C < -512) {
-        car->unk144 = 2;
+        car->direction = DIRECTION_LEFT;
     } else {
-        car->unk144 = 0;
+        car->direction = DIRECTION_FRONT;
     }
 }
 

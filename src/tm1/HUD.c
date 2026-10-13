@@ -6,6 +6,7 @@
 #include "tm1/GRUTILS.H"
 #include "tm1/HUD.H"
 #include "tm1/RT.H"
+#include "tm1/UA.H"
 
 typedef struct Radar {
     /* 0x000 */ POLY_F4 bg[2];
@@ -201,7 +202,7 @@ void hudAddRadarSig(s32 id, s32* pos, s32 ang)
     LINE_F2* a;
     LINE_F2* b;
 
-    if (id == 0x398 && radar.buffer != 0) {
+    if (id == UA_HEALTH_STAND && radar.buffer != 0) {
         return;
     }
     x = pos[0];
@@ -213,7 +214,7 @@ void hudAddRadarSig(s32 id, s32* pos, s32 ang)
     cosine = rcos(ang);
     sz = (s32)(0u - ((u32)x * (u32)sine + (u32)z * (u32)cosine)) / radar.scale;
     if ((u32)sx + 36u >= 72 || (u32)sz + 22u >= 44 || radar.sigTotal + 2 >= 25) {
-        if (id != 0x398) {
+        if (id != UA_HEALTH_STAND) {
             if ((u32)sx + 36u < 72) {
                 if (sz > 0) {
                     radar.sigCount1 = 1;
@@ -238,7 +239,7 @@ void hudAddRadarSig(s32 id, s32* pos, s32 ang)
         a = &radar.sig[buf + n];
         n += 2;
         b = &radar.sig[buf + n];
-        if (id == 0x398) {
+        if (id == UA_HEALTH_STAND) {
             setXY2(a, sx + 52, sz + 54, sx + 54, sz + 56);
             setXY2(b, sx + 52, sz + 56, sx + 54, sz + 54);
         } else {
@@ -246,56 +247,56 @@ void hudAddRadarSig(s32 id, s32* pos, s32 ang)
             setXY2(b, bx, sz + 56, sx + 54, sz + 56);
         }
         switch (id) {
-        case 0xA:
+        case UA_ICE_CREAM_TRUCK:
             setRGB0(a, 0xFF, 0x90, 0xBA);
             setRGB0(b, 0xFF, 0x90, 0xBA);
             break;
-        case 0x14:
+        case UA_TAXI_CAB:
             setRGB0(a, 0xFF, 0xFF, 0);
             setRGB0(b, 0xFF, 0xFF, 0);
             break;
-        case 0x28:
+        case UA_MONSTER_TRUCK:
             setRGB0(a, 0, 0xE9, 0);
             setRGB0(b, 0, 0xE9, 0);
             break;
-        case 0x32:
+        case UA_POLICE_CAR:
             setRGB0(a, 0, 0, 0xFF);
             setRGB0(b, 0, 0, 0xFF);
             break;
-        case 0x3C:
+        case UA_LAMBORGHINI:
             setRGB0(a, 0xFF, 0, 0);
             setRGB0(b, 0xFF, 0, 0);
             break;
-        case 0x46:
+        case UA_HUMVEE:
             setRGB0(a, 0x82, 0xCA, 0x36);
             setRGB0(b, 0x82, 0xCA, 0x36);
             break;
-        case 0x50:
+        case UA_HARLEY:
             setRGB0(a, 0xFF, 0x66, 0);
             setRGB0(b, 0xFF, 0x66, 0);
             break;
-        case 0x5A:
+        case UA_DUNE_BUGGY:
             setRGB0(a, 0xC7, 0x71, 0);
             setRGB0(b, 0xC7, 0x71, 0);
             break;
-        case 0x64:
+        case UA_LOW_RIDER:
             setRGB0(a, 0xFF, 0, 0xFF);
             setRGB0(b, 0xFF, 0, 0xFF);
             break;
-        case 0x6E:
+        case UA_CORVETTE:
             setRGB0(a, 0xFF, 0xFF, 0xFF);
             setRGB0(b, 0xFF, 0xFF, 0xFF);
             break;
-        case 0x78:
+        case UA_MAD_MAX:
             setRGB0(a, 0x9B, 0x9B, 0x32);
             setRGB0(b, 0x9B, 0x9B, 0x32);
             break;
-        case 0x1E:
-        case 0x82:
+        case UA_SEMI_TRUCK:
+        case UA_BOSS_CAR:
             setRGB0(a, 0, 0, 0);
             setRGB0(b, 0, 0, 0);
             break;
-        case 0x398:
+        case UA_HEALTH_STAND:
             setRGB0(a, 0xFF, 0xC8, 0xFF);
             setRGB0(b, 0xFF, 0xC8, 0xFF);
             break;
@@ -324,16 +325,16 @@ void hudRadarToggle(void)
 void hudStoreArrowIcon(s32 id, GrObj* obj)
 {
     switch (id) {
-    case 0x50A:
+    case UA_ARROW_UP:
         grutilsParse2DSprite(obj, &ArrowUpInfo, 1);
         break;
-    case 0x50C:
+    case UA_ARROW_DOWN:
         grutilsParse2DSprite(obj, &ArrowDownInfo, 1);
         break;
-    case 0x50D:
+    case UA_ARROW_LEFT:
         grutilsParse2DSprite(obj, &ArrowLeftInfo, 1);
         break;
-    case 0x50B:
+    case UA_ARROW_RIGHT:
         grutilsParse2DSprite(obj, &ArrowRightInfo, 1);
         break;
     }

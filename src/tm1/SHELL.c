@@ -6,21 +6,26 @@
 #include <STDIO.H>
 #include <STRINGS.H>
 
+#include "tm1/ACCESS.H"
 #include "tm1/CS.H"
 #include "tm1/CTLPAD.H"
 #include "tm1/DB.H"
+#include "tm1/DIFFICUL.H"
 #include "tm1/EXPLODE.H"
 #include "tm1/FILEIO.H"
 #include "tm1/FONT.H"
 #include "tm1/HIER.H"
 #include "tm1/INTERACT.H"
+#include "tm1/LEVELS.H"
 #include "tm1/LIGHT.H"
 #include "tm1/RT.H"
 #include "tm1/SCREEN.H"
 #include "tm1/SHELL.H"
 #include "tm1/SOUND.H"
+#include "tm1/STATE.H"
 #include "tm1/TARGETS.H"
 #include "tm1/TIMER.H"
+#include "tm1/TRANSIT.H"
 #include "tm1/UA.H"
 #include "tm1/UAEFFECT.H"
 #include "tm1/UA_DASH.H"
@@ -35,8 +40,8 @@
 extern void exit(s32 code);
 
 s16 gAccessCodeDigit = 0;
-s32 gCurrentLevel = 0;
-s32 gStartLevel = 0;
+s32 gCurrentLevel = LEVEL1_ARENA;
+s32 gStartLevel = LEVEL1_ARENA;
 s32 gCarsDbState = 0;
 s32 gAccessCode = 0;
 
@@ -130,37 +135,37 @@ void main(void)
     screenWaitForContinue(120, 120);
     screenDisplaySonyLegalScreen();
     screenDisplayDeveloperScreen();
-    shellSetGameState(0);
+    shellSetGameState(GAME_STATE_LOGOS);
     do {
         switch (gGameState) {
-        case 0:
+        case GAME_STATE_LOGOS:
             screenDisplayLogos();
-            shellSetGameState(30);
+            shellSetGameState(GAME_STATE_TITLE_MOVIE);
             screenSetMusicVolume();
             screenSetEffectsVolume();
             break;
-        case 30:
+        case GAME_STATE_TITLE_MOVIE:
             ResetUpdateRate();
             rtSetSplitScreen(0);
             shellLoadCarsDatabase();
             screenPlayCinema(2);
-            shellSetGameState(1);
+            shellSetGameState(GAME_STATE_TITLE);
             soundSetPreviousMusicVolume(screenGetMusicVolume());
-            soundStartPlayDA(2);
+            soundStartPlayDA(DA_TRACK_TWISTED_THEME);
             break;
-        case 1:
+        case GAME_STATE_TITLE:
             gAccessCodeDigit = 0;
-            gCurrentLevel = 0;
-            gStartLevel = 0;
+            gCurrentLevel = LEVEL1_ARENA;
+            gStartLevel = LEVEL1_ARENA;
             advanced = 0;
             ResetUpdateRate();
             rtSetSplitScreen(0);
             uaInitWeapons(1);
             shellStopCarEngineRev();
             gVehicleID = -1;
-            if (soundGetCurrentDATrack() != 2) {
+            if (soundGetCurrentDATrack() != DA_TRACK_TWISTED_THEME) {
                 soundInterruptPlayDA();
-                soundStartPlayDA(2);
+                soundStartPlayDA(DA_TRACK_TWISTED_THEME);
             }
             dbLoaded = 0;
             shellLoadCarsDatabase();
@@ -169,100 +174,100 @@ void main(void)
             shellSetGameState(screenDisplayTitle());
             gLivesRemaining = 3;
             break;
-        case 2:
+        case GAME_STATE_ATTRACT:
             switch (gShellFlag) {
             case 0:
-                shellSetGameState(3);
+                shellSetGameState(GAME_STATE_DEMO_MOVIE);
                 gShellFlag = gShellFlag + 1;
                 break;
             case 1:
-                shellSetGameState(21);
+                shellSetGameState(GAME_STATE_HISTORY);
                 gShellFlag = gShellFlag + 1;
                 break;
             case 2:
-                shellSetGameState(27);
+                shellSetGameState(GAME_STATE_VEHICLE_DEMO);
                 gShellFlag = 0;
                 break;
             }
             break;
-        case 29:
+        case GAME_STATE_MAIN_OPTIONS:
             shellSetGameState(screenMainOptions());
             break;
-        case 6:
+        case GAME_STATE_OPTIONS:
             shellPlayCarEngineRev();
             soundProcessIds();
             shellSetGameState(screenOptions(rtIsSplitScreenOn()));
             break;
-        case 27:
-            if (soundGetCurrentDATrack() != 2) {
+        case GAME_STATE_VEHICLE_DEMO:
+            if (soundGetCurrentDATrack() != DA_TRACK_TWISTED_THEME) {
                 soundInterruptPlayDA();
-                soundStartPlayDA(2);
+                soundStartPlayDA(DA_TRACK_TWISTED_THEME);
             }
             soundResumePlayDA();
             screenVehicleChoice(1, 1);
-            shellSetGameState(30);
+            shellSetGameState(GAME_STATE_TITLE_MOVIE);
             break;
-        case 21:
-            if (soundGetCurrentDATrack() != 2) {
+        case GAME_STATE_HISTORY:
+            if (soundGetCurrentDATrack() != DA_TRACK_TWISTED_THEME) {
                 soundInterruptPlayDA();
-                soundStartPlayDA(2);
+                soundStartPlayDA(DA_TRACK_TWISTED_THEME);
             }
             soundResumePlayDA();
             if (screenDisplayHistory() == 0) {
                 shellLoadCarsDatabase();
                 screenVehicleChoice(1, 1);
             }
-            if (gPreviousGameState == 2) {
-                shellSetGameState(30);
+            if (gPreviousGameState == GAME_STATE_ATTRACT) {
+                shellSetGameState(GAME_STATE_TITLE_MOVIE);
             } else {
                 shellSetGameState(gPreviousGameState);
             }
             break;
-        case 25:
+        case GAME_STATE_AUDIO_OPTIONS:
             screenAudioOptions(1, 1);
-            shellSetGameState(29);
+            shellSetGameState(GAME_STATE_MAIN_OPTIONS);
             break;
-        case 24:
+        case GAME_STATE_CHOOSE_CONTROLS:
             shellPlayCarEngineRev();
             if (rtIsSplitScreenOn() != 0) {
                 screenChooseControls(2, screenGetWhichPad(), 1);
             } else {
                 screenChooseControls(1, 0, 1);
             }
-            shellSetGameState(6);
+            shellSetGameState(GAME_STATE_OPTIONS);
             break;
-        case 23:
+        case GAME_STATE_CHOOSE_BATTLEGROUND:
             shellPlayCarEngineRev();
             screenChooseBattleground(rtIsSplitScreenOn());
             if (rtIsSplitScreenOn() == 0) {
-                if (gCurrentLevel != 0) {
-                    shellSetGameState(22);
+                if (gCurrentLevel != LEVEL1_ARENA) {
+                    shellSetGameState(GAME_STATE_ACCESS_CODE);
                 } else {
-                    shellSetGameState(6);
+                    shellSetGameState(GAME_STATE_OPTIONS);
                 }
             } else {
-                shellSetGameState(6);
+                shellSetGameState(GAME_STATE_OPTIONS);
             }
             break;
-        case 20:
+        case GAME_STATE_BATTLE_OPTIONS:
             shellPlayCarEngineRev();
             shellSetGameState(screenBattleOptions(rtIsSplitScreenOn()));
             break;
-        case 22:
+        case GAME_STATE_ACCESS_CODE:
             shellPlayCarEngineRev();
             ok = shellProcessAccessCode(screenEnterAccessCode());
-            st = 6;
+            st = GAME_STATE_OPTIONS;
             if (ok == 0) {
                 st = screenWrongPassword(st);
             }
             shellSetGameState(st);
             break;
-        case 19:
+        case GAME_STATE_2P_NEXT_ROUND:
             gLivesRemaining = 1;
             uaInitWeapons(1);
-            shellSetGameState(10);
+            shellSetGameState(GAME_STATE_LOAD_LEVEL);
             break;
-        case 7:
+        case GAME_STATE_1P_VEHICLE_SELECT:
             shellSetGodMode(0, 0);
             shellSetGodMode(1, 0);
             UASetHelicoptorMode(0, 0);
@@ -274,12 +279,12 @@ void main(void)
             gVehicleID = screenVehicleChoice(1, 0);
             shellLeaveLevel(0);
             if (gVehicleID != -1) {
-                shellSetGameState(20);
+                shellSetGameState(GAME_STATE_BATTLE_OPTIONS);
             } else {
-                shellSetGameState(1);
+                shellSetGameState(GAME_STATE_TITLE);
             }
             break;
-        case 8:
+        case GAME_STATE_2P_VEHICLE_SELECT:
             shellSetGodMode(0, 0);
             shellSetGodMode(1, 0);
             UASetHelicoptorMode(0, 0);
@@ -295,27 +300,27 @@ void main(void)
                 vid = gVehicleID;
             } while (0);
             score1 = 0;
-            gCurrentLevel = 0;
+            gCurrentLevel = LEVEL1_ARENA;
             dbLoaded = 0;
             if (vid != -1) {
                 rtSetSplitScreen(1);
-                shellSetGameState(20);
+                shellSetGameState(GAME_STATE_BATTLE_OPTIONS);
             } else {
-                shellSetGameState(1);
+                shellSetGameState(GAME_STATE_TITLE);
             }
             break;
-        case 3:
-        case 28:
+        case GAME_STATE_DEMO_MOVIE:
+        case GAME_STATE_UNK_28:
             soundInterruptPlayDA();
             screenPlayCinema(1);
-            if (gPreviousGameState == 2) {
-                shellSetGameState(30);
+            if (gPreviousGameState == GAME_STATE_ATTRACT) {
+                shellSetGameState(GAME_STATE_TITLE_MOVIE);
             } else {
                 shellSetGameState(gPreviousGameState);
             }
             soundResumePlayDA();
             break;
-        case 10:
+        case GAME_STATE_LOAD_LEVEL:
             soundInterruptPlayDA();
             if (dbLoaded == 0) {
                 if (rtIsSplitScreenOn() == 0) {
@@ -334,14 +339,14 @@ void main(void)
                 shellInitNewDatabase(gCurrentLevel, gTimeStamp);
             }
             shellInitLevel(gCurrentLevel);
-            shellSetGameState(11);
+            shellSetGameState(GAME_STATE_PLAY_LEVEL);
             break;
-        case 12:
+        case GAME_STATE_BOSS_CAR:
             screenBossCar();
             uaInitBossCar();
-            shellSetGameState(11);
+            shellSetGameState(GAME_STATE_PLAY_LEVEL);
             break;
-        case 11:
+        case GAME_STATE_PLAY_LEVEL:
             soundResetSoundEngine();
             soundStartPlayDA(shellSoundForThisLevel());
             r = rtMainLoop();
@@ -349,41 +354,41 @@ void main(void)
             rtClearPendingReturns();
             soundForceAllSoundsOffNow();
             shellPlayCarEngineRev();
-            soundStartPlayDA(2);
+            soundStartPlayDA(DA_TRACK_TWISTED_THEME);
             soundInterruptPlayDA();
             switch (r) {
-            case 4:
+            case RT_RETURN_P2_WON:
                 dbLoaded = 0;
                 score1 = score1 + 1;
                 screenPrintScore(1, score0, score1);
-                shellSetGameState(19);
+                shellSetGameState(GAME_STATE_2P_NEXT_ROUND);
                 uaInitWeapons(1);
                 break;
-            case 2:
-                shellSetGameState(30);
+            case RT_RETURN_ABORTED:
+                shellSetGameState(GAME_STATE_TITLE_MOVIE);
                 uaInitWeapons(1);
                 break;
-            case 1:
+            case RT_RETURN_PLAYER_DIED:
                 gLivesRemaining = gLivesRemaining - 1;
                 if (gLivesRemaining == 0) {
-                    shellSetGameState(14);
+                    shellSetGameState(GAME_STATE_LOST_GAME);
                     uaInitWeapons(1);
                 } else {
                     screenLostALife(gLivesRemaining);
-                    shellSetGameState(10);
+                    shellSetGameState(GAME_STATE_LOAD_LEVEL);
                 }
                 break;
-            case 3:
+            case RT_RETURN_WON:
             default:
                 if (rtIsSplitScreenOn() != 0) {
                     dbLoaded = 0;
                     score0 = score0 + 1;
                     screenPrintScore(0, score0, score1);
-                    shellSetGameState(19);
-                } else if (gCurrentLevel == 6) {
-                    shellLeaveLevel(6);
-                    shellSetGameState(30);
-                } else if (gCurrentLevel != 5) {
+                    shellSetGameState(GAME_STATE_2P_NEXT_ROUND);
+                } else if (gCurrentLevel == LEVEL7_ARENA_5) {
+                    shellLeaveLevel(LEVEL7_ARENA_5);
+                    shellSetGameState(GAME_STATE_TITLE_MOVIE);
+                } else if (gCurrentLevel != LEVEL6_ROOFTOPS) {
                     advanced = 1;
                     shellLeaveLevel(gCurrentLevel);
                     do {
@@ -391,62 +396,62 @@ void main(void)
                     } while (0);
                     dbLoaded = 0;
                     gCurrentLevel = lvl + 1;
-                    shellSetGameState(10);
+                    shellSetGameState(GAME_STATE_LOAD_LEVEL);
                 } else if (gAccessCodeDigit == 0) {
-                    shellSetGameState(12);
+                    shellSetGameState(GAME_STATE_BOSS_CAR);
                     gAccessCodeDigit = 1;
                 } else {
-                    shellSetGameState(13);
+                    shellSetGameState(GAME_STATE_CAR_ENDING);
                     gAccessCodeDigit = 0;
                 }
                 break;
             }
             break;
-        case 26:
+        case GAME_STATE_RESTART_CONTEST:
             dbLoaded = 0;
             shellPlayCarEngineRev();
             shellLeaveLevel(gCurrentLevel - 1);
-            gCurrentLevel = 0;
+            gCurrentLevel = LEVEL1_ARENA;
             shellBeginLevelTransition();
             screenTransitionLevel(gCurrentLevel, 0);
-            shellSetGameState(10);
+            shellSetGameState(GAME_STATE_LOAD_LEVEL);
             break;
-        case 13:
+        case GAME_STATE_CAR_ENDING:
             soundInterruptPlayDA();
-            soundStartPlayDA(2);
+            soundStartPlayDA(DA_TRACK_TWISTED_THEME);
             soundInterruptPlayDA();
             screenPlayCarEnding(gVehicleID);
-            if (uaGetDifficulty() >= 2) {
-                gCurrentLevel = 6;
-                st = 10;
+            if (uaGetDifficulty() >= DIFFICULTY_HARD) {
+                gCurrentLevel = LEVEL7_ARENA_5;
+                st = GAME_STATE_LOAD_LEVEL;
             } else {
-                st = 30;
+                st = GAME_STATE_TITLE_MOVIE;
             }
             shellSetGameState(st);
             dbLoaded = 0;
             break;
-        case 14:
+        case GAME_STATE_LOST_GAME:
             shellPlayCarEngineRev();
             soundInterruptPlayDA();
             screenLostGame();
-            shellSetGameState(30);
-            gCurrentLevel = 0;
+            shellSetGameState(GAME_STATE_TITLE_MOVIE);
+            gCurrentLevel = LEVEL1_ARENA;
             break;
-        case 15:
+        case GAME_STATE_CREDITS:
             shellStopCarEngineRev();
-            if (soundGetCurrentDATrack() != 2) {
+            if (soundGetCurrentDATrack() != DA_TRACK_TWISTED_THEME) {
                 soundInterruptPlayDA();
-                soundStartPlayDA(2);
+                soundStartPlayDA(DA_TRACK_TWISTED_THEME);
             }
             screenDisplayCredits();
-            shellSetGameState(29);
+            shellSetGameState(GAME_STATE_MAIN_OPTIONS);
             break;
-        case 16:
+        case GAME_STATE_LEAVE_GAME:
             shellLeaveGame();
-            shellSetGameState(2);
+            shellSetGameState(GAME_STATE_ATTRACT);
             break;
         default:
-            shellSetGameState(0);
+            shellSetGameState(GAME_STATE_LOGOS);
             break;
         }
     } while (quit == 0);
@@ -550,17 +555,17 @@ void shellSetAppropriateDBnames(s32 vehicle)
     } while (0);
     last = str + (len - 1);
     switch (lvl) {
-    case 0:
+    case LEVEL1_ARENA:
         break;
-    case 1:
-    case 5:
+    case LEVEL2_WAREHOUSE:
+    case LEVEL6_ROOFTOPS:
         switch (vehicle) {
-        case 10:
-        case 20:
-        case 30:
-        case 50:
-        case 60:
-        case 100:
+        case UA_ICE_CREAM_TRUCK:
+        case UA_TAXI_CAB:
+        case UA_SEMI_TRUCK:
+        case UA_POLICE_CAR:
+        case UA_LAMBORGHINI:
+        case UA_LOW_RIDER:
             *last = '1';
             break;
         default:
@@ -568,14 +573,14 @@ void shellSetAppropriateDBnames(s32 vehicle)
             break;
         }
         break;
-    case 2:
+    case LEVEL3_FREEWAY:
         switch (vehicle) {
-        case 10:
-        case 20:
-        case 30:
-        case 40:
-        case 110:
-        case 120:
+        case UA_ICE_CREAM_TRUCK:
+        case UA_TAXI_CAB:
+        case UA_SEMI_TRUCK:
+        case UA_MONSTER_TRUCK:
+        case UA_CORVETTE:
+        case UA_MAD_MAX:
             *last = '1';
             break;
         default:
@@ -583,14 +588,14 @@ void shellSetAppropriateDBnames(s32 vehicle)
             break;
         }
         break;
-    case 3:
+    case LEVEL4_CITY_PARK:
         switch (vehicle) {
-        case 10:
-        case 40:
-        case 60:
-        case 100:
-        case 110:
-        case 120:
+        case UA_ICE_CREAM_TRUCK:
+        case UA_MONSTER_TRUCK:
+        case UA_LAMBORGHINI:
+        case UA_LOW_RIDER:
+        case UA_CORVETTE:
+        case UA_MAD_MAX:
             *last = '1';
             break;
         default:
@@ -598,12 +603,12 @@ void shellSetAppropriateDBnames(s32 vehicle)
             break;
         }
         break;
-    case 4:
+    case LEVEL5_CYBURBIA:
         switch (vehicle) {
-        case 20:
-        case 30:
-        case 100:
-        case 120:
+        case UA_TAXI_CAB:
+        case UA_SEMI_TRUCK:
+        case UA_LOW_RIDER:
+        case UA_MAD_MAX:
             *last = '2';
             break;
         default:
@@ -611,7 +616,7 @@ void shellSetAppropriateDBnames(s32 vehicle)
             break;
         }
         break;
-    case 6:
+    case LEVEL7_ARENA_5:
         break;
     }
 }
@@ -636,7 +641,7 @@ char* shellGetCurrentLevelName(void)
 {
     s32 lvl = gCurrentLevel;
 
-    if (lvl == 6) {
+    if (lvl == LEVEL7_ARENA_5) {
         return gArena5Name;
     }
     return levelNames[lvl];
@@ -644,7 +649,7 @@ char* shellGetCurrentLevelName(void)
 
 char* shellGetLevelName(s32 level)
 {
-    if (level == 6) {
+    if (level == LEVEL7_ARENA_5) {
         return gArena5Name;
     }
     return levelNames[level];
@@ -654,8 +659,8 @@ char* shellGetNextLevelName(void)
 {
     s32 lvl = gCurrentLevel;
 
-    if (lvl == 5) {
-        return levelNames[0];
+    if (lvl == LEVEL6_ROOFTOPS) {
+        return levelNames[LEVEL1_ARENA];
     }
     return levelNames[lvl + 1];
 }
@@ -670,9 +675,9 @@ s32 shellNextLevelChoice(s32 delta)
     s32 lvl = gCurrentLevel + delta;
     gCurrentLevel = lvl;
     if (lvl < 0) {
-        gCurrentLevel = 5;
-    } else if (lvl == 6) {
-        gCurrentLevel = 0;
+        gCurrentLevel = LEVEL6_ROOFTOPS;
+    } else if (lvl == LEVEL6_ROOFTOPS + 1) {
+        gCurrentLevel = LEVEL1_ARENA;
     }
     return gCurrentLevel;
 }
@@ -697,10 +702,10 @@ char* shellGetTwoPlayerCurrentLevelName(void)
 {
     s32 lvl = gCurrentLevel;
 
-    if (lvl == 4) {
+    if (lvl == LEVEL5_CYBURBIA) {
         return gCanalName;
     }
-    if (lvl == 5) {
+    if (lvl == LEVEL6_ROOFTOPS) {
         return "ROOF TOP";
     }
     return levelNames[lvl];
@@ -716,9 +721,9 @@ s32 shellNextTwoPlayerLevelChoice(s32 delta)
     s32 lvl = gCurrentLevel + delta;
     gCurrentLevel = lvl;
     if (lvl < 0) {
-        gCurrentLevel = 5;
-    } else if (lvl == 6) {
-        gCurrentLevel = 0;
+        gCurrentLevel = LEVEL6_ROOFTOPS;
+    } else if (lvl == LEVEL6_ROOFTOPS + 1) {
+        gCurrentLevel = LEVEL1_ARENA;
     }
     return gCurrentLevel;
 }
@@ -732,7 +737,7 @@ void shellInitMachine(void)
     fileioInit();
     soundInit();
     soundSetMusicVolume(0);
-    soundStartPlayDA(2);
+    soundStartPlayDA(DA_TRACK_TWISTED_THEME);
     soundInterruptPlayDA();
     fontInit();
     screenInit();
@@ -830,27 +835,27 @@ s32 shellSoundForThisLevel(void)
     s32 id;
 
     switch (gCurrentLevel) {
-    case 0:
-        return 3;
-    case 1:
+    case LEVEL1_ARENA:
+        return DA_TRACK_CIRCUS_METALLICUS;
+    case LEVEL2_WAREHOUSE:
         split = rtIsSplitScreenOn();
-        id = 4;
+        id = DA_TRACK_STALK_N_ROLL;
         goto chk;
-    case 3:
-        return 4;
-    case 4:
+    case LEVEL4_CITY_PARK:
+        return DA_TRACK_STALK_N_ROLL;
+    case LEVEL5_CYBURBIA:
         split = rtIsSplitScreenOn();
-        id = 6;
+        id = DA_TRACK_CYBURB_HUNT;
     chk:
         if (split != 0) {
-            id = 7;
+            id = DA_TRACK_CYBURB_SLIDE;
         }
         return id;
-    case 5:
-        return 8;
-    case 2:
+    case LEVEL6_ROOFTOPS:
+        return DA_TRACK_DROP_DEAD;
+    case LEVEL3_FREEWAY:
     default:
-        return 2;
+        return DA_TRACK_TWISTED_THEME;
     }
 }
 
@@ -859,19 +864,19 @@ s32 shellGetSoundtrackId(void)
     switch (gSoundtrackChoice) {
     case 0:
     default:
-        return 2;
+        return DA_TRACK_TWISTED_THEME;
     case 1:
-        return 3;
+        return DA_TRACK_CIRCUS_METALLICUS;
     case 2:
-        return 5;
+        return DA_TRACK_ASPHALT_ASSAULT;
     case 3:
-        return 7;
+        return DA_TRACK_CYBURB_SLIDE;
     case 4:
-        return 6;
+        return DA_TRACK_CYBURB_HUNT;
     case 5:
-        return 4;
+        return DA_TRACK_STALK_N_ROLL;
     case 6:
-        return 8;
+        return DA_TRACK_DROP_DEAD;
     }
 }
 
@@ -883,25 +888,25 @@ char* shellGetSoundtrackTitle(void)
 void shellSetSoundtrackChoice(s32 id)
 {
     switch (id) {
-    case 2:
+    case DA_TRACK_TWISTED_THEME:
         gSoundtrackChoice = 0;
         break;
-    case 3:
+    case DA_TRACK_CIRCUS_METALLICUS:
         gSoundtrackChoice = 1;
         break;
-    case 5:
+    case DA_TRACK_ASPHALT_ASSAULT:
         gSoundtrackChoice = 2;
         break;
-    case 7:
+    case DA_TRACK_CYBURB_SLIDE:
         gSoundtrackChoice = 3;
         break;
-    case 6:
+    case DA_TRACK_CYBURB_HUNT:
         gSoundtrackChoice = 4;
         break;
-    case 4:
+    case DA_TRACK_STALK_N_ROLL:
         gSoundtrackChoice = 5;
         break;
-    case 8:
+    case DA_TRACK_DROP_DEAD:
         gSoundtrackChoice = 6;
         break;
     }
@@ -977,56 +982,56 @@ s32 shellProcessAccessCode(s32 code)
 
     soundProcessIds();
     switch (code) {
-    case 1:
-        gCurrentLevel = 1;
-        gStartLevel = 1;
+    case ACCESS_CODE_WAREHOUSE:
+        gCurrentLevel = LEVEL2_WAREHOUSE;
+        gStartLevel = LEVEL2_WAREHOUSE;
         ok = 1;
         break;
-    case 2:
-        gCurrentLevel = 2;
-        gStartLevel = 2;
+    case ACCESS_CODE_FREEWAY:
+        gCurrentLevel = LEVEL3_FREEWAY;
+        gStartLevel = LEVEL3_FREEWAY;
         ok = 1;
         break;
-    case 3:
-        gCurrentLevel = 3;
-        gStartLevel = 3;
+    case ACCESS_CODE_CITY_PARK:
+        gCurrentLevel = LEVEL4_CITY_PARK;
+        gStartLevel = LEVEL4_CITY_PARK;
         ok = 1;
         break;
-    case 4:
-        gCurrentLevel = 4;
-        gStartLevel = 4;
+    case ACCESS_CODE_CYBURBIA:
+        gCurrentLevel = LEVEL5_CYBURBIA;
+        gStartLevel = LEVEL5_CYBURBIA;
         ok = 1;
         break;
-    case 5:
-        gCurrentLevel = 5;
-        gStartLevel = 5;
+    case ACCESS_CODE_ROOFTOPS:
+        gCurrentLevel = LEVEL6_ROOFTOPS;
+        gStartLevel = LEVEL6_ROOFTOPS;
         ok = 1;
         break;
-    case 9:
+    case ACCESS_CODE_BOSS_SCREEN:
         ok = 1;
         screenBossCar();
         break;
-    case 11:
+    case ACCESS_CODE_MINION:
         ok = 1;
-        gCurrentLevel = 5;
-        gStartLevel = 5;
+        gCurrentLevel = LEVEL6_ROOFTOPS;
+        gStartLevel = LEVEL6_ROOFTOPS;
         gAccessCodeDigit = 0;
-        rtReturnToShell(3, 0);
+        rtReturnToShell(RT_RETURN_WON, 0);
         break;
-    case 13:
-        gCurrentLevel = 6;
-        gStartLevel = 6;
+    case ACCESS_CODE_ARENA_5:
+        gCurrentLevel = LEVEL7_ARENA_5;
+        gStartLevel = LEVEL7_ARENA_5;
         ok = 1;
         break;
-    case 8:
+    case ACCESS_CODE_GOD_MODE:
         shellSetGodMode(0, 1);
         ok = 1;
         break;
-    case 14:
+    case ACCESS_CODE_HELICOPTER_VIEW:
         UASetHelicoptorMode(0, 1);
         ok = 1;
         break;
-    case 7:
+    case ACCESS_CODE_INFINITE_WEAPONS:
         shellSetInfiniteWeapons(0, 1);
         ok = 1;
         break;
@@ -1035,10 +1040,10 @@ s32 shellProcessAccessCode(s32 code)
         break;
     }
     if (ok == 1) {
-        uasoundPlayCarWeaponPickup(0x19C, 0, 0);
+        uasoundPlayCarWeaponPickup(UA_PICKUP_BOMB, 0, 0);
     } else {
-        uasoundStopCarSignature(10);
-        uasoundPlayCarSignature(10, 0, 0);
+        uasoundStopCarSignature(UA_ICE_CREAM_TRUCK);
+        uasoundPlayCarSignature(UA_ICE_CREAM_TRUCK, 0, 0);
     }
     soundProcessIds();
     screenWaitForContinue(60, 60);
@@ -1075,7 +1080,7 @@ void shellBeginLevelTransition(void)
     }
     gFd = fileioOpenFileAsync(tex, &size);
     fileioReadFileAsync(gFd, LOAD_BUFFER, size);
-    gTransitionState = 5;
+    gTransitionState = TRANSITION_READING_TEXTURES;
 }
 
 s32 shellCheckTransitionStatus(void)
@@ -1086,20 +1091,20 @@ s32 shellCheckTransitionStatus(void)
         return 0;
     }
     switch ((u32)gTransitionState) {
-    case 1:
+    case TRANSITION_INIT_TEXTURES:
         fileioCloseFile(gFd);
         gTimeStamp = shellTextureInit(LOAD_BUFFER);
-        gTransitionState = 2;
+        gTransitionState = TRANSITION_START_DATABASE;
         break;
-    case 2:
+    case TRANSITION_START_DATABASE:
         DrawSync(0);
         gFd = fileioOpenFileAsync(dbFilename, &size);
         fileioReadFileAsync(gFd, LOAD_BUFFER, size);
-        gTransitionState = 0;
+        gTransitionState = TRANSITION_READING_DATABASE;
         break;
-    case 5:
+    case TRANSITION_READING_TEXTURES:
         break;
-    case 0:
+    case TRANSITION_READING_DATABASE:
         fileioCloseFile(gFd);
         break;
     default:
@@ -1220,7 +1225,7 @@ s32 shellIsPerfect(void)
 {
     s32 perfect = 0;
     if ((gInfiniteWeapons | gGodMode) == 0) {
-        perfect = (gStartLevel == 0);
+        perfect = (gStartLevel == LEVEL1_ARENA);
     }
     return perfect;
 }

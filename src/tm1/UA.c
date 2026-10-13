@@ -11,11 +11,14 @@
 #include "tm1/CAR_INIT.H"
 #include "tm1/CTLPAD.H"
 #include "tm1/CURBS.H"
+#include "tm1/DIFFICUL.H"
 #include "tm1/EXPLODE.H"
 #include "tm1/HUD.H"
 #include "tm1/INTERACT.H"
+#include "tm1/LEVELS.H"
 #include "tm1/LIGHT.H"
 #include "tm1/MATH.H"
+#include "tm1/PADCFG.H"
 #include "tm1/POTHOLES.H"
 #include "tm1/RT.H"
 #include "tm1/SLICK.H"
@@ -48,10 +51,10 @@ static s32 twoPlayerMode = 0;
 static s32 beatThisLevel = 0;
 static u8 gHeliMode = 0;
 static s32 gVar368 = 0;
-static s32 difficulty = 1;
+static s32 difficulty = DIFFICULTY_MEDIUM;
 static s32 gVar370 = 0;
 static u8 gLevelFlag = 0;
-static s32 gCurLevel = 1;
+static s32 gCurLevel = LEVEL_NUM(LEVEL1_ARENA);
 
 char* gCarNameStrings[13] = {
     "SWEET TOOTH",
@@ -154,18 +157,18 @@ u16* OpponentBitMasks[6] = {
 };
 
 s32 CarNumToCarName[12] = {
-    10,
-    20,
-    30,
-    50,
-    100,
-    60,
-    90,
-    70,
-    80,
-    110,
-    40,
-    120,
+    UA_ICE_CREAM_TRUCK,
+    UA_TAXI_CAB,
+    UA_SEMI_TRUCK,
+    UA_POLICE_CAR,
+    UA_LOW_RIDER,
+    UA_LAMBORGHINI,
+    UA_DUNE_BUGGY,
+    UA_HUMVEE,
+    UA_HARLEY,
+    UA_CORVETTE,
+    UA_MONSTER_TRUCK,
+    UA_MAD_MAX,
 };
 
 static u8 gBattleMusicOn = 0;
@@ -246,12 +249,12 @@ void uaInit(void)
     }
     uaInitCars();
     for (i = 0; i < 2; i++) {
-        PadSetConfig(1, i);
+        PadSetConfig(PAD_CONFIG_STANDARD, i);
     }
     camera[0] = NULL;
     camera[1] = NULL;
     UASetNumPlayers(1);
-    playerCar[0] = 20;
+    playerCar[0] = UA_TAXI_CAB;
     srand(GetCurTics());
 }
 
@@ -321,24 +324,24 @@ void uaInitDB(u32 level)
     }
     InitAICarsInBattle();
     switch (level) {
-    case 0:
-    case 6:
+    case LEVEL1_ARENA:
+    case LEVEL7_ARENA_5:
     default:
         InitLevel1DBSpecifics();
         break;
-    case 1:
+    case LEVEL2_WAREHOUSE:
         InitLevel2DBSpecifics();
         break;
-    case 2:
+    case LEVEL3_FREEWAY:
         InitLevel3DBSpecifics();
         break;
-    case 3:
+    case LEVEL4_CITY_PARK:
         InitLevel4DBSpecifics();
         break;
-    case 4:
+    case LEVEL5_CYBURBIA:
         InitLevel5DBSpecifics();
         break;
-    case 5:
+    case LEVEL6_ROOFTOPS:
         InitLevel6DBSpecifics();
         break;
     }
@@ -378,7 +381,7 @@ void InitLevel1DBSpecifics(void)
 {
     s32* p;
 
-    gCurLevel = 1;
+    gCurLevel = LEVEL_NUM(LEVEL1_ARENA);
     gLevelFlag = 0;
     if (rtIsSplitScreenOn()) {
         uaInitView(rtGetDb(), 11, 0);
@@ -428,7 +431,7 @@ void InitLevel2DBSpecifics(void)
 {
     s32* p;
 
-    gCurLevel = 2;
+    gCurLevel = LEVEL_NUM(LEVEL2_WAREHOUSE);
     gLevelFlag = 1;
     if (rtIsSplitScreenOn()) {
         uaInitView(rtGetDb(), 11, 0);
@@ -478,7 +481,7 @@ void InitLevel3DBSpecifics(void)
 {
     s32* p;
 
-    gCurLevel = 3;
+    gCurLevel = LEVEL_NUM(LEVEL3_FREEWAY);
     gLevelFlag = 1;
     if (rtIsSplitScreenOn()) {
         uaInitView(rtGetDb(), 11, 0);
@@ -528,7 +531,7 @@ void InitLevel4DBSpecifics(void)
 {
     s32* p;
 
-    gCurLevel = 4;
+    gCurLevel = LEVEL_NUM(LEVEL4_CITY_PARK);
     gLevelFlag = 1;
     if (rtIsSplitScreenOn()) {
         uaInitView(rtGetDb(), 11, 0);
@@ -578,7 +581,7 @@ void InitLevel5DBSpecifics(void)
 {
     s32* p;
 
-    gCurLevel = 5;
+    gCurLevel = LEVEL_NUM(LEVEL5_CYBURBIA);
     gLevelFlag = 1;
     if (rtIsSplitScreenOn()) {
         uaInitView(rtGetDb(), 11, 0);
@@ -622,7 +625,7 @@ void InitLevel6DBSpecifics(void)
 {
     s32* p;
 
-    gCurLevel = 6;
+    gCurLevel = LEVEL_NUM(LEVEL6_ROOFTOPS);
     gLevelFlag = 0;
     if (rtIsSplitScreenOn()) {
         uaInitView(rtGetDb(), 11, 0);
@@ -675,26 +678,26 @@ void InitLevel(u32 level)
     s32 n;
 
     switch (level) {
-    case 0:
+    case LEVEL1_ARENA:
     default:
         InitUALevel1();
         break;
-    case 1:
+    case LEVEL2_WAREHOUSE:
         InitUALevel2();
         break;
-    case 2:
+    case LEVEL3_FREEWAY:
         InitUALevel3();
         break;
-    case 3:
+    case LEVEL4_CITY_PARK:
         InitUALevel4();
         break;
-    case 4:
+    case LEVEL5_CYBURBIA:
         InitUALevel5();
         break;
-    case 5:
+    case LEVEL6_ROOFTOPS:
         InitUALevel6();
         break;
-    case 6:
+    case LEVEL7_ARENA_5:
         InitUALevel7();
         break;
     }
@@ -766,7 +769,7 @@ void InitUALevel1(void)
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
             } else {
                 SetCarVRMode(&playerInfo[i], playerInfo[i].unkF8);
-                if (playerInfo[i].unkF4 == 4) {
+                if (playerInfo[i].unkF4 == VR_MODE_HELICOPTER) {
                     InitHelicoptorPosition();
                 }
             }
@@ -819,8 +822,8 @@ void InitUALevel2(void)
                 playerInfo[i].vrRot[1].vy = playerInfo[i].vrRot[5].vy;
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
             } else {
-                if (playerInfo[i].unkF8 == 4) {
-                    playerInfo[i].unkF8 = 2;
+                if (playerInfo[i].unkF8 == VR_MODE_HELICOPTER) {
+                    playerInfo[i].unkF8 = VR_MODE_UNK_2;
                 }
                 SetCarVRMode(&playerInfo[i], playerInfo[i].unkF8);
             }
@@ -873,8 +876,8 @@ void InitUALevel3(void)
                 playerInfo[i].vrRot[1].vy = playerInfo[i].vrRot[5].vy;
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
             } else {
-                if (playerInfo[i].unkF8 == 4) {
-                    playerInfo[i].unkF8 = 2;
+                if (playerInfo[i].unkF8 == VR_MODE_HELICOPTER) {
+                    playerInfo[i].unkF8 = VR_MODE_UNK_2;
                 }
                 SetCarVRMode(&playerInfo[i], playerInfo[i].unkF8);
             }
@@ -927,8 +930,8 @@ void InitUALevel4(void)
                 playerInfo[i].vrRot[1].vy = playerInfo[i].vrRot[5].vy;
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
             } else {
-                if (playerInfo[i].unkF8 == 4) {
-                    playerInfo[i].unkF8 = 2;
+                if (playerInfo[i].unkF8 == VR_MODE_HELICOPTER) {
+                    playerInfo[i].unkF8 = VR_MODE_UNK_2;
                 }
                 SetCarVRMode(&playerInfo[i], playerInfo[i].unkF8);
             }
@@ -981,8 +984,8 @@ void InitUALevel5(void)
                 playerInfo[i].vrRot[1].vy = playerInfo[i].vrRot[5].vy;
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
             } else {
-                if (playerInfo[i].unkF8 == 4) {
-                    playerInfo[i].unkF8 = 2;
+                if (playerInfo[i].unkF8 == VR_MODE_HELICOPTER) {
+                    playerInfo[i].unkF8 = VR_MODE_UNK_2;
                 }
                 SetCarVRMode(&playerInfo[i], playerInfo[i].unkF8);
             }
@@ -1040,7 +1043,7 @@ void InitUALevel6(void)
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
             } else {
                 SetCarVRMode(&playerInfo[i], playerInfo[i].unkF8);
-                if (playerInfo[i].unkF4 == 4) {
+                if (playerInfo[i].unkF4 == VR_MODE_HELICOPTER) {
                     InitHelicoptorPosition();
                 }
             }
@@ -1098,7 +1101,7 @@ void InitUALevel7(void)
                 playerInfo[i].vrRot[1].vz = playerInfo[i].vrRot[5].vz;
             } else {
                 SetCarVRMode(&playerInfo[i], playerInfo[i].unkF8);
-                if (playerInfo[i].unkF4 == 4) {
+                if (playerInfo[i].unkF4 == VR_MODE_HELICOPTER) {
                     InitHelicoptorPosition();
                 }
             }
@@ -1142,7 +1145,7 @@ void uaPickAICars(s16 level)
 {
     s32 i;
 
-    if ((u16)level < 7) {
+    if ((u16)level < LEVEL_MAX) {
         for (i = 0; i < gAICars; i++) {
             UASetAICar(numTargets++, gSelectedAICars[i]);
         }
@@ -1199,14 +1202,12 @@ void UASetInfiniteWeapons(s32 player, s32 on)
 
 void UASetHelicoptorMode(s32 unused, u8 mode)
 {
-    if (gCurLevel == 1) {
+    switch (gCurLevel) {
+    case LEVEL_NUM(LEVEL1_ARENA):
+    case LEVEL_NUM(LEVEL6_ROOFTOPS):
+    case LEVEL_NUM(LEVEL7_ARENA_5):
         gHeliMode = mode;
-    } else if (gCurLevel > 0) {
-        if (gCurLevel < 8) {
-            if (gCurLevel >= 6) {
-                gHeliMode = mode;
-            }
-        }
+        break;
     }
 }
 
@@ -1247,7 +1248,7 @@ void SetCarCsInfo(s16 slot, s16 idx, s32 car, u8 found)
     playerInfo[slot].playerIdx = slot;
     if (found) {
         CarInit(&playerInfo[slot], carName[idx], gInitPlayerWeapons[slot]);
-        SetCarVRMode(&playerInfo[slot], 2);
+        SetCarVRMode(&playerInfo[slot], VR_MODE_UNK_2);
     } else {
         rot.vx = playerInfo[slot].motion.rot.vx;
         mode = playerInfo[slot].unkF4;
@@ -1421,7 +1422,7 @@ void PlayGame(void)
     }
     if (!twoPlayerMode && !playerInfo[0].flags[0] && !beatThisLevel && !AnyAICarsAlive()) {
         beatThisLevel = 1;
-        rtReturnToShell(3, 180);
+        rtReturnToShell(RT_RETURN_WON, 180);
     }
     UpdateNumAICarsInBattle();
     aiEndTics = GetCurTics();
@@ -1429,9 +1430,9 @@ void PlayGame(void)
     regen_healthstands();
     if (!twoPlayerMode) {
         switch (gCurLevel) {
-        case 2:
-        case 4:
-        case 5:
+        case LEVEL_NUM(LEVEL2_WAREHOUSE):
+        case LEVEL_NUM(LEVEL4_CITY_PARK):
+        case LEVEL_NUM(LEVEL5_CYBURBIA):
             if (GetNumAICarsInBattle() == 0) {
                 uasoundPlayHuntDA(gCurLevel);
             } else if (gBattleMusicOn) {
@@ -1441,7 +1442,7 @@ void PlayGame(void)
             break;
         }
     }
-    if (gCurLevel >= 2) {
+    if (gCurLevel >= LEVEL_NUM(LEVEL2_WAREHOUSE)) {
         move_targets();
     }
     soundProcessIds();
@@ -1522,12 +1523,12 @@ void UpdatePlayerDamageModel(s16 player)
                 if (twoPlayerMode != 0) {
                     gVar340 = 1;
                     if (player == 0) {
-                        mode = 4;
+                        mode = RT_RETURN_P2_WON;
                     } else {
-                        mode = 3;
+                        mode = RT_RETURN_WON;
                     }
                 } else {
-                    mode = 1;
+                    mode = RT_RETURN_PLAYER_DIED;
                 }
                 rtReturnToShell(mode, 180);
             }
@@ -1535,7 +1536,7 @@ void UpdatePlayerDamageModel(s16 player)
     }
     if (skipLevel != 0) {
         if (playerInfo[player].stats.unk4C == 0) {
-            rtReturnToShell(3, 180);
+            rtReturnToShell(RT_RETURN_WON, 180);
             skipLevel = 0;
         }
     }
@@ -1643,7 +1644,7 @@ void UpdateCamera(s16 idx)
         viewSetDeltaRot(&zeroRot, idx);
         return;
     }
-    if (playerInfo[idx].unkF4 == 4) {
+    if (playerInfo[idx].unkF4 == VR_MODE_HELICOPTER) {
         h = &helicoptor;
         AICarHeliUpdate(h);
         helicoptor.motion.pos.vz
@@ -1654,7 +1655,7 @@ void UpdateCamera(s16 idx)
         UASetCameraPosition(0, &h->motion.pos, &rot);
         return;
     }
-    if (playerInfo[idx].unkF4 == 1) {
+    if (playerInfo[idx].unkF4 == VR_MODE_UNK_1) {
         if (gVar350) {
             rot.vx = aiCarCs[aiCamFollow]->rot.vx;
             rot.vy = aiCarCs[aiCamFollow]->rot.vy;
@@ -1788,13 +1789,13 @@ void CheckVRMode(PlayerCar* car)
             gVrEnabled[player] = 0;
             mode = oldMode + 1;
             if (gHeliMode && !gLevelFlag) {
-                ok = mode < 5;
+                ok = mode <= VR_MODE_HELICOPTER;
             } else {
-                ok = mode < 4;
+                ok = mode <= VR_MODE_UNK_3;
             }
             if (!ok) {
-                mode = 1;
-                if (car->skid[10] && car->weap.cur == 11) {
+                mode = VR_MODE_UNK_1;
+                if (car->skid[10] && car->weap.cur == WEAPON_SPECIAL) {
                     car->unk9A = 1;
                     car->stats.cheatTimer = 0;
                 }
@@ -1805,10 +1806,10 @@ void CheckVRMode(PlayerCar* car)
         if (gVrEnabled[player] != 0) {
             gVrEnabled[player] = 0;
             mode = oldMode - 1;
-            if (mode == 0) {
+            if (mode < VR_MODE_UNK_1) {
                 if (gHeliMode && !gLevelFlag) {
-                    mode = 4;
-                    if (car->skid[10] && car->weap.cur == 11) {
+                    mode = VR_MODE_HELICOPTER;
+                    if (car->skid[10] && car->weap.cur == WEAPON_SPECIAL) {
                         car->unk9A = 0;
                         if (car->unk9B) {
                             gStandMode = 1;
@@ -1816,8 +1817,8 @@ void CheckVRMode(PlayerCar* car)
                         }
                     }
                 } else {
-                    mode = 3;
-                    if (car->skid[10] && car->weap.cur == 11) {
+                    mode = VR_MODE_UNK_3;
+                    if (car->skid[10] && car->weap.cur == WEAPON_SPECIAL) {
                         car->unk9A = 0;
                         if (car->unk9B) {
                             gStandMode = 1;
@@ -1851,7 +1852,7 @@ void CheckVRMode(PlayerCar* car)
             gHeliMode = 1;
         }
     } else if (mode != oldMode) {
-        if (mode == 4) {
+        if (mode == VR_MODE_HELICOPTER) {
             InitHelicoptorPosition();
             if (rtIsRearViewOn()) {
                 rtToggleRearView();
@@ -1861,7 +1862,7 @@ void CheckVRMode(PlayerCar* car)
             rtSetRearView(1);
         }
     }
-    if (gCurLevel == 6) {
+    if (gCurLevel == LEVEL_NUM(LEVEL6_ROOFTOPS)) {
         if (playerInfo[0].unkC0 == 7) {
             gVar33C = 0;
         }
@@ -1869,11 +1870,12 @@ void CheckVRMode(PlayerCar* car)
             if (playerInfo[0].unkC0 == 5) {
                 gVar33C = 1;
                 SetCarVRMode(&playerInfo[0], playerInfo[0].unkF8);
-                if (playerInfo[0].unkF4 == 4) {
+                if (playerInfo[0].unkF4 == VR_MODE_HELICOPTER) {
                     InitHelicoptorPosition();
                 }
-            } else if (playerInfo[0].unkF4 == 3 || playerInfo[0].unkF4 == 4) {
-                SetCarVRMode(&playerInfo[0], 2);
+            } else if (playerInfo[0].unkF4 == VR_MODE_UNK_3
+                || playerInfo[0].unkF4 == VR_MODE_HELICOPTER) {
+                SetCarVRMode(&playerInfo[0], VR_MODE_UNK_2);
                 playerInfo[0].unkF8 = oldMode;
             }
         }
@@ -2082,7 +2084,7 @@ Cs* UAGetCs(s32 name)
             return carCs[i];
         }
     }
-    if (name == -1) {
+    if (name == UA_NONE) {
         return helicoptorCS;
     }
     return NULL;
@@ -2159,9 +2161,9 @@ void UASetCameraPosition(s16 which, VECTOR3* pos, SVECTOR* rot)
     s32 dy;
     s32 dz;
 
-    if (gCurLevel == 6) {
+    if (gCurLevel == LEVEL_NUM(LEVEL6_ROOFTOPS)) {
         if (pos->vz < 6800) {
-            if (playerInfo[which].unkF4 == 4) {
+            if (playerInfo[which].unkF4 == VR_MODE_HELICOPTER) {
                 camera[which]->rot.vx = rot->vx;
                 camera[which]->rot.vy = rot->vy;
                 camera[which]->rot.vz = rot->vz;
@@ -2171,7 +2173,7 @@ void UASetCameraPosition(s16 which, VECTOR3* pos, SVECTOR* rot)
                     camera[which]->pos.vz = pos->vz;
                 }
             } else {
-                if (playerInfo[which].unkF4 != 5) {
+                if (playerInfo[which].unkF4 != VR_MODE_FIXED) {
                     sv.vx = playerInfo[which].dRot.vx;
                     sv.vy = playerInfo[which].dRot.vy;
                     sv.vz = playerInfo[which].motion.rot.vz;
@@ -2183,7 +2185,7 @@ void UASetCameraPosition(s16 which, VECTOR3* pos, SVECTOR* rot)
                     camera[which]->pos.vx = playerInfo[which].motion.pos.vx + out.vx;
                     camera[which]->pos.vy = playerInfo[which].motion.pos.vy + out.vy;
                     camera[which]->pos.vz = playerInfo[which].motion.pos.vz + out.vz;
-                    SetCarVRMode(&playerInfo[which], 5);
+                    SetCarVRMode(&playerInfo[which], VR_MODE_FIXED);
                 }
                 dx = pos->vx - camera[which]->pos.vx;
                 dy = pos->vy - camera[which]->pos.vy;
@@ -2199,8 +2201,8 @@ void UASetCameraPosition(s16 which, VECTOR3* pos, SVECTOR* rot)
             camera[which]->rot.vx = rot->vx;
             camera[which]->rot.vy = rot->vy;
             camera[which]->rot.vz = rot->vz;
-            if (playerInfo[which].unkF4 == 5) {
-                SetCarVRMode(&playerInfo[which], 2);
+            if (playerInfo[which].unkF4 == VR_MODE_FIXED) {
+                SetCarVRMode(&playerInfo[which], VR_MODE_UNK_2);
             }
         }
     } else {
@@ -2255,13 +2257,13 @@ void uaTweekDifficultyFnc(void)
     default:
         strength = 100;
         break;
-    case 0:
+    case DIFFICULTY_EASY:
         strength = 60;
         break;
-    case 1:
+    case DIFFICULTY_MEDIUM:
         strength = 100;
         break;
-    case 2:
+    case DIFFICULTY_HARD:
         strength = 120;
         break;
     }
@@ -2315,7 +2317,7 @@ void uaPadInit(PlayerCar* car, s32 mode)
         car->skid[40] = 12;
     } while (0);
     switch (mode) {
-    case 0:
+    case PAD_CONFIG_CTL_FREAK:
         do {
             car->skid[22] = 0;
         } while (0);
@@ -2365,7 +2367,7 @@ void uaPadInit(PlayerCar* car, s32 mode)
             car->skid[32] = 10;
         } while (0);
         break;
-    case 1:
+    case PAD_CONFIG_STANDARD:
     default:
         do {
             car->skid[22] = 1;
@@ -2419,7 +2421,7 @@ void uaPadInit(PlayerCar* car, s32 mode)
             car->skid[32] = 12;
         } while (0);
         break;
-    case 2:
+    case PAD_CONFIG_DEADLY_FORCE:
         do {
             car->skid[22] = 2;
         } while (0);
@@ -2469,7 +2471,7 @@ void uaPadInit(PlayerCar* car, s32 mode)
             car->skid[32] = 10;
         } while (0);
         break;
-    case 3:
+    case PAD_CONFIG_RUN_N_GUN:
         do {
             car->skid[22] = 3;
         } while (0);
@@ -2543,14 +2545,14 @@ s32 GetAICarStrength(void)
     s32 r;
 
     switch (difficulty) {
-    case 0:
+    case DIFFICULTY_EASY:
     default:
         r = 60;
         break;
-    case 1:
+    case DIFFICULTY_MEDIUM:
         r = 100;
         break;
-    case 2:
+    case DIFFICULTY_HARD:
         r = 120;
         break;
     }
@@ -2597,27 +2599,27 @@ s32 uaGetCurrentCar(s32 isPlayer, s16 idx)
     }
 
     switch (name) {
-    case 110:
+    case UA_CORVETTE:
         return 1;
-    case 20:
+    case UA_TAXI_CAB:
         return 2;
-    case 90:
+    case UA_DUNE_BUGGY:
         return 3;
-    case 70:
+    case UA_HUMVEE:
         return 4;
-    case 10:
+    case UA_ICE_CREAM_TRUCK:
         return 5;
-    case 100:
+    case UA_LOW_RIDER:
         return 6;
-    case 60:
+    case UA_LAMBORGHINI:
         return 7;
-    case 120:
+    case UA_MAD_MAX:
         return 8;
-    case 40:
+    case UA_MONSTER_TRUCK:
         return 9;
-    case 50:
+    case UA_POLICE_CAR:
         return 10;
-    case 30:
+    case UA_SEMI_TRUCK:
         return 11;
     }
     return 0;
@@ -2738,7 +2740,7 @@ void uaSelectOpponents(s32 car, s16 level, s16* outCount, s32* outCars)
 
     bits = 0;
     n = 0;
-    if ((u16)level < 7) {
+    if ((u16)level < LEVEL_MAX) {
         for (carNum = 0; carNum < 12; carNum++) {
             if (car == CarNumToCarName[carNum]) {
                 break;
@@ -2746,10 +2748,10 @@ void uaSelectOpponents(s32 car, s16 level, s16* outCount, s32* outCars)
         }
         gAICars = 0;
         remaining = 1;
-        if (level == 6) {
+        if (level == LEVEL7_ARENA_5) {
             remaining = 5;
         }
-        if (level == 0 || level == 6) {
+        if (level == LEVEL1_ARENA || level == LEVEL7_ARENA_5) {
             me = carNum;
             remaining--;
             while (remaining != -1) {
@@ -2815,7 +2817,7 @@ void uaInitBossCar(void)
     s32 z;
 
     numTargets = 4;
-    UASetAICar(3, 130);
+    UASetAICar(3, UA_BOSS_CAR);
     beatThisLevel = 0;
     if (playerInfo[0].unkC0 < 6) {
         aiCarInfo[3].stats.triggerPt = 28;

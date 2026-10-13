@@ -2,11 +2,13 @@
 
 #include "tm1/CAR.H"
 #include "tm1/CS.H"
+#include "tm1/DIFFICUL.H"
 #include "tm1/EXPLODE.H"
 #include "tm1/GRUTILS.H"
 #include "tm1/HDP.H"
 #include "tm1/HUD.H"
 #include "tm1/INTERACT.H"
+#include "tm1/LEVELS.H"
 #include "tm1/MATH.H"
 #include "tm1/RT.H"
 #include "tm1/SHELL.H"
@@ -157,11 +159,11 @@ void carSetPowerupDelaysBySkillLevel(s32 level)
     s32 wd;
 
     switch (level) {
-    case 0:
+    case DIFFICULTY_EASY:
         healthRegenDelay = 2000;
         wd = 150;
         break;
-    case 1:
+    case DIFFICULTY_MEDIUM:
         healthRegenDelay = 4000;
         wd = 250;
         break;
@@ -176,31 +178,31 @@ void carSetPowerupDelaysBySkillLevel(s32 level)
 s32 getSpecialWeaponCost(s32 id)
 {
     switch (id) {
-    case 100:
+    case UA_LOW_RIDER:
         return weaponCost100;
-    case 60:
+    case UA_LAMBORGHINI:
         return weaponCost60;
-    case 30:
+    case UA_SEMI_TRUCK:
         return weaponCost30;
-    case 10:
+    case UA_ICE_CREAM_TRUCK:
         return weaponCost10;
-    case 20:
+    case UA_TAXI_CAB:
         return weaponCost20;
-    case 90:
+    case UA_DUNE_BUGGY:
         return weaponCost90;
-    case 70:
+    case UA_HUMVEE:
         return weaponCost70;
-    case 80:
+    case UA_HARLEY:
         return weaponCost80;
-    case 110:
+    case UA_CORVETTE:
         return weaponCost110;
-    case 50:
+    case UA_POLICE_CAR:
         return weaponCost50;
-    case 130:
+    case UA_BOSS_CAR:
         return weaponCost130;
-    case 40:
+    case UA_MONSTER_TRUCK:
         return weaponCost40;
-    case 120:
+    case UA_MAD_MAX:
         return weaponCost120;
     }
     return 20;
@@ -221,21 +223,21 @@ void UpdateWeapons(Car* car, u8 isPlayer)
         pad = &AI_CAR(car)->weap;
     }
     if (pad->reset != 0) {
-        for (i = 0; i < 14; i++) {
+        for (i = 0; i < WEAPON_AMMO_MAX; i++) {
             pad->ammo[i] = 1;
         }
-        pad->ammo[4] = 0;
-        pad->ammo[12] = 0;
-        pad->ammo[11] = 20;
+        pad->ammo[WEAPON_SINGING_MISSILE] = 0;
+        pad->ammo[WEAPON_NONE] = 0;
+        pad->ammo[WEAPON_SPECIAL] = 20;
         pad->unk46 = 2;
     } else {
         t = pad->timer++;
         if (t >= ammoRegenRate) {
             pad->timer = 0;
-            if ((s16)pad->ammo[11] + 1 < 20) {
-                pad->ammo[11] = pad->ammo[11] + 1;
+            if ((s16)pad->ammo[WEAPON_SPECIAL] + 1 < 20) {
+                pad->ammo[WEAPON_SPECIAL] = pad->ammo[WEAPON_SPECIAL] + 1;
             } else {
-                pad->ammo[11] = 20;
+                pad->ammo[WEAPON_SPECIAL] = 20;
             }
             if (!isPlayer && AI_CAR(car)->unk40 == 0
                 && AI_CAR(car)->stats.unk40 < (AI_CAR(car)->stats.unk44 >> 2)) {
@@ -262,8 +264,8 @@ void UpdatePlayerWeaponPadStatus(PlayerCar* car)
         start = car->weap.cur;
         car->weap.cur = start + 1;
         for (;;) {
-            if (car->weap.cur >= 13) {
-                car->weap.cur = 0;
+            if (car->weap.cur >= WEAPON_MAX) {
+                car->weap.cur = WEAPON_FIRE_MISSILE;
             }
             if ((s16)car->weap.ammo[car->weap.cur] > 0) {
                 return;
@@ -279,8 +281,8 @@ void UpdatePlayerWeaponPadStatus(PlayerCar* car)
         }
         car->skid[0x0F] = 0;
         start = car->weap.cur;
-        if (car->weap.cur == 0) {
-            car->weap.cur = 11;
+        if (car->weap.cur == WEAPON_FIRE_MISSILE) {
+            car->weap.cur = WEAPON_SPECIAL;
         } else {
             car->weap.cur--;
         }
@@ -291,8 +293,8 @@ void UpdatePlayerWeaponPadStatus(PlayerCar* car)
             if (car->weap.cur == start) {
                 return;
             }
-            if (car->weap.cur == 0) {
-                car->weap.cur = 11;
+            if (car->weap.cur == WEAPON_FIRE_MISSILE) {
+                car->weap.cur = WEAPON_SPECIAL;
             } else {
                 car->weap.cur--;
             }
@@ -331,7 +333,7 @@ void UpdateAIWeaponPadStatus(AICar* car)
         if (t < lim && car->unk34 < 4800) {
             car->skid[9] = 1;
         }
-        if (car->uaIndex == 130 && car->unk144 == 1) {
+        if (car->uaIndex == UA_BOSS_CAR && car->direction == DIRECTION_REAR) {
             s32 a;
             a = car->unk2C;
             if (a < 0) {
@@ -341,10 +343,10 @@ void UpdateAIWeaponPadStatus(AICar* car)
                 car->skid[9] = 1;
             }
         }
-        if (car->weap.cur == 2 && n < 3) {
+        if (car->weap.cur == WEAPON_HOMING_MISSILE && n < 3) {
             n += 2;
         }
-        if (car->weap.cur == 11 && n < 3 && (car->uaIndex == 70 || car->uaIndex == 110)) {
+        if (car->weap.cur == WEAPON_SPECIAL && n < 3 && (car->uaIndex == UA_HUMVEE || car->uaIndex == UA_CORVETTE)) {
             n += 2;
         }
         lim = n * 113;
@@ -354,7 +356,7 @@ void UpdateAIWeaponPadStatus(AICar* car)
         }
         if (t < lim) {
             car->skid[10] = 1;
-        } else if (car->unk144 == 1) {
+        } else if (car->direction == DIRECTION_REAR) {
             s32 a;
             a = car->unk2C;
             if (a < 0) {
@@ -364,7 +366,7 @@ void UpdateAIWeaponPadStatus(AICar* car)
                 car->skid[10] = 1;
             }
         }
-        if (car->weap.cur < 11) {
+        if (car->weap.cur < WEAPON_REGULAR_MAX) {
             car->weap.ammo[car->weap.cur] = 10;
         }
     }
@@ -513,14 +515,14 @@ void UpdateNonGuns(Car* car, u8 isPlayer)
         pad->fireDelay--;
         return;
     }
-    if (pad->cur == 12) {
+    if (pad->cur == WEAPON_NONE) {
         sk[10] = 0;
     }
     if ((s16)cfg->unk18 > 0) {
         sk[10] = 0;
     }
     if (sk[10] != 0) {
-        if (isPlayer == 0 && pad->cur != 11) {
+        if (isPlayer == 0 && pad->cur != WEAPON_SPECIAL) {
             pad->ammo[pad->cur] = 5;
         }
         if (pad->ammo[pad->cur] != 0) {
@@ -530,27 +532,27 @@ void UpdateNonGuns(Car* car, u8 isPlayer)
                 isPlayer = cs->unkC0;
             }
             switch (pad->cur) {
-            case 6:
-            case 8:
-            case 9:
-            case 10:
+            case WEAPON_CATAPULT:
+            case WEAPON_BOMB:
+            case WEAPON_OIL:
+            case WEAPON_SPIKE:
                 LaunchDrops(car, isPlayer);
                 break;
-            case 7:
+            case WEAPON_FLAMETHROWER:
                 fireRearFlameThrower(car, isPlayer);
                 break;
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
+            case WEAPON_FIRE_MISSILE:
+            case WEAPON_FREEZE_MISSILE:
+            case WEAPON_HOMING_MISSILE:
+            case WEAPON_POWER_MISSILE:
+            case WEAPON_SINGING_MISSILE:
+            case WEAPON_REAR_MISSILE:
                 FireMissiles(car, isPlayer);
                 break;
-            case 11:
+            case WEAPON_SPECIAL:
                 FireSpecials(car, isPlayer);
                 break;
-            case 12:
+            case WEAPON_NONE:
                 break;
             }
         }
@@ -599,24 +601,24 @@ void FireMissiles(Car* car, u8 isPlayer)
     d[2] = d[2] + m->pos.vz;
     r = -1;
     switch (pad->cur) {
-    case 0:
+    case WEAPON_FIRE_MISSILE:
         carLockon(isPlayer, &tgt);
         r = create_FIRE_missile(cs->unkC0, tgt, &m->rot, d, missileDamageFire);
         break;
-    case 1:
-        r = create_FREEZE_missile(cs->unkC0, &m->rot, d, -1);
+    case WEAPON_FREEZE_MISSILE:
+        r = create_FREEZE_missile(cs->unkC0, &m->rot, d, HIT_FREEZE);
         break;
-    case 3:
+    case WEAPON_POWER_MISSILE:
         r = create_POWER_missile(cs->unkC0, &m->rot, d, missileDamagePower);
         break;
-    case 4:
+    case WEAPON_SINGING_MISSILE:
         r = create_SINGING_missile(cs->unkC0, &m->rot, d, missileDamageSinging);
         break;
-    case 5:
+    case WEAPON_REAR_MISSILE:
         carLockon2(isPlayer, &tgt);
         r = create_REAR_missile(cs->unkC0, tgt, &m->rot, d, missileDamageRear);
         break;
-    case 2:
+    case WEAPON_HOMING_MISSILE:
         carLockon(isPlayer, &tgt);
         r = create_HOMING_missile(cs->unkC0, tgt, &m->rot, d, missileDamageHoming);
         break;
@@ -685,59 +687,59 @@ void FireSpecials(Car* car, u8 isPlayer)
     r[1] = rcos(m->rot.vz) >> 6;
     r[2] = -rsin(m->rot.vx) >> 6;
     switch (kind) {
-    case 30:
-        if ((s16)pad->ammo[11] >= weaponCost30) {
+    case UA_SEMI_TRUCK:
+        if ((s16)pad->ammo[WEAPON_SPECIAL] >= weaponCost30) {
             d[2] = d[2] - 16;
             s_create_bullet(idx, r, d, 4, damage30, 12, 0);
-            pad->ammo[11] = pad->ammo[11] - weaponCost30;
-            uasoundStopCarSpecialWeapon(9);
+            pad->ammo[WEAPON_SPECIAL] = pad->ammo[WEAPON_SPECIAL] - weaponCost30;
+            uasoundStopCarSpecialWeapon(SOUND_SPECIAL_SEMI_TRUCK);
             range = soundGetCalculatedSoundRange();
             uasoundPlayCarSpecialWeaponLaunchOrInflight(
-                9, range, soundGetCalculatedSoundXPosition());
+                SOUND_SPECIAL_SEMI_TRUCK, range, soundGetCalculatedSoundXPosition());
         }
         break;
-    case 60:
-        if ((s16)pad->ammo[11] >= weaponCost60) {
+    case UA_LAMBORGHINI:
+        if ((s16)pad->ammo[WEAPON_SPECIAL] >= weaponCost60) {
             s_create_bullet(idx, r, d, 6, damage60, 15, 0);
-            pad->ammo[11] = pad->ammo[11] - weaponCost60;
-            uasoundStopCarSpecialWeapon(6);
+            pad->ammo[WEAPON_SPECIAL] = pad->ammo[WEAPON_SPECIAL] - weaponCost60;
+            uasoundStopCarSpecialWeapon(SOUND_SPECIAL_LAMBORGHINI);
             range = soundGetCalculatedSoundRange();
             uasoundPlayCarSpecialWeaponLaunchOrInflight(
-                6, range, soundGetCalculatedSoundXPosition());
+                SOUND_SPECIAL_LAMBORGHINI, range, soundGetCalculatedSoundXPosition());
         }
         break;
-    case 20:
-        if ((s16)pad->ammo[11] >= weaponCost20) {
+    case UA_TAXI_CAB:
+        if ((s16)pad->ammo[WEAPON_SPECIAL] >= weaponCost20) {
             s_create_bullet(idx, r, d, 17, damage20, 30, 0);
-            pad->ammo[11] = pad->ammo[11] - weaponCost20;
-            uasoundStopCarSpecialWeapon(7);
+            pad->ammo[WEAPON_SPECIAL] = pad->ammo[WEAPON_SPECIAL] - weaponCost20;
+            uasoundStopCarSpecialWeapon(SOUND_SPECIAL_TAXI_CAB);
             range = soundGetCalculatedSoundRange();
             uasoundPlayCarSpecialWeaponLaunchOrInflight(
-                7, range, soundGetCalculatedSoundXPosition());
+                SOUND_SPECIAL_TAXI_CAB, range, soundGetCalculatedSoundXPosition());
         }
         break;
-    case 90:
-        if ((s16)pad->ammo[11] >= weaponCost90) {
+    case UA_DUNE_BUGGY:
+        if ((s16)pad->ammo[WEAPON_SPECIAL] >= weaponCost90) {
             s_create_bullet(idx, r, d, 19, damage90, 30, 0);
-            pad->ammo[11] = pad->ammo[11] - weaponCost90;
-            uasoundStopCarSpecialWeapon(0);
+            pad->ammo[WEAPON_SPECIAL] = pad->ammo[WEAPON_SPECIAL] - weaponCost90;
+            uasoundStopCarSpecialWeapon(SOUND_SPECIAL_DUNE_BUGGY);
             range = soundGetCalculatedSoundRange();
             uasoundPlayCarSpecialWeaponLaunchOrInflight(
-                0, range, soundGetCalculatedSoundXPosition());
+                SOUND_SPECIAL_DUNE_BUGGY, range, soundGetCalculatedSoundXPosition());
         }
         break;
-    case 10:
-        if ((s16)pad->ammo[11] >= weaponCost10) {
+    case UA_ICE_CREAM_TRUCK:
+        if ((s16)pad->ammo[WEAPON_SPECIAL] >= weaponCost10) {
             s_create_bullet(idx, r, d, 15, damage10, 30, 0);
-            pad->ammo[11] = pad->ammo[11] - weaponCost10;
-            uasoundStopCarSpecialWeapon(1);
+            pad->ammo[WEAPON_SPECIAL] = pad->ammo[WEAPON_SPECIAL] - weaponCost10;
+            uasoundStopCarSpecialWeapon(SOUND_SPECIAL_ICE_CREAM_TRUCK);
             range = soundGetCalculatedSoundRange();
             uasoundPlayCarSpecialWeaponLaunchOrInflight(
-                1, range, soundGetCalculatedSoundXPosition());
+                SOUND_SPECIAL_ICE_CREAM_TRUCK, range, soundGetCalculatedSoundXPosition());
         }
         break;
-    case 70:
-        if ((s16)pad->ammo[11] >= weaponCost70) {
+    case UA_HUMVEE:
+        if ((s16)pad->ammo[WEAPON_SPECIAL] >= weaponCost70) {
             MATRIX* mat2;
             s32 res;
             carLockon(isPlayer, &tgt);
@@ -772,26 +774,26 @@ void FireSpecials(Car* car, u8 isPlayer)
                 count = count + 1;
             }
             if (count != 0) {
-                pad->ammo[11] = pad->ammo[11] - weaponCost70;
-                uasoundStopCarSpecialWeapon(4);
+                pad->ammo[WEAPON_SPECIAL] = pad->ammo[WEAPON_SPECIAL] - weaponCost70;
+                uasoundStopCarSpecialWeapon(SOUND_SPECIAL_HUMVEE);
                 range = soundGetCalculatedSoundRange();
                 uasoundPlayCarSpecialWeaponLaunchOrInflight(
-                    4, range, soundGetCalculatedSoundXPosition());
+                    SOUND_SPECIAL_HUMVEE, range, soundGetCalculatedSoundXPosition());
             }
         }
         break;
-    case 80:
-        if ((s16)pad->ammo[11] >= weaponCost80) {
+    case UA_HARLEY:
+        if ((s16)pad->ammo[WEAPON_SPECIAL] >= weaponCost80) {
             s_create_bullet(idx, r, d, 21, damage80, 20, 0);
-            pad->ammo[11] = pad->ammo[11] - weaponCost80;
-            uasoundStopCarSpecialWeapon(11);
+            pad->ammo[WEAPON_SPECIAL] = pad->ammo[WEAPON_SPECIAL] - weaponCost80;
+            uasoundStopCarSpecialWeapon(SOUND_SPECIAL_HARLEY);
             range = soundGetCalculatedSoundRange();
             uasoundPlayCarSpecialWeaponLaunchOrInflight(
-                11, range, soundGetCalculatedSoundXPosition());
+                SOUND_SPECIAL_HARLEY, range, soundGetCalculatedSoundXPosition());
         }
         break;
-    case 110:
-        if ((s16)pad->ammo[11] >= weaponCost110) {
+    case UA_CORVETTE:
+        if ((s16)pad->ammo[WEAPON_SPECIAL] >= weaponCost110) {
             carLockon(isPlayer, &tgt);
             v[1] = 0;
             v[0] = (s16)cfg->dropPower;
@@ -801,31 +803,31 @@ void FireSpecials(Car* car, u8 isPlayer)
             d[1] = d[1] + m->pos.vy;
             d[2] = d[2] + m->pos.vz;
             if (create_GHOST_missile(idx, tgt, &m->rot, d, damage110) >= 0) {
-                pad->ammo[11] = pad->ammo[11] - weaponCost110;
-                uasoundStopCarSpecialWeapon(3);
+                pad->ammo[WEAPON_SPECIAL] = pad->ammo[WEAPON_SPECIAL] - weaponCost110;
+                uasoundStopCarSpecialWeapon(SOUND_SPECIAL_CORVETTE);
                 range = soundGetCalculatedSoundRange();
                 uasoundPlayCarSpecialWeaponLaunchOrInflight(
-                    3, range, soundGetCalculatedSoundXPosition());
+                    SOUND_SPECIAL_CORVETTE, range, soundGetCalculatedSoundXPosition());
             }
         }
         break;
-    case 50:
-        if ((s16)pad->ammo[11] >= weaponCost50) {
+    case UA_POLICE_CAR:
+        if ((s16)pad->ammo[WEAPON_SPECIAL] >= weaponCost50) {
             if (fire_taser(car, isPlayer) != 0) {
                 if (isPlayer) {
-                    pad->ammo[11] = pad->ammo[11] - weaponCost50;
+                    pad->ammo[WEAPON_SPECIAL] = pad->ammo[WEAPON_SPECIAL] - weaponCost50;
                 } else {
-                    pad->ammo[11] = pad->ammo[11] - weaponCost50 / 2;
+                    pad->ammo[WEAPON_SPECIAL] = pad->ammo[WEAPON_SPECIAL] - weaponCost50 / 2;
                 }
-                uasoundStopCarSpecialWeapon(8);
+                uasoundStopCarSpecialWeapon(SOUND_SPECIAL_POLICE_CAR);
                 range = soundGetCalculatedSoundRange();
                 uasoundPlayCarSpecialWeaponLaunchOrInflight(
-                    8, range, soundGetCalculatedSoundXPosition());
+                    SOUND_SPECIAL_POLICE_CAR, range, soundGetCalculatedSoundXPosition());
             }
         }
         break;
-    case 120:
-        if ((s16)pad->ammo[11] >= weaponCost120) {
+    case UA_MAD_MAX:
+        if ((s16)pad->ammo[WEAPON_SPECIAL] >= weaponCost120) {
             carLockon(isPlayer, &tgt);
             v[1] = 0;
             v[0] = (s16)cfg->dropPower;
@@ -835,16 +837,16 @@ void FireSpecials(Car* car, u8 isPlayer)
             d[1] = d[1] + m->pos.vy;
             d[2] = d[2] + m->pos.vz;
             if (create_DEATHSPEAR_missile(idx, tgt, &m->rot, d, damage120) >= 0) {
-                pad->ammo[11] = pad->ammo[11] - weaponCost120;
-                uasoundStopCarSpecialWeapon(2);
+                pad->ammo[WEAPON_SPECIAL] = pad->ammo[WEAPON_SPECIAL] - weaponCost120;
+                uasoundStopCarSpecialWeapon(SOUND_SPECIAL_MAD_MAX);
                 range = soundGetCalculatedSoundRange();
                 uasoundPlayCarSpecialWeaponLaunchOrInflight(
-                    2, range, soundGetCalculatedSoundXPosition());
+                    SOUND_SPECIAL_MAD_MAX, range, soundGetCalculatedSoundXPosition());
             }
         }
         break;
-    case 130:
-        if ((s16)pad->ammo[11] >= weaponCost100) {
+    case UA_BOSS_CAR:
+        if ((s16)pad->ammo[WEAPON_SPECIAL] >= weaponCost100) {
             VECTOR3 rot2;
             carLockon(isPlayer, &tgt);
             v[1] = 0;
@@ -864,20 +866,20 @@ void FireSpecials(Car* car, u8 isPlayer)
             fire_taser(car, isPlayer);
             fireFlameThrower(car, isPlayer, 2, r);
             pad->ammo[pad->cur] = pad->ammo[pad->cur] - weaponCost130;
-            uasoundStopCarSpecialWeapon(12);
+            uasoundStopCarSpecialWeapon(SOUND_SPECIAL_BOSS_CAR);
             range = soundGetCalculatedSoundRange();
             uasoundPlayCarSpecialWeaponLaunchOrInflight(
-                12, range, soundGetCalculatedSoundXPosition());
+                SOUND_SPECIAL_BOSS_CAR, range, soundGetCalculatedSoundXPosition());
         }
         break;
-    case 100:
-        if ((s16)pad->ammo[11] >= weaponCost100) {
+    case UA_LOW_RIDER:
+        if ((s16)pad->ammo[WEAPON_SPECIAL] >= weaponCost100) {
             fireFlameThrower(car, isPlayer, 2, r);
             pad->ammo[pad->cur] = pad->ammo[pad->cur] - weaponCost100;
-            uasoundStopCarSpecialWeapon(10);
+            uasoundStopCarSpecialWeapon(SOUND_SPECIAL_LOW_RIDER);
             range = soundGetCalculatedSoundRange();
             uasoundPlayCarSpecialWeaponLaunchOrInflight(
-                10, range, soundGetCalculatedSoundXPosition());
+                SOUND_SPECIAL_LOW_RIDER, range, soundGetCalculatedSoundXPosition());
         }
         break;
     }
@@ -1121,7 +1123,7 @@ void draw_tasers(RenderCtx* ctx, s32 view)
                 tp[0] = taser[i].pos[0] + (rcos(taser[i].life * 400) >> 4);
                 tp[1] = taser[i].pos[1] + (rsin(taser[i].life * 400) >> 4);
                 tp[2] = 0;
-                if (shellGetCurrentLevel() == 5) {
+                if (shellGetCurrentLevel() == LEVEL6_ROOFTOPS) {
                     tp[2] = taser[i].pos[2] - 40;
                 }
             }
@@ -1273,16 +1275,16 @@ INCLUDE_ASM("asm/nonmatchings/tm1/INTERACT", LaunchDrops);
 void carAddWeapTex(GrObj* obj, s32 id)
 {
     switch (id) {
-    case 0xD4:
+    case UA_BOMB:
         grutilsParse3DSprite(obj, &bombSprite, 1);
         break;
-    case 0xD5:
+    case UA_OIL:
         grutilsParse3DSprite(obj, &oilSprite, 1);
         break;
-    case 0xD6:
+    case UA_SPIKE:
         grutilsParse3DSprite(obj, &spikeSprite, 1);
         break;
-    case 0xD2:
+    case UA_CATAPULT:
         grutilsParse3DSprite(obj, &catapultSprite, 1);
         break;
     }
@@ -1340,21 +1342,21 @@ u8 carDropWeapon(u32 kind, s32 idx, s32* pos, s32 power)
     dst[2] = pos[2];
     do {
         switch (kind) {
-        case 8:
+        case WEAPON_BOMB:
             sprite = &bombSprite;
-            dropweapon[i].type = -5;
+            dropweapon[i].type = HIT_BOMB;
             break;
-        case 6:
+        case WEAPON_CATAPULT:
             sprite = &catapultSprite;
-            dropweapon[i].type = -4;
+            dropweapon[i].type = HIT_CATAPULT;
             break;
-        case 9:
+        case WEAPON_OIL:
             sprite = &oilSprite;
-            dropweapon[i].type = -2;
+            dropweapon[i].type = HIT_OIL;
             break;
-        case 10:
+        case WEAPON_SPIKE:
             sprite = &spikeSprite;
-            dropweapon[i].type = -3;
+            dropweapon[i].type = HIT_SPIKE;
             break;
         default:
             dropweapon[i].life = 0;
@@ -1392,16 +1394,16 @@ void check_dropweap_impact(s32 i)
         soundSetRangeAndXPositionFromWorldLoc(pos);
         range = soundGetCalculatedSoundRange();
         uasoundPlayCarWeaponExplode(d->kind, range, soundGetCalculatedSoundXPosition(), 0x63);
-        if (d->kind == 8) {
+        if (d->kind == WEAPON_BOMB) {
             d->pos[2] = d->pos[2] + 50;
             do_big_explosion(pos);
             d->pos[2] = d->pos[2] - 50;
             do_big_explosion(pos);
         }
-        if (d->kind == 10) {
+        if (d->kind == WEAPON_SPIKE) {
             do_smoke(pos);
         }
-        if (d->kind != 8) {
+        if (d->kind != WEAPON_BOMB) {
             for (j = 0; j < 6; j++) {
                 v[0] = d->pos[0] + (rand() & 0x3F) - 32;
                 v[1] = d->pos[1] + (rand() & 0x3F) - 32;
@@ -1409,15 +1411,15 @@ void check_dropweap_impact(s32 i)
                 do_puff(v);
             }
         }
-        if (d->kind != 9) {
+        if (d->kind != WEAPON_OIL) {
             d->life = 0;
         }
         v[0] = 0;
         v[1] = 0;
         v[2] = 100;
-        if ((s16)d->type == -3) {
+        if ((s16)d->type == HIT_SPIKE) {
             bulDispatchDamage(hit, 0, 0, spikeDamage, v, -(s32)d->kind);
-        } else if ((s16)d->type == -5) {
+        } else if ((s16)d->type == HIT_BOMB) {
             bulDispatchDamage(hit, 0, 0, bombDamage, v, -(s32)d->kind);
         }
         bulDispatchDamage(hit, 0, 0, (s16)d->type, v, -(s32)d->kind);
@@ -1793,12 +1795,12 @@ void fireRearFlameThrower(Car* car, u8 isPlayer)
     }
     soundSetRangeAndXPositionFromWorldLoc(&m->pos.vx);
     range = soundGetCalculatedSoundRange();
-    uasoundPlayCarWeaponLaunchOrInflight(7, range, soundGetCalculatedSoundXPosition());
+    uasoundPlayCarWeaponLaunchOrInflight(WEAPON_FLAMETHROWER, range, soundGetCalculatedSoundXPosition());
     if (fireFlameThrower(car, isPlayer, 0, 0) != 0) {
         do {
             pad->fireDelay = 20;
         } while (0);
-        pad->ammo[7] = pad->ammo[7] - 1;
+        pad->ammo[WEAPON_FLAMETHROWER] = pad->ammo[WEAPON_FLAMETHROWER] - 1;
     }
 }
 
@@ -1835,7 +1837,7 @@ s16 fireFlameThrower(Car* car, u8 isPlayer, u8 rear, s32* pos)
         wp[2] = (s32)((u32)cs->pos.vz + (u32)pos[2]);
         soundSetRangeAndXPositionFromWorldLoc(wp);
         range = soundGetCalculatedSoundRange();
-        uasoundPlayCarWeaponLaunchOrInflight(7, range, soundGetCalculatedSoundXPosition());
+        uasoundPlayCarWeaponLaunchOrInflight(WEAPON_FLAMETHROWER, range, soundGetCalculatedSoundXPosition());
     }
     flameThrower[i].flag = 0;
     return i + 1;
@@ -2042,92 +2044,92 @@ void carGetPickup(Car* car, u8 isPlayer, s32 kind, s32 idx)
     if (rtIsSplitScreenOn() != 0) {
         cap = 30;
     }
-    if (cap > 0 || kind == 0x1AE || isPlayer == 0) {
+    if (cap > 0 || kind == UA_UNK_430 || isPlayer == 0) {
         switch (kind) {
-        case 0x191:
-            amt = weaponPickupAmount[0];
+        case UA_PICKUP_FIRE_MISSILE:
+            amt = weaponPickupAmount[WEAPON_FIRE_MISSILE];
             if (cap < amt) {
                 amt = cap;
             }
-            pad->ammo[0] = pad->ammo[0] + amt;
+            pad->ammo[WEAPON_FIRE_MISSILE] = pad->ammo[WEAPON_FIRE_MISSILE] + amt;
             break;
-        case 0x192:
-            amt = weaponPickupAmount[1];
+        case UA_PICKUP_FREEZE_MISSILE:
+            amt = weaponPickupAmount[WEAPON_FREEZE_MISSILE];
             if (cap < amt) {
                 amt = cap;
             }
-            pad->ammo[1] = pad->ammo[1] + amt;
+            pad->ammo[WEAPON_FREEZE_MISSILE] = pad->ammo[WEAPON_FREEZE_MISSILE] + amt;
             break;
-        case 0x193:
-            amt = weaponPickupAmount[2];
+        case UA_PICKUP_HOMING_MISSILE:
+            amt = weaponPickupAmount[WEAPON_HOMING_MISSILE];
             if (cap < amt) {
                 amt = cap;
             }
-            pad->ammo[2] = pad->ammo[2] + amt;
+            pad->ammo[WEAPON_HOMING_MISSILE] = pad->ammo[WEAPON_HOMING_MISSILE] + amt;
             break;
-        case 0x194:
-            amt = weaponPickupAmount[3];
+        case UA_PICKUP_POWER_MISSILE:
+            amt = weaponPickupAmount[WEAPON_POWER_MISSILE];
             if (cap < amt) {
                 amt = cap;
             }
-            pad->ammo[3] = pad->ammo[3] + amt;
+            pad->ammo[WEAPON_POWER_MISSILE] = pad->ammo[WEAPON_POWER_MISSILE] + amt;
             break;
-        case 0x195:
-            amt = weaponPickupAmount[5];
+        case UA_PICKUP_REAR_MISSILE:
+            amt = weaponPickupAmount[WEAPON_REAR_MISSILE];
             if (cap < amt) {
                 amt = cap;
             }
-            pad->ammo[5] = pad->ammo[5] + amt;
+            pad->ammo[WEAPON_REAR_MISSILE] = pad->ammo[WEAPON_REAR_MISSILE] + amt;
             break;
-        case 0x196:
-            amt = weaponPickupAmount[4];
+        case UA_PICKUP_SINGING_MISSILE:
+            amt = weaponPickupAmount[WEAPON_SINGING_MISSILE];
             if (cap < amt) {
                 amt = cap;
             }
-            pad->ammo[4] = pad->ammo[4] + amt;
+            pad->ammo[WEAPON_SINGING_MISSILE] = pad->ammo[WEAPON_SINGING_MISSILE] + amt;
             break;
-        case 0x1C2:
-            pad->ammo[11] = 20;
+        case UA_PICKUP_SPECIAL:
+            pad->ammo[WEAPON_SPECIAL] = 20;
             break;
-        case 0x19C:
-            amt = weaponPickupAmount[8];
+        case UA_PICKUP_BOMB:
+            amt = weaponPickupAmount[WEAPON_BOMB];
             if (cap < amt) {
                 amt = cap;
             }
-            pad->ammo[8] = pad->ammo[8] + amt;
+            pad->ammo[WEAPON_BOMB] = pad->ammo[WEAPON_BOMB] + amt;
             break;
-        case 0x19D:
-            amt = weaponPickupAmount[9];
+        case UA_PICKUP_OIL:
+            amt = weaponPickupAmount[WEAPON_OIL];
             if (cap < amt) {
                 amt = cap;
             }
-            pad->ammo[9] = pad->ammo[9] + amt;
+            pad->ammo[WEAPON_OIL] = pad->ammo[WEAPON_OIL] + amt;
             break;
-        case 0x19E:
-            amt = weaponPickupAmount[10];
+        case UA_PICKUP_SPIKE:
+            amt = weaponPickupAmount[WEAPON_SPIKE];
             if (cap < amt) {
                 amt = cap;
             }
-            pad->ammo[10] = pad->ammo[10] + amt;
+            pad->ammo[WEAPON_SPIKE] = pad->ammo[WEAPON_SPIKE] + amt;
             break;
-        case 0x19A:
-            amt = weaponPickupAmount[6];
+        case UA_PICKUP_CATAPULT:
+            amt = weaponPickupAmount[WEAPON_CATAPULT];
             if (cap < amt) {
                 amt = cap;
             }
-            pad->ammo[6] = pad->ammo[6] + amt;
+            pad->ammo[WEAPON_CATAPULT] = pad->ammo[WEAPON_CATAPULT] + amt;
             break;
-        case 0x19B:
-            amt = weaponPickupAmount[7];
+        case UA_PICKUP_FLAMETHROWER:
+            amt = weaponPickupAmount[WEAPON_FLAMETHROWER];
             if (cap < amt) {
                 amt = cap;
             }
-            pad->ammo[7] = pad->ammo[7] + amt;
+            pad->ammo[WEAPON_FLAMETHROWER] = pad->ammo[WEAPON_FLAMETHROWER] + amt;
             break;
-        case 0x1AF:
+        case UA_UNK_431:
             pad->unk44 = (u32)pad->unk44 + (u32)weaponPickupAmount[13];
             break;
-        case 0x1AE:
+        case UA_UNK_430:
             pad->unk46 = (u32)pad->unk46 + (u32)weaponPickupAmount[12];
             break;
         }
@@ -2138,11 +2140,11 @@ void carGetPickup(Car* car, u8 isPlayer, s32 kind, s32 idx)
         pickup[idx].kind = 0;
         pad->totalAmmo = 0;
         if (rtIsSplitScreenOn() == 0) {
-            for (i = 0; i < 11; i++) {
+            for (i = 0; i < WEAPON_REGULAR_MAX; i++) {
                 pad->totalAmmo = pad->totalAmmo + pad->ammo[i];
             }
         }
-        if ((s16)pad->totalAmmo == (s16)pad->maxAmmo && isPlayer && kind != 0x1AE) {
+        if ((s16)pad->totalAmmo == (s16)pad->maxAmmo && isPlayer && kind != UA_UNK_430) {
             uadashMaxCarryCapacity();
         }
     } else {
@@ -2163,9 +2165,9 @@ u8 health_stand_active(s32 n)
 void animate_health_stand(s32 n)
 {
     if (rand() & 1) {
-        uaswSetState(0x398, n, 1);
+        uaswSetState(UA_HEALTH_STAND, n, 1);
     } else {
-        uaswSetState(0x398, n, 0);
+        uaswSetState(UA_HEALTH_STAND, n, 0);
     }
 }
 
@@ -2173,7 +2175,7 @@ void deactivate_health_stand(s32 n)
 {
     if ((u32)n - 1u < 10u) {
         HStand[n - 1].active = 0;
-        uaswSetState(0x398, n, 1);
+        uaswSetState(UA_HEALTH_STAND, n, 1);
         numHealthStands = (s32)((u32)numHealthStands - 1u);
     }
 }
@@ -2182,7 +2184,7 @@ void reactivate_healthstand(s32 n)
 {
     if ((u32)n - 1u < 10u) {
         HStand[n - 1].active = 1;
-        uaswSetState(0x398, n, 0);
+        uaswSetState(UA_HEALTH_STAND, n, 0);
     }
 }
 
@@ -2235,7 +2237,7 @@ void regen_healthstands(void)
                 d[0] = (s32)((u32)HStand[i].pos[0] - (u32)pi->motion.pos.vx);
                 d[1] = (s32)((u32)HStand[i].pos[1] - (u32)pi->motion.pos.vy);
                 d[2] = (s32)((u32)HStand[i].pos[2] - (u32)pi->motion.pos.vz);
-                hudAddRadarSig(0x398, d, pi->motion.rot.vz);
+                hudAddRadarSig(UA_HEALTH_STAND, d, pi->motion.rot.vz);
             }
         }
     } while (0);

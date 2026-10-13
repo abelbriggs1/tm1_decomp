@@ -4,6 +4,17 @@
 #include "common.h"
 #include "tm1/SOUND_ID_API.H"
 
+// CD audio tracks for `soundStartPlayDA()`.
+// (Track 1 holds the game data, so it is used to mean "no music".)
+#define DA_TRACK_NONE 1
+#define DA_TRACK_TWISTED_THEME 2
+#define DA_TRACK_CIRCUS_METALLICUS 3
+#define DA_TRACK_STALK_N_ROLL 4
+#define DA_TRACK_ASPHALT_ASSAULT 5
+#define DA_TRACK_CYBURB_HUNT 6
+#define DA_TRACK_CYBURB_SLIDE 7
+#define DA_TRACK_DROP_DEAD 8
+
 typedef struct {
     s16 x;
     s16 y;

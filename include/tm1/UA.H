@@ -8,6 +8,206 @@
 #include "tm1/RT.H"
 #include <LIBGTE.H>
 
+// `ua` entity type indices.
+// The helicopter camera car also uses `UA_NONE`, since it has no model.
+#define UA_NONE (-1)
+#define UA_3D_ENVIRONMENT 1
+#define UA_SKY 2
+#define UA_UNK_3 3
+
+// Cars. Each car's tire, shadow, and headlight nodes use the car's index
+// plus 2, 3, and 4 respectively.
+#define UA_ICE_CREAM_TRUCK 10
+#define UA_ICE_CREAM_TRUCK_TIRE 12
+#define UA_ICE_CREAM_TRUCK_SHADOW 13
+#define UA_ICE_CREAM_TRUCK_HEADLIGHTS 14
+#define UA_TAXI_CAB 20
+#define UA_TAXI_CAB_TIRE 22
+#define UA_TAXI_CAB_SHADOW 23
+#define UA_TAXI_CAB_HEADLIGHTS 24
+#define UA_SEMI_TRUCK 30
+#define UA_SEMI_TRUCK_TIRE 32
+#define UA_SEMI_TRUCK_SHADOW 33
+#define UA_SEMI_TRUCK_HEADLIGHTS 34
+#define UA_MONSTER_TRUCK 40
+#define UA_MONSTER_TRUCK_WHEEL 42
+#define UA_MONSTER_TRUCK_SHADOW 43
+#define UA_MONSTER_TRUCK_HEADLIGHTS 44
+#define UA_POLICE_CAR 50
+#define UA_POLICE_CAR_TIRE 52
+#define UA_POLICE_CAR_SHADOW 53
+#define UA_POLICE_CAR_HEADLIGHTS 54
+#define UA_LAMBORGHINI 60
+#define UA_LAMBORGHINI_TIRE 62
+#define UA_LAMBORGHINI_SHADOW 63
+#define UA_LAMBORGHINI_HEADLIGHTS 64
+#define UA_HUMVEE 70
+#define UA_HUMVEE_TIRE 72
+#define UA_HUMVEE_SHADOW 73
+#define UA_HUMVEE_HEADLIGHTS 74
+#define UA_HARLEY 80
+#define UA_HARLEY_TIRE 82
+#define UA_HARLEY_SHADOW 83
+#define UA_HARLEY_HEADLIGHTS 84
+#define UA_DUNE_BUGGY 90
+#define UA_DUNE_BUGGY_TIRE 92
+#define UA_DUNE_BUGGY_SHADOW 93
+#define UA_DUNE_BUGGY_HEADLIGHTS 94
+#define UA_LOW_RIDER 100
+#define UA_LOW_RIDER_TIRE 102
+#define UA_LOW_RIDER_SHADOW 103
+#define UA_LOW_RIDER_HEADLIGHTS 104
+#define UA_CORVETTE 110
+#define UA_CORVETTE_TIRE 112
+#define UA_CORVETTE_SHADOW 113
+#define UA_CORVETTE_HEADLIGHTS 114
+#define UA_MAD_MAX 120
+#define UA_MAD_MAX_TIRE 122
+#define UA_MAD_MAX_SHADOW 123
+#define UA_MAD_MAX_HEADLIGHTS 124
+#define UA_BOSS_CAR 130
+#define UA_BOSS_CAR_TIRE 132
+#define UA_BOSS_CAR_SHADOW 133
+#define UA_BOSS_CAR_HEADLIGHTS 134
+
+// Weapon models and sprites.
+#define UA_UNK_201 201
+#define UA_UNK_202 202
+#define UA_UNK_203 203
+#define UA_UNK_204 204
+#define UA_UNK_205 205
+#define UA_UNK_206 206
+#define UA_CATAPULT 210
+#define UA_BOMB 212
+#define UA_OIL 213
+#define UA_SPIKE 214
+#define UA_UNK_301 301
+#define UA_UNK_302 302
+#define UA_SWARM_MISSILE 307
+#define UA_UNK_308 308
+#define UA_UNK_309 309
+#define UA_GHOST_MISSILE 311
+#define UA_DEATHSPEAR 312
+
+// Weapon pickups.
+#define UA_UNK_400 400
+#define UA_PICKUP_FIRE_MISSILE 401
+#define UA_PICKUP_FREEZE_MISSILE 402
+#define UA_PICKUP_HOMING_MISSILE 403
+#define UA_PICKUP_POWER_MISSILE 404
+#define UA_PICKUP_REAR_MISSILE 405
+#define UA_PICKUP_SINGING_MISSILE 406
+#define UA_PICKUP_CATAPULT 410
+#define UA_PICKUP_FLAMETHROWER 411
+#define UA_PICKUP_BOMB 412
+#define UA_PICKUP_OIL 413
+#define UA_PICKUP_SPIKE 414
+#define UA_UNK_420 420
+#define UA_UNK_421 421
+#define UA_UNK_422 422
+#define UA_UNK_423 423
+#define UA_UNK_430 430
+#define UA_UNK_431 431
+#define UA_PICKUP_SPECIAL 450
+
+// Destroyable targets.
+#define UA_UNK_600 600
+#define UA_UNK_601 601
+#define UA_UNK_603 603
+#define UA_UNK_610 610
+#define UA_UNK_611 611
+#define UA_UNK_612 612
+#define UA_UNK_613 613
+
+// Explosion effects.
+#define UA_FLAME_ANIMATION 650
+#define UA_SMOKE_ANIMATION 651
+#define UA_CONTRAIL_ANIMATION 652
+#define UA_SPARK_ANIMATION 653
+#define UA_EXPLOSION_ANIMATION 654
+#define UA_GBURST_ANIMATION 655
+#define UA_BURN_ANIMATION 656
+#define UA_FRAGMENT_A 670
+#define UA_FRAGMENT_B 671
+#define UA_FRAGMENT_C 672
+#define UA_FRAGMENT_D 673
+
+#define UA_BARRICADE 700
+#define UA_UNK_702 702
+#define UA_UNK_703 703
+#define UA_UNK_705 705
+#define UA_UNK_707 707
+#define UA_UNK_708 708
+#define UA_UNK_713 713
+#define UA_UNK_715 715
+#define UA_UNK_716 716
+#define UA_UNK_720 720
+#define UA_UNK_721 721
+#define UA_UNK_730 730
+
+// Hover cops.
+#define UA_BAZ_COP 750
+#define UA_HOVER_COP 752
+
+// Static cops.
+#define UA_UNK_753 753
+#define UA_UNK_754 754
+#define UA_UNK_755 755
+
+// Pedestrians.
+#define UA_UNK_751 751
+#define UA_UNK_756 756
+#define UA_UNK_760 760
+#define UA_UNK_772 772
+#define UA_UNK_773 773
+#define UA_UNK_775 775
+#define UA_UNK_776 776
+#define UA_UNK_777 777
+#define UA_UNK_778 778
+#define UA_UNK_781 781
+#define UA_UNK_782 782
+
+#define UA_UNK_770 770
+#define UA_TV 810
+#define UA_UNK_902 902
+#define UA_HEALTH_STAND 920
+#define UA_HEALTH_STAND_LIGHTNING 921
+#define UA_UNK_930 930
+#define UA_UNK_931 931
+
+#define UA_UNK_1000 1000
+#define UA_UNK_1001 1001
+#define UA_UNK_1002 1002
+#define UA_UNK_1003 1003
+#define UA_UNK_1004 1004
+#define UA_UNK_1005 1005
+#define UA_UNK_1008 1008
+#define UA_UNK_1009 1009
+#define UA_UNK_1010 1010
+#define UA_UNK_1015 1015
+#define UA_DROP_BOX 1016
+#define UA_UNK_1017 1017
+#define UA_FALLING_BOX 1018
+#define UA_BREAKING_WINDOW 1019
+
+// Cockpit and HUD.
+#define UA_DASHBOARD 1240
+#define UA_REAR_VIEW_MIRROR 1247
+#define UA_DASHBOARD_ICONS 1260
+#define UA_STEERING_WHEEL 1280
+#define UA_ARROW_UP 1290
+#define UA_ARROW_RIGHT 1291
+#define UA_ARROW_DOWN 1292
+#define UA_ARROW_LEFT 1293
+#define UA_CAR_OCCUPANTS 1300
+
+#define UA_IS_PICKUP(type) ((type) >= UA_PICKUP_FIRE_MISSILE && (type) <= UA_PICKUP_SPECIAL)
+#define UA_IS_PERSON(type) ((type) >= UA_BAZ_COP && (type) <= UA_UNK_782)
+
+// Maps a car's UA index to its car-relative slot/ID.
+// (A car and its tire, shadow, and headlight nodes all share the same ID.)
+#define UA_CAR_SLOT(type) ((type) / 10)
+
 typedef struct DrawNode {
     /*0x00*/ u8 pad00[0x14];
     /*0x14*/ u8 drawFlag;

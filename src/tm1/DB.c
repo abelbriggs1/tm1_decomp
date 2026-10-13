@@ -245,7 +245,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/DB", dbScanForInteractiveStuff);
 void dbProcessInteractives(s32 type, DbNode* node, s32* loc, s32 parent, s32* parentLoc)
 {
     switch (type) {
-    case 3: {
+    case UA_UNK_3: {
         Cs* cs;
 
         cs = dbInitCsForAModel(node);
@@ -253,7 +253,7 @@ void dbProcessInteractives(s32 type, DbNode* node, s32* loc, s32 parent, s32* pa
         cs->unk0C = 0;
         break;
     }
-    case 1:
+    case UA_3D_ENVIRONMENT:
         if (db3DEnvironmentTrap != 0) {
             printf("Warning: found another node flagged as the 3D environment\n");
             break;
@@ -261,7 +261,7 @@ void dbProcessInteractives(s32 type, DbNode* node, s32* loc, s32 parent, s32* pa
         csSetEpNode(csGetWorldCs(), node);
         db3DEnvironmentTrap = 1;
         break;
-    case 2: {
+    case UA_SKY: {
         Cs* cs;
 
         cs = csCreate();
@@ -270,253 +270,253 @@ void dbProcessInteractives(s32 type, DbNode* node, s32* loc, s32 parent, s32* pa
         cs->unk0C = 0;
         break;
     }
-    case 0xA:
+    case UA_ICE_CREAM_TRUCK:
         UAAddCs(dbInitCsForAModel(node), 0xA);
         break;
-    case 0x14:
+    case UA_TAXI_CAB:
         UAAddCs(dbInitCsForAModel(node), 0x14);
         break;
-    case 0x1E:
+    case UA_SEMI_TRUCK:
         UAAddCs(dbInitCsForAModel(node), 0x1E);
         break;
-    case 0x28:
+    case UA_MONSTER_TRUCK:
         UAAddCs(dbInitCsForAModel(node), 0x28);
         break;
-    case 0x32:
+    case UA_POLICE_CAR:
         UAAddCs(dbInitCsForAModel(node), 0x32);
         break;
-    case 0x3C:
+    case UA_LAMBORGHINI:
         UAAddCs(dbInitCsForAModel(node), 0x3C);
         break;
-    case 0x46:
+    case UA_HUMVEE:
         UAAddCs(dbInitCsForAModel(node), 0x46);
         break;
-    case 0x50:
+    case UA_HARLEY:
         UAAddCs(dbInitCsForAModel(node), 0x50);
         break;
-    case 0x5A:
+    case UA_DUNE_BUGGY:
         UAAddCs(dbInitCsForAModel(node), 0x5A);
         break;
-    case 0x64:
+    case UA_LOW_RIDER:
         UAAddCs(dbInitCsForAModel(node), 0x64);
         break;
-    case 0x6E:
+    case UA_CORVETTE:
         UAAddCs(dbInitCsForAModel(node), 0x6E);
         break;
-    case 0x78:
+    case UA_MAD_MAX:
         UAAddCs(dbInitCsForAModel(node), 0x78);
         break;
-    case 0x82:
+    case UA_BOSS_CAR:
         UAAddCs(dbInitCsForAModel(node), 0x82);
         break;
-    case 0xC:
-    case 0x16:
-    case 0x20:
-    case 0x34:
-    case 0x3E:
-    case 0x48:
-    case 0x52:
-    case 0x5C:
-    case 0x66:
-    case 0x70:
-    case 0x7A:
-    case 0x84:
+    case UA_ICE_CREAM_TRUCK_TIRE:
+    case UA_TAXI_CAB_TIRE:
+    case UA_SEMI_TRUCK_TIRE:
+    case UA_POLICE_CAR_TIRE:
+    case UA_LAMBORGHINI_TIRE:
+    case UA_HUMVEE_TIRE:
+    case UA_HARLEY_TIRE:
+    case UA_DUNE_BUGGY_TIRE:
+    case UA_LOW_RIDER_TIRE:
+    case UA_CORVETTE_TIRE:
+    case UA_MAD_MAX_TIRE:
+    case UA_BOSS_CAR_TIRE:
         uaswInitCarTire(&node->sw);
         break;
-    case 0xD:
-    case 0x17:
-    case 0x21:
-    case 0x2B:
-    case 0x35:
-    case 0x3F:
-    case 0x49:
-    case 0x53:
-    case 0x5D:
-    case 0x67:
-    case 0x71:
-    case 0x7B:
-    case 0x85:
+    case UA_ICE_CREAM_TRUCK_SHADOW:
+    case UA_TAXI_CAB_SHADOW:
+    case UA_SEMI_TRUCK_SHADOW:
+    case UA_MONSTER_TRUCK_SHADOW:
+    case UA_POLICE_CAR_SHADOW:
+    case UA_LAMBORGHINI_SHADOW:
+    case UA_HUMVEE_SHADOW:
+    case UA_HARLEY_SHADOW:
+    case UA_DUNE_BUGGY_SHADOW:
+    case UA_LOW_RIDER_SHADOW:
+    case UA_CORVETTE_SHADOW:
+    case UA_MAD_MAX_SHADOW:
+    case UA_BOSS_CAR_SHADOW:
         uaswInitCarShadow(&node->sw);
         break;
-    case 0x50A:
-    case 0x50B:
-    case 0x50C:
-    case 0x50D:
+    case UA_ARROW_UP:
+    case UA_ARROW_RIGHT:
+    case UA_ARROW_DOWN:
+    case UA_ARROW_LEFT:
         hudStoreArrowIcon(type, &node->gr);
         break;
-    case 0x258:
-    case 0x259:
-    case 0x262:
-    case 0x263:
-    case 0x264:
-    case 0x265:
-    case 0x302:
-    case 0x386:
-    case 0x3A2:
-    case 0x3A3:
-    case 0x3E8:
-    case 0x3E9:
-    case 0x3EA:
-    case 0x3F1:
-    case 0x3F2:
-    case 0x3F9:
+    case UA_UNK_600:
+    case UA_UNK_601:
+    case UA_UNK_610:
+    case UA_UNK_611:
+    case UA_UNK_612:
+    case UA_UNK_613:
+    case UA_UNK_770:
+    case UA_UNK_902:
+    case UA_UNK_930:
+    case UA_UNK_931:
+    case UA_UNK_1000:
+    case UA_UNK_1001:
+    case UA_UNK_1002:
+    case UA_UNK_1009:
+    case UA_UNK_1010:
+    case UA_UNK_1017:
         uaswInitDbSwitch(&node->sw, type);
         init_target(type, node->sw.sub, (VECTOR3*)loc);
         break;
-    case 0x2CB:
-    case 0x2CC:
-    case 0x2D0:
-    case 0x2D1:
-    case 0x2DA:
-    case 0x3EB:
-    case 0x3EC:
-    case 0x3ED:
-    case 0x3F0:
-    case 0x3F7:
+    case UA_UNK_715:
+    case UA_UNK_716:
+    case UA_UNK_720:
+    case UA_UNK_721:
+    case UA_UNK_730:
+    case UA_UNK_1003:
+    case UA_UNK_1004:
+    case UA_UNK_1005:
+    case UA_UNK_1008:
+    case UA_UNK_1015:
         uaswInitDbEditNumChildren(&node->sw, type);
         init_target(type, node->sw.shadowSub, (VECTOR3*)loc);
         break;
-    case 0x2EE:
-    case 0x2F0:
+    case UA_BAZ_COP:
+    case UA_HOVER_COP:
         if (node->h.op == 1) {
             init_merc(type, node);
         }
         break;
-    case 0x2EF:
-    case 0x2F4:
-    case 0x2F8:
-    case 0x304:
-    case 0x305:
-    case 0x307:
-    case 0x308:
-    case 0x309:
-    case 0x30A:
-    case 0x30D:
-    case 0x30E:
+    case UA_UNK_751:
+    case UA_UNK_756:
+    case UA_UNK_760:
+    case UA_UNK_772:
+    case UA_UNK_773:
+    case UA_UNK_775:
+    case UA_UNK_776:
+    case UA_UNK_777:
+    case UA_UNK_778:
+    case UA_UNK_781:
+    case UA_UNK_782:
         init_pedestrian(type, node);
         break;
-    case 0x2F1:
-    case 0x2F2:
-    case 0x2F3:
+    case UA_UNK_753:
+    case UA_UNK_754:
+    case UA_UNK_755:
         setup_static_cop(&node->sw, (VECTOR3*)loc);
         break;
-    case 0x398:
+    case UA_HEALTH_STAND:
         set_health_stand(node->sw.sub, loc);
         goto doSwitch;
-    case 0xC9:
-    case 0xCA:
-    case 0xCB:
-    case 0xCC:
-    case 0xCD:
-    case 0xCE:
-    case 0x133:
-    case 0x137:
-    case 0x138:
+    case UA_UNK_201:
+    case UA_UNK_202:
+    case UA_UNK_203:
+    case UA_UNK_204:
+    case UA_UNK_205:
+    case UA_UNK_206:
+    case UA_SWARM_MISSILE:
+    case UA_GHOST_MISSILE:
+    case UA_DEATHSPEAR:
         bulAddCs(node, type);
         break;
-    case 0xD2:
-    case 0xD4:
-    case 0xD5:
-    case 0xD6:
+    case UA_CATAPULT:
+    case UA_BOMB:
+    case UA_OIL:
+    case UA_SPIKE:
         carAddWeapTex(&node->gr, type);
         break;
-    case 0x4D8:
+    case UA_DASHBOARD:
         UAdashInitDashboard((u_long*)node);
         break;
-    case 0x4EC:
+    case UA_DASHBOARD_ICONS:
         UAdashInitDashboardIcons(&node->dash);
         break;
-    case 0x2A:
+    case UA_MONSTER_TRUCK_WHEEL:
         UAeffectInitMonsterTruckWheel(&node->wheel);
         break;
-    case 0x12D:
-    case 0x12E:
-    case 0x134:
-    case 0x135:
+    case UA_UNK_301:
+    case UA_UNK_302:
+    case UA_UNK_308:
+    case UA_UNK_309:
         bulMakeSpecialBullet(type, &node->gr);
         break;
-    case 0x190:
-    case 0x191:
-    case 0x192:
-    case 0x193:
-    case 0x194:
-    case 0x195:
-    case 0x196:
-    case 0x19A:
-    case 0x19B:
-    case 0x19C:
-    case 0x19D:
-    case 0x19E:
-    case 0x1A4:
-    case 0x1A5:
-    case 0x1A6:
-    case 0x1A7:
-    case 0x1AE:
-    case 0x1AF:
-    case 0x1C2:
+    case UA_UNK_400:
+    case UA_PICKUP_FIRE_MISSILE:
+    case UA_PICKUP_FREEZE_MISSILE:
+    case UA_PICKUP_HOMING_MISSILE:
+    case UA_PICKUP_POWER_MISSILE:
+    case UA_PICKUP_REAR_MISSILE:
+    case UA_PICKUP_SINGING_MISSILE:
+    case UA_PICKUP_CATAPULT:
+    case UA_PICKUP_FLAMETHROWER:
+    case UA_PICKUP_BOMB:
+    case UA_PICKUP_OIL:
+    case UA_PICKUP_SPIKE:
+    case UA_UNK_420:
+    case UA_UNK_421:
+    case UA_UNK_422:
+    case UA_UNK_423:
+    case UA_UNK_430:
+    case UA_UNK_431:
+    case UA_PICKUP_SPECIAL:
         uaswInitDbEditNumChildren(&node->sw, type);
         setPickup(loc, type, node->sw.num);
         break;
-    case 0x32A:
+    case UA_TV:
         UAeffectInitTV(&node->eff);
         break;
-    case 0x28A:
+    case UA_FLAME_ANIMATION:
         explodeStoreFlameAnimation(node);
         break;
-    case 0x28E:
+    case UA_EXPLOSION_ANIMATION:
         explodeStoreExplosionAnimation(node);
         break;
-    case 0x28B:
+    case UA_SMOKE_ANIMATION:
         explodeStoreSmokeAnimation(node);
         break;
-    case 0x290:
+    case UA_BURN_ANIMATION:
         explodeStoreBurnAnimation(node);
         break;
-    case 0x28D:
+    case UA_SPARK_ANIMATION:
         explodeStoreSparkAnimation(node);
         break;
-    case 0x28C:
+    case UA_CONTRAIL_ANIMATION:
         explodeStoreContrailAnimation(node);
         break;
-    case 0x28F:
+    case UA_GBURST_ANIMATION:
         explodeStoreGburstAnimation(node);
         break;
-    case 0x29E:
-    case 0x29F:
-    case 0x2A0:
-    case 0x2A1:
+    case UA_FRAGMENT_A:
+    case UA_FRAGMENT_B:
+    case UA_FRAGMENT_C:
+    case UA_FRAGMENT_D:
         explodeLoadFragTexture(type, &node->gr);
         break;
-    case 0xE:
-    case 0x18:
-    case 0x22:
-    case 0x2C:
-    case 0x36:
-    case 0x40:
-    case 0x4A:
-    case 0x54:
-    case 0x5E:
-    case 0x68:
-    case 0x72:
-    case 0x7C:
-    case 0x86:
-    case 0x2BC:
-    case 0x3F8:
-    case 0x3FA:
-    case 0x3FB:
+    case UA_ICE_CREAM_TRUCK_HEADLIGHTS:
+    case UA_TAXI_CAB_HEADLIGHTS:
+    case UA_SEMI_TRUCK_HEADLIGHTS:
+    case UA_MONSTER_TRUCK_HEADLIGHTS:
+    case UA_POLICE_CAR_HEADLIGHTS:
+    case UA_LAMBORGHINI_HEADLIGHTS:
+    case UA_HUMVEE_HEADLIGHTS:
+    case UA_HARLEY_HEADLIGHTS:
+    case UA_DUNE_BUGGY_HEADLIGHTS:
+    case UA_LOW_RIDER_HEADLIGHTS:
+    case UA_CORVETTE_HEADLIGHTS:
+    case UA_MAD_MAX_HEADLIGHTS:
+    case UA_BOSS_CAR_HEADLIGHTS:
+    case UA_BARRICADE:
+    case UA_DROP_BOX:
+    case UA_FALLING_BOX:
+    case UA_BREAKING_WINDOW:
     doSwitch:
         uaswInitDbSwitch(&node->sw, type);
         break;
-    case 0x399:
+    case UA_HEALTH_STAND_LIGHTNING:
         UAeffectInitHealthStandLightning(&node->eff);
         break;
-    case 0x500:
+    case UA_STEERING_WHEEL:
         uadashInitSteeringWheel(&node->gr);
         break;
-    case 0x514:
+    case UA_CAR_OCCUPANTS:
         screenInitCarOccupants(node);
         break;
-    case 0x4DF:
+    case UA_REAR_VIEW_MIRROR:
         uadashInitRearViewMirror();
         break;
     default:

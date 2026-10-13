@@ -8,6 +8,7 @@
 #include "tm1/GRUTILS.H"
 #include "tm1/RT.H"
 #include "tm1/STARS.H"
+#include "tm1/UA.H"
 #include "tm1/VIEW.H"
 #include "tm1/WEAPON.H"
 
@@ -711,13 +712,13 @@ void explodeLoadFragTexture(s32 id, GrObj* data)
 {
     if (data->kind != 0) {
         printf("\nError Parsing Fragment Sprite %d\n", id);
-    } else if (id == 0x29E) {
+    } else if (id == UA_FRAGMENT_A) {
         grutilsParse3DSprite(data, fragmenta, 4);
-    } else if (id == 0x29F) {
+    } else if (id == UA_FRAGMENT_B) {
         grutilsParse3DSprite(data, fragmentb, 4);
-    } else if (id == 0x2A0) {
+    } else if (id == UA_FRAGMENT_C) {
         grutilsParse3DSprite(data, fragmentc, 4);
-    } else if (id == 0x2A1) {
+    } else if (id == UA_FRAGMENT_D) {
         grutilsParse3DSprite(data, fragmentd, 4);
     }
 }

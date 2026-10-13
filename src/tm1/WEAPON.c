@@ -10,6 +10,7 @@
 #include "tm1/GRUTILS.H"
 #include "tm1/HDP.H"
 #include "tm1/INTERACT.H"
+#include "tm1/LEVELS.H"
 #include "tm1/MATH.H"
 #include "tm1/RT.H"
 #include "tm1/SHELL.H"
@@ -87,22 +88,22 @@ void bulSetContrailGraphics(GrSprite* info)
 void bulAddCs(void* node, s32 id)
 {
     switch (id) {
-    case 201:
-    case 202:
-    case 203:
-    case 204:
-    case 205:
-    case 206:
+    case UA_UNK_201:
+    case UA_UNK_202:
+    case UA_UNK_203:
+    case UA_UNK_204:
+    case UA_UNK_205:
+    case UA_UNK_206:
         fire_missile_node = node;
         swarm_missile_node = node;
         break;
-    case 311:
+    case UA_GHOST_MISSILE:
         ghost_missile_node = node;
         break;
-    case 312:
+    case UA_DEATHSPEAR:
         deathspear_node = node;
         break;
-    case 307:
+    case UA_SWARM_MISSILE:
         swarm_missile_node = node;
         break;
     }
@@ -111,17 +112,17 @@ void bulAddCs(void* node, s32 id)
 void bulMakeSpecialBullet(s32 id, GrObj* obj)
 {
     switch (id) {
-    case 0x12D:
+    case UA_UNK_301:
         grutilsParse3DSprite(obj, &BulletSprites[0], 4);
         break;
-    case 0x12E:
+    case UA_UNK_302:
         grutilsParse3DSprite(obj, &BulletSprites[4], 4);
         break;
-    case 0x135:
+    case UA_UNK_309:
         grutilsParse3DSprite(obj, &BulletSprites[8], 2);
         grutilsParse3DSprite(obj, &BulletSprites[10], 2);
         break;
-    case 0x134:
+    case UA_UNK_308:
         grutilsParse3DSprite(obj, &BulletSprites[12], 4);
         break;
     }
@@ -344,7 +345,7 @@ void move_bullets(void)
                     b->unk30 = 0;
                 }
                 if (b->unk30 == 0 && p.vz <= 0) {
-                    if (shellGetCurrentLevel() != 3 || b->vel.vz < 0) {
+                    if (shellGetCurrentLevel() != LEVEL4_CITY_PARK || b->vel.vz < 0) {
                         b->unk30 = 8;
                     }
                 }
@@ -1044,7 +1045,7 @@ s16 create_FIRE_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, 
         setContrailColor(i, 0x80, 0x80, 0x80);
         mlist[i].unk48 = 0;
         soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
-        uasoundStopCarWeapon(0);
+        uasoundStopCarWeapon(WEAPON_FIRE_MISSILE);
         uasoundPlayCarWeaponLaunchOrInflight(
             0, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
     }
@@ -1078,7 +1079,7 @@ s16 create_FREEZE_missile(s32 owner, VECTOR3* rot, VECTOR3* pos, s32 damage)
         setContrailColor(i, 0x20, 0x20, 0x9F);
         mlist[i].unk48 = 1;
         soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
-        uasoundStopCarWeapon(1);
+        uasoundStopCarWeapon(WEAPON_FREEZE_MISSILE);
         uasoundPlayCarWeaponLaunchOrInflight(
             1, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
     }
@@ -1093,7 +1094,7 @@ s16 create_POWER_missile(s32 owner, VECTOR3* rot, VECTOR3* pos, s32 damage)
         setContrailColor(i, 0xFA, 0, 0);
         mlist[i].unk48 = 3;
         soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
-        uasoundStopCarWeapon(3);
+        uasoundStopCarWeapon(WEAPON_POWER_MISSILE);
         uasoundPlayCarWeaponLaunchOrInflight(
             3, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
     }
@@ -1115,7 +1116,7 @@ s16 create_REAR_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos, 
         setContrailColor(i, 0x80, 0x80, 0x80);
         mlist[i].unk48 = 5;
         soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
-        uasoundStopCarWeapon(5);
+        uasoundStopCarWeapon(WEAPON_REAR_MISSILE);
         uasoundPlayCarWeaponLaunchOrInflight(
             5, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
     }
@@ -1133,7 +1134,7 @@ s16 create_SINGING_missile(s32 owner, VECTOR3* rot, VECTOR3* pos, s32 damage)
         setContrailColor(i, 0x10, 0x80, 0x10);
         mlist[i].unk48 = 4;
         soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
-        uasoundStopCarWeapon(4);
+        uasoundStopCarWeapon(WEAPON_SINGING_MISSILE);
         uasoundPlayCarWeaponLaunchOrInflight(
             4, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
     }
@@ -1161,7 +1162,7 @@ s16 create_GHOST_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos,
         mlist[i].life = 80;
         mlist[i].unk48 = 4;
         soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
-        uasoundStopCarWeapon(4);
+        uasoundStopCarWeapon(WEAPON_SINGING_MISSILE);
         uasoundPlayCarWeaponLaunchOrInflight(
             4, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
     }
@@ -1229,7 +1230,7 @@ s16 create_HOMING_missile(s32 owner, VECTOR3* target, VECTOR3* rot, VECTOR3* pos
         }
         soundSetRangeAndXPositionFromWorldLoc(&pos->vx);
         m->unk48 = 2;
-        uasoundStopCarWeapon(2);
+        uasoundStopCarWeapon(WEAPON_HOMING_MISSILE);
         uasoundPlayCarWeaponLaunchOrInflight(
             2, soundGetCalculatedSoundRange(), soundGetCalculatedSoundXPosition());
         return i;
@@ -1475,7 +1476,7 @@ void move_missile(Missile* m)
             }
         }
         if (m->unk2C != 3 && m->cs->pos.vz < 0) {
-            if (shellGetCurrentLevel() != 3) {
+            if (shellGetCurrentLevel() != LEVEL4_CITY_PARK) {
                 m->life = 0;
             } else if (m->cs->pos.vx < 6800) {
                 m->life = 0;
@@ -1670,12 +1671,12 @@ s32 bulDispatchDamage(s32 id, s32 a, s32 b, s32 damage, VECTOR3* dir, s32 owner)
     }
     if (id > 0 && id != 8) {
         if (id == 100) {
-            a = 750;
+            a = UA_BAZ_COP;
             merc_takehit(a, damage);
             return 1;
         }
         if (id == 101) {
-            a = 752;
+            a = UA_HOVER_COP;
             merc_takehit(a, damage);
             return 1;
         }
@@ -1687,56 +1688,56 @@ s32 bulDispatchDamage(s32 id, s32 a, s32 b, s32 damage, VECTOR3* dir, s32 owner)
         return 1;
     }
     switch (a) {
-    case 0x258:
-    case 0x259:
-    case 0x25B:
-    case 0x262:
-    case 0x263:
-    case 0x264:
-    case 0x265:
-    case 0x2BE:
-    case 0x2BF:
-    case 0x2C1:
-    case 0x2C3:
-    case 0x2C4:
-    case 0x2C9:
-    case 0x2CB:
-    case 0x2CC:
-    case 0x2D0:
-    case 0x2D1:
-    case 0x2DA:
-    case 0x302:
-    case 0x386:
-    case 0x3E8:
-    case 0x3E9:
-    case 0x3EA:
-    case 0x3EB:
-    case 0x3EC:
-    case 0x3ED:
-    case 0x3F0:
-    case 0x3F1:
-    case 0x3F2:
-    case 0x3F7:
-    case 0x3F9:
+    case UA_UNK_600:
+    case UA_UNK_601:
+    case UA_UNK_603:
+    case UA_UNK_610:
+    case UA_UNK_611:
+    case UA_UNK_612:
+    case UA_UNK_613:
+    case UA_UNK_702:
+    case UA_UNK_703:
+    case UA_UNK_705:
+    case UA_UNK_707:
+    case UA_UNK_708:
+    case UA_UNK_713:
+    case UA_UNK_715:
+    case UA_UNK_716:
+    case UA_UNK_720:
+    case UA_UNK_721:
+    case UA_UNK_730:
+    case UA_UNK_770:
+    case UA_UNK_902:
+    case UA_UNK_1000:
+    case UA_UNK_1001:
+    case UA_UNK_1002:
+    case UA_UNK_1003:
+    case UA_UNK_1004:
+    case UA_UNK_1005:
+    case UA_UNK_1008:
+    case UA_UNK_1009:
+    case UA_UNK_1010:
+    case UA_UNK_1015:
+    case UA_UNK_1017:
         target_takehit(a, b, damage);
         return 1;
-    case 0x2EE:
-    case 0x2F0:
+    case UA_BAZ_COP:
+    case UA_HOVER_COP:
         merc_takehit(a, damage);
         return 1;
-    case 0x2F1:
-    case 0x2F2:
-    case 0x2F3:
+    case UA_UNK_753:
+    case UA_UNK_754:
+    case UA_UNK_755:
         static_cop_takehit(b);
         return 1;
-    case 0x3F8:
+    case UA_DROP_BOX:
         drop_box_takehit();
         return 1;
-    case 0x2F8:
-    case 0x309:
-    case 0x30A:
-    case 0x30D:
-    case 0x30E:
+    case UA_UNK_760:
+    case UA_UNK_777:
+    case UA_UNK_778:
+    case UA_UNK_781:
+    case UA_UNK_782:
         pedestrian_takehit(a, (s32)dir);
         return 1;
     }

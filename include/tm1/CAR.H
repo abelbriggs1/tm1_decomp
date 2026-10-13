@@ -13,6 +13,51 @@
 // Helper macro to access a generic car pointer as an `AICar`.
 #define AI_CAR(c) ((AICar*)(c))
 
+// Weapon slots, used for `CarWeap.cur` and to index `CarWeap.ammo`.
+#define WEAPON_FIRE_MISSILE 0
+#define WEAPON_FREEZE_MISSILE 1
+#define WEAPON_HOMING_MISSILE 2
+#define WEAPON_POWER_MISSILE 3
+#define WEAPON_SINGING_MISSILE 4
+#define WEAPON_REAR_MISSILE 5
+#define WEAPON_CATAPULT 6
+#define WEAPON_FLAMETHROWER 7
+#define WEAPON_BOMB 8
+#define WEAPON_OIL 9
+#define WEAPON_SPIKE 10
+#define WEAPON_SPECIAL 11
+#define WEAPON_NONE 12
+
+#define WEAPON_MAX (WEAPON_NONE + 1)
+// Slots below this hold regular (non-special) weapons.
+#define WEAPON_REGULAR_MAX (WEAPON_SPIKE + 1)
+// `CarWeap.ammo` has one more entry than there are weapon slots.
+// The last entry has no known use.
+#define WEAPON_AMMO_MAX 14
+
+// Special effects passed to `carTakeHit()` as negative damage.
+#define HIT_FREEZE (-1)
+#define HIT_OIL (-2)
+#define HIT_SPIKE (-3)
+#define HIT_CATAPULT (-4)
+#define HIT_BOMB (-5)
+#define HIT_UNK_6 (-6)
+
+// Player camera view modes.
+#define VR_MODE_UNK_1 1
+#define VR_MODE_UNK_2 2
+#define VR_MODE_UNK_3 3
+#define VR_MODE_HELICOPTER 4
+// A fixed camera that turns to follow the car. Used when the car falls off the
+// Rooftops level.
+#define VR_MODE_FIXED 5
+
+// Where an AI car's target is, relative to the direction the AI car faces.
+#define DIRECTION_FRONT 0
+#define DIRECTION_REAR 1
+#define DIRECTION_LEFT 2
+#define DIRECTION_RIGHT 3
+
 typedef struct CarMotion {
     /*0x00*/ u16 unk00;
     /*0x02*/ u16 unk02;
@@ -202,9 +247,22 @@ typedef struct CarBounce {
     /*0x38*/ s32 unk38;
 } CarBounce; /* 0x3C */
 
-// TODO: Make these into proper structs.
-typedef s32 CarFrontProfile[4];
-typedef s32 CarRearProfile[6];
+// Percent chance for an AI car to pick each weapon.
+typedef struct CarFrontProfile {
+    /*0x00*/ s32 fire;
+    /*0x04*/ s32 freeze;
+    /*0x08*/ s32 homing;
+    /*0x0C*/ s32 power;
+} CarFrontProfile; /* 0x10 */
+
+typedef struct CarRearProfile {
+    /*0x00*/ s32 rearMissile;
+    /*0x04*/ s32 catapult;
+    /*0x08*/ s32 flamethrower;
+    /*0x0C*/ s32 bomb;
+    /*0x10*/ s32 oil;
+    /*0x14*/ s32 spikes;
+} CarRearProfile; /* 0x18 */
 
 typedef struct CarWeap {
     /*0x00*/ u16 gunDelay;
@@ -212,7 +270,7 @@ typedef struct CarWeap {
     /*0x04*/ u8 unk04;
     /*0x05*/ u8 pad05[0x3];
     /*0x08*/ u32 cur;
-    /*0x0C*/ u16 ammo[14];
+    /*0x0C*/ u16 ammo[WEAPON_AMMO_MAX];
     /*0x28*/ u16 maxAmmo;
     /*0x2A*/ u8 pad2A[0x2];
     /*0x2C*/ CarFrontProfile* foreProfile;
@@ -329,7 +387,7 @@ typedef struct AICar {
     /*0x106*/ s8 unk106;
     /*0x107*/ u8 unk107;
     /*0x108*/ CarBounce bounce;
-    /*0x144*/ s32 unk144;
+    /*0x144*/ s32 direction;
     /*0x148*/ CarCollision collision;
     /*0x160*/ u8 unk160;
     /*0x161*/ u8 unk161;

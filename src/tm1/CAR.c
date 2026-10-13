@@ -6,8 +6,10 @@
 #include "tm1/CAR_INIT.H"
 #include "tm1/CS.H"
 #include "tm1/CTLPAD.H"
+#include "tm1/DIFFICUL.H"
 #include "tm1/EXPLODE.H"
 #include "tm1/INTERACT.H"
+#include "tm1/LEVELS.H"
 #include "tm1/MATH.H"
 #include "tm1/POTHOLES.H"
 #include "tm1/RT.H"
@@ -53,12 +55,12 @@ void CarUpdate(PlayerCar* car)
     }
     if (car->flags[0x19]) {
         if (car->flags[0x0A] || car->flags[0x17] || car->flags[0x00]
-            || shellGetCurrentLevel() == 5) {
+            || shellGetCurrentLevel() == LEVEL6_ROOFTOPS) {
             car->flags[0x19] = 0;
             uaswSetCarShadow(car->uaIndex, 0);
         }
     } else if (!car->flags[0x0A] && !car->flags[0x17] && !car->flags[0x00]
-        && shellGetCurrentLevel() != 5) {
+        && shellGetCurrentLevel() != LEVEL6_ROOFTOPS) {
         car->flags[0x19] = 1;
         uaswSetCarShadow(car->uaIndex, 1);
     }
@@ -1085,16 +1087,16 @@ void CheckHitDetection(Car* car, u8 isPlayer)
         if (!isPlayer && flags[29] && (s16)st->unk22 >= 13)
             hit.hit = 0;
         type = (u16)hit.tag0;
-        if (type - 401U < 50U) {
+        if (UA_IS_PICKUP(type)) {
             carGetPickup(car, isPlayer, (s16)type, hit.tag1);
             hit.hit = 0;
-        } else if ((s16)type == 700) {
-            UAeffectBarricade(700, hit.tag1, bearing);
+        } else if ((s16)type == UA_BARRICADE) {
+            UAeffectBarricade(UA_BARRICADE, hit.tag1, bearing);
             speed = __builtin_abs(m->vel.vy);
             denominator = speed < st->unkA8 ? st->unkA8 : speed;
             col->unk12 = (s32)((u32)speed * 99U) / denominator;
             hit.hit = 0;
-        } else if (type - 750U < 33U || (s16)type == 1001) {
+        } else if (UA_IS_PERSON(type) || (s16)type == UA_UNK_1001) {
             bulDispatchDamage(hit.obj->unkC0, (s16)type, hit.tag1, 10, &m->rot, 0);
             t[0].unk0A = MakeFakePotHole();
             t[1].unk0A = t[0].unk0A;
@@ -1165,7 +1167,7 @@ void CheckHitDetection(Car* car, u8 isPlayer)
                 hit.hit = 0;
         } else if ((s16)type == 1021) {
             if (!isPlayer && !alt->unk16E && !flags[0]) {
-                if (alt->unk34 < 800 && alt->uaIndex != 130) {
+                if (alt->unk34 < 800 && alt->uaIndex != UA_BOSS_CAR) {
                     if ((s16)col->unkE < 100 || flags[13] || flags[15])
                         hit.hit = 0;
                 }
@@ -2245,9 +2247,9 @@ void CarViewUpdate(PlayerCar* car)
     } else {
         uaDontDrawCar((s16)car->playerIdx, 1);
     }
-    if ((u32)car->unkF4 < 4) {
+    if ((u32)car->unkF4 < VR_MODE_HELICOPTER) {
         GetUpdateRate();
-        if (car->unkF4 == 1) {
+        if (car->unkF4 == VR_MODE_UNK_1) {
             if (__builtin_abs(car->dTrans.vy - car->vrPos[0].vy) >= 17) {
                 car->dTrans.vx = SmoothValue(car->dTrans.vx, car->vrPos[0].vx, 0x5A);
                 car->dTrans.vy = SmoothValue(car->dTrans.vy, car->vrPos[0].vy, 0x5A);
@@ -2268,7 +2270,7 @@ void CarViewUpdate(PlayerCar* car)
                     uaDontDrawCar((s16)car->playerIdx, 1);
                 }
             }
-        } else if (car->unkF4 == 2) {
+        } else if (car->unkF4 == VR_MODE_UNK_2) {
             if (__builtin_abs(car->dTrans.vy - car->vrPos[1].vy) >= 17) {
                 car->dTrans.vy = SmoothValue(car->dTrans.vy, car->vrPos[1].vy, 0x5A);
                 car->dTrans.vz = SmoothValue(car->dTrans.vz, car->vrPos[1].vz, 0x5A);
@@ -2317,7 +2319,7 @@ void CarViewUpdate(PlayerCar* car)
         viewSetDeltaTrans(&car->dTrans, (s16)car->playerIdx);
         return;
     }
-    if (car->unkF4 == 4) {
+    if (car->unkF4 == VR_MODE_HELICOPTER) {
         cs = UAGetCameraCS((s16)car->playerIdx);
         v.vx = 0;
         v.vy = 100;
@@ -2486,7 +2488,7 @@ void UpdateBounce(Car* car, u8 isPlayer)
     }
     bp->unk34 = SmoothValue(bp->unk34, (s16)v, 90);
 
-    if (isPlayer && PLAYER_CAR(car)->unkF4 == 1) {
+    if (isPlayer && PLAYER_CAR(car)->unkF4 == VR_MODE_UNK_1) {
         bp->unk16 = SmoothValue(bp->unk16, PLAYER_CAR(car)->speedDelta, 90);
         bp->unk30 = -bp->unk16 / 2;
     } else {
@@ -2581,16 +2583,16 @@ void carTakeHit(s32 id, s32 amount, s32 a, s32 flag)
             cs = GetAICs3D(idx);
             enabled = alt->unk40;
             canHit = alt->unk46;
-            mode = 3;
+            mode = VR_MODE_UNK_3;
             st = &alt->stats;
             f = alt->flags;
             ua = alt->uaIndex;
         }
 
         if (enabled && !f[0x16] && !uaHasPlayerBeatThisLevel()) {
-            if (mode == 1) {
+            if (mode == VR_MODE_UNK_1) {
                 SetFXSheet(rate, rgb[0], rgb[1], rgb[2]);
-            } else if (amount != -1 && !f[0x10]) {
+            } else if (amount != HIT_FREEZE && !f[0x10]) {
                 UAeffectActHitLights(cs, rate, rgb);
             }
 
@@ -2616,10 +2618,10 @@ void carTakeHit(s32 id, s32 amount, s32 a, s32 flag)
                 if (st->unk4C || !isPlayer) {
                     if (isPlayer) {
                         dif = uaGetDifficulty();
-                        if (dif == 0) {
+                        if (dif == DIFFICULTY_EASY) {
                             amount = (s32)((u32)amount * 2u) / 3;
                         }
-                        if (dif == 2) {
+                        if (dif == DIFFICULTY_HARD) {
                             amount = (s32)((u32)amount * 4u) / 3;
                         }
                         if (amount <= 0) {
@@ -2633,7 +2635,7 @@ void carTakeHit(s32 id, s32 amount, s32 a, s32 flag)
                 }
             } else {
                 switch (amount) {
-                case -1:
+                case HIT_FREEZE:
                     if (!f[0x10]) {
                         f[0x10] = 1;
                         st->unk18 = 0xB4;
@@ -2642,29 +2644,29 @@ void carTakeHit(s32 id, s32 amount, s32 a, s32 flag)
                         st->unk18 = 0xB4;
                     }
                     break;
-                case -2:
-                    if (ua != 0x82 && canHit) {
+                case HIT_OIL:
+                    if (ua != UA_BOSS_CAR && canHit) {
                         f[0x12] = 1;
                         f[0x0D] = 1;
                         st->unk1C = 0xC8;
                     }
                     break;
-                case -3:
+                case HIT_SPIKE:
                     f[0x11] = 1;
                     st->spikeTimer = 0xC8;
                     st->unkFC = st->unkFC / 2;
                     RecomputeCarDeltas(st);
                     break;
-                case -4:
-                    if (ua != 0x82) {
+                case HIT_CATAPULT:
+                    if (ua != UA_BOSS_CAR) {
                         InitCatapult(info, isPlayer);
                         break;
                     }
 
-                case -5:
+                case HIT_BOMB:
                     InitBombDamage(info, isPlayer, 1, flag);
                     break;
-                case -6:
+                case HIT_UNK_6:
                     wp->unk42 = 1;
                     break;
                 }
@@ -3025,15 +3027,15 @@ void InitMonsterSmash(Car* carA, u8 isPlayerA, Car* carB, u8 isPlayerB, s16 unus
         uaIdx = AI_CAR(carB)->uaIndex;
     }
 
-    if ((s16)wa->ammo[11] < getSpecialWeaponCost(0x28)) {
+    if ((s16)wa->ammo[WEAPON_SPECIAL] < getSpecialWeaponCost(UA_MONSTER_TRUCK)) {
         return;
     }
     if (fa[27]) {
         return;
     }
 
-    uasoundPlayCarSpecialWeaponLaunchOrInflight(5, 0, 0);
-    wa->ammo[11] = wa->ammo[11] - getSpecialWeaponCost(0x28);
+    uasoundPlayCarSpecialWeaponLaunchOrInflight(SOUND_SPECIAL_MONSTER_TRUCK, 0, 0);
+    wa->ammo[WEAPON_SPECIAL] = wa->ammo[WEAPON_SPECIAL] - getSpecialWeaponCost(UA_MONSTER_TRUCK);
     if (isPlayerB) {
         cs = GetPlayerCs3D((s16)idx);
     } else {
@@ -3072,12 +3074,12 @@ void SetCarVRMode(PlayerCar* car, u32 mode)
     VECTOR off;
     u8 moved;
 
-    if (mode < 5) {
+    if (mode < VR_MODE_FIXED) {
         car->unkF8 = mode;
     }
     moved = 0;
-    if (mode < 4) {
-        if ((u32)car->unkF4 >= 4) {
+    if (mode < VR_MODE_HELICOPTER) {
+        if ((u32)car->unkF4 >= VR_MODE_HELICOPTER) {
             rot.vx = 0;
             rot.vy = 0;
             rot.vz = 0;
@@ -3244,7 +3246,7 @@ void UpdateCarDeath(Car* car, u8 isPlayer)
             }
         } else {
             limit = 3;
-            if (shellGetCurrentLevel() == 5 && m->pos.vz < 400) {
+            if (shellGetCurrentLevel() == LEVEL6_ROOFTOPS && m->pos.vz < 400) {
                 limit = 7;
             }
             if ((s16)st->blasts < limit) {

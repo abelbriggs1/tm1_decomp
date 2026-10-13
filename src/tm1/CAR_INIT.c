@@ -8,6 +8,7 @@
 #include "tm1/CAR_INIT.H"
 #include "tm1/CS.H"
 #include "tm1/INTERACT.H"
+#include "tm1/LEVELS.H"
 #include "tm1/RT.H"
 #include "tm1/SHELL.H"
 #include "tm1/TIMER.H"
@@ -28,7 +29,7 @@ void CarInit(PlayerCar* car, s32 uaIndex, u8 which)
         InitWeapons(car, &car->weap, 1);
         car->stats.unkF8 = 0;
     } else {
-        car->weap.ammo[11] = 20;
+        car->weap.ammo[WEAPON_SPECIAL] = 20;
     }
     car->weap.gunHeat = 0;
     car->weap.gunOverheat = 0;
@@ -99,7 +100,7 @@ void CarInitDynamics(PlayerCar* car)
     CarInitDeltas(&car->stats, car->uaIndex);
     car->stats.unk40 = car->stats.unk44;
     InitTireInfo(car->tires);
-    if (shellGetCurrentLevel() == 5) {
+    if (shellGetCurrentLevel() == LEVEL6_ROOFTOPS) {
         InitTireGroup(car->tires, 11);
     } else {
         InitTireGroup(car->tires, 0);
@@ -154,63 +155,63 @@ void InitWeapons(Car* car, CarWeap* weap, u8 isPlayer)
     weap->gunDelay = 0;
     weap->fireDelay = 0;
     weap->unk04 = 0;
-    for (i = 0; i < 14; i++) {
+    for (i = 0; i < WEAPON_AMMO_MAX; i++) {
         weap->ammo[i] = 0;
     }
-    weap->cur = 11;
-    weap->ammo[11] = 20;
-    weap->ammo[0] = 2;
+    weap->cur = WEAPON_SPECIAL;
+    weap->ammo[WEAPON_SPECIAL] = 20;
+    weap->ammo[WEAPON_FIRE_MISSILE] = 2;
     weap->totalAmmo = 2;
     switch (id) {
-    case 10:
+    case UA_ICE_CREAM_TRUCK:
         weap->maxAmmo = 28;
         weap->unk48 = getSpecialWeaponCost(id);
         break;
-    case 20:
+    case UA_TAXI_CAB:
         weap->maxAmmo = 28;
         weap->unk48 = getSpecialWeaponCost(id);
         break;
-    case 30:
+    case UA_SEMI_TRUCK:
         weap->maxAmmo = 28;
         weap->unk48 = getSpecialWeaponCost(id);
         break;
-    case 40:
+    case UA_MONSTER_TRUCK:
         weap->maxAmmo = 28;
         weap->unk48 = getSpecialWeaponCost(id);
         break;
-    case 50:
+    case UA_POLICE_CAR:
         weap->maxAmmo = 28;
         weap->unk48 = getSpecialWeaponCost(id);
         break;
-    case 60:
+    case UA_LAMBORGHINI:
         weap->maxAmmo = 28;
         weap->unk48 = getSpecialWeaponCost(id);
         break;
-    case 70:
+    case UA_HUMVEE:
         weap->maxAmmo = 28;
         weap->unk48 = getSpecialWeaponCost(id);
         break;
-    case 80:
+    case UA_HARLEY:
         weap->maxAmmo = 28;
         weap->unk48 = getSpecialWeaponCost(id);
         break;
-    case 90:
+    case UA_DUNE_BUGGY:
         weap->maxAmmo = 28;
         weap->unk48 = getSpecialWeaponCost(id);
         break;
-    case 100:
+    case UA_LOW_RIDER:
         weap->maxAmmo = 28;
         weap->unk48 = getSpecialWeaponCost(id);
         break;
-    case 110:
+    case UA_CORVETTE:
         weap->maxAmmo = 28;
         weap->unk48 = getSpecialWeaponCost(id);
         break;
-    case 120:
+    case UA_MAD_MAX:
         weap->maxAmmo = 28;
         weap->unk48 = getSpecialWeaponCost(id);
         break;
-    case 130:
+    case UA_BOSS_CAR:
         weap->maxAmmo = 60;
         weap->unk48 = getSpecialWeaponCost(id);
         break;
@@ -229,8 +230,8 @@ void InitWeapons(Car* car, CarWeap* weap, u8 isPlayer)
 void InitPlayerPositions(PlayerCar* car, u8 isP1)
 {
     switch (shellGetCurrentLevel()) {
-    case 0:
-    case 6:
+    case LEVEL1_ARENA:
+    case LEVEL7_ARENA_5:
     default:
         if (isP1) {
             car->motion.pos.vx = 0x460;
@@ -244,7 +245,7 @@ void InitPlayerPositions(PlayerCar* car, u8 isP1)
             car->motion.pos.vz = 0;
         }
         break;
-    case 1:
+    case LEVEL2_WAREHOUSE:
         if (isP1) {
             car->motion.pos.vx = -0x28A0;
             car->motion.pos.vy = -0x11D0;
@@ -257,7 +258,7 @@ void InitPlayerPositions(PlayerCar* car, u8 isP1)
             car->motion.pos.vz = 0;
         }
         break;
-    case 2:
+    case LEVEL3_FREEWAY:
         if (isP1) {
             if (rtIsSplitScreenOn() == 0) {
                 car->motion.pos.vx = 0x1C20;
@@ -284,7 +285,7 @@ void InitPlayerPositions(PlayerCar* car, u8 isP1)
             }
         }
         break;
-    case 3:
+    case LEVEL4_CITY_PARK:
         if (isP1) {
             if (rtIsSplitScreenOn() == 0) {
                 car->motion.pos.vx = 0x12C0;
@@ -311,7 +312,7 @@ void InitPlayerPositions(PlayerCar* car, u8 isP1)
             }
         }
         break;
-    case 4:
+    case LEVEL5_CYBURBIA:
         if (isP1) {
             if (rtIsSplitScreenOn() == 0) {
                 car->motion.pos.vx = 0x1C20;
@@ -338,7 +339,7 @@ void InitPlayerPositions(PlayerCar* car, u8 isP1)
             }
         }
         break;
-    case 5:
+    case LEVEL6_ROOFTOPS:
         if (isP1) {
             car->motion.pos.vx = 0x3CD8;
             car->motion.pos.vy = 0x250;
@@ -426,46 +427,46 @@ void CarInitDeltas(CarStats* stats, s32 uaIndex)
     }
     stats->monster = 0;
     switch (uaIndex) {
-    case 10:
+    case UA_ICE_CREAM_TRUCK:
         InitIceCreamTruck(stats);
         break;
-    case 30:
+    case UA_SEMI_TRUCK:
         InitSemiTruck(stats);
         break;
-    case 20:
+    case UA_TAXI_CAB:
         InitTaxiCab(stats);
         break;
-    case 40:
+    case UA_MONSTER_TRUCK:
         InitMonsterTruck(stats);
         break;
-    case 60:
+    case UA_LAMBORGHINI:
         InitLamborghini(stats);
         break;
-    case 50:
+    case UA_POLICE_CAR:
         InitPoliceCar(stats);
         break;
-    case 90:
+    case UA_DUNE_BUGGY:
         InitDuneBuggy(stats);
         break;
-    case 70:
+    case UA_HUMVEE:
         InitHumvee(stats);
         break;
-    case 100:
+    case UA_LOW_RIDER:
         InitLowRider(stats);
         break;
-    case 120:
+    case UA_MAD_MAX:
         InitMadMax(stats);
         break;
-    case 80:
+    case UA_HARLEY:
         InitHarley(stats);
         break;
-    case 110:
+    case UA_CORVETTE:
         InitCorvette(stats);
         break;
-    case 130:
+    case UA_BOSS_CAR:
         InitBossCar(stats);
         break;
-    case -1:
+    case UA_NONE:
     default:
         InitHeliCar(stats);
         break;
@@ -1043,55 +1044,55 @@ void CarInitVRModes(PlayerCar* car)
     car->vrRot[5].vz = 0;
     car->vrRot[5].vx = 68;
     switch (car->uaIndex) {
-    case 10:
+    case UA_ICE_CREAM_TRUCK:
         car->vrPos[5].vy = -240;
         car->vrPos[5].vz = 112;
         break;
-    case 30:
+    case UA_SEMI_TRUCK:
         car->vrPos[5].vy = -256;
         car->vrPos[5].vz = 96;
         break;
-    case 20:
+    case UA_TAXI_CAB:
         car->vrPos[5].vy = -208;
         car->vrPos[5].vz = 72;
         break;
-    case 40:
+    case UA_MONSTER_TRUCK:
         car->vrPos[5].vy = -200;
         car->vrPos[5].vz = 64;
         break;
-    case 60:
+    case UA_LAMBORGHINI:
         car->vrPos[5].vy = -152;
         car->vrPos[5].vz = 48;
         break;
-    case 50:
+    case UA_POLICE_CAR:
         car->vrPos[5].vy = -192;
         car->vrPos[5].vz = 72;
         break;
-    case 90:
+    case UA_DUNE_BUGGY:
         car->vrPos[5].vy = -136;
         car->vrPos[5].vz = 48;
         break;
-    case 70:
+    case UA_HUMVEE:
         car->vrPos[5].vy = -152;
         car->vrPos[5].vz = 56;
         break;
-    case 100:
+    case UA_LOW_RIDER:
         car->vrPos[5].vy = -208;
         car->vrPos[5].vz = 48;
         break;
-    case 120:
+    case UA_MAD_MAX:
         car->vrPos[5].vy = -176;
         car->vrPos[5].vz = 48;
         break;
-    case 80:
+    case UA_HARLEY:
         car->vrPos[5].vy = -240;
         car->vrPos[5].vz = 48;
         break;
-    case 110:
+    case UA_CORVETTE:
         car->vrPos[5].vy = -168;
         car->vrPos[5].vz = 48;
         break;
-    case 130:
+    case UA_BOSS_CAR:
     default:
         break;
     }

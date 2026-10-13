@@ -9,6 +9,7 @@
 #include "tm1/CARUPD.H"
 #include "tm1/EXPLODE.H"
 #include "tm1/INTERACT.H"
+#include "tm1/LEVELS.H"
 #include "tm1/MATH.H"
 #include "tm1/SHELL.H"
 #include "tm1/SMOOTH.H"
@@ -1106,7 +1107,7 @@ void CheckHealthStands(Car* car, u8 isPlayer)
         return;
     }
     switch (shellGetCurrentLevel()) {
-    case 1:
+    case LEVEL2_WAREHOUSE:
         if (m->pos.vx >= -12464) {
             if (m->pos.vx < -12399) {
                 if (m->pos.vy >= -4360) {
@@ -1118,7 +1119,7 @@ void CheckHealthStands(Car* car, u8 isPlayer)
             }
         }
         break;
-    case 2:
+    case LEVEL3_FREEWAY:
         if (m->pos.vx >= 16288) {
             if (m->pos.vx < 16337) {
                 if (m->pos.vy >= -7600) {
@@ -1130,7 +1131,7 @@ void CheckHealthStands(Car* car, u8 isPlayer)
             }
         }
         break;
-    case 3:
+    case LEVEL4_CITY_PARK:
         if (m->pos.vx >= 11840) {
             if (m->pos.vx < 12161) {
                 if (m->pos.vy >= -4000) {
@@ -1142,7 +1143,7 @@ void CheckHealthStands(Car* car, u8 isPlayer)
             }
         }
         break;
-    case 4:
+    case LEVEL5_CYBURBIA:
         if (m->pos.vx >= 22640) {
             if (m->pos.vx < 22673) {
                 if (m->pos.vy >= 11632) {
@@ -1154,7 +1155,7 @@ void CheckHealthStands(Car* car, u8 isPlayer)
             }
         }
         break;
-    case 5:
+    case LEVEL6_ROOFTOPS:
         if (m->pos.vx >= 8272) {
             if (m->pos.vx < 8345) {
                 if (m->pos.vy >= 10072) {
@@ -1319,7 +1320,7 @@ void UpdateTirePositions(Car* car, u8 isPlayer)
         q = st->unk6C - st->unk6C * ang / 1024;
     }
     m->pos.vz += p + q;
-    if (shellGetCurrentLevel() == 5 && st->unk40 > 0 && m->pos.vz < 160) {
+    if (shellGetCurrentLevel() == LEVEL6_ROOFTOPS && st->unk40 > 0 && m->pos.vz < 160) {
         if (isPlayer == 0 && ai != 0) {
             if (spd >= 1601) {
                 ang2 = 2048 - (GetPlayerInfo(ai->unk0E)->motion.rot.vz - ai->unk30);
@@ -1333,7 +1334,7 @@ void UpdateTirePositions(Car* car, u8 isPlayer)
                 }
             }
         }
-        if ((spd >= 6401 || uaIndex == 130) && ai != 0) {
+        if ((spd >= 6401 || uaIndex == UA_BOSS_CAR) && ai != 0) {
             if (ai->unk16F != 0) {
                 PutAICarBackOnRoof(ai);
             } else {

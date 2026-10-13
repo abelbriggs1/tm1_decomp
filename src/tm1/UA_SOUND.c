@@ -1,6 +1,9 @@
 #include "common.h"
 
+#include "tm1/LEVELS.H"
+#include "tm1/SOUND.H"
 #include "tm1/SOUND_ID_API.H"
+#include "tm1/UA.H"
 
 #include "tm1/UA_SOUND.H"
 
@@ -12,19 +15,19 @@ static s32 huntDADelay = 0;
 static s32 battleDADelay = 0;
 
 #define CAR_CASES                                                                                  \
-    case 10:                                                                                       \
-    case 20:                                                                                       \
-    case 30:                                                                                       \
-    case 40:                                                                                       \
-    case 50:                                                                                       \
-    case 60:                                                                                       \
-    case 70:                                                                                       \
-    case 80:                                                                                       \
-    case 90:                                                                                       \
-    case 100:                                                                                      \
-    case 110:                                                                                      \
-    case 120:                                                                                      \
-    case 130:
+    case UA_ICE_CREAM_TRUCK:                                                                       \
+    case UA_TAXI_CAB:                                                                              \
+    case UA_SEMI_TRUCK:                                                                            \
+    case UA_MONSTER_TRUCK:                                                                         \
+    case UA_POLICE_CAR:                                                                            \
+    case UA_LAMBORGHINI:                                                                           \
+    case UA_HUMVEE:                                                                                \
+    case UA_HARLEY:                                                                                \
+    case UA_DUNE_BUGGY:                                                                            \
+    case UA_LOW_RIDER:                                                                             \
+    case UA_CORVETTE:                                                                              \
+    case UA_MAD_MAX:                                                                               \
+    case UA_BOSS_CAR:
 
 void uasoundFireCarMachineGuns(s32 w, s32 a, s32 b)
 {
@@ -33,46 +36,46 @@ void uasoundFireCarMachineGuns(s32 w, s32 a, s32 b)
     switch (w) {
     case 0:
         return;
-    case 80:
+    case UA_HARLEY:
         id = 0x61;
         break;
-    case 110:
+    case UA_CORVETTE:
         id = 0x64;
         break;
-    case 20:
+    case UA_TAXI_CAB:
         id = 0x5b;
         break;
-    case 90:
+    case UA_DUNE_BUGGY:
         id = 0x62;
         break;
-    case 70:
+    case UA_HUMVEE:
         id = 0x60;
         break;
-    case 10:
+    case UA_ICE_CREAM_TRUCK:
         id = 0x5a;
         break;
-    case 100:
+    case UA_LOW_RIDER:
         id = 0x63;
         break;
-    case 60:
+    case UA_LAMBORGHINI:
         id = 0x5f;
         break;
-    case 120:
+    case UA_MAD_MAX:
         id = 0x65;
         break;
-    case 40:
+    case UA_MONSTER_TRUCK:
         id = 0x5d;
         break;
-    case 50:
+    case UA_POLICE_CAR:
         id = 0x5e;
         break;
-    case 30:
+    case UA_SEMI_TRUCK:
         id = 0x5c;
         break;
-    case 130:
+    case UA_BOSS_CAR:
         id = 0x66;
         break;
-    case 752:
+    case UA_HOVER_COP:
         id = 0x84;
         break;
     default:
@@ -88,46 +91,46 @@ void uasoundStopCarMachineGuns(s32 w)
     switch (w) {
     case 0:
         return;
-    case 80:
+    case UA_HARLEY:
         id = 0x61;
         break;
-    case 110:
+    case UA_CORVETTE:
         id = 0x64;
         break;
-    case 20:
+    case UA_TAXI_CAB:
         id = 0x5b;
         break;
-    case 90:
+    case UA_DUNE_BUGGY:
         id = 0x62;
         break;
-    case 70:
+    case UA_HUMVEE:
         id = 0x60;
         break;
-    case 10:
+    case UA_ICE_CREAM_TRUCK:
         id = 0x5a;
         break;
-    case 100:
+    case UA_LOW_RIDER:
         id = 0x63;
         break;
-    case 60:
+    case UA_LAMBORGHINI:
         id = 0x5f;
         break;
-    case 120:
+    case UA_MAD_MAX:
         id = 0x65;
         break;
-    case 40:
+    case UA_MONSTER_TRUCK:
         id = 0x5d;
         break;
-    case 50:
+    case UA_POLICE_CAR:
         id = 0x5e;
         break;
-    case 30:
+    case UA_SEMI_TRUCK:
         id = 0x5c;
         break;
-    case 130:
+    case UA_BOSS_CAR:
         id = 0x66;
         break;
-    case 752:
+    case UA_HOVER_COP:
         id = 0x84;
         break;
     default:
@@ -146,45 +149,45 @@ void uasoundPlayCarEngineRev(s32 w, s32 a, s32 b, s32 v)
     s32 id;
 
     switch (w) {
-    case -1:
+    case UA_NONE:
         return;
-    case 80:
+    case UA_HARLEY:
         id = 0x54;
         break;
-    case 110:
+    case UA_CORVETTE:
         id = 0x57;
         break;
-    case 20:
+    case UA_TAXI_CAB:
         id = 0x4e;
         break;
-    case 90:
+    case UA_DUNE_BUGGY:
         id = 0x55;
         break;
-    case 70:
+    case UA_HUMVEE:
         id = 0x53;
         break;
-    case 10:
+    case UA_ICE_CREAM_TRUCK:
         id = 0x4d;
         break;
-    case 100:
+    case UA_LOW_RIDER:
         id = 0x56;
         break;
-    case 60:
+    case UA_LAMBORGHINI:
         id = 0x52;
         break;
-    case 120:
+    case UA_MAD_MAX:
         id = 0x58;
         break;
-    case 40:
+    case UA_MONSTER_TRUCK:
         id = 0x50;
         break;
-    case 50:
+    case UA_POLICE_CAR:
         id = 0x51;
         break;
-    case 30:
+    case UA_SEMI_TRUCK:
         id = 0x4f;
         break;
-    case 130:
+    case UA_BOSS_CAR:
         id = 0x59;
         break;
     default:
@@ -201,7 +204,7 @@ void uasoundPlayCarCrash(s32 w, s32 a, s32 b, s32 v)
         v = v + 20;
     }
     switch (w) {
-    case -1:
+    case UA_NONE:
         break;
         CAR_CASES
         id = 0x6a;
@@ -226,7 +229,7 @@ void uasoundPlayCarExplode(s32 w, s32 a, s32 b, s32 v)
     s32 id;
 
     switch (w) {
-    case -1:
+    case UA_NONE:
         break;
         CAR_CASES
         id = 0x71;
@@ -252,7 +255,7 @@ void uasoundPlayCarSkid(s32 w, s32 a, s32 b, s32 v)
     s32 id;
 
     switch (w) {
-    case -1:
+    case UA_NONE:
         break;
         CAR_CASES
         id = 0x6d;
@@ -280,81 +283,81 @@ void uasoundStopCarSounds(s32 w)
     s32 gun;
 
     switch (w) {
-    case -1:
+    case UA_NONE:
         return;
-    case 80:
+    case UA_HARLEY:
         skid = 0;
         rev = 0x54;
         crash = 2;
         gun = 0x61;
         break;
-    case 110:
+    case UA_CORVETTE:
         skid = 0;
         rev = 0x57;
         crash = 2;
         gun = 0x64;
         break;
-    case 20:
+    case UA_TAXI_CAB:
         skid = 0;
         rev = 0x4e;
         crash = 2;
         gun = 0x5b;
         break;
-    case 90:
+    case UA_DUNE_BUGGY:
         skid = 0;
         rev = 0x55;
         crash = 2;
         gun = 0x62;
         break;
-    case 70:
+    case UA_HUMVEE:
         skid = 0;
         rev = 0x53;
         crash = 2;
         gun = 0x60;
         break;
-    case 10:
+    case UA_ICE_CREAM_TRUCK:
         skid = 0;
         rev = 0x4d;
         crash = 2;
         gun = 0x5a;
         break;
-    case 100:
+    case UA_LOW_RIDER:
         skid = 0;
         rev = 0x56;
         crash = 2;
         gun = 0x63;
         break;
-    case 60:
+    case UA_LAMBORGHINI:
         skid = 0;
         rev = 0x52;
         crash = 2;
         gun = 0x5f;
         break;
-    case 120:
+    case UA_MAD_MAX:
         skid = 0;
         rev = 0x58;
         crash = 2;
         gun = 0x65;
         break;
-    case 40:
+    case UA_MONSTER_TRUCK:
         skid = 0;
         rev = 0x50;
         crash = 2;
         gun = 0x5d;
         break;
-    case 50:
+    case UA_POLICE_CAR:
         skid = 0;
         rev = 0x51;
         crash = 2;
         gun = 0x5e;
         break;
-    case 30:
+    case UA_SEMI_TRUCK:
         skid = 0;
         rev = 0x4f;
         crash = 2;
         gun = 0x5c;
         break;
-    case 130:
+    case UA_BOSS_CAR:
         skid = 0;
         rev = 0x59;
         crash = 2;
@@ -374,40 +377,40 @@ void uasoundPlayCarWeaponPickup(s32 w, s32 a, s32 b)
     s32 id;
 
     switch (w) {
-    case 412:
+    case UA_PICKUP_BOMB:
         id = 0x5;
         break;
-    case 413:
+    case UA_PICKUP_OIL:
         id = 0x8;
         break;
-    case 414:
+    case UA_PICKUP_SPIKE:
         id = 0xb;
         break;
-    case 411:
+    case UA_PICKUP_FLAMETHROWER:
         id = 0xe;
         break;
-    case 410:
+    case UA_PICKUP_CATAPULT:
         id = 0x11;
         break;
-    case 401:
+    case UA_PICKUP_FIRE_MISSILE:
         id = 0x14;
         break;
-    case 405:
+    case UA_PICKUP_REAR_MISSILE:
         id = 0x17;
         break;
-    case 402:
+    case UA_PICKUP_FREEZE_MISSILE:
         id = 0x1a;
         break;
-    case 404:
+    case UA_PICKUP_POWER_MISSILE:
         id = 0x1d;
         break;
-    case 406:
+    case UA_PICKUP_SINGING_MISSILE:
         id = 0x20;
         break;
-    case 403:
+    case UA_PICKUP_HOMING_MISSILE:
         id = 0x23;
         break;
-    case 430:
+    case UA_UNK_430:
         id = 0x81;
         break;
     default:
@@ -425,39 +428,39 @@ void uasoundPlayCarWeaponLaunchOrInflight(s32 w, s32 a, s32 b)
     chan = 7;
     extra = -1;
     switch (w) {
-    case 8:
+    case WEAPON_BOMB:
         id = 0x6;
         break;
-    case 9:
+    case WEAPON_OIL:
         id = 0x9;
         break;
-    case 10:
+    case WEAPON_SPIKE:
         id = 0xc;
         break;
-    case 7:
+    case WEAPON_FLAMETHROWER:
         id = 0xf;
         chan = 4;
         extra = 0x3c0;
         break;
-    case 6:
+    case WEAPON_CATAPULT:
         id = 0x12;
         break;
-    case 0:
+    case WEAPON_FIRE_MISSILE:
         id = 0x15;
         break;
-    case 5:
+    case WEAPON_REAR_MISSILE:
         id = 0x18;
         break;
-    case 1:
+    case WEAPON_FREEZE_MISSILE:
         id = 0x1b;
         break;
-    case 3:
+    case WEAPON_POWER_MISSILE:
         id = 0x1e;
         break;
-    case 4:
+    case WEAPON_SINGING_MISSILE:
         id = 0x21;
         break;
-    case 2:
+    case WEAPON_HOMING_MISSILE:
         id = 0x24;
         break;
     default:
@@ -473,38 +476,38 @@ void uasoundStopCarWeapon(s32 w)
 
     chan = 7;
     switch (w) {
-    case 8:
+    case WEAPON_BOMB:
         id = 6;
         break;
-    case 9:
+    case WEAPON_OIL:
         id = 9;
         break;
-    case 10:
+    case WEAPON_SPIKE:
         id = 12;
         break;
-    case 7:
+    case WEAPON_FLAMETHROWER:
         id = 15;
         chan = 4;
         break;
-    case 6:
+    case WEAPON_CATAPULT:
         id = 18;
         break;
-    case 0:
+    case WEAPON_FIRE_MISSILE:
         id = 21;
         break;
-    case 5:
+    case WEAPON_REAR_MISSILE:
         id = 24;
         break;
-    case 1:
+    case WEAPON_FREEZE_MISSILE:
         id = 27;
         break;
-    case 3:
+    case WEAPON_POWER_MISSILE:
         id = 30;
         break;
-    case 4:
+    case WEAPON_SINGING_MISSILE:
         id = 33;
         break;
-    case 2:
+    case WEAPON_HOMING_MISSILE:
         id = 36;
         break;
     default:
@@ -521,48 +524,48 @@ void uasoundPlayCarWeaponExplode(s32 w, s32 a, s32 b, s32 v)
 
     chan = 7;
     switch (w) {
-    case 8:
+    case WEAPON_BOMB:
         stopId = 0x6;
         playId = 0x7;
         break;
-    case 9:
+    case WEAPON_OIL:
         stopId = 0x9;
         playId = 0xa;
         break;
-    case 10:
+    case WEAPON_SPIKE:
         stopId = 0xc;
         playId = 0xd;
         break;
-    case 7:
+    case WEAPON_FLAMETHROWER:
         stopId = 0xf;
         playId = 0x10;
         chan = 4;
         break;
-    case 6:
+    case WEAPON_CATAPULT:
         stopId = 0x12;
         playId = 0x13;
         break;
-    case 0:
+    case WEAPON_FIRE_MISSILE:
         stopId = 0x15;
         playId = 0x19;
         break;
-    case 5:
+    case WEAPON_REAR_MISSILE:
         stopId = 0x18;
         playId = 0x19;
         break;
-    case 1:
+    case WEAPON_FREEZE_MISSILE:
         stopId = 0x1b;
         playId = 0x1c;
         break;
-    case 3:
+    case WEAPON_POWER_MISSILE:
         stopId = 0x1e;
         playId = 0x1f;
         break;
-    case 4:
+    case WEAPON_SINGING_MISSILE:
         stopId = 0x21;
         playId = 0x22;
         break;
-    case 2:
+    case WEAPON_HOMING_MISSILE:
         stopId = 0x24;
         playId = 0x25;
         break;
@@ -578,43 +581,43 @@ void uasoundPlayCarSpecialWeaponPickup(s32 w, s32 a, s32 b)
     s32 id;
 
     switch (w) {
-    case 0:
+    case SOUND_SPECIAL_DUNE_BUGGY:
         id = 0x26;
         break;
-    case 1:
+    case SOUND_SPECIAL_ICE_CREAM_TRUCK:
         id = 0x29;
         break;
-    case 2:
+    case SOUND_SPECIAL_MAD_MAX:
         id = 0x2c;
         break;
-    case 3:
+    case SOUND_SPECIAL_CORVETTE:
         id = 0x2f;
         break;
-    case 4:
+    case SOUND_SPECIAL_HUMVEE:
         id = 0x32;
         break;
-    case 5:
+    case SOUND_SPECIAL_MONSTER_TRUCK:
         id = 0x35;
         break;
-    case 6:
+    case SOUND_SPECIAL_LAMBORGHINI:
         id = 0x38;
         break;
-    case 7:
+    case SOUND_SPECIAL_TAXI_CAB:
         id = 0x3b;
         break;
-    case 8:
+    case SOUND_SPECIAL_POLICE_CAR:
         id = 0x3e;
         break;
-    case 9:
+    case SOUND_SPECIAL_SEMI_TRUCK:
         id = 0x41;
         break;
-    case 10:
+    case SOUND_SPECIAL_LOW_RIDER:
         id = 0x44;
         break;
-    case 11:
+    case SOUND_SPECIAL_HARLEY:
         id = 0x47;
         break;
-    case 12:
+    case SOUND_SPECIAL_BOSS_CAR:
         id = 0x4a;
         break;
     default:
@@ -628,43 +631,43 @@ void uasoundPlayCarSpecialWeaponLaunchOrInflight(s32 w, s32 a, s32 b)
     s32 id;
 
     switch (w) {
-    case 0:
+    case SOUND_SPECIAL_DUNE_BUGGY:
         id = 0x27;
         break;
-    case 1:
+    case SOUND_SPECIAL_ICE_CREAM_TRUCK:
         id = 0x2a;
         break;
-    case 2:
+    case SOUND_SPECIAL_MAD_MAX:
         id = 0x2d;
         break;
-    case 3:
+    case SOUND_SPECIAL_CORVETTE:
         id = 0x30;
         break;
-    case 4:
+    case SOUND_SPECIAL_HUMVEE:
         id = 0x33;
         break;
-    case 5:
+    case SOUND_SPECIAL_MONSTER_TRUCK:
         id = 0x36;
         break;
-    case 6:
+    case SOUND_SPECIAL_LAMBORGHINI:
         id = 0x39;
         break;
-    case 7:
+    case SOUND_SPECIAL_TAXI_CAB:
         id = 0x3c;
         break;
-    case 8:
+    case SOUND_SPECIAL_POLICE_CAR:
         id = 0x3f;
         break;
-    case 9:
+    case SOUND_SPECIAL_SEMI_TRUCK:
         id = 0x42;
         break;
-    case 10:
+    case SOUND_SPECIAL_LOW_RIDER:
         id = 0x45;
         break;
-    case 11:
+    case SOUND_SPECIAL_HARLEY:
         id = 0x48;
         break;
-    case 12:
+    case SOUND_SPECIAL_BOSS_CAR:
         id = 0x4b;
         break;
     default:
@@ -678,43 +681,43 @@ void uasoundStopCarSpecialWeapon(s32 w)
     s32 id;
 
     switch (w) {
-    case 0:
+    case SOUND_SPECIAL_DUNE_BUGGY:
         id = 0x27;
         break;
-    case 1:
+    case SOUND_SPECIAL_ICE_CREAM_TRUCK:
         id = 0x2a;
         break;
-    case 2:
+    case SOUND_SPECIAL_MAD_MAX:
         id = 0x2d;
         break;
-    case 3:
+    case SOUND_SPECIAL_CORVETTE:
         id = 0x30;
         break;
-    case 4:
+    case SOUND_SPECIAL_HUMVEE:
         id = 0x33;
         break;
-    case 5:
+    case SOUND_SPECIAL_MONSTER_TRUCK:
         id = 0x36;
         break;
-    case 6:
+    case SOUND_SPECIAL_LAMBORGHINI:
         id = 0x39;
         break;
-    case 7:
+    case SOUND_SPECIAL_TAXI_CAB:
         id = 0x3c;
         break;
-    case 8:
+    case SOUND_SPECIAL_POLICE_CAR:
         id = 0x3f;
         break;
-    case 9:
+    case SOUND_SPECIAL_SEMI_TRUCK:
         id = 0x42;
         break;
-    case 10:
+    case SOUND_SPECIAL_LOW_RIDER:
         id = 0x45;
         break;
-    case 11:
+    case SOUND_SPECIAL_HARLEY:
         id = 0x48;
         break;
-    case 12:
+    case SOUND_SPECIAL_BOSS_CAR:
         id = 0x4b;
         break;
     default:
@@ -729,55 +732,55 @@ void uasoundPlayCarSpecialWeaponExplode(s32 w, s32 a, s32 b, s32 v)
     s32 playId;
 
     switch (w) {
-    case 0:
+    case SOUND_SPECIAL_DUNE_BUGGY:
         stopId = 0x27;
         playId = 0x28;
         break;
-    case 1:
+    case SOUND_SPECIAL_ICE_CREAM_TRUCK:
         stopId = 0x2a;
         playId = 0x2b;
         break;
-    case 2:
+    case SOUND_SPECIAL_MAD_MAX:
         stopId = 0x2d;
         playId = 0x2e;
         break;
-    case 3:
+    case SOUND_SPECIAL_CORVETTE:
         stopId = 0x30;
         playId = 0x31;
         break;
-    case 4:
+    case SOUND_SPECIAL_HUMVEE:
         stopId = 0x33;
         playId = 0x34;
         break;
-    case 5:
+    case SOUND_SPECIAL_MONSTER_TRUCK:
         stopId = 0x36;
         playId = 0x37;
         break;
-    case 6:
+    case SOUND_SPECIAL_LAMBORGHINI:
         stopId = 0x39;
         playId = 0x3a;
         break;
-    case 7:
+    case SOUND_SPECIAL_TAXI_CAB:
         stopId = 0x3c;
         playId = 0x3d;
         break;
-    case 8:
+    case SOUND_SPECIAL_POLICE_CAR:
         stopId = 0x3f;
         playId = 0x40;
         break;
-    case 9:
+    case SOUND_SPECIAL_SEMI_TRUCK:
         stopId = 0x42;
         playId = 0x43;
         break;
-    case 10:
+    case SOUND_SPECIAL_LOW_RIDER:
         stopId = 0x45;
         playId = 0x46;
         break;
-    case 11:
+    case SOUND_SPECIAL_HARLEY:
         stopId = 0x48;
         playId = 0x49;
         break;
-    case 12:
+    case SOUND_SPECIAL_BOSS_CAR:
         stopId = 0x4b;
         playId = 0x4c;
         break;
@@ -793,45 +796,45 @@ void uasoundPlayCarSignature(s32 w, s32 a, s32 b)
     s32 id;
 
     switch (w) {
-    case -1:
+    case UA_NONE:
         return;
-    case 80:
+    case UA_HARLEY:
         id = 0x7b;
         break;
-    case 110:
+    case UA_CORVETTE:
         id = 0x7e;
         break;
-    case 20:
+    case UA_TAXI_CAB:
         id = 0x75;
         break;
-    case 90:
+    case UA_DUNE_BUGGY:
         id = 0x7c;
         break;
-    case 70:
+    case UA_HUMVEE:
         id = 0x7a;
         break;
-    case 10:
+    case UA_ICE_CREAM_TRUCK:
         id = 0x74;
         break;
-    case 100:
+    case UA_LOW_RIDER:
         id = 0x7d;
         break;
-    case 60:
+    case UA_LAMBORGHINI:
         id = 0x79;
         break;
-    case 120:
+    case UA_MAD_MAX:
         id = 0x7f;
         break;
-    case 40:
+    case UA_MONSTER_TRUCK:
         id = 0x77;
         break;
-    case 50:
+    case UA_POLICE_CAR:
         id = 0x78;
         break;
-    case 30:
+    case UA_SEMI_TRUCK:
         id = 0x76;
         break;
-    case 130:
+    case UA_BOSS_CAR:
         id = 0x80;
         break;
     default:
@@ -845,45 +848,45 @@ void uasoundStopCarSignature(s32 w)
     s32 id;
 
     switch (w) {
-    case -1:
+    case UA_NONE:
         return;
-    case 80:
+    case UA_HARLEY:
         id = 0x7b;
         break;
-    case 110:
+    case UA_CORVETTE:
         id = 0x7e;
         break;
-    case 20:
+    case UA_TAXI_CAB:
         id = 0x75;
         break;
-    case 90:
+    case UA_DUNE_BUGGY:
         id = 0x7c;
         break;
-    case 70:
+    case UA_HUMVEE:
         id = 0x7a;
         break;
-    case 10:
+    case UA_ICE_CREAM_TRUCK:
         id = 0x74;
         break;
-    case 100:
+    case UA_LOW_RIDER:
         id = 0x7d;
         break;
-    case 60:
+    case UA_LAMBORGHINI:
         id = 0x79;
         break;
-    case 120:
+    case UA_MAD_MAX:
         id = 0x7f;
         break;
-    case 40:
+    case UA_MONSTER_TRUCK:
         id = 0x77;
         break;
-    case 50:
+    case UA_POLICE_CAR:
         id = 0x78;
         break;
-    case 30:
+    case UA_SEMI_TRUCK:
         id = 0x76;
         break;
-    case 130:
+    case UA_BOSS_CAR:
         id = 0x80;
         break;
     default:
@@ -990,14 +993,14 @@ void uasoundPlayHuntDA(s32 mode)
     s32 track;
 
     switch (mode) {
-    case 2:
-        track = 4;
+    case LEVEL_NUM(LEVEL2_WAREHOUSE):
+        track = DA_TRACK_STALK_N_ROLL;
         break;
-    case 4:
-        track = 4;
+    case LEVEL_NUM(LEVEL4_CITY_PARK):
+        track = DA_TRACK_STALK_N_ROLL;
         break;
-    case 5:
-        track = 6;
+    case LEVEL_NUM(LEVEL5_CYBURBIA):
+        track = DA_TRACK_CYBURB_HUNT;
         break;
     default:
         return;
@@ -1019,14 +1022,14 @@ void uasoundPlayBattleDA(s32 mode)
 {
     s32 track;
 
-    track = 7;
+    track = DA_TRACK_CYBURB_SLIDE;
     switch (mode) {
-    case 2:
+    case LEVEL_NUM(LEVEL2_WAREHOUSE):
         break;
-    case 4:
-        track = 5;
+    case LEVEL_NUM(LEVEL4_CITY_PARK):
+        track = DA_TRACK_ASPHALT_ASSAULT;
         break;
-    case 5:
+    case LEVEL_NUM(LEVEL5_CYBURBIA):
         break;
     default:
         return;

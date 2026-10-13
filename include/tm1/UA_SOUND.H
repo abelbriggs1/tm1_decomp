@@ -4,6 +4,21 @@
 #include "common.h"
 #include "tm1/SOUND_REQ.H"
 
+// Special weapon sound IDs.
+#define SOUND_SPECIAL_DUNE_BUGGY 0
+#define SOUND_SPECIAL_ICE_CREAM_TRUCK 1
+#define SOUND_SPECIAL_MAD_MAX 2
+#define SOUND_SPECIAL_CORVETTE 3
+#define SOUND_SPECIAL_HUMVEE 4
+#define SOUND_SPECIAL_MONSTER_TRUCK 5
+#define SOUND_SPECIAL_LAMBORGHINI 6
+#define SOUND_SPECIAL_TAXI_CAB 7
+#define SOUND_SPECIAL_POLICE_CAR 8
+#define SOUND_SPECIAL_SEMI_TRUCK 9
+#define SOUND_SPECIAL_LOW_RIDER 10
+#define SOUND_SPECIAL_HARLEY 11
+#define SOUND_SPECIAL_BOSS_CAR 12
+
 void uasoundFireCarMachineGuns(s32 w, s32 a, s32 b);
 void uasoundStopCarMachineGuns(s32 w);
 void uasoundExplodeMachineGunBullet(s32 a, s32 b, s32 c);

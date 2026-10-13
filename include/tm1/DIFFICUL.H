@@ -1,0 +1,10 @@
+#ifndef __TM1_DIFFICUL_H__
+#define __TM1_DIFFICUL_H__
+
+#define DIFFICULTY_EASY 0
+#define DIFFICULTY_MEDIUM 1
+#define DIFFICULTY_HARD 2
+
+#define DIFFICULTY_MAX (DIFFICULTY_HARD + 1)
+
+#endif // __TM1_DIFFICUL_H__

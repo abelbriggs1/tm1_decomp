@@ -7,6 +7,7 @@
 #include "tm1/CAR.H"
 #include "tm1/CARUPD.H"
 #include "tm1/CAR_INIT.H"
+#include "tm1/LEVELS.H"
 #include "tm1/SHELL.H"
 #include "tm1/TRIGPTS.H"
 #include "tm1/UA.H"
@@ -30,7 +31,7 @@ void AICarInit(AICar* car, s32 uaIndex, u8 which)
         InitWeapons(car, &car->weap, 0);
         car->stats.unkF8 = 0;
     } else {
-        car->weap.ammo[11] = 20;
+        car->weap.ammo[WEAPON_SPECIAL] = 20;
     }
     car->unk01 = 2;
     InitAIFlags(&car->unk40);
@@ -124,13 +125,13 @@ void AICarInitDynamics(AICar* car)
     CarInitDeltas(&car->stats, car->uaIndex);
     InitHitPoints(car, 0);
     InitTireInfo(car->tires);
-    if (shellGetCurrentLevel() == 5) {
+    if (shellGetCurrentLevel() == LEVEL6_ROOFTOPS) {
         InitTireGroup(car->tires, 8);
     } else {
         InitTireGroup(car->tires, 0);
     }
     car->unk18 = 0x140;
-    if (car->uaIndex == -1) {
+    if (car->uaIndex == UA_NONE) {
         car->unk18 = 0x320;
     }
     car->unk1C = 0xA0;
@@ -161,7 +162,7 @@ void AICarInitProfiles(AICar* car)
     car->attack[2].unk06 = 50;
     car->attack[3].unk06 = 50;
     switch (car->uaIndex) {
-    case 10:
+    case UA_ICE_CREAM_TRUCK:
         car->route[0].prio = 0;
         car->route[0].unk04 = 0;
         car->route[0].unk08 = 100;
@@ -191,7 +192,7 @@ void AICarInitProfiles(AICar* car)
         car->attack[2].unk00 = 90;
         car->attack[3].unk00 = 90;
         break;
-    case 20:
+    case UA_TAXI_CAB:
         car->route[0].prio = 0;
         car->route[0].unk04 = 100;
         car->route[0].unk08 = 100;
@@ -221,7 +222,7 @@ void AICarInitProfiles(AICar* car)
         car->attack[2].unk00 = 30;
         car->attack[3].unk00 = 30;
         break;
-    case 30:
+    case UA_SEMI_TRUCK:
         car->route[0].prio = 70;
         car->route[0].unk04 = 97;
         car->route[0].unk08 = 100;
@@ -251,7 +252,7 @@ void AICarInitProfiles(AICar* car)
         car->attack[2].unk00 = 90;
         car->attack[3].unk00 = 90;
         break;
-    case 40:
+    case UA_MONSTER_TRUCK:
         car->route[0].prio = 90;
         car->route[0].unk04 = 100;
         car->route[0].unk08 = 100;
@@ -281,7 +282,7 @@ void AICarInitProfiles(AICar* car)
         car->attack[2].unk00 = 100;
         car->attack[3].unk00 = 100;
         break;
-    case 60:
+    case UA_LAMBORGHINI:
         car->route[0].prio = 10;
         car->route[0].unk04 = 98;
         car->route[0].unk08 = 100;
@@ -311,7 +312,7 @@ void AICarInitProfiles(AICar* car)
         car->attack[2].unk00 = 0;
         car->attack[3].unk00 = 0;
         break;
-    case 50:
+    case UA_POLICE_CAR:
         car->route[0].prio = 0;
         car->route[0].unk04 = 85;
         car->route[0].unk08 = 100;
@@ -341,7 +342,7 @@ void AICarInitProfiles(AICar* car)
         car->attack[2].unk00 = 50;
         car->attack[3].unk00 = 50;
         break;
-    case 70:
+    case UA_HUMVEE:
         car->route[0].prio = 80;
         car->route[0].unk04 = 98;
         car->route[0].unk08 = 100;
@@ -371,7 +372,7 @@ void AICarInitProfiles(AICar* car)
         car->attack[2].unk00 = 65;
         car->attack[3].unk00 = 65;
         break;
-    case 80:
+    case UA_HARLEY:
         car->route[0].prio = 0;
         car->route[0].unk04 = 0;
         car->route[0].unk08 = 100;
@@ -401,7 +402,7 @@ void AICarInitProfiles(AICar* car)
         car->attack[2].unk00 = 0;
         car->attack[3].unk00 = 0;
         break;
-    case 90:
+    case UA_DUNE_BUGGY:
         car->route[0].prio = 15;
         car->route[0].unk04 = 90;
         car->route[0].unk08 = 100;
@@ -431,7 +432,7 @@ void AICarInitProfiles(AICar* car)
         car->attack[2].unk00 = 10;
         car->attack[3].unk00 = 10;
         break;
-    case 100:
+    case UA_LOW_RIDER:
         car->route[0].prio = 0;
         car->route[0].unk04 = 0;
         car->route[0].unk08 = 100;
@@ -461,7 +462,7 @@ void AICarInitProfiles(AICar* car)
         car->attack[2].unk00 = 5;
         car->attack[3].unk00 = 5;
         break;
-    case 110:
+    case UA_CORVETTE:
         car->route[0].prio = 0;
         car->route[0].unk04 = 100;
         car->route[0].unk08 = 100;
@@ -491,7 +492,7 @@ void AICarInitProfiles(AICar* car)
         car->attack[2].unk00 = 5;
         car->attack[3].unk00 = 5;
         break;
-    case 120:
+    case UA_MAD_MAX:
         car->route[0].prio = 0;
         car->route[0].unk04 = 100;
         car->route[0].unk08 = 100;
@@ -521,7 +522,7 @@ void AICarInitProfiles(AICar* car)
         car->attack[2].unk00 = 30;
         car->attack[3].unk00 = 50;
         break;
-    case 130:
+    case UA_BOSS_CAR:
         car->route[0].prio = 30;
         car->route[0].unk04 = 90;
         car->route[0].unk08 = 100;

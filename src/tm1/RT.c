@@ -114,11 +114,11 @@ s32 rtMainLoop(void)
 INCLUDE_ASM("asm/nonmatchings/tm1/RT", rtMainLoop);
 #endif
 
-void rtReturnToShell(s32 arg, s32 mode)
+void rtReturnToShell(s32 code, s32 delay)
 {
     if (D_8018BF18 < 4) {
-        gReturnsPending[D_8018BF18].mode = arg;
-        gReturnsPending[D_8018BF18].arg = mode;
+        gReturnsPending[D_8018BF18].code = code;
+        gReturnsPending[D_8018BF18].delay = delay;
         D_8018BF18 = D_8018BF18 + 1;
     }
 }
@@ -137,11 +137,11 @@ void rtClearPendingReturns(void)
         neg = -1;
     } while (0);
     for (; i < 4; i++) {
-        gReturnsPending[n].mode = 0;
-        gReturnsPending[n].arg = neg;
+        gReturnsPending[n].code = RT_RETURN_NONE;
+        gReturnsPending[n].delay = neg;
     }
     D_8018BF18 = 0;
-    D_8018BF1C = 0;
+    D_8018BF1C = RT_RETURN_NONE;
 }
 
 s32 rtTimeToReturnToShell(void)
@@ -159,12 +159,12 @@ s32 rtTimeToReturnToShell(void)
     for (i = 0; i < D_8018BF18; i++) {
         f = GetFieldsLastFrame();
         do {
-            a = gReturnsPending[i].arg;
+            a = gReturnsPending[i].delay;
         } while (0);
 
         t = a - f;
 
-        gReturnsPending[i].arg = t;
+        gReturnsPending[i].delay = t;
         if (t < 0) {
             found = i;
         }
@@ -172,10 +172,10 @@ s32 rtTimeToReturnToShell(void)
     if (found == -1) {
         return 0;
     }
-    D_8018BF1C = gReturnsPending[found].mode;
+    D_8018BF1C = gReturnsPending[found].code;
     for (i = found + 1; i < D_8018BF18; i++) {
-        gReturnsPending[i - 1].mode = gReturnsPending[i].mode;
-        gReturnsPending[i - 1].arg = gReturnsPending[i].arg;
+        gReturnsPending[i - 1].code = gReturnsPending[i].code;
+        gReturnsPending[i - 1].delay = gReturnsPending[i].delay;
     }
     D_8018BF18--;
     return 1;

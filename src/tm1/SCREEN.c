@@ -7,21 +7,27 @@
 #include <STDIO.H>
 #include <STRINGS.H>
 
+#include "tm1/ACCESS.H"
 #include "tm1/CAR.H"
 #include "tm1/CAR_INIT.H"
 #include "tm1/CS.H"
 #include "tm1/CTLPAD.H"
+#include "tm1/DIFFICUL.H"
 #include "tm1/FILEIO.H"
 #include "tm1/FONT.H"
 #include "tm1/HIER.H"
+#include "tm1/LEVELS.H"
 #include "tm1/LIGHT.H"
 #include "tm1/MATH.H"
 #include "tm1/MOVIE.H"
+#include "tm1/PADCFG.H"
 #include "tm1/RT.H"
 #include "tm1/SCREEN.H"
 #include "tm1/SHELL.H"
 #include "tm1/SMOOTH.H"
 #include "tm1/SOUND.H"
+#include "tm1/STATE.H"
+#include "tm1/TRANSIT.H"
 #include "tm1/UA.H"
 #include "tm1/UA_DASH.H"
 #include "tm1/UA_SOUND.H"
@@ -85,15 +91,15 @@ extern ScreenArrow screenVehicleArrows[2];
 extern ScreenArrow screenControlArrows[2];
 extern ScreenCinema screenCinemas[4];
 extern char* gTransitionLabels[14];
-extern char* screenControlPadLabels[4];
+extern char* screenControlPadLabels[PAD_CONFIG_MAX];
 extern char* screenVolumeLabels[15];
-extern char* screenDifficultyLabels[3];
+extern char* screenDifficultyLabels[DIFFICULTY_MAX];
 extern u16 screenNumCards[8];
 extern s16 D_80170F44[7][8];
 extern s16 D_80170FB4[7][8];
 extern s16 D_80171024[8];
 extern s16 D_80171034[8];
-extern char* screenPasswords[15];
+extern char* screenPasswords[ACCESS_CODE_MAX];
 
 extern DRAWENV gScreenDrawEnv;
 extern DISPENV gScreenDisplayEnv;
@@ -144,7 +150,7 @@ INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB91C);
 #ifdef NON_MATCHING
 s32 screenDisplayTitle(void)
 {
-    s32 ret = 1;
+    s32 ret = GAME_STATE_TITLE;
     char* choices[3] = { "1P CONTEST", "2P BATTLE", "OPTIONS" };
     DRAWENV env;
     s32 frames;
@@ -187,24 +193,24 @@ s32 screenDisplayTitle(void)
             uasoundPlayMenuSelectFlush();
             switch (gTitleChoice) {
             case 0:
-                ret = 7;
+                ret = GAME_STATE_1P_VEHICLE_SELECT;
                 goto done;
             case 1:
-                ret = 8;
+                ret = GAME_STATE_2P_VEHICLE_SELECT;
                 goto done;
             case 2:
-                ret = 0x1D;
+                ret = GAME_STATE_MAIN_OPTIONS;
                 goto done;
             case 3:
-                ret = 0x15;
+                ret = GAME_STATE_HISTORY;
                 goto done;
             case 4:
-                ret = 0xF;
+                ret = GAME_STATE_CREDITS;
                 goto done;
             }
             goto done;
         } else if (frames >= 1201) {
-            ret = 2;
+            ret = GAME_STATE_ATTRACT;
             goto done;
         }
         if (gTitleChoice != prev) {
@@ -237,7 +243,7 @@ INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB948);
 #ifdef NON_MATCHING
 s32 screenBattleOptions(s32 twoPlayer)
 {
-    s32 ret = 1;
+    s32 ret = GAME_STATE_TITLE;
     char* names[3] = { "START", "OPTIONS", "EXIT" };
     DRAWENV env;
     s32 choice = 0;
@@ -293,18 +299,18 @@ s32 screenBattleOptions(s32 twoPlayer)
             uasoundPlayMenuSelectFlush();
             switch (choice) {
             case 0:
-                ret = 10;
+                ret = GAME_STATE_LOAD_LEVEL;
                 goto out;
             case 1:
-                ret = 6;
+                ret = GAME_STATE_OPTIONS;
                 goto out;
             case 2:
-                ret = 1;
+                ret = GAME_STATE_TITLE;
                 goto out;
             }
             goto out;
         } else if (frames >= 1201) {
-            ret = 1;
+            ret = GAME_STATE_TITLE;
             goto out;
         }
         if (choice != prev) {
@@ -322,7 +328,7 @@ s32 screenBattleOptions(s32 twoPlayer)
         }
     }
 out:
-    if (ret == 10) {
+    if (ret == GAME_STATE_LOAD_LEVEL) {
         while (ctlpadAnyKey(pad)) {
             UpdCtlPad();
         }
@@ -572,7 +578,7 @@ s32 screenOptions(s32 twoPlayer)
     s32 pad;
     s32 minChoice;
     s32 dir;
-    s32 ret = 20;
+    s32 ret = GAME_STATE_BATTLE_OPTIONS;
 
     minChoice = 0;
     names[3] = "EXIT";
@@ -643,7 +649,7 @@ s32 screenOptions(s32 twoPlayer)
             case 1:
                 if (twoPlayer == 0) {
                     uasoundPlayMenuCycleFlush();
-                    ret = 0x18;
+                    ret = GAME_STATE_CHOOSE_CONTROLS;
                     return ret;
                 }
                 break;
@@ -658,7 +664,7 @@ s32 screenOptions(s32 twoPlayer)
                 }
                 shellNextLevelChoice(dir);
                 uasoundPlayMenuCycleFlush();
-                ret = 0x17;
+                ret = GAME_STATE_CHOOSE_BATTLEGROUND;
                 return ret;
             }
         } else if (ctlpadAnySelect(pad)) {
@@ -677,20 +683,20 @@ s32 screenOptions(s32 twoPlayer)
             case 1:
                 if (twoPlayer) {
                     uasoundPlayMenuSelectFlush();
-                    ret = 0x18;
+                    ret = GAME_STATE_CHOOSE_CONTROLS;
                     return ret;
                 }
                 uasoundPlayMenuCycleFlush();
-                ret = 0x18;
+                ret = GAME_STATE_CHOOSE_CONTROLS;
                 return ret;
             case 2:
                 if (twoPlayer) {
                     uasoundPlayMenuCycleFlush();
-                    ret = 0x17;
+                    ret = GAME_STATE_CHOOSE_BATTLEGROUND;
                     return ret;
                 }
                 uasoundPlayMenuSelectFlush();
-                ret = 0x16;
+                ret = GAME_STATE_ACCESS_CODE;
                 return ret;
             }
         } else if (frames >= 18001) {
@@ -720,7 +726,7 @@ INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB9EC);
 s32 screenMainOptions(void)
 {
     static s32 prevChoice;
-    s32 ret = 1;
+    s32 ret = GAME_STATE_TITLE;
     char* choices[4];
     s32 frames;
 
@@ -761,16 +767,16 @@ s32 screenMainOptions(void)
             uasoundPlayMenuSelectFlush();
             switch (gMainOptionsChoice) {
             case 0:
-                ret = 0x19;
+                ret = GAME_STATE_AUDIO_OPTIONS;
                 break;
             case 1:
-                ret = 0x15;
+                ret = GAME_STATE_HISTORY;
                 break;
             case 2:
-                ret = 0xF;
+                ret = GAME_STATE_CREDITS;
                 break;
             case 3:
-                ret = 1;
+                ret = GAME_STATE_TITLE;
                 gMainOptionsChoice = 0;
                 prevChoice = -1;
                 VSync(0);
@@ -1429,33 +1435,33 @@ s32 screenGetCarsEnum(s32 which)
 {
     switch (which) {
     case 0:
-        return 10;
+        return UA_ICE_CREAM_TRUCK;
     case 1:
-        return 20;
+        return UA_TAXI_CAB;
     case 2:
-        return 30;
+        return UA_SEMI_TRUCK;
     case 3:
-        return 50;
+        return UA_POLICE_CAR;
     case 4:
-        return 100;
+        return UA_LOW_RIDER;
     case 5:
-        return 60;
+        return UA_LAMBORGHINI;
     case 6:
-        return 90;
+        return UA_DUNE_BUGGY;
     case 7:
-        return 70;
+        return UA_HUMVEE;
     case 8:
-        return 80;
+        return UA_HARLEY;
     case 9:
-        return 110;
+        return UA_CORVETTE;
     case 10:
-        return 40;
+        return UA_MONSTER_TRUCK;
     case 11:
-        return 120;
+        return UA_MAD_MAX;
     case 12:
-        return 130;
+        return UA_BOSS_CAR;
     }
-    return -1;
+    return UA_NONE;
 }
 
 #ifdef NON_MATCHING
@@ -1614,7 +1620,7 @@ s32 screenTransitionLevel(s32 level, s32 advanced)
     sprintf(lines[2], "%s", gTransitionLabels[level]);
     sprintf(lines[3], "%s", gTransitionLabels[7 + level]);
     sprintf(lines[4], "%s", screenPasswordForLevel(level));
-    if (level == 0)
+    if (level == LEVEL1_ARENA)
         count = 3;
     for (line = 0; line < count; ++line) {
         x = (fontStringWidth(6, (u8*)lines[line]) >> 1) + 320;
@@ -1655,7 +1661,7 @@ s32 screenTransitionLevel(s32 level, s32 advanced)
     screenDisplayToDisplay(0, 1);
     DrawSync(0);
     shellDrawCards();
-    shellSetTransitionState(1);
+    shellSetTransitionState(TRANSITION_INIT_TEXTURES);
     shellCheckTransitionStatus();
     screenVramToRam(320, 0, 320, 240, image);
     meetText[18] = screenGetLevelNumCards(level) == 1 ? 0 : 's';
@@ -1692,7 +1698,7 @@ INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenTransitionLevel);
 
 void screenLostGame(void)
 {
-    uasoundPlayCarSignature(10, 0, 0);
+    uasoundPlayCarSignature(UA_ICE_CREAM_TRUCK, 0, 0);
     soundProcessIds();
     screenGrayedScreen();
     fontPrintCenteredXY(6, 159, 119, "YOU LOSE!");
@@ -1782,11 +1788,11 @@ char* screenChooseControls(s32 mode, s32 pad, s32 unused)
     sprintf(imageName, "UASCREEN\\SCRNFB%d.TIM", config);
     fileioLoadFileIntoRam(image, imageName);
     screenDisplayImage(0, image, 0, 0);
-    if (config != 0)
+    if (config != PAD_CONFIG_CTL_FREAK)
         fontPrintXY(fonts[0], screenControlArrows[0].x, screenControlArrows[0].y,
             screenControlArrows[0].label);
     changed = 0;
-    if (config != 3)
+    if (config != PAD_CONFIG_RUN_N_GUN)
         fontPrintXY(fonts[0], screenControlArrows[1].x, screenControlArrows[1].y,
             screenControlArrows[1].label);
     left = 0;
@@ -1802,10 +1808,10 @@ char* screenChooseControls(s32 mode, s32 pad, s32 unused)
         UpdCtlPad();
         if (waitRelease) {
             idleFrames = 0;
-            if (config != 0)
+            if (config != PAD_CONFIG_CTL_FREAK)
                 fontPrintXY(fonts[left], screenControlArrows[0].x, screenControlArrows[0].y,
                     screenControlArrows[0].label);
-            if (config != 3)
+            if (config != PAD_CONFIG_RUN_N_GUN)
                 fontPrintXY(fonts[right], screenControlArrows[1].x, screenControlArrows[1].y,
                     screenControlArrows[1].label);
             if (!ctlpadAnyKey(inputPad))
@@ -1823,11 +1829,11 @@ char* screenChooseControls(s32 mode, s32 pad, s32 unused)
             if (left || (right = ctlpadAnyRight(inputPad))) {
                 waitRelease = 1;
                 if (left) {
-                    if (config > 0) {
+                    if (config > PAD_CONFIG_CTL_FREAK) {
                         --config;
                         changed = 1;
                     }
-                } else if (config < 3) {
+                } else if (config < PAD_CONFIG_RUN_N_GUN) {
                     ++config;
                     changed = 1;
                 }
@@ -1865,10 +1871,10 @@ char* screenChooseControls(s32 mode, s32 pad, s32 unused)
                 fontPrintCenteredXY(0, 159, 40, playerName);
             }
         }
-        if (config != 0)
+        if (config != PAD_CONFIG_CTL_FREAK)
             fontPrintXY(fonts[left], screenControlArrows[0].x, screenControlArrows[0].y,
                 screenControlArrows[0].label);
-        if (config != 3)
+        if (config != PAD_CONFIG_RUN_N_GUN)
             fontPrintXY(fonts[right], screenControlArrows[1].x, screenControlArrows[1].y,
                 screenControlArrows[1].label);
         DrawSync(0);
@@ -2008,9 +2014,9 @@ s32 screenNextDifficulty(s32 delta)
 {
     gDifficulty += delta;
     if (gDifficulty < 0) {
-        gDifficulty = 2;
-    } else if (gDifficulty == 3) {
-        gDifficulty = 0;
+        gDifficulty = DIFFICULTY_HARD;
+    } else if (gDifficulty == DIFFICULTY_MAX) {
+        gDifficulty = DIFFICULTY_EASY;
     }
     return gDifficulty;
 }
@@ -2217,7 +2223,7 @@ void screenCheckMidGameOptions(void)
     VSync(0);
     screenSetEnv();
     screenDisplayToDisplay(0, 1);
-    if (rtIsSplitScreenOn() == 0 && shellGetCurrentLevel() != 0) {
+    if (rtIsSplitScreenOn() == 0 && shellGetCurrentLevel() != LEVEL1_ARENA) {
         pw = screenPasswordForLevel(shellGetCurrentLevel());
         sprintf(buf, "%s PASSWORD:", shellGetCurrentLevelName());
     }
@@ -2292,7 +2298,7 @@ void screenCheckMidGameOptions(void)
                 VSync(0);
                 screenDisplayToDisplay(0, 1);
                 fontPrintCenteredXY(6, 159, 115, aborted);
-                rtReturnToShell(2, 0);
+                rtReturnToShell(RT_RETURN_ABORTED, 0);
                 while (ctlpadAnyKey(pad)) {
                     UpdCtlPad();
                 }
@@ -2991,7 +2997,7 @@ s32 screenWrongPassword(s32 unused_state)
     fontSetColor(fonts[1], 100, 100, 100);
     wrong = "WRONG!";
     fontPrintCenteredXY(0, 159, 95, wrong);
-    ret = 6;
+    ret = GAME_STATE_OPTIONS;
     fontPrintCenteredXY(fonts[1], 159, 133, strs[0]);
     choice = 0;
     fontPrintCenteredXY(fonts[0], 159, 153, strs[1]);
@@ -3025,10 +3031,10 @@ s32 screenWrongPassword(s32 unused_state)
             uasoundPlayMenuSelectFlush();
             switch (choice) {
             case 0:
-                ret = 22;
+                ret = GAME_STATE_ACCESS_CODE;
                 goto out;
             case 1:
-                ret = 6;
+                ret = GAME_STATE_OPTIONS;
                 goto out;
             }
             goto out;
@@ -3066,20 +3072,20 @@ INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenWrongPassword);
 char* screenPasswordForLevel(s32 level)
 {
     switch (level) {
-    case 1:
-        return screenPasswords[1];
-    case 2:
-        return screenPasswords[2];
-    case 3:
-        return screenPasswords[3];
-    case 4:
-        return screenPasswords[4];
-    case 5:
-        return screenPasswords[5];
-    case 6:
-        return screenPasswords[13];
+    case LEVEL2_WAREHOUSE:
+        return screenPasswords[ACCESS_CODE_WAREHOUSE];
+    case LEVEL3_FREEWAY:
+        return screenPasswords[ACCESS_CODE_FREEWAY];
+    case LEVEL4_CITY_PARK:
+        return screenPasswords[ACCESS_CODE_CITY_PARK];
+    case LEVEL5_CYBURBIA:
+        return screenPasswords[ACCESS_CODE_CYBURBIA];
+    case LEVEL6_ROOFTOPS:
+        return screenPasswords[ACCESS_CODE_ROOFTOPS];
+    case LEVEL7_ARENA_5:
+        return screenPasswords[ACCESS_CODE_ARENA_5];
     }
-    return screenPasswords[0];
+    return screenPasswords[ACCESS_CODE_ARENA];
 }
 
 s32 screenAccessCodeFromPassword(char* password)
@@ -3087,7 +3093,7 @@ s32 screenAccessCodeFromPassword(char* password)
     u32 i;
 
     if (*password != 0) {
-        for (i = 0; i < 15; i++) {
+        for (i = 0; i < ACCESS_CODE_MAX; i++) {
             if (strcmp(password, screenPasswords[i]) == 0) {
                 return i;
             }
@@ -3625,19 +3631,19 @@ s32 screenPlayCarEnding(s32 carId)
     switch (passwordChoice) {
     case 0:
         fontPrintCenteredXY(6, 159, 175, "Infinite Weapons");
-        password = screenPasswords[7];
+        password = screenPasswords[ACCESS_CODE_INFINITE_WEAPONS];
         break;
     case 1:
         fontPrintCenteredXY(6, 159, 175, "Minion and Friends");
-        password = screenPasswords[11];
+        password = screenPasswords[ACCESS_CODE_MINION];
         break;
     case 2:
         fontPrintCenteredXY(6, 159, 175, "Arena with 5 Opponents");
-        password = screenPasswords[13];
+        password = screenPasswords[ACCESS_CODE_ARENA_5];
         break;
     default:
         fontPrintCenteredXY(6, 159, 175, "Helicopter View");
-        password = screenPasswords[14];
+        password = screenPasswords[ACCESS_CODE_HELICOPTER_VIEW];
         break;
     }
     fontPrintCenteredXY(5, 159, 205, password);
@@ -3652,21 +3658,21 @@ s32 screenPlayCarEnding(s32 carId)
     shellStopCarEngineRev();
     sprintf(storyName, "UATEXT\\CAREND%02d.TXT", GetCarNumFromCarName(carId) + 1);
 
-    if (carId == 50) {
+    if (carId == UA_POLICE_CAR) {
         background = "UASCREEN\\SCRNCOP.TIM";
         signatureCountdown = 720;
         SetOutlawEndingParameters();
-        track = 8;
-    } else if (carId == 120) {
+        track = DA_TRACK_DROP_DEAD;
+    } else if (carId == UA_MAD_MAX) {
         background = "UASCREEN\\SCRNROAD.TIM";
         signatureCountdown = 60;
         SetRoadKillEndingParameters();
-        track = 2;
+        track = DA_TRACK_TWISTED_THEME;
     } else {
         background = "UASCREEN\\SCRNLARO.TIM";
         signatureCountdown = 30;
         SetDefaultEndingParameters();
-        track = 1;
+        track = DA_TRACK_NONE;
     }
     screenScrollTextInit(
         &credits, "UATEXT\\CREDITS.TXT", TEXT_BUFFER, background, OPTIONS_IMAGE, 6);
@@ -3679,7 +3685,7 @@ s32 screenPlayCarEnding(s32 carId)
         screenDisplayImage(ending.imageRight, credits.image, 0, 0);
         if (!musicStarted) {
             musicStarted = 1;
-            if (track != 1)
+            if (track != DA_TRACK_NONE)
                 soundStartPlayDA(track);
         }
         screenCarEndingDrawCar(&ending);
@@ -3741,12 +3747,12 @@ void screenShowAccessCodes(void)
     if (shellIsPerfect()) {
         fontPrintCenteredXY(6, 159, 50, "PASSWORDS");
         fontPrintCenteredXY(6, 159, 175, "Infinite Weapons");
-        fontPrintCenteredXY(5, 159, 205, screenPasswords[7]);
+        fontPrintCenteredXY(5, 159, 205, screenPasswords[ACCESS_CODE_INFINITE_WEAPONS]);
     } else {
         fontPrintCenteredXY(6, 159, 50, "PASSWORD");
     }
     fontPrintCenteredXY(6, 159, 110, "Helicopter View");
-    fontPrintCenteredXY(5, 159, 140, screenPasswords[14]);
+    fontPrintCenteredXY(5, 159, 140, screenPasswords[ACCESS_CODE_HELICOPTER_VIEW]);
     while (ctlpadAnyKey(pad)) {
         UpdCtlPad();
     }
@@ -3784,23 +3790,23 @@ void screenShowAccessCodeForLevel(s32 level, s32 x, s32 y)
 
     password = 0;
     switch (level) {
-    case 1:
-        password = screenPasswordFromAccessCode(1);
+    case LEVEL2_WAREHOUSE:
+        password = screenPasswordFromAccessCode(ACCESS_CODE_WAREHOUSE);
         break;
-    case 2:
-        password = screenPasswordFromAccessCode(2);
+    case LEVEL3_FREEWAY:
+        password = screenPasswordFromAccessCode(ACCESS_CODE_FREEWAY);
         break;
-    case 3:
-        password = screenPasswordFromAccessCode(3);
+    case LEVEL4_CITY_PARK:
+        password = screenPasswordFromAccessCode(ACCESS_CODE_CITY_PARK);
         break;
-    case 4:
-        password = screenPasswordFromAccessCode(4);
+    case LEVEL5_CYBURBIA:
+        password = screenPasswordFromAccessCode(ACCESS_CODE_CYBURBIA);
         break;
-    case 5:
-        password = screenPasswordFromAccessCode(5);
+    case LEVEL6_ROOFTOPS:
+        password = screenPasswordFromAccessCode(ACCESS_CODE_ROOFTOPS);
         break;
-    case 6:
-        password = screenPasswordFromAccessCode(13);
+    case LEVEL7_ARENA_5:
+        password = screenPasswordFromAccessCode(ACCESS_CODE_ARENA_5);
         break;
     }
     if (password != 0) {
