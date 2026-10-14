@@ -6,10 +6,12 @@ import argparse
 import logging
 import logging.config
 import os
+import sys
 from pathlib import Path
 
 from .operations import (
     clean,
+    ctx,
     distclean,
     generate,
     split,
@@ -45,6 +47,7 @@ distclean.add_subparser(subparsers)
 split.add_subparser(subparsers)
 generate.add_subparser(subparsers)
 check.add_subparser(subparsers)
+ctx.add_subparser(subparsers)
 
 
 def cli(root: Path):
@@ -60,3 +63,4 @@ def cli(root: Path):
     except Exception as e:
         LOG.critical("Exception occurred!", exc_info=True)
         LOG.critical("Exiting due to error: %s", e)
+        sys.exit(1)

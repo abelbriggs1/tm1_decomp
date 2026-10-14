@@ -13,7 +13,7 @@ nonmatchings/
 permuter_settings.toml
 objdiff.json
 *.rom
-ctx*
+/ctx*
 expected/
 build.ninja
 .ninja_log

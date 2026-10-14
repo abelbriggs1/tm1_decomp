@@ -329,6 +329,24 @@ class Environment:
             flags.append("-DM2CTX")
         return f"{self.toolchain.c_preprocessor_cmd} {' '.join(flags)}"
 
+    def generate_ctx_preprocessor_args(self) -> list[str]:
+        """
+        Generate the C preprocessor invocation used to create context files,
+        not including input/output parameters.
+        """
+        return [
+            self.toolchain.c_preprocessor_cmd,
+            *[f"-I{inc}" for inc in self.directories.includes],
+            *[
+                arg
+                for inc in self.directories.system_includes
+                for arg in ("-isystem", str(inc))
+            ],
+            "-P",
+            "-undef",
+            "-DM2CTX",
+        ]
+
     def generate_c_compiler_cmd(self, tmp_dir: str, rsp_file: str) -> str:
         """
         Generate the full C compiler invocation for this environment.
