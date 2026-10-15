@@ -1,15 +1,15 @@
 {
   "measures": {
-    "fuzzy_match_percent": 23.631985,
+    "fuzzy_match_percent": 23.663422,
     "total_code": "470784",
-    "matched_code": "111092",
-    "matched_code_percent": 23.597233,
+    "matched_code": "111240",
+    "matched_code_percent": 23.62867,
     "total_data": "614188",
     "matched_data": "95420",
     "matched_data_percent": 15.535959,
     "total_functions": 1983,
-    "matched_functions": 707,
-    "matched_functions_percent": 35.653053,
+    "matched_functions": 709,
+    "matched_functions_percent": 35.75391,
     "total_units": 68
   },
   "units": [
@@ -2888,16 +2888,16 @@
     {
       "name": "tm1/FONT",
       "measures": {
-        "fuzzy_match_percent": 16.338028,
+        "fuzzy_match_percent": 17.370892,
         "total_code": "4260",
-        "matched_code": "696",
-        "matched_code_percent": 16.338028,
+        "matched_code": "740",
+        "matched_code_percent": 17.370892,
         "total_data": "1896",
         "matched_data": "288",
         "matched_data_percent": 15.189873,
         "total_functions": 14,
-        "matched_functions": 7,
-        "matched_functions_percent": 50.0,
+        "matched_functions": 8,
+        "matched_functions_percent": 57.14286,
         "total_units": 1
       },
       "sections": [
@@ -2927,7 +2927,7 @@
         {
           "name": ".text",
           "size": "4260",
-          "fuzzy_match_percent": 16.338028,
+          "fuzzy_match_percent": 17.370892,
           "metadata": {}
         }
       ],
@@ -3014,6 +3014,7 @@
         {
           "name": "fontSetColor",
           "size": "44",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4008"
         },
@@ -7450,16 +7451,16 @@
     {
       "name": "tm1/UA",
       "measures": {
-        "fuzzy_match_percent": 51.752296,
+        "fuzzy_match_percent": 52.194626,
         "total_code": "23512",
-        "matched_code": "12168",
-        "matched_code_percent": 51.7523,
+        "matched_code": "12272",
+        "matched_code_percent": 52.194626,
         "total_data": "16060",
         "matched_data": "15204",
         "matched_data_percent": 94.66998,
         "total_functions": 95,
-        "matched_functions": 72,
-        "matched_functions_percent": 75.789474,
+        "matched_functions": 73,
+        "matched_functions_percent": 76.8421,
         "total_units": 1
       },
       "sections": [
@@ -7495,7 +7496,7 @@
         {
           "name": ".text",
           "size": "23512",
-          "fuzzy_match_percent": 51.752296,
+          "fuzzy_match_percent": 52.194626,
           "metadata": {}
         }
       ],
@@ -7933,6 +7934,7 @@
         {
           "name": "uaGetCarMatID",
           "size": "104",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18632"
         },
@@ -15660,16 +15662,16 @@
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 31.029486,
+        "fuzzy_match_percent": 31.070763,
         "total_code": "358548",
-        "matched_code": "111092",
-        "matched_code_percent": 30.983856,
+        "matched_code": "111240",
+        "matched_code_percent": 31.025135,
         "total_data": "473756",
         "matched_data": "95420",
         "matched_data_percent": 20.141169,
         "total_functions": 1009,
-        "matched_functions": 707,
-        "matched_functions_percent": 70.069374,
+        "matched_functions": 709,
+        "matched_functions_percent": 70.26759,
         "total_units": 63
       }
     },

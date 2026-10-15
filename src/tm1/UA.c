@@ -2113,23 +2113,17 @@ u8 uaIsCarCS(Cs* cs, u8* isPlayer, s16* index)
     return found;
 }
 
-#ifdef NON_MATCHING
 s16 uaGetCarMatID(s16 idx, u8 isPlayer)
 {
-    u16* tbl;
     s16 k;
 
     if (isPlayer) {
-        tbl = &playerIndexToCarIndex[idx];
+        k = playerIndexToCarIndex[idx];
     } else {
-        tbl = (u16*)&aiIndexToCarIndex[idx];
+        k = ((u16*)aiIndexToCarIndex)[idx];
     }
-    k = *tbl;
     return carCs[k]->unkC0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/UA", uaGetCarMatID);
-#endif
 
 s32 uaIsCarMatID(s16 matId, s8* isPlayer, u16* index)
 {

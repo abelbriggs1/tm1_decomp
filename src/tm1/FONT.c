@@ -503,17 +503,10 @@ INCLUDE_ASM("asm/nonmatchings/tm1/FONT", fontGetCharacterInfo);
 
 INCLUDE_ASM("asm/nonmatchings/tm1/FONT", fontInit);
 
-#ifdef NON_MATCHING
 void fontSetColor(int font, u8 red, u8 green, u8 blue)
 {
-    SPRT* fontData = &gCharacterTemplate[font];
-    fontData->r0 = red;
-    fontData->g0 = green;
-    fontData->b0 = blue;
+    setRGB0(&gCharacterTemplate[font], red, green, blue);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/FONT", fontSetColor);
-#endif // NON_MATCHING
 
 INCLUDE_RODATA("asm/nonmatchings/tm1/FONT", D_800FA99C);
 
