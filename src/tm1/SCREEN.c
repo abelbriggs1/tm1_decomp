@@ -1007,16 +1007,57 @@ s32 screenHoldForTwoPlayerControl(s32* pa, s32* pb, u_long* image)
     return ret;
 }
 
+static inline void screenDrawVehicleFace(ScreenVehicleFace* faces, s32 player, Db* cdb)
+{
+    POLY_FT4* p = &faces[player].poly;
+    ScreenVehicleFace* face = &faces[player];
+    s32 dx0 = face->x;
+    s32 x0 = (u16)p->x0 + dx0;
+    s32 dy0 = face->y;
+    s32 y0 = (u16)p->y0 + dy0;
+    s32 dx1 = face->x;
+    s32 x1 = (u16)p->x1 + dx1;
+    s32 dy1 = face->y;
+    s32 y1 = (u16)p->y1 + dy1;
+    s32 dx2 = face->x;
+    s32 x2 = (u16)p->x2 + dx2;
+    s32 dy2 = face->y;
+    s32 y2 = (u16)p->y2 + dy2;
+    s32 dx3 = face->x;
+    s32 x3 = (u16)p->x3 + dx3;
+    s32 dy3 = face->y;
+    s32 y3 = (u16)p->y3 + dy3;
+    setXY4(p, x0, y0, x1, y1, x2, y2, x3, y3);
+    AddPrim(((u_long*)cdb->small) + 4095, p);
+}
 s32 screenVehicleChoice(s32 players, u8 demo)
 {
     s32 selected[2] = { -1, -1 };
     VECTOR3 translation = { 0, -7680, 4096 };
     SVECTOR rotation;
-    s32 fonts[4];
-    static char* const menuTemplate[3] = { "SELECT", "CAR INFO", "EXIT" };
-    char* menuLabels[3];
-    char* playerLabels[2];
-    s32 playerX[2];
+    s32 imageRight;
+    s32 released;
+    s32 savedIsBg;
+    u_long* image;
+    s32 reset;
+    Db* db;
+    s32 lastCar = -1;
+    s32 left = 0;
+    s32 right = 0;
+    s32 fonts[2] = { 0, 1 };
+    s32 arrowFonts[2] = { 2, 3 };
+    u16 blink = 0;
+
+    char* menuLabels[3] = { "SELECT", "CAR INFO", "EXIT" };
+    char* playerLabels[2] = { "Player 1", "Player 2" };
+    s32 car;
+    s32 menu;
+    s32 remaining;
+    s32 player = 0;
+    s32 pad = 2;
+    s32 playerX[2] = { 42, 277 };
+    s32 shrinkFrames;
+    s32 done;
     SPRT selectSprites[10];
     DR_MODE selectMode;
     SPRT infoSprites[10];
@@ -1030,46 +1071,19 @@ s32 screenVehicleChoice(s32 players, u8 demo)
     SPRT arrowSprites[2];
     DR_MODE arrowModes[2];
     ScreenVehicleFace faces[2];
-    s32 pad;
-    s32 player;
-    s32 imageRight;
-    s32 released;
-    s32 savedIsBg;
-    u_long* image;
-    s32 reset;
-    Db* db;
-    s32 lastCar = -1;
-    s32 left = 0;
-    s32 right = 0;
-    u16 blink;
-    s32 remaining;
-    s32 shrinkFrames;
-    s32 done;
     Db* cdb;
-    POLY_FT4* p;
-    s32 car;
-    s32 menu;
     s32 frames;
     s32 up;
     s32 i;
     s32 lf, rf;
     s32* fontBase;
+    s32* selectedFont;
 
-    fonts[0] = 0;
-    fonts[1] = 1;
-    fonts[2] = 2;
-    fonts[3] = 3;
-    blink = 0;
-    __builtin_memcpy(menuLabels, menuTemplate, sizeof(menuLabels));
-    playerLabels[0] = "Player 1";
-    playerLabels[1] = "Player 2";
-    playerX[0] = 42;
-    playerX[1] = 277;
-    car = menu = 0;
+    car = 0;
+    menu = 0;
     remaining = players;
-    shrinkFrames = done = 0;
-    player = 0;
-    pad = 2;
+    shrinkFrames = 0;
+    done = 0;
     while (GetPadStatus(2) != 0)
         UpdCtlPad();
     image = VEHICLE_IMAGE;
@@ -1122,43 +1136,54 @@ s32 screenVehicleChoice(s32 players, u8 demo)
         VSync(0);
         DrawSync(0);
         ClearOTagR(((u_long*)cdb->small), 4096);
+        fontBase = fonts;
         if (!demo) {
-            fontBase = fonts;
-            fontSpritePrintXY(*(menu == 0 ? &fonts[1] : fontBase), 110, 40, (u32*)&selectMode,
-                (u32*)selectSprites, menuLabels[0], ((u_long*)cdb->small) + 4095);
-            fontSpritePrintXY(*(menu == 1 ? &fonts[1] : fontBase), 110, 60, (u32*)&infoMode,
-                (u32*)infoSprites, menuLabels[1], ((u_long*)cdb->small) + 4095);
-            fontSpritePrintXY(*(menu == 2 ? &fonts[1] : fontBase), 110, 80, (u32*)&exitMode,
-                (u32*)exitSprites, menuLabels[2], ((u_long*)cdb->small) + 4095);
+            selectedFont = fontBase;
+            if (menu == 0)
+                selectedFont = &fonts[1];
+            fontSpritePrintXY(*selectedFont, 110, 40, (u32*)&selectMode, (u32*)selectSprites,
+                menuLabels[0], ((u_long*)cdb->small) + 4095);
+            selectedFont = fontBase;
+            if (menu == 1)
+                selectedFont = &fonts[1];
+            fontSpritePrintXY(*selectedFont, 110, 60, (u32*)&infoMode, (u32*)infoSprites,
+                menuLabels[1], ((u_long*)cdb->small) + 4095);
+            selectedFont = fontBase;
+            if (menu == 2)
+                selectedFont = &fonts[1];
+            fontSpritePrintXY(*selectedFont, 110, 80, (u32*)&exitMode, (u32*)exitSprites,
+                menuLabels[2], ((u_long*)cdb->small) + 4095);
             if (!blink)
                 blink = 0xFF00;
             if (players >= 2) {
                 if (blink & 1)
-                    fontSpritePrintCenteredXY(2, playerX[player], 30, &playerModes[player],
-                        playerSprites[player], (u8*)playerLabels[player],
+                    fontSpritePrintCenteredXY(2, playerX[player], 30, (u32*)&playerModes[player],
+                        (u32*)playerSprites[player], (u8*)playerLabels[player],
                         ((u_long*)cdb->small) + 4095);
 
-                fontSpritePrintCenteredXY(2, playerX[(player ^ 1)], 30, &playerModes[(player ^ 1)],
-                    playerSprites[(player ^ 1)], (u8*)playerLabels[(player ^ 1)],
-                    ((u_long*)cdb->small) + 4095);
+                fontSpritePrintCenteredXY(2, playerX[(player ^ 1)], 30,
+                    (u32*)&playerModes[(player ^ 1)], (u32*)playerSprites[(player ^ 1)],
+                    (u8*)playerLabels[(player ^ 1)], ((u_long*)cdb->small) + 4095);
             } else if (blink & 1) {
-                fontSpritePrintCenteredXY(2, playerX[0], 30, &playerModes[0], playerSprites[0],
-                    (u8*)playerLabels[0], ((u_long*)cdb->small) + 4095);
+                fontSpritePrintCenteredXY(2, playerX[0], 30, (u32*)&playerModes[0],
+                    (u32*)playerSprites[0], (u8*)playerLabels[0], ((u_long*)cdb->small) + 4095);
             }
             blink >>= 1;
-            lf = rf = 0;
             if ((left || right) && menu == 0) {
-                lf = left;
                 rf = right;
+                lf = left;
+            } else {
+                rf = 0;
+                lf = 0;
             }
-            fontSpritePrintXY(fonts[2 + lf], screenVehicleArrows[0].x, screenVehicleArrows[0].y,
-                &arrowModes[0], &arrowSprites[0], (u8*)screenVehicleArrows[0].label,
+            fontSpritePrintXY(arrowFonts[lf], screenVehicleArrows[0].x, screenVehicleArrows[0].y,
+                (u32*)&arrowModes[0], (u32*)&arrowSprites[0], (u8*)screenVehicleArrows[0].label,
                 ((u_long*)cdb->small));
-            fontSpritePrintXY(fonts[2 + rf], screenVehicleArrows[1].x, screenVehicleArrows[1].y,
-                &arrowModes[1], &arrowSprites[1], (u8*)screenVehicleArrows[1].label,
+            fontSpritePrintXY(arrowFonts[rf], screenVehicleArrows[1].x, screenVehicleArrows[1].y,
+                (u32*)&arrowModes[1], (u32*)&arrowSprites[1], (u8*)screenVehicleArrows[1].label,
                 ((u_long*)cdb->small));
         }
-        fontSpritePrintCenteredXY(0, 159, 215, &carNameMode, carNameSprites[imageRight],
+        fontSpritePrintCenteredXY(0, 159, 215, (u32*)&carNameMode, (u32*)carNameSprites[imageRight],
             (u8*)uaGetCarNameString(screenGetCarsEnum(car)), ((u_long*)cdb->small));
 
         if (shrinkFrames) {
@@ -1178,30 +1203,13 @@ s32 screenVehicleChoice(s32 players, u8 demo)
             }
             --shrinkFrames;
         }
-        faces[player].poly = Face[car];
-        p = &faces[player].poly;
-        p->x0 += faces[player].x;
-        p->y0 += faces[player].y;
-        p->x1 += faces[player].x;
-        p->y1 += faces[player].y;
-        p->x2 += faces[player].x;
-        p->y2 += faces[player].y;
-        p->x3 += faces[player].x;
-        p->y3 += faces[player].y;
-        AddPrim(((u_long*)cdb->small) + 4095, p);
+        __builtin_memcpy(&faces[player].poly, &Face[car], sizeof(POLY_FT4));
+        screenDrawVehicleFace(faces, player, cdb);
 
         if (selected[(player ^ 1)] != -1 && selected[(player ^ 1)] < 12) {
-            faces[(player ^ 1)].poly = Face[selected[(player ^ 1)]];
-            p = &faces[(player ^ 1)].poly;
-            p->x0 += faces[(player ^ 1)].x;
-            p->y0 += faces[(player ^ 1)].y;
-            p->x1 += faces[(player ^ 1)].x;
-            p->y1 += faces[(player ^ 1)].y;
-            p->x2 += faces[(player ^ 1)].x;
-            p->y2 += faces[(player ^ 1)].y;
-            p->x3 += faces[(player ^ 1)].x;
-            p->y3 += faces[(player ^ 1)].y;
-            AddPrim(((u_long*)cdb->small) + 4095, p);
+            s32 other = player ^ 1;
+            __builtin_memcpy(&faces[other].poly, &Face[selected[player ^ 1]], sizeof(POLY_FT4));
+            screenDrawVehicleFace(faces, other, cdb);
         }
         UpdCtlPad();
         if (released) {
@@ -1216,11 +1224,15 @@ s32 screenVehicleChoice(s32 players, u8 demo)
             if (up || ctlpadAnyDown(pad)) {
                 released = 1;
                 if (up) {
-                    if (menu-- == 0)
+                    if (menu == 0)
                         menu = 2;
+                    else
+                        menu--;
                 } else {
-                    if (menu++ == 2)
+                    if (menu == 2)
                         menu = 0;
+                    else
+                        menu++;
                 }
                 uasoundPlayMenuCycleFlush();
                 goto draw_vehicle;
@@ -1248,7 +1260,10 @@ s32 screenVehicleChoice(s32 players, u8 demo)
                     --remaining;
                     pad ^= 1;
                     player ^= 1;
-                    car = car == 0 ? 1 : 0;
+                    if (car == 0)
+                        car = 1;
+                    else
+                        car = 0;
                 }
                 shrinkFrames = 8;
                 uasoundPlayMenuSelectFlush();
@@ -1290,7 +1305,6 @@ s32 screenVehicleChoice(s32 players, u8 demo)
                 }
                 uasoundPlayMenuCycleFlush();
             } else if (frames >= 18001) {
-                selected[0] = selected[1] = -1;
                 break;
             }
         }
@@ -1298,8 +1312,8 @@ s32 screenVehicleChoice(s32 players, u8 demo)
         if (demo && frames >= 361) {
             frames = 0;
             screenSetVehicleHeading(120);
-            ++car;
             reset = 1;
+            ++car;
             if (car == 12)
                 break;
         }
@@ -1323,8 +1337,10 @@ s32 screenVehicleChoice(s32 players, u8 demo)
         ++frames;
         DrawOTag(((u_long*)cdb->small) + 4095);
     }
-    if (frames >= 18001)
-        selected[0] = selected[1] = -1;
+    if (frames >= 18001) {
+        selected[0] = -1;
+        selected[1] = -1;
+    }
     if (!demo) {
         if (menu == 2)
             selected[0] = -1;
@@ -1513,17 +1529,12 @@ s32 screenTransitionLevel(s32 level, s32 advanced)
     char* meetText = "Meet Your Opponents";
     char lines[5][50];
     DRAWENV env;
-    DRAWENV* draw;
     u_long* image;
     s32 pad;
     s32 count;
     s32 line;
     s32 x;
     s32 start;
-    s32 limit;
-    s32 phase;
-    s32 font;
-    s32 center;
 
     image = (u_long*)rtGetDoubleBufferArea();
     count = 5;
@@ -1543,13 +1554,12 @@ s32 screenTransitionLevel(s32 level, s32 advanced)
     sprintf(lines[4], "%s", screenPasswordForLevel(level));
     if (level == LEVEL1_ARENA)
         count = 3;
-    draw = &env;
     for (line = 0; line < count; ++line) {
         x = (fontStringWidth(6, (u8*)lines[line]) >> 1) + 320;
         while (x >= 151) {
             screenRamToVram(0, 0, 320, 240, image);
-            SetDefDrawEnv(draw, 0, 0, 320, 240);
-            PutDrawEnv(draw);
+            SetDefDrawEnv(&env, 0, 0, 320, 240);
+            PutDrawEnv(&env);
 
             switch (line) {
             case 4:
@@ -1561,20 +1571,10 @@ s32 screenTransitionLevel(s32 level, s32 advanced)
             case 1:
                 fontPrintCenteredXY(6, 159, 75, lines[0]);
             }
-            if (line < 4) {
-                font = 6;
-                if (x < 159)
-                    center = 159;
-                else
-                    center = x;
-            } else {
-                font = 5;
-                if (x < 159)
-                    center = 159;
-                else
-                    center = x;
-            }
-            fontPrintCenteredXY(font, center, 75 + line * 30, lines[line]);
+            if (line < 4)
+                fontPrintCenteredXY(6, x < 159 ? 159 : x, 75 + line * 30, lines[line]);
+            else
+                fontPrintCenteredXY(5, x < 159 ? 159 : x, 75 + line * 30, lines[line]);
             x -= 20;
             PutDrawEnv(&gScreenDrawEnv);
             VSync(0);
@@ -1612,11 +1612,11 @@ s32 screenTransitionLevel(s32 level, s32 advanced)
     else
         meetText[18] = 's';
     start = -(fontStringWidth(6, (u8*)meetText) >> 1);
-    limit = 159;
+    count = 159;
     DrawSync(0);
-    for (phase = 0; phase < 2; ++phase) {
+    for (line = 0; line < 2; ++line) {
         x = start;
-        while (x < limit) {
+        while (x < count) {
             DrawSync(0);
             shellCheckTransitionStatus();
             screenRamToVram(0, 0, 320, 240, image);
@@ -1630,7 +1630,7 @@ s32 screenTransitionLevel(s32 level, s32 advanced)
             VSync(0);
             screenDisplayToDisplay(0, 1);
         }
-        limit = 335 - start;
+        count = -start + 335;
         start = x;
         while (!shellCheckTransitionStatus())
             VSync(0);
@@ -1687,23 +1687,19 @@ char* screenChooseControls(s32 mode, s32 pad, s32 unused)
     char imageName[32];
     char playerName[16];
     DRAWENV env;
-    s32 fonts[2];
     s32 waitRelease;
-    u_long* image;
+    u_long* image = (u_long*)rtGetDoubleBufferArea();
     s32 config;
-    s32 labelFrames;
+    s32 labelFrames = 0;
     s32 inputPad;
+    s32 fonts[2] = { 2, 3 };
     s32 changed;
     s32 left;
     s32 right;
     s32 idleFrames;
     u32 blink;
 
-    image = (u_long*)rtGetDoubleBufferArea();
-    labelFrames = 0;
     inputPad = 0;
-    fonts[0] = 2;
-    fonts[1] = 3;
     PutDrawEnv(&gScreenDrawEnv);
     DrawSync(0);
     VSync(0);
@@ -1972,14 +1968,13 @@ void screenLostALife(s32 unused_lives)
         screenLoadScreenFromRam(0, (u_long*)rtGetDoubleBufferArea());
 
         t = ((n - i) << 8) * 0xFF / n;
-        i++;
         setRGB0(&prim, ~(t >> 8), 0, 0);
         PutDrawEnv(&draw);
         DrawPrim(&prim);
         VSync(0);
         DrawSync(0);
         screenDisplayToDisplay(0, 1);
-    } while (i <= n);
+    } while (++i <= n);
     VSync(60);
 }
 
@@ -2087,6 +2082,32 @@ void screenDisplayLogos(void)
 
 static char* aborted;
 
+static inline void screenPrintPauseChoices(s32 choice, s32* fonts, char** names)
+{
+    s32* lo;
+    s32* pf;
+    s32* pf2;
+    s32* pf3;
+    s32* pf4;
+    lo = fonts;
+    pf = lo;
+    if (choice == 0)
+        pf = fonts + 1;
+    fontPrintCenteredXY(*pf, 159, 140, names[0]);
+    pf2 = lo;
+    if (choice == 1)
+        pf2 = fonts + 1;
+    fontPrintCenteredXY(*pf2, 159, 160, names[1]);
+    pf3 = lo;
+    if (choice == 2)
+        pf3 = fonts + 1;
+    fontPrintCenteredXY(*pf3, 159, 180, names[2]);
+    pf4 = lo;
+    if (choice == 3)
+        pf4 = fonts + 1;
+    fontPrintCenteredXY(*pf4, 159, 200, names[3]);
+}
+
 void screenCheckMidGameOptions(void)
 {
     s32 choice = 0;
@@ -2099,11 +2120,6 @@ void screenCheckMidGameOptions(void)
     s32 fonts[2];
     s32 pad;
     s32 prev;
-    s32* lo;
-    s32* pf;
-    s32* pf2;
-    s32* pf3;
-    s32* pf4;
 
     fonts[0] = 0;
     fonts[1] = 1;
@@ -2136,23 +2152,7 @@ void screenCheckMidGameOptions(void)
     fontPrintCenteredXY(6, 159, 60, paused);
     fontPrintCenteredXY(fonts[0], 159, 90, buf);
     fontPrintCenteredXY(5, 159, 115, pw);
-    lo = fonts;
-    pf = lo;
-    if (choice == 0)
-        pf = fonts + 1;
-    fontPrintCenteredXY(*pf, 159, 140, names[0]);
-    pf2 = lo;
-    if (choice == 1)
-        pf2 = fonts + 1;
-    fontPrintCenteredXY(*pf2, 159, 160, names[1]);
-    pf3 = lo;
-    if (choice == 2)
-        pf3 = fonts + 1;
-    fontPrintCenteredXY(*pf3, 159, 180, names[2]);
-    pf4 = lo;
-    if (choice == 3)
-        pf4 = fonts + 1;
-    fontPrintCenteredXY(*pf4, 159, 200, names[3]);
+    screenPrintPauseChoices(choice, fonts, names);
     while (ctlpadAnyKey(pad)) {
         UpdCtlPad();
     }
@@ -2226,23 +2226,7 @@ void screenCheckMidGameOptions(void)
             fontPrintCenteredXY(6, 159, 60, paused);
             fontPrintCenteredXY(fonts[0], 159, 90, buf);
             fontPrintCenteredXY(5, 159, 115, pw);
-            lo = fonts;
-            pf = lo;
-            if (choice == 0)
-                pf = fonts + 1;
-            fontPrintCenteredXY(*pf, 159, 140, names[0]);
-            pf2 = lo;
-            if (choice == 1)
-                pf2 = fonts + 1;
-            fontPrintCenteredXY(*pf2, 159, 160, names[1]);
-            pf3 = lo;
-            if (choice == 2)
-                pf3 = fonts + 1;
-            fontPrintCenteredXY(*pf3, 159, 180, names[2]);
-            pf4 = lo;
-            if (choice == 3)
-                pf4 = fonts + 1;
-            fontPrintCenteredXY(*pf4, 159, 200, names[3]);
+            screenPrintPauseChoices(choice, fonts, names);
         }
         while (ctlpadAnyKey(pad)) {
             UpdCtlPad();
@@ -2558,9 +2542,21 @@ s32 screenGetLevelNumCards(s32 level)
     return (s16)screenNumCards[level];
 }
 
+static inline void screenSetBattleCoordinates(
+    s32 i, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2, s32 x3, s32 y3)
+{
+    gCards[i].x0 = x0;
+    gCards[i].x1 = x1;
+    gCards[i].x2 = x2;
+    gCards[i].x3 = x3;
+    gCards[i].y0 = y0;
+    gCards[i].y1 = y1;
+    gCards[i].y2 = y2;
+    gCards[i].y3 = y3;
+}
 void screenLoadCardsForBattleOptions(s32 twoPlayer, s32 car0, s32 car1)
 {
-    s32 cars[2];
+    s32 cars[2] = { car0, car1 };
     s32 count;
     s32 v;
     s32 tp;
@@ -2569,29 +2565,18 @@ void screenLoadCardsForBattleOptions(s32 twoPlayer, s32 car0, s32 car1)
     POLY_FT4* p;
 
     count = 1;
-    cars[0] = car0;
-    cars[1] = car1;
     if (twoPlayer) {
         count = 2;
     }
     v = 0;
     tp = 11;
-    p = gCards;
     for (i = 0; i < count; i++) {
         if (cars[i] != 0x82) {
-            setPolyFT4(p);
+            setPolyFT4(&gCards[i]);
+            p = &gCards[i];
             SetSemiTrans(p, 0);
-            p->r0 = 127;
-            p->g0 = 127;
-            p->b0 = 127;
-            gCards[i].x2 = -64;
-            gCards[i].x3 = -64;
-            gCards[i].y0 = -32;
-            gCards[i].y1 = 32;
-            gCards[i].y2 = -32;
-            gCards[i].y3 = 32;
-            gCards[i].x0 = 64;
-            gCards[i].x1 = 64;
+            setRGB0(p, 127, 127, 127);
+            screenSetBattleCoordinates(i, 64, -32, 64, 32, -64, -32, -64, 32);
             if (i == 4) {
                 tp++;
                 v = 0;
@@ -2609,13 +2594,10 @@ void screenLoadCardsForBattleOptions(s32 twoPlayer, s32 car0, s32 car1)
             gCards[i].v2 = vv;
             gCards[i].clut = ((i & 0x3ff) << 6) | 0x28;
         }
-        p++;
     }
     setPolyFT4(&screen_sw);
     SetSemiTrans(&screen_sw, 0);
-    screen_sw.r0 = 127;
-    screen_sw.g0 = 127;
-    screen_sw.b0 = 127;
+    setRGB0(&screen_sw, 127, 127, 127);
     screenLoadCarPictures(count, cars);
 }
 
@@ -3465,6 +3447,7 @@ s32 screenPlayCarEnding(s32 carId)
     s32 pad;
     s32 passwordChoice;
     char* background;
+    u_long* image;
     s32 signatureCountdown;
     s32 track;
     s32 musicStarted;
@@ -3538,9 +3521,10 @@ s32 screenPlayCarEnding(s32 carId)
         track = DA_TRACK_NONE;
         break;
     }
+    image = OPTIONS_IMAGE;
     text = &credits;
-    screenScrollTextInit(text, "UATEXT\\CREDITS.TXT", TEXT_BUFFER, background, OPTIONS_IMAGE, 6);
-    screenCarEndingInit(&ending, carId, OPTIONS_IMAGE);
+    screenScrollTextInit(text, "UATEXT\\CREDITS.TXT", TEXT_BUFFER, background, image, 6);
+    screenCarEndingInit(&ending, carId, image);
     done = 0;
     do {
         screenCarEndingReset(&ending);

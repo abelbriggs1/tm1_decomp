@@ -1,16 +1,16 @@
 {
   "measures": {
-    "fuzzy_match_percent": 30.283018,
+    "fuzzy_match_percent": 36.593174,
     "total_code": "470784",
-    "matched_code": "142404",
-    "matched_code_percent": 30.248266,
-    "total_data": "614188",
+    "matched_code": "170928",
+    "matched_code_percent": 36.3071,
+    "total_data": "612120",
     "matched_data": "95420",
-    "matched_data_percent": 15.535959,
+    "matched_data_percent": 15.588448,
     "total_functions": 1983,
-    "matched_functions": 723,
-    "matched_functions_percent": 36.459908,
-    "total_units": 68
+    "matched_functions": 781,
+    "matched_functions_percent": 39.38477,
+    "total_units": 64
   },
   "units": [
     {
@@ -5820,16 +5820,16 @@
     {
       "name": "tm1/SCREEN",
       "measures": {
-        "fuzzy_match_percent": 13.438229,
+        "fuzzy_match_percent": 99.997665,
         "total_code": "34320",
-        "matched_code": "4612",
-        "matched_code_percent": 13.438228,
+        "matched_code": "33136",
+        "matched_code_percent": 96.55012,
         "total_data": "4228",
         "matched_data": "1100",
         "matched_data_percent": 26.017029,
         "total_functions": 95,
-        "matched_functions": 36,
-        "matched_functions_percent": 37.894737,
+        "matched_functions": 94,
+        "matched_functions_percent": 98.94737,
         "total_units": 1
       },
       "sections": [
@@ -5842,6 +5842,7 @@
         {
           "name": ".data",
           "size": "604",
+          "fuzzy_match_percent": 57.31236,
           "metadata": {}
         },
         {
@@ -5858,12 +5859,13 @@
         {
           "name": ".sdata",
           "size": "364",
+          "fuzzy_match_percent": 98.89807,
           "metadata": {}
         },
         {
           "name": ".text",
           "size": "34320",
-          "fuzzy_match_percent": 13.438229,
+          "fuzzy_match_percent": 99.997665,
           "metadata": {}
         }
       ],
@@ -5871,6 +5873,7 @@
         {
           "name": "atoi",
           "size": "92",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
@@ -5884,48 +5887,56 @@
         {
           "name": "screenDisplayTitle",
           "size": "712",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "148"
         },
         {
           "name": "screenBattleOptions",
           "size": "860",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "860"
         },
         {
           "name": "screenDisplayImage",
           "size": "172",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1720"
         },
         {
           "name": "screenDisplayToDisplay",
           "size": "96",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1892"
         },
         {
           "name": "screenAudioOptions",
           "size": "1308",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1988"
         },
         {
           "name": "screenOptions",
           "size": "1164",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3296"
         },
         {
           "name": "screenMainOptions",
           "size": "708",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4460"
         },
         {
           "name": "screenChooseBattleground",
           "size": "1044",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "5168"
         },
@@ -5939,18 +5950,21 @@
         {
           "name": "screenDisplayChoicesFromBottom",
           "size": "384",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6236"
         },
         {
           "name": "screenInitCarOccupants",
           "size": "736",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "6620"
         },
         {
           "name": "screenLoadCarSelectionBackground",
           "size": "104",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7356"
         },
@@ -5971,6 +5985,7 @@
         {
           "name": "screenVehicleChoice",
           "size": "4244",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8112"
         },
@@ -5984,18 +5999,21 @@
         {
           "name": "screenSetVehicleHeading",
           "size": "48",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "12508"
         },
         {
           "name": "screenResetFrameNum",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "12556"
         },
         {
           "name": "screenSpinVehicle",
           "size": "648",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "12572"
         },
@@ -6009,6 +6027,7 @@
         {
           "name": "screenTransitionLevel",
           "size": "1512",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "13424"
         },
@@ -6022,6 +6041,7 @@
         {
           "name": "screenBossCar",
           "size": "296",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "15016"
         },
@@ -6035,6 +6055,7 @@
         {
           "name": "screenChooseControls",
           "size": "1292",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "15436"
         },
@@ -6048,60 +6069,70 @@
         {
           "name": "screenGetMusicLabel",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "16756"
         },
         {
           "name": "screenNextMusicChoice",
           "size": "60",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "16788"
         },
         {
           "name": "screenSetMusicVolume",
           "size": "60",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "16848"
         },
         {
           "name": "screenGetMusicVolume",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "16908"
         },
         {
           "name": "screenGetEffectsLabel",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "16944"
         },
         {
           "name": "screenNextEffectsChoice",
           "size": "60",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "16976"
         },
         {
           "name": "screenSetEffectsVolume",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17036"
         },
         {
           "name": "screenGetDifficultyLabel",
           "size": "32",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17100"
         },
         {
           "name": "screenNextDifficulty",
           "size": "64",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17132"
         },
         {
           "name": "screenLostALife",
           "size": "408",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17196"
         },
@@ -6122,6 +6153,7 @@
         {
           "name": "screenPlayCinema",
           "size": "656",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17792"
         },
@@ -6142,6 +6174,7 @@
         {
           "name": "screenCheckMidGameOptions",
           "size": "1592",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18584"
         },
@@ -6155,36 +6188,42 @@
         {
           "name": "screenPrintScore",
           "size": "564",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20304"
         },
         {
           "name": "screenInitCardSprites",
           "size": "828",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20868"
         },
         {
           "name": "screenResetCards",
           "size": "204",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "21696"
         },
         {
           "name": "screenDrawCard",
           "size": "1360",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "21900"
         },
         {
           "name": "screenLoadCarPictures",
           "size": "428",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "23260"
         },
         {
           "name": "screenGetNumCards",
           "size": "40",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "23688"
         },
@@ -6198,12 +6237,14 @@
         {
           "name": "screenLoadCardsForBattleOptions",
           "size": "608",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "23764"
         },
         {
           "name": "screenDrawCardsForBattleOptions",
           "size": "784",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "24372"
         },
@@ -6231,24 +6272,28 @@
         {
           "name": "screenVramToRam",
           "size": "128",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "25536"
         },
         {
           "name": "screenRamToVram",
           "size": "128",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "25664"
         },
         {
           "name": "screenEnterAccessCode",
           "size": "964",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "25792"
         },
         {
           "name": "screenWrongPassword",
           "size": "812",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "26756"
         },
@@ -6276,54 +6321,63 @@
         {
           "name": "screenBlinkCursor",
           "size": "192",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "27868"
         },
         {
           "name": "screenEraseCursor",
           "size": "56",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "28060"
         },
         {
           "name": "screenResetCursor",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "28116"
         },
         {
           "name": "screenWaitForContinue",
           "size": "168",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "28132"
         },
         {
           "name": "SetDefaultEndingParameters",
           "size": "108",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "28300"
         },
         {
           "name": "SetOutlawEndingParameters",
           "size": "108",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "28408"
         },
         {
           "name": "SetRoadKillEndingParameters",
           "size": "104",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "28516"
         },
         {
           "name": "screenCarEnding",
           "size": "536",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "28620"
         },
         {
           "name": "screenCarEndingInit",
           "size": "280",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "29156"
         },
@@ -6337,6 +6391,7 @@
         {
           "name": "screenCarEndingDrawCar",
           "size": "180",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "29596"
         },
@@ -6371,6 +6426,7 @@
         {
           "name": "screenScrollTextInit",
           "size": "844",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "30172"
         },
@@ -6412,6 +6468,7 @@
         {
           "name": "screenPlayCarEnding",
           "size": "1184",
+          "fuzzy_match_percent": 99.932434,
           "metadata": {},
           "address": "32000"
         },
@@ -6432,18 +6489,21 @@
         {
           "name": "screenShowAccessCodes",
           "size": "292",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "33384"
         },
         {
           "name": "screenDisplayHistory",
           "size": "48",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "33676"
         },
         {
           "name": "screenDisplayCredits",
           "size": "48",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "33724"
         },
@@ -6457,6 +6517,7 @@
         {
           "name": "screenWonSpecialLevel",
           "size": "164",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "34016"
         },
@@ -15030,37 +15091,6 @@
       }
     },
     {
-      "name": "tm1/SCREEN",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "604",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "size": "604",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/UA_DASH",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15123,41 +15153,6 @@
       }
     },
     {
-      "name": "tm1/SCREEN",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "364",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sdata",
-          "size": "364",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/UA_DASH",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15179,41 +15174,6 @@
         {
           "name": ".sdata",
           "size": "76",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
-      "name": "tm1/SCREEN",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "88",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".sbss",
-          "size": "88",
           "metadata": {}
         },
         {
@@ -15515,37 +15475,6 @@
       }
     },
     {
-      "name": "tm1/SCREEN",
-      "measures": {
-        "fuzzy_match_percent": 100.0,
-        "matched_code_percent": 100.0,
-        "total_data": "1012",
-        "matched_functions_percent": 100.0,
-        "complete_code_percent": 100.0,
-        "total_units": 1
-      },
-      "sections": [
-        {
-          "name": ".bss",
-          "size": "1012",
-          "metadata": {}
-        },
-        {
-          "name": ".data",
-          "metadata": {}
-        },
-        {
-          "name": ".text",
-          "metadata": {}
-        }
-      ],
-      "metadata": {
-        "progress_categories": [
-          "tm1"
-        ]
-      }
-    },
-    {
       "name": "tm1/UA_SW",
       "measures": {
         "fuzzy_match_percent": 100.0,
@@ -15676,17 +15605,17 @@
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 39.762486,
+        "fuzzy_match_percent": 48.047905,
         "total_code": "358548",
-        "matched_code": "142404",
-        "matched_code_percent": 39.716858,
-        "total_data": "473756",
+        "matched_code": "170928",
+        "matched_code_percent": 47.67228,
+        "total_data": "471688",
         "matched_data": "95420",
-        "matched_data_percent": 20.141169,
+        "matched_data_percent": 20.229473,
         "total_functions": 1009,
-        "matched_functions": 723,
-        "matched_functions_percent": 71.655106,
-        "total_units": 63
+        "matched_functions": 781,
+        "matched_functions_percent": 77.40337,
+        "total_units": 59
       }
     },
     {
