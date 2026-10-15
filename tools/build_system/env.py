@@ -283,6 +283,7 @@ class EnvironmentToolchain:
                 "tm1/TIMER": 0,
             },
             extra_flags={
+                "tm1/CAR": ["-fbuiltin"],
                 "tm1/FONT": ["-fbuiltin"],
                 "tm1/SCREEN": ["-fbuiltin"],
             }

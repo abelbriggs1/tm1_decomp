@@ -7,7 +7,7 @@ void InitTimer();
 void TermTimer();
 u32 GetCurTics();
 s16 GetFieldsLastFrame();
-s16 GetUpdateRate();
+s32 GetUpdateRate();
 u32 GetFrameCount();
 void ResetUpdateRate();
 

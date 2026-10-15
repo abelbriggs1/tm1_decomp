@@ -93,7 +93,7 @@ s16 GetFieldsLastFrame()
     return gFieldsLastFrame;
 }
 
-s16 GetUpdateRate()
+s32 GetUpdateRate()
 {
     return gUpdateRate;
 }
