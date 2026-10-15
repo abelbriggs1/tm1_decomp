@@ -11,13 +11,6 @@
 #define NUM_FONTS 7
 #define NUM_FONTINFO_FIELDS 77
 
-#define GET_GLYPH_METRICS(font_id, glyph_index, out_width, out_height, out_y_offset)               \
-    do {                                                                                           \
-        *(out_width) = gFontInfo[(font_id)][(glyph_index)].width;                                  \
-        *(out_height) = gFontInfo[(font_id)][(glyph_index)].height;                                \
-        *(out_y_offset) = gFontInfo[(font_id)][(glyph_index)].yOffset;                             \
-    } while (0)
-
 typedef struct {
     u8 u;
     u8 v;
@@ -587,7 +580,12 @@ void fontGetCharacterInfo(
         break;
     default: {
         int index = getFontInfoIndex(character);
-        GET_GLYPH_METRICS(font, index, width, height, yOffset);
+        /* PsyQ retains loop markers that affect register allocation; see QUIRKS.md. */
+        do {
+            *width = gFontInfo[font][index].width;
+            *height = gFontInfo[font][index].height;
+            *yOffset = gFontInfo[font][index].yOffset;
+        } while (0);
         break;
     }
     }
