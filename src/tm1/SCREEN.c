@@ -2282,7 +2282,7 @@ void screenPrintScore(s16 who, s16 wins, s16 losses)
 }
 
 static u16 screenNumCards[8] = { 1, 3, 5, 6, 8, 3, 5, 0 };
-static s16 D_80170F44[7][8] = {
+static s16 screenCardCenterX[7][8] = {
     { 160, 0, 0, 0, 0, 0, 0, 0 },
     { 83, 236, 160, 0, 0, 0, 0, 0 },
     { 88, 247, 160, 88, 247, 0, 0, 0 },
@@ -2291,7 +2291,7 @@ static s16 D_80170F44[7][8] = {
     { 83, 236, 160, 0, 0, 0, 0, 0 },
     { 88, 247, 160, 88, 247, 0, 0, 0 },
 };
-static s16 D_80170FB4[7][8] = {
+static s16 screenCardCenterY[7][8] = {
     { 100, 0, 0, 0, 0, 0, 0, 0 },
     { 74, 74, 164, 0, 0, 0, 0, 0 },
     { 50, 50, 120, 190, 190, 0, 0, 0 },
@@ -2300,7 +2300,7 @@ static s16 D_80170FB4[7][8] = {
     { 74, 74, 164, 0, 0, 0, 0, 0 },
     { 50, 50, 120, 190, 190, 0, 0, 0 },
 };
-static s16 D_80171024[8] = {
+static s16 screenCardHalfWidth[8] = {
     80,
     70,
     60,
@@ -2310,7 +2310,7 @@ static s16 D_80171024[8] = {
     60,
     0,
 };
-static s16 D_80171034[8] = {
+static s16 screenCardHalfHeight[8] = {
     40,
     35,
     30,
@@ -2346,14 +2346,14 @@ void screenInitCardSprites(s32 which, s16 count, s32* opponents)
         p->r0 = 127;
         p->g0 = 127;
         p->b0 = 127;
-        gCards[i].x0 = D_80171024[which];
-        gCards[i].y0 = -D_80171034[which];
-        gCards[i].x1 = D_80171024[which];
-        gCards[i].y1 = D_80171034[which];
-        gCards[i].x2 = -D_80171024[which];
-        gCards[i].y2 = -D_80171034[which];
-        gCards[i].x3 = -D_80171024[which];
-        gCards[i].y3 = D_80171034[which];
+        gCards[i].x0 = screenCardHalfWidth[which];
+        gCards[i].y0 = -screenCardHalfHeight[which];
+        gCards[i].x1 = screenCardHalfWidth[which];
+        gCards[i].y1 = screenCardHalfHeight[which];
+        gCards[i].x2 = -screenCardHalfWidth[which];
+        gCards[i].y2 = -screenCardHalfHeight[which];
+        gCards[i].x3 = -screenCardHalfWidth[which];
+        gCards[i].y3 = screenCardHalfHeight[which];
         if (i == 4) {
             tp++;
             v = 0;
@@ -2416,12 +2416,12 @@ void screenDrawCard(s32 card, s32 instant, s32 skipMoving)
     ClearOTagR(screen_ot, 2);
     if (!skipMoving) {
         if (!instant) {
-            x0 = SmoothValue(x0, D_80170F44[whichLevel][card], 85);
-            y0 = SmoothValue(y0, D_80170FB4[whichLevel][card], 85);
+            x0 = SmoothValue(x0, screenCardCenterX[whichLevel][card], 85);
+            y0 = SmoothValue(y0, screenCardCenterY[whichLevel][card], 85);
             angle = SmoothValue(angle, 1080, 85);
         } else {
-            x0 = D_80170F44[whichLevel][card];
-            y0 = D_80170FB4[whichLevel][card];
+            x0 = screenCardCenterX[whichLevel][card];
+            y0 = screenCardCenterY[whichLevel][card];
             random = rand();
             if (random & 8)
                 delta = -(random & 6);
