@@ -304,3 +304,10 @@ While developers didn't intentionally insert barriers, it is _possible_ that bar
 exist in the original compiled code. Most commonly, they can be an artifact of
 stubbed debug macros whose contents were removed or disabled. Their presence is
 more likely in TUs with a lot of `printf()` output and debug strings.
+
+## PsyQ compiler stack size
+
+Large functions can exhaust PsyQ's default 256 KiB DPMI stack, causing `Abort!`
+or invalid memory accesses in `daze`, as observed when compiling `TRIGPTS.c`.
+Pass `--env 'GO32=dpmistack 1048576'` to `daze` to use a 1 MiB stack.
+This is already configured in `tools/build_system/env.py`.
