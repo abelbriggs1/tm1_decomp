@@ -1,15 +1,15 @@
 {
   "measures": {
-    "fuzzy_match_percent": 23.631985,
+    "fuzzy_match_percent": 24.389019,
     "total_code": "470784",
-    "matched_code": "111092",
-    "matched_code_percent": 23.597233,
+    "matched_code": "114656",
+    "matched_code_percent": 24.354269,
     "total_data": "614188",
     "matched_data": "95420",
     "matched_data_percent": 15.535959,
     "total_functions": 1983,
-    "matched_functions": 707,
-    "matched_functions_percent": 35.653053,
+    "matched_functions": 714,
+    "matched_functions_percent": 36.00605,
     "total_units": 68
   },
   "units": [
@@ -2888,16 +2888,16 @@
     {
       "name": "tm1/FONT",
       "measures": {
-        "fuzzy_match_percent": 16.338028,
+        "fuzzy_match_percent": 100.0,
         "total_code": "4260",
-        "matched_code": "696",
-        "matched_code_percent": 16.338028,
+        "matched_code": "4260",
+        "matched_code_percent": 100.0,
         "total_data": "1896",
         "matched_data": "288",
         "matched_data_percent": 15.189873,
         "total_functions": 14,
-        "matched_functions": 7,
-        "matched_functions_percent": 50.0,
+        "matched_functions": 14,
+        "matched_functions_percent": 100.0,
         "total_units": 1
       },
       "sections": [
@@ -2927,7 +2927,7 @@
         {
           "name": ".text",
           "size": "4260",
-          "fuzzy_match_percent": 16.338028,
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         }
       ],
@@ -2963,6 +2963,7 @@
         {
           "name": "fontPrint",
           "size": "692",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "588"
         },
@@ -2976,12 +2977,14 @@
         {
           "name": "fontSpritePrintCenteredXY",
           "size": "492",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1340"
         },
         {
           "name": "fontSpritePrint",
           "size": "816",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1832"
         },
@@ -3002,24 +3005,28 @@
         {
           "name": "fontGetCharacterInfo",
           "size": "456",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2696"
         },
         {
           "name": "fontInit",
           "size": "856",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3152"
         },
         {
           "name": "fontSetColor",
           "size": "44",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4008"
         },
         {
           "name": "fontSetDefaultColor",
           "size": "208",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "4052"
         }
@@ -15660,16 +15667,16 @@
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 31.029486,
+        "fuzzy_match_percent": 32.023495,
         "total_code": "358548",
-        "matched_code": "111092",
-        "matched_code_percent": 30.983856,
+        "matched_code": "114656",
+        "matched_code_percent": 31.977865,
         "total_data": "473756",
         "matched_data": "95420",
         "matched_data_percent": 20.141169,
         "total_functions": 1009,
-        "matched_functions": 707,
-        "matched_functions_percent": 70.069374,
+        "matched_functions": 714,
+        "matched_functions_percent": 70.76313,
         "total_units": 63
       }
     },
