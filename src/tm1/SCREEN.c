@@ -59,61 +59,51 @@ typedef struct ScreenVehicleFace {
 
 extern void SetBlockFill(BLK_FILL* p);
 
-extern s32 gTitleChoice;
-extern s32 gOptionsChoice;
-extern s32 gMainOptionsChoice;
-extern s16 gFrameNum;
-extern s32 ua_music_vol;
-extern s32 ua_sfx_vol;
-extern s32 gDifficulty;
-extern s32 gCursorOn;
-extern s32 gCursorCount;
-extern RECT gCursorRect;
-
-extern u8* gFaceObject;
-extern s16 InLeft;
-extern s32 gHeading;
-extern s16 screen_whichOT;
-extern u_long* screen_ot;
-extern s32 whichLevel;
-extern s16 x0;
-extern s16 y0;
-extern s16 angle;
-extern char gPassword[6];
-extern SVECTOR gEyeRot;
-extern SVECTOR gDeltaRot;
-extern s32 gStartLocation;
+static s32 gTitleChoice;
+static s32 gOptionsChoice;
+static s32 gMainOptionsChoice;
+static s16 gFrameNum;
+static s32 ua_music_vol;
+static s32 ua_sfx_vol;
+static s32 gDifficulty;
 
 POLY_FT4* Face;
 
-extern char* screenCarPictures[12];
-extern ScreenArrow screenVehicleArrows[2];
-extern ScreenArrow screenControlArrows[2];
-extern ScreenCinema screenCinemas[4];
-extern char* gTransitionLabels[14];
-extern char* screenControlPadLabels[PAD_CONFIG_MAX];
-extern char* screenVolumeLabels[15];
-extern char* screenDifficultyLabels[DIFFICULTY_MAX];
-extern u16 screenNumCards[8];
-extern s16 D_80170F44[7][8];
-extern s16 D_80170FB4[7][8];
-extern s16 D_80171024[8];
-extern s16 D_80171034[8];
-extern char* screenPasswords[ACCESS_CODE_MAX];
-
-extern DRAWENV gScreenDrawEnv;
-extern DISPENV gScreenDisplayEnv;
-extern POLY_FT4 gCards[8];
-extern DISPENV displays[2];
-extern POLY_FT4 screen_sw;
-extern u_long screen_OT[2][2];
-extern u_long gCursorImageBuf[48];
-extern VECTOR3 gEyePoint;
-extern VECTOR3 gDeltaTrans;
+static DRAWENV gScreenDrawEnv;
+static DISPENV gScreenDisplayEnv;
+static POLY_FT4 gCards[8];
+static DISPENV displays[2];
+static POLY_FT4 screen_sw;
+static u_long screen_OT[2][2];
+static u_long gCursorImageBuf[48];
+static VECTOR3 gEyePoint;
+static VECTOR3 gDeltaTrans;
 extern DISPENV gCardsDisplayEnv[2];
 extern DRAWENV gCardsDrawEnv[2];
 
-#ifdef NON_MATCHING
+static char* screenCarPictures[12] = {
+    "UATIM\\ICE_CARD.TIM",
+    "UATIM\\CAB_CARD.TIM",
+    "UATIM\\SEMI_CAR.TIM",
+    "UATIM\\COP_CARD.TIM",
+    "UATIM\\LOWRIDER.TIM",
+    "UATIM\\LAMBO_CA.TIM",
+    "UATIM\\DUNEB_CA.TIM",
+    "UATIM\\HUMVEE_C.TIM",
+    "UATIM\\HARLEY_C.TIM",
+    "UATIM\\VETTE_CA.TIM",
+    "UATIM\\MONSTERT.TIM",
+    "UATIM\\MADMAX_C.TIM",
+};
+static ScreenArrow screenVehicleArrows[2] = { { 14, 215, "<" }, { 285, 215, ">" } };
+static ScreenArrow screenControlArrows[2] = { { 14, 63, "<" }, { 285, 63, ">" } };
+static ScreenCinema screenCinemas[4] = {
+    { "\\MOVIES\\SLOGO15S.STR;1", 149, 1 },
+    { "\\UAMOVIES\\TMDMO15S.STR;1", 1000, 1 },
+    { "\\UAMOVIES\\TMTTL15S.STR;1", 67, 0 },
+    { "\\UAMOVIES\\WHDMO15S.STR;1", 857, 1 },
+};
+
 s32 atoi(char* str)
 {
     unsigned char* p;
@@ -125,13 +115,10 @@ s32 atoi(char* str)
         if (*p > '9') {
             break;
         }
-        val = *p++ + (val * 10 - '0');
+        val = (*p++ - '0') + val * 10;
     }
     return val;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", atoi);
-#endif
 
 void screenSetEnv(void)
 {
@@ -139,15 +126,6 @@ void screenSetEnv(void)
     PutDrawEnv(&gScreenDrawEnv);
 }
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB7A8);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB904);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB910);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB91C);
-
-#ifdef NON_MATCHING
 s32 screenDisplayTitle(void)
 {
     s32 ret = GAME_STATE_TITLE;
@@ -155,15 +133,13 @@ s32 screenDisplayTitle(void)
     DRAWENV env;
     s32 frames;
     s32 prev;
-    s32 cur;
     u_long* image;
 
     image = TITLE_IMAGE;
     screenSetEnv();
     VSync(0);
     screenDisplayImage(1, image, 0, 0);
-    cur = gTitleChoice;
-    screenDisplayChoicesFromBottom(2, 3, -1, cur, choices, 0, 195, 20);
+    screenDisplayChoicesFromBottom(2, 3, -1, gTitleChoice, choices, 0, 195, 20);
     while (ctlpadAnyKey(0)) {
         UpdCtlPad();
     }
@@ -217,8 +193,7 @@ s32 screenDisplayTitle(void)
             screenDisplayImage(0, image, 0, 0);
             SetDefDrawEnv(&env, 0, 0, 320, 240);
             PutDrawEnv(&env);
-            cur = gTitleChoice;
-            screenDisplayChoicesFromBottom(2, 3, prev, cur, choices, 0, 195, 20);
+            screenDisplayChoicesFromBottom(2, 3, prev, gTitleChoice, choices, 0, 195, 20);
             PutDrawEnv(&gScreenDrawEnv);
             VSync(0);
             screenDisplayToDisplay(0, 1);
@@ -230,17 +205,9 @@ s32 screenDisplayTitle(void)
 done:
     return ret;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenDisplayTitle);
-#endif
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB928);
+static s32 gTitleChoice = 0;
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB934);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB948);
-
-#ifdef NON_MATCHING
 s32 screenBattleOptions(s32 twoPlayer)
 {
     s32 ret = GAME_STATE_TITLE;
@@ -335,11 +302,7 @@ out:
     }
     return ret;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenBattleOptions);
-#endif
 
-#ifdef NON_MATCHING
 void screenDisplayImage(s32 rightHalf, u_long* data, s32 x, s32 y)
 {
     static GsIMAGE tim;
@@ -361,11 +324,7 @@ void screenDisplayImage(s32 rightHalf, u_long* data, s32 x, s32 y)
     LoadImage(&theRect, tim.pixel);
     DrawSync(0);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenDisplayImage);
-#endif
 
-#ifdef NON_MATCHING
 void screenDisplayToDisplay(s32 toRight, s32 unused)
 {
     static RECT src;
@@ -387,17 +346,7 @@ void screenDisplayToDisplay(s32 toRight, s32 unused)
     src.h = 240;
     MoveImage(&src, x, y);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenDisplayToDisplay);
-#endif
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB960);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB96C);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB980);
-
-#ifdef NON_MATCHING
 s32 screenAudioOptions(s32 noLoad, s32 hasTracks)
 {
     s32 choice = 0;
@@ -556,19 +505,9 @@ s32 screenAudioOptions(s32 noLoad, s32 hasTracks)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenAudioOptions);
-#endif
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB998);
+static s32 gOptionsChoice = 0;
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB9A8);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB9B4);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB9C0);
-
-#ifdef NON_MATCHING
 s32 screenOptions(s32 twoPlayer)
 {
     static s32 prevChoice;
@@ -712,17 +651,9 @@ s32 screenOptions(s32 twoPlayer)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenOptions);
-#endif
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB9CC);
+static s32 gMainOptionsChoice = 0;
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB9DC);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB9EC);
-
-#ifdef NON_MATCHING
 s32 screenMainOptions(void)
 {
     static s32 prevChoice;
@@ -799,15 +730,21 @@ s32 screenMainOptions(void)
 done:
     return ret;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenMainOptions);
-#endif
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FB9F8);
+static u8* gFaceObject;
+static s16 InLeft;
+static s32 gHeading;
+static s16 screen_whichOT;
+static u_long* screen_ot;
+static s32 whichLevel;
+static s16 x0;
+static s16 y0;
+static s16 angle;
+static char gPassword[6];
+static SVECTOR gEyeRot;
+static SVECTOR gDeltaRot;
+static s32 gStartLocation;
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBA10);
-
-#ifdef NON_MATCHING
 void screenChooseBattleground(s32 split)
 {
     static GsIMAGE tim;
@@ -889,8 +826,8 @@ void screenChooseBattleground(s32 split)
             screenDisplayImage(0, image, 0, 0);
             SetDefDrawEnv(&env, 0, 0, 320, 240);
             PutDrawEnv(&env);
-            changed = 0;
             fontPrintXY(fonts[0], 64, 200, "<");
+            changed = 0;
             fontPrintXY(fonts[0], 239, 200, ">");
             fontPrintCenteredXY(0, 159, 200, levelName);
             fontPrintCenteredXY(2, 159, 220, "Press SELECT To Select");
@@ -902,9 +839,6 @@ void screenChooseBattleground(s32 split)
     DrawSync(0);
     GsGetTimInfo(image + 1, &tim);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenChooseBattleground);
-#endif
 
 s32 screenCharacterRowPosition(s32 row, s32 numRows, s32 center, s32 spacing)
 {
@@ -912,7 +846,6 @@ s32 screenCharacterRowPosition(s32 row, s32 numRows, s32 center, s32 spacing)
     return center - (numRows - row) * spacing;
 }
 
-#ifdef NON_MATCHING
 void screenDisplayChoicesFromBottom(
     s32 mode, s32 count, s32 unused, s32 sel, char** names, char** names2, s32 a6, s32 a7)
 {
@@ -944,11 +877,7 @@ void screenDisplayChoicesFromBottom(
         pf(1, xb, y, names2[sel]);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenDisplayChoicesFromBottom);
-#endif
 
-#ifdef NON_MATCHING
 void screenInitCarOccupants(u8* model)
 {
     u8* prim;
@@ -998,17 +927,7 @@ void screenInitCarOccupants(u8* model)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenInitCarOccupants);
-#endif
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBA28);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBA3C);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBA50);
-
-#ifdef NON_MATCHING
 void screenLoadCarSelectionBackground(void)
 {
     fileioLoadFileIntoRam(TITLE_IMAGE, "UASCREEN\\SCRNC.TIM");
@@ -1016,9 +935,6 @@ void screenLoadCarSelectionBackground(void)
     fileioLoadFileIntoRam(VEHICLE_IMAGE, "UASCREEN\\SCRND.TIM");
     fileioLoadFileIntoRam(AUDIO_IMAGE, "UASCREEN\\SCRNFC1.TIM");
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenLoadCarSelectionBackground);
-#endif
 
 void screenShowCarBio(s32 carName, s32 pad)
 {
@@ -1091,30 +1007,22 @@ s32 screenHoldForTwoPlayerControl(s32* pa, s32* pb, u_long* image)
     return ret;
 }
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBA90);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBA9C);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBAA8);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBAB4);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBAC0);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBACC);
-
-#ifdef NON_MATCHING
 s32 screenVehicleChoice(s32 players, u8 demo)
 {
-    s32 selected[2];
+    s32 selected[2] = { -1, -1 };
     VECTOR3 translation = { 0, -7680, 4096 };
     SVECTOR rotation;
     s32 fonts[4];
-    char* menuLabels[3] = { "SELECT", "CAR INFO", "EXIT" };
+    static char* const menuTemplate[3] = { "SELECT", "CAR INFO", "EXIT" };
+    char* menuLabels[3];
     char* playerLabels[2];
     s32 playerX[2];
-    SPRT menuSprites[3][10];
-    DR_MODE menuModes[3];
+    SPRT selectSprites[10];
+    DR_MODE selectMode;
+    SPRT infoSprites[10];
+    DR_MODE infoMode;
+    SPRT exitSprites[10];
+    DR_MODE exitMode;
     SPRT playerSprites[2][10];
     DR_MODE playerModes[2];
     SPRT carNameSprites[2][20];
@@ -1122,38 +1030,37 @@ s32 screenVehicleChoice(s32 players, u8 demo)
     SPRT arrowSprites[2];
     DR_MODE arrowModes[2];
     ScreenVehicleFace faces[2];
+    s32 pad;
+    s32 player;
+    s32 imageRight;
+    s32 released;
+    s32 savedIsBg;
+    u_long* image;
+    s32 reset;
     Db* db;
+    s32 lastCar = -1;
+    s32 left = 0;
+    s32 right = 0;
+    u16 blink;
+    s32 remaining;
+    s32 shrinkFrames;
+    s32 done;
     Db* cdb;
     POLY_FT4* p;
     s32 car;
     s32 menu;
-    s32 remaining;
-    s32 shrinkFrames;
-    s32 done;
-    s32 pad;
-    s32 player;
-    s32 lastCar;
-    s32 left;
-    s32 right;
-    s32 released;
-    s32 reset;
-    s32 imageRight;
-    s32 savedIsBg;
     s32 frames;
     s32 up;
     s32 i;
-    s32 other;
     s32 lf, rf;
-    u16 blink;
+    s32* fontBase;
 
-    selected[0] = selected[1] = -1;
-    lastCar = -1;
-    left = right = 0;
     fonts[0] = 0;
     fonts[1] = 1;
     fonts[2] = 2;
     fonts[3] = 3;
     blink = 0;
+    __builtin_memcpy(menuLabels, menuTemplate, sizeof(menuLabels));
     playerLabels[0] = "Player 1";
     playerLabels[1] = "Player 2";
     playerX[0] = 42;
@@ -1165,9 +1072,10 @@ s32 screenVehicleChoice(s32 players, u8 demo)
     pad = 2;
     while (GetPadStatus(2) != 0)
         UpdCtlPad();
+    image = VEHICLE_IMAGE;
     if (demo) {
         soundInterruptPlayDA();
-        fileioLoadFileIntoRam(VEHICLE_IMAGE, "UASCREEN\\SCRND2.TIM");
+        fileioLoadFileIntoRam(image, "UASCREEN\\SCRND2.TIM");
         soundResumePlayDA();
     }
     soundGetReverbType();
@@ -1187,7 +1095,7 @@ s32 screenVehicleChoice(s32 players, u8 demo)
     savedIsBg = db[0].draw.isbg;
     db[0].draw.isbg = 0;
     db[1].draw.isbg = 0;
-    screenDisplayImage(0, VEHICLE_IMAGE, 0, 0);
+    screenDisplayImage(0, image, 0, 0);
     DrawSync(0);
     VSync(0);
     screenDisplayToDisplay(0, 1);
@@ -1195,10 +1103,9 @@ s32 screenVehicleChoice(s32 players, u8 demo)
     rotation.vx = 182;
     rotation.vy = 0;
     rotation.vz = 0;
-    rotation.pad = 0;
     viewSetDeltaRot(&rotation, 0);
     if (players == 2)
-        done = screenHoldForTwoPlayerControl(&pad, &player, VEHICLE_IMAGE);
+        done = screenHoldForTwoPlayerControl(&pad, &player, image);
     else
         pad = 0;
     frames = 0;
@@ -1216,9 +1123,13 @@ s32 screenVehicleChoice(s32 players, u8 demo)
         DrawSync(0);
         ClearOTagR(((u_long*)cdb->small), 4096);
         if (!demo) {
-            for (i = 0; i < 3; ++i)
-                fontSpritePrintXY(fonts[menu == i], 110, 40 + i * 20, &menuModes[i], menuSprites[i],
-                    (u8*)menuLabels[i], ((u_long*)cdb->small) + 4095);
+            fontBase = fonts;
+            fontSpritePrintXY(*(menu == 0 ? &fonts[1] : fontBase), 110, 40, (u32*)&selectMode,
+                (u32*)selectSprites, menuLabels[0], ((u_long*)cdb->small) + 4095);
+            fontSpritePrintXY(*(menu == 1 ? &fonts[1] : fontBase), 110, 60, (u32*)&infoMode,
+                (u32*)infoSprites, menuLabels[1], ((u_long*)cdb->small) + 4095);
+            fontSpritePrintXY(*(menu == 2 ? &fonts[1] : fontBase), 110, 80, (u32*)&exitMode,
+                (u32*)exitSprites, menuLabels[2], ((u_long*)cdb->small) + 4095);
             if (!blink)
                 blink = 0xFF00;
             if (players >= 2) {
@@ -1226,9 +1137,10 @@ s32 screenVehicleChoice(s32 players, u8 demo)
                     fontSpritePrintCenteredXY(2, playerX[player], 30, &playerModes[player],
                         playerSprites[player], (u8*)playerLabels[player],
                         ((u_long*)cdb->small) + 4095);
-                other = player ^ 1;
-                fontSpritePrintCenteredXY(2, playerX[other], 30, &playerModes[other],
-                    playerSprites[other], (u8*)playerLabels[other], ((u_long*)cdb->small) + 4095);
+
+                fontSpritePrintCenteredXY(2, playerX[(player ^ 1)], 30, &playerModes[(player ^ 1)],
+                    playerSprites[(player ^ 1)], (u8*)playerLabels[(player ^ 1)],
+                    ((u_long*)cdb->small) + 4095);
             } else if (blink & 1) {
                 fontSpritePrintCenteredXY(2, playerX[0], 30, &playerModes[0], playerSprites[0],
                     (u8*)playerLabels[0], ((u_long*)cdb->small) + 4095);
@@ -1248,15 +1160,21 @@ s32 screenVehicleChoice(s32 players, u8 demo)
         }
         fontSpritePrintCenteredXY(0, 159, 215, &carNameMode, carNameSprites[imageRight],
             (u8*)uaGetCarNameString(screenGetCarsEnum(car)), ((u_long*)cdb->small));
-        other = player ^ 1;
+
         if (shrinkFrames) {
-            if (selected[other] < 12) {
-                Face[selected[other]].x0 = SmoothValue(Face[selected[other]].x0, 24, 50);
-                Face[selected[other]].y0 = SmoothValue(Face[selected[other]].y0, 22, 50);
-                Face[selected[other]].x1 = SmoothValue(Face[selected[other]].x1, 24, 50);
-                Face[selected[other]].x2 = SmoothValue(Face[selected[other]].x2, -24, 50);
-                Face[selected[other]].y2 = SmoothValue(Face[selected[other]].y2, 22, 50);
-                Face[selected[other]].x3 = SmoothValue(Face[selected[other]].x3, -24, 50);
+            if (selected[(player ^ 1)] < 12) {
+                Face[selected[(player ^ 1)]].x0
+                    = SmoothValue(Face[selected[(player ^ 1)]].x0, 24, 50);
+                Face[selected[(player ^ 1)]].y0
+                    = SmoothValue(Face[selected[(player ^ 1)]].y0, 22, 50);
+                Face[selected[(player ^ 1)]].x1
+                    = SmoothValue(Face[selected[(player ^ 1)]].x1, 24, 50);
+                Face[selected[(player ^ 1)]].x2
+                    = SmoothValue(Face[selected[(player ^ 1)]].x2, -24, 50);
+                Face[selected[(player ^ 1)]].y2
+                    = SmoothValue(Face[selected[(player ^ 1)]].y2, 22, 50);
+                Face[selected[(player ^ 1)]].x3
+                    = SmoothValue(Face[selected[(player ^ 1)]].x3, -24, 50);
             }
             --shrinkFrames;
         }
@@ -1271,18 +1189,18 @@ s32 screenVehicleChoice(s32 players, u8 demo)
         p->x3 += faces[player].x;
         p->y3 += faces[player].y;
         AddPrim(((u_long*)cdb->small) + 4095, p);
-        other = player ^ 1;
-        if (selected[other] != -1 && selected[other] < 12) {
-            faces[other].poly = Face[selected[other]];
-            p = &faces[other].poly;
-            p->x0 += faces[other].x;
-            p->y0 += faces[other].y;
-            p->x1 += faces[other].x;
-            p->y1 += faces[other].y;
-            p->x2 += faces[other].x;
-            p->y2 += faces[other].y;
-            p->x3 += faces[other].x;
-            p->y3 += faces[other].y;
+
+        if (selected[(player ^ 1)] != -1 && selected[(player ^ 1)] < 12) {
+            faces[(player ^ 1)].poly = Face[selected[(player ^ 1)]];
+            p = &faces[(player ^ 1)].poly;
+            p->x0 += faces[(player ^ 1)].x;
+            p->y0 += faces[(player ^ 1)].y;
+            p->x1 += faces[(player ^ 1)].x;
+            p->y1 += faces[(player ^ 1)].y;
+            p->x2 += faces[(player ^ 1)].x;
+            p->y2 += faces[(player ^ 1)].y;
+            p->x3 += faces[(player ^ 1)].x;
+            p->y3 += faces[(player ^ 1)].y;
             AddPrim(((u_long*)cdb->small) + 4095, p);
         }
         UpdCtlPad();
@@ -1401,7 +1319,7 @@ s32 screenVehicleChoice(s32 players, u8 demo)
         soundProcessIds();
         PutDrawEnv(&cdb->draw);
         PutDispEnv(&cdb->disp);
-        screenDisplayImage(imageRight, VEHICLE_IMAGE, 0, 0);
+        screenDisplayImage(imageRight, image, 0, 0);
         ++frames;
         DrawOTag(((u_long*)cdb->small) + 4095);
     }
@@ -1417,7 +1335,7 @@ s32 screenVehicleChoice(s32 players, u8 demo)
         }
     } else {
         soundInterruptPlayDA();
-        fileioLoadFileIntoRam(VEHICLE_IMAGE, "UASCREEN\\SCRND.TIM");
+        fileioLoadFileIntoRam(image, "UASCREEN\\SCRND.TIM");
         soundResumePlayDA();
     }
     VSync(0);
@@ -1427,9 +1345,6 @@ s32 screenVehicleChoice(s32 players, u8 demo)
     hierSetLodScale(3);
     return screenGetCarsEnum(selected[0]);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenVehicleChoice);
-#endif
 
 s32 screenGetCarsEnum(s32 which)
 {
@@ -1464,26 +1379,19 @@ s32 screenGetCarsEnum(s32 which)
     return UA_NONE;
 }
 
-#ifdef NON_MATCHING
 void screenSetVehicleHeading(s32 heading)
 {
     gHeading = (heading << 12) / 360;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenSetVehicleHeading);
-#endif
 
-#ifdef NON_MATCHING
 void screenResetFrameNum(void)
 {
     gFrameNum = 0;
     InLeft = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenResetFrameNum);
-#endif
 
-#ifdef NON_MATCHING
+static s16 gFrameNum = 22;
+
 void screenSpinVehicle(Db* db, s32 carName, s32 force, s32 exclude)
 {
     CarStats e;
@@ -1501,10 +1409,13 @@ void screenSpinVehicle(Db* db, s32 carName, s32 force, s32 exclude)
     carNum = GetCarNumFromCarName(carName);
     cs = UAGetCs(carName);
     if (cs == 0) {
-        printf("PlayerCar %d\n", carName);
+        printf("Car %d\n", carName);
         return;
     }
-    cs->pos.vx = (InLeft == 0 ? 7680 : -7680) - spin;
+    if (InLeft == 0)
+        cs->pos.vx = 7680 - spin;
+    else
+        cs->pos.vx = -7680 - spin;
     cs->pos.vy = 0;
     CarInitDeltas(&e, carName);
     cs->pos.vz = e.unk6C * 32;
@@ -1562,9 +1473,6 @@ void screenSpinVehicle(Db* db, s32 carName, s32 force, s32 exclude)
         InLeft = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenSpinVehicle);
-#endif
 
 void screenGrayedScreen(void)
 {
@@ -1583,29 +1491,39 @@ void screenGrayedScreen(void)
     DrawPrim(&poly);
 }
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBB94);
+static char* gTransitionLabels[14] = {
+    "'ARENA DUEL'",
+    "'WAREHOUSE DISTRICT",
+    "'FREEWAY",
+    "'RIVER PARK",
+    "'ASSAULT on",
+    "'ROOFTOP COMBAT'",
+    "'THE FIGHT OF",
+    "",
+    "WARFARE'",
+    "FREE FOR ALL'",
+    "RUMBLE'",
+    "CYBURBIA'",
+    "The Final Battle",
+    "YOUR LIFE!'",
+};
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBBA8);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBBBC);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBBC8);
-
-#ifdef NON_MATCHING
 s32 screenTransitionLevel(s32 level, s32 advanced)
 {
     char* meetText = "Meet Your Opponents";
     char lines[5][50];
     DRAWENV env;
+    DRAWENV* draw;
     u_long* image;
     s32 pad;
     s32 count;
     s32 line;
-    s32 previous;
     s32 x;
     s32 start;
     s32 limit;
     s32 phase;
+    s32 font;
+    s32 center;
 
     image = (u_long*)rtGetDoubleBufferArea();
     count = 5;
@@ -1615,23 +1533,48 @@ s32 screenTransitionLevel(s32 level, s32 advanced)
         UpdCtlPad();
     screenGrayedScreen();
     screenVramToRam(320, 0, 320, 240, image);
-    sprintf(lines[0], advanced ? "CONGRATULATIONS!" : "WELCOME!");
+    if (advanced)
+        sprintf(lines[0], "CONGRATULATIONS!");
+    else
+        sprintf(lines[0], "WELCOME!");
     sprintf(lines[1], "Prepare for...");
     sprintf(lines[2], "%s", gTransitionLabels[level]);
     sprintf(lines[3], "%s", gTransitionLabels[7 + level]);
     sprintf(lines[4], "%s", screenPasswordForLevel(level));
     if (level == LEVEL1_ARENA)
         count = 3;
+    draw = &env;
     for (line = 0; line < count; ++line) {
         x = (fontStringWidth(6, (u8*)lines[line]) >> 1) + 320;
         while (x >= 151) {
             screenRamToVram(0, 0, 320, 240, image);
-            SetDefDrawEnv(&env, 0, 0, 320, 240);
-            PutDrawEnv(&env);
+            SetDefDrawEnv(draw, 0, 0, 320, 240);
+            PutDrawEnv(draw);
 
-            for (previous = line - 1; previous >= 0; --previous)
-                fontPrintCenteredXY(6, 159, 75 + previous * 30, lines[previous]);
-            fontPrintCenteredXY(line < 4 ? 6 : 5, x < 159 ? 159 : x, 75 + line * 30, lines[line]);
+            switch (line) {
+            case 4:
+                fontPrintCenteredXY(6, 159, 165, lines[3]);
+            case 3:
+                fontPrintCenteredXY(6, 159, 135, lines[2]);
+            case 2:
+                fontPrintCenteredXY(6, 159, 105, lines[1]);
+            case 1:
+                fontPrintCenteredXY(6, 159, 75, lines[0]);
+            }
+            if (line < 4) {
+                font = 6;
+                if (x < 159)
+                    center = 159;
+                else
+                    center = x;
+            } else {
+                font = 5;
+                if (x < 159)
+                    center = 159;
+                else
+                    center = x;
+            }
+            fontPrintCenteredXY(font, center, 75 + line * 30, lines[line]);
             x -= 20;
             PutDrawEnv(&gScreenDrawEnv);
             VSync(0);
@@ -1664,7 +1607,10 @@ s32 screenTransitionLevel(s32 level, s32 advanced)
     shellSetTransitionState(TRANSITION_INIT_TEXTURES);
     shellCheckTransitionStatus();
     screenVramToRam(320, 0, 320, 240, image);
-    meetText[18] = screenGetLevelNumCards(level) == 1 ? 0 : 's';
+    if (screenGetLevelNumCards(level) == 1)
+        meetText[18] = '\0';
+    else
+        meetText[18] = 's';
     start = -(fontStringWidth(6, (u8*)meetText) >> 1);
     limit = 159;
     DrawSync(0);
@@ -1692,9 +1638,6 @@ s32 screenTransitionLevel(s32 level, s32 advanced)
     fontSetDefaultColor(6);
     return DrawSync(0);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenTransitionLevel);
-#endif
 
 void screenLostGame(void)
 {
@@ -1704,15 +1647,6 @@ void screenLostGame(void)
     fontPrintCenteredXY(6, 159, 119, "YOU LOSE!");
 }
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBBE4);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBBFC);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBC18);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBC34);
-
-#ifdef NON_MATCHING
 void screenBossCar(void)
 {
     s32 pad;
@@ -1738,9 +1672,6 @@ void screenBossCar(void)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenBossCar);
-#endif
 
 void screenInit(void)
 {
@@ -1750,11 +1681,6 @@ void screenInit(void)
     PutDispEnv(&gScreenDisplayEnv);
 }
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBC4C);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBC64);
-
-#ifdef NON_MATCHING
 char* screenChooseControls(s32 mode, s32 pad, s32 unused)
 {
     static GsIMAGE tim;
@@ -1762,15 +1688,15 @@ char* screenChooseControls(s32 mode, s32 pad, s32 unused)
     char playerName[16];
     DRAWENV env;
     s32 fonts[2];
+    s32 waitRelease;
     u_long* image;
     s32 config;
+    s32 labelFrames;
     s32 inputPad;
     s32 changed;
     s32 left;
     s32 right;
-    s32 waitRelease;
     s32 idleFrames;
-    s32 labelFrames;
     u32 blink;
 
     image = (u_long*)rtGetDoubleBufferArea();
@@ -1795,10 +1721,10 @@ char* screenChooseControls(s32 mode, s32 pad, s32 unused)
     if (config != PAD_CONFIG_RUN_N_GUN)
         fontPrintXY(fonts[0], screenControlArrows[1].x, screenControlArrows[1].y,
             screenControlArrows[1].label);
+    waitRelease = 1;
     left = 0;
     right = 0;
     idleFrames = 0;
-    waitRelease = 1;
     blink = 0xF0F0;
     sprintf(playerName, "Player %d", pad + 1);
 
@@ -1887,25 +1813,46 @@ char* screenChooseControls(s32 mode, s32 pad, s32 unused)
     PadSetConfig(config, (s16)pad);
     return screenGetControlPadLabel(config);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenChooseControls);
-#endif
+
+static char* screenControlPadLabels[PAD_CONFIG_MAX] = {
+    "CTL FREAK",
+    "STANDARD",
+    "DEADLY FORCE",
+    "RUN N' GUN",
+};
 
 char* screenGetControlPadLabel(s32 which)
 {
     return screenControlPadLabels[which];
 }
 
-#ifdef NON_MATCHING
+static s32 ua_music_vol = 7;
+static s32 ua_sfx_vol = 7;
+static s32 gDifficulty = DIFFICULTY_MEDIUM;
+
+static char* screenVolumeLabels[15] = {
+    "**************",
+    "|*************",
+    "||************",
+    "|||***********",
+    "||||**********",
+    "|||||*********",
+    "||||||********",
+    "|||||||*******",
+    "||||||||******",
+    "|||||||||*****",
+    "||||||||||****",
+    "|||||||||||***",
+    "||||||||||||**",
+    "|||||||||||||*",
+    "||||||||||||||",
+};
+
 char* screenGetMusicLabel(void)
 {
     return screenVolumeLabels[ua_music_vol];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenGetMusicLabel);
-#endif
 
-#ifdef NON_MATCHING
 s32 screenNextMusicChoice(s32 delta)
 {
     ua_music_vol += delta;
@@ -1916,11 +1863,7 @@ s32 screenNextMusicChoice(s32 delta)
     }
     return ua_music_vol;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenNextMusicChoice);
-#endif
 
-#ifdef NON_MATCHING
 void screenSetMusicVolume(void)
 {
     s32 vol;
@@ -1936,11 +1879,7 @@ void screenSetMusicVolume(void)
     } while (0);
     uasoundSetMusicVolume(vol);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenSetMusicVolume);
-#endif
 
-#ifdef NON_MATCHING
 s32 screenGetMusicVolume(void)
 {
     s32 vol;
@@ -1952,20 +1891,12 @@ s32 screenGetMusicVolume(void)
     }
     return vol;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenGetMusicVolume);
-#endif
 
-#ifdef NON_MATCHING
 char* screenGetEffectsLabel(void)
 {
     return screenVolumeLabels[ua_sfx_vol];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenGetEffectsLabel);
-#endif
 
-#ifdef NON_MATCHING
 s32 screenNextEffectsChoice(s32 delta)
 {
     ua_sfx_vol += delta;
@@ -1976,11 +1907,7 @@ s32 screenNextEffectsChoice(s32 delta)
     }
     return ua_sfx_vol;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenNextEffectsChoice);
-#endif
 
-#ifdef NON_MATCHING
 void screenSetEffectsVolume(void)
 {
     s32 vol;
@@ -1996,20 +1923,18 @@ void screenSetEffectsVolume(void)
     } while (0);
     uasoundSetMusicVolume(99 - vol);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenSetEffectsVolume);
-#endif
 
-#ifdef NON_MATCHING
+static char* screenDifficultyLabels[DIFFICULTY_MAX] = {
+    "EASY",
+    "MEDIUM",
+    "HARD",
+};
+
 char* screenGetDifficultyLabel(void)
 {
     return screenDifficultyLabels[gDifficulty];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenGetDifficultyLabel);
-#endif
 
-#ifdef NON_MATCHING
 s32 screenNextDifficulty(s32 delta)
 {
     gDifficulty += delta;
@@ -2020,11 +1945,7 @@ s32 screenNextDifficulty(s32 delta)
     }
     return gDifficulty;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenNextDifficulty);
-#endif
 
-#ifdef NON_MATCHING
 void screenLostALife(s32 unused_lives)
 {
     POLY_F4 prim;
@@ -2061,9 +1982,6 @@ void screenLostALife(s32 unused_lives)
     } while (i <= n);
     VSync(60);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenLostALife);
-#endif
 
 s32 screenMovieIsDoneTest(s32 frames, s32 limit, u8 flip)
 {
@@ -2095,8 +2013,6 @@ done:
     return result;
 }
 
-/* Matches, but needs the `screen` data sections to be defined in C. */
-#ifdef NON_MATCHING
 s32 screenPlayCinema(s32 which)
 {
     static DRAWENV draws[2];
@@ -2152,9 +2068,6 @@ s32 screenPlayCinema(s32 which)
     }
     return result;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenPlayCinema);
-#endif
 
 void screenPlayAllMovies(void)
 {
@@ -2172,20 +2085,15 @@ void screenDisplayLogos(void)
     screenPlayCinema(0);
 }
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBD94);
+static char* aborted;
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBDA8);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBDBC);
-
-#ifdef NON_MATCHING
 void screenCheckMidGameOptions(void)
 {
-    static char* aborted = "BATTLE ABORTED";
     s32 choice = 0;
     char* pw = "";
     POLY_F4 poly;
     DRAWENV env;
+    char* paused = "PAUSED";
     char buf[30] = "";
     char* names[5] = { "START", "QUIT", "AUDIO", "CONTROLLER OPTIONS", "" };
     s32 fonts[2];
@@ -2196,12 +2104,10 @@ void screenCheckMidGameOptions(void)
     s32* pf2;
     s32* pf3;
     s32* pf4;
-    char* paused;
 
     fonts[0] = 0;
     fonts[1] = 1;
     pad = (rtIsSplitScreenOn() != 0) * 2;
-    paused = "PAUSED";
     if (GetCtlPad(1, pad) == 0) {
         return;
     }
@@ -2231,13 +2137,21 @@ void screenCheckMidGameOptions(void)
     fontPrintCenteredXY(fonts[0], 159, 90, buf);
     fontPrintCenteredXY(5, 159, 115, pw);
     lo = fonts;
-    pf = (choice == 0) ? fonts + 1 : lo;
+    pf = lo;
+    if (choice == 0)
+        pf = fonts + 1;
     fontPrintCenteredXY(*pf, 159, 140, names[0]);
-    pf2 = (choice == 1) ? fonts + 1 : lo;
+    pf2 = lo;
+    if (choice == 1)
+        pf2 = fonts + 1;
     fontPrintCenteredXY(*pf2, 159, 160, names[1]);
-    pf3 = (choice == 2) ? fonts + 1 : lo;
+    pf3 = lo;
+    if (choice == 2)
+        pf3 = fonts + 1;
     fontPrintCenteredXY(*pf3, 159, 180, names[2]);
-    pf4 = (choice == 3) ? fonts + 1 : lo;
+    pf4 = lo;
+    if (choice == 3)
+        pf4 = fonts + 1;
     fontPrintCenteredXY(*pf4, 159, 200, names[3]);
     while (ctlpadAnyKey(pad)) {
         UpdCtlPad();
@@ -2313,13 +2227,21 @@ void screenCheckMidGameOptions(void)
             fontPrintCenteredXY(fonts[0], 159, 90, buf);
             fontPrintCenteredXY(5, 159, 115, pw);
             lo = fonts;
-            pf = (choice == 0) ? fonts + 1 : lo;
+            pf = lo;
+            if (choice == 0)
+                pf = fonts + 1;
             fontPrintCenteredXY(*pf, 159, 140, names[0]);
-            pf2 = (choice == 1) ? fonts + 1 : lo;
+            pf2 = lo;
+            if (choice == 1)
+                pf2 = fonts + 1;
             fontPrintCenteredXY(*pf2, 159, 160, names[1]);
-            pf3 = (choice == 2) ? fonts + 1 : lo;
+            pf3 = lo;
+            if (choice == 2)
+                pf3 = fonts + 1;
             fontPrintCenteredXY(*pf3, 159, 180, names[2]);
-            pf4 = (choice == 3) ? fonts + 1 : lo;
+            pf4 = lo;
+            if (choice == 3)
+                pf4 = fonts + 1;
             fontPrintCenteredXY(*pf4, 159, 200, names[3]);
         }
         while (ctlpadAnyKey(pad)) {
@@ -2327,9 +2249,8 @@ void screenCheckMidGameOptions(void)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenCheckMidGameOptions);
-#endif
+
+static char* aborted = "BATTLE ABORTED";
 
 void screenClearScreen(s32 x, s32 y, s32 w, s32 h)
 {
@@ -2343,8 +2264,6 @@ void screenClearScreen(s32 x, s32 y, s32 w, s32 h)
     DrawSync(0);
 }
 
-/* Matches, but needs the `screen` data sections to be defined in C. */
-#ifdef NON_MATCHING
 void screenPrintScore(s16 who, s16 wins, s16 losses)
 {
     char* names[2];
@@ -2353,8 +2272,8 @@ void screenPrintScore(s16 who, s16 wins, s16 losses)
     char* label[2];
     s32 font[2];
 
-    names[0] = uaGetCarNameString(*(s32*)((char*)GetPlayerInfo(0) + 148));
-    names[1] = uaGetCarNameString(*(s32*)((char*)GetPlayerInfo(1) + 148));
+    names[0] = uaGetCarNameString(GetPlayerInfo(0)->uaIndex);
+    names[1] = uaGetCarNameString(GetPlayerInfo(1)->uaIndex);
     screenGrayedScreen();
     label[who] = "WINNER!";
     label[who ^ 1] = "LOSER";
@@ -2377,18 +2296,53 @@ void screenPrintScore(s16 who, s16 wins, s16 losses)
     fontPrintCenteredXY(2, 270, 178, "LOSSES");
     fontPrintCenteredXY(2, 270, 198, buf2);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenPrintScore);
-#endif
 
-#ifdef NON_MATCHING
+static u16 screenNumCards[8] = { 1, 3, 5, 6, 8, 3, 5, 0 };
+static s16 D_80170F44[7][8] = {
+    { 160, 0, 0, 0, 0, 0, 0, 0 },
+    { 83, 236, 160, 0, 0, 0, 0, 0 },
+    { 88, 247, 160, 88, 247, 0, 0, 0 },
+    { 86, 249, 90, 245, 86, 249, 0, 0 },
+    { 59, 159, 259, 104, 214, 59, 159, 259 },
+    { 83, 236, 160, 0, 0, 0, 0, 0 },
+    { 88, 247, 160, 88, 247, 0, 0, 0 },
+};
+static s16 D_80170FB4[7][8] = {
+    { 100, 0, 0, 0, 0, 0, 0, 0 },
+    { 74, 74, 164, 0, 0, 0, 0, 0 },
+    { 50, 50, 120, 190, 190, 0, 0, 0 },
+    { 50, 50, 120, 120, 190, 190, 0, 0 },
+    { 60, 60, 60, 120, 120, 180, 180, 180 },
+    { 74, 74, 164, 0, 0, 0, 0, 0 },
+    { 50, 50, 120, 190, 190, 0, 0, 0 },
+};
+static s16 D_80171024[8] = {
+    80,
+    70,
+    60,
+    60,
+    45,
+    70,
+    60,
+    0,
+};
+static s16 D_80171034[8] = {
+    40,
+    35,
+    30,
+    30,
+    23,
+    35,
+    30,
+    0,
+};
+
 void screenInitCardSprites(s32 which, s16 count, s32* opponents)
 {
     POLY_FT4* p;
     s16 i;
-    s32 v;
-    s32 vv;
-    s32 tp;
+    u16 v;
+    u16 tp;
 
     v = 0;
     tp = 10;
@@ -2402,8 +2356,8 @@ void screenInitCardSprites(s32 which, s16 count, s32* opponents)
     gCardsDrawEnv[1].isbg = 1;
     gCardsDrawEnv[1].dtd = 0;
     for (i = 0; i < count; i++) {
+        setPolyFT4(&gCards[i]);
         p = &gCards[i];
-        setPolyFT4(p);
         SetSemiTrans(p, 0);
         p->r0 = 127;
         p->g0 = 127;
@@ -2416,20 +2370,18 @@ void screenInitCardSprites(s32 which, s16 count, s32* opponents)
         gCards[i].y2 = -D_80171034[which];
         gCards[i].x3 = -D_80171024[which];
         gCards[i].y3 = D_80171034[which];
-        vv = v;
         if (i == 4) {
             tp++;
             v = 0;
-            vv = 0;
         }
         gCards[i].v0 = v;
-        gCards[i].v1 = vv + 63;
-        gCards[i].v3 = vv + 63;
+        gCards[i].v1 = v + 63;
+        gCards[i].v3 = v + 63;
         gCards[i].u0 = 127;
         gCards[i].u1 = 127;
         gCards[i].u2 = 0;
         gCards[i].u3 = 0;
-        gCards[i].v2 = vv;
+        gCards[i].v2 = v;
         gCards[i].tpage = tp + 128;
         gCards[i].clut = ((i & 0x3ff) << 6) | 0x30;
         v += 64;
@@ -2440,11 +2392,7 @@ void screenInitCardSprites(s32 which, s16 count, s32* opponents)
     screen_sw.g0 = 127;
     screen_sw.b0 = 127;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenInitCardSprites);
-#endif
 
-#ifdef NON_MATCHING
 void screenResetCards(s32 which)
 {
     x0 = 160;
@@ -2461,11 +2409,7 @@ void screenResetCards(s32 which)
         gCards[which].y3 = screen_sw.y3;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenResetCards);
-#endif
 
-#ifdef NON_MATCHING
 void screenDrawCard(s32 card, s32 instant, s32 skipMoving)
 {
     MATRIX matrix;
@@ -2495,9 +2439,10 @@ void screenDrawCard(s32 card, s32 instant, s32 skipMoving)
             x0 = D_80170F44[whichLevel][card];
             y0 = D_80170FB4[whichLevel][card];
             random = rand();
-            delta = random & 6;
             if (random & 8)
-                delta = -delta;
+                delta = -(random & 6);
+            else
+                delta = random & 6;
             angle = 360 + delta;
         }
         for (row = 0; row < 3; ++row) {
@@ -2512,12 +2457,9 @@ void screenDrawCard(s32 card, s32 instant, s32 skipMoving)
         rotation.vy = 0;
 
         rotation.vz = ((s32)angle * 4096) / 360;
-        rotation.pad = 0;
         RotMatrixYXZ(&rotation, &matrix);
         SetTransMatrix(&matrix);
         SetRotMatrix(&matrix);
-        input.vz = 0;
-        input.pad = 0;
         input.vx = gCards[card].x0;
         input.vy = gCards[card].y0;
         RotTrans(&input, &output, &flag);
@@ -2561,17 +2503,25 @@ void screenDrawCard(s32 card, s32 instant, s32 skipMoving)
         240, image);
     DrawOTag(screen_ot + 1);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenDrawCard);
-#endif
 
-#ifdef NON_MATCHING
+static inline void screenGetTexturePagePosition(POLY_FT4* card, s32* y, s32* x)
+{
+    *y = (card->tpage << 4) & 0x100;
+    *x = (card->tpage << 6) & 0x3FF;
+}
+
+static inline void screenGetClutPosition(POLY_FT4* card, s32* y, s32* x)
+{
+    *x = (card->clut & 0x3F) << 4;
+    *y = card->clut >> 6;
+}
+
 void screenLoadCarPictures(s16 numCars, s32* carNames)
 {
     RECT rect;
     GsIMAGE tim;
-    s32 xoff;
     s32 yoff;
+    s32 xoff;
     u8* buf;
     POLY_FT4* card;
     s16 i;
@@ -2580,8 +2530,7 @@ void screenLoadCarPictures(s16 numCars, s32* carNames)
     for (i = 0; i < numCars; i++) {
         fileioLoadFileIntoRam(buf, screenCarPictures[GetCarNumFromCarName(carNames[i])]);
         card = &gCards[i];
-        yoff = (card->tpage << 4) & 0x100;
-        xoff = (card->tpage << 6) & 0x3ff;
+        screenGetTexturePagePosition(card, &yoff, &xoff);
         GsGetTimInfo((u_long*)(buf + 4), &tim);
         rect.x = (card->u2 >> 1) + xoff;
         rect.y = card->v2 + yoff;
@@ -2589,33 +2538,26 @@ void screenLoadCarPictures(s16 numCars, s32* carNames)
         rect.h = tim.ph;
         LoadImage(&rect, tim.pixel);
         if ((tim.pmode >> 3) & 1) {
-            rect.x = (card->clut & 0x3f) << 4;
-            rect.y = card->clut >> 6;
+            screenGetClutPosition(card, &yoff, &xoff);
+            rect.x = xoff;
+            rect.y = yoff;
             rect.w = tim.cw;
             rect.h = tim.ch;
             LoadImage(&rect, tim.clut);
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenLoadCarPictures);
-#endif
 
-#ifdef NON_MATCHING
 s16 screenGetNumCards(void)
 {
     return screenNumCards[whichLevel];
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenGetNumCards);
-#endif
 
-s16 screenGetLevelNumCards(s32 level)
+s32 screenGetLevelNumCards(s32 level)
 {
-    return screenNumCards[level];
+    return (s16)screenNumCards[level];
 }
 
-#ifdef NON_MATCHING
 void screenLoadCardsForBattleOptions(s32 twoPlayer, s32 car0, s32 car1)
 {
     s32 cars[2];
@@ -2650,12 +2592,11 @@ void screenLoadCardsForBattleOptions(s32 twoPlayer, s32 car0, s32 car1)
             gCards[i].y3 = 32;
             gCards[i].x0 = 64;
             gCards[i].x1 = 64;
-            vv = v;
             if (i == 4) {
                 tp++;
                 v = 0;
-                vv = 0;
             }
+            vv = v;
             gCards[i].v0 = v;
             v += 64;
             gCards[i].v1 = vv + 63;
@@ -2677,22 +2618,17 @@ void screenLoadCardsForBattleOptions(s32 twoPlayer, s32 car0, s32 car1)
     screen_sw.b0 = 127;
     screenLoadCarPictures(count, cars);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenLoadCardsForBattleOptions);
-#endif
 
-#ifdef NON_MATCHING
 void screenDrawCardsForBattleOptions(s32 twoPlayer)
 {
     s32 x;
 
-    DrawSync(0);
     x = 0;
     if (twoPlayer == 0) {
         x = 75;
     }
-    x += 83;
-    screen_sw.x0 = gCards[0].x0 + x;
+    DrawSync(0);
+    screen_sw.x0 = gCards[0].x0 + (x += 83);
     screen_sw.y0 = gCards[0].y0 + 97;
     screen_sw.x1 = gCards[0].x1 + x;
     screen_sw.y1 = gCards[0].y1 + 97;
@@ -2735,9 +2671,6 @@ void screenDrawCardsForBattleOptions(s32 twoPlayer)
     }
     DrawSync(0);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenDrawCardsForBattleOptions);
-#endif
 
 void screenDumpScreenToRam(s32 rightHalf, u_long* dest)
 {
@@ -2796,55 +2729,34 @@ void screenVramToScreen(s32 rightHalf, s32 slot)
     DrawSync(0);
 }
 
-#ifdef NON_MATCHING
+static inline void screenSetTransferRect(RECT* r, s32 x, s32 y, s32 w, s32 h)
+{
+    r->w = w;
+    r->h = h;
+    r->x = x;
+    r->y = y;
+}
+
 void screenVramToRam(s32 x, s32 y, s32 w, s32 h, u_long* dest)
 {
     RECT r;
-    u_long* buffer;
 
-    do {
-        buffer = dest;
-    } while (0);
     DrawSync(0);
-    r.w = w;
-    r.h = h;
-    r.x = x;
-    r.y = y;
-    do {
-        StoreImage(&r, buffer);
-    } while (0);
+    screenSetTransferRect(&r, x, y, w, h);
+    StoreImage(&r, dest);
     DrawSync(0);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenVramToRam);
-#endif
 
-#ifdef NON_MATCHING
 void screenRamToVram(s32 x, s32 y, s32 w, s32 h, u_long* src)
 {
     RECT r;
-    u_long* buffer;
 
-    do {
-        buffer = src;
-    } while (0);
     DrawSync(0);
-    r.w = w;
-    r.h = h;
-    r.x = x;
-    r.y = y;
-    do {
-        LoadImage(&r, buffer);
-    } while (0);
+    screenSetTransferRect(&r, x, y, w, h);
+    LoadImage(&r, src);
     DrawSync(0);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenRamToVram);
-#endif
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBDDC);
-
-#ifdef NON_MATCHING
 s32 screenEnterAccessCode(void)
 {
     s32 w;
@@ -2965,13 +2877,7 @@ fill:
     fontSetDefaultColor(0);
     return screenAccessCodeFromPassword(gPassword);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenEnterAccessCode);
-#endif
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBDF0);
-
-#ifdef NON_MATCHING
 s32 screenWrongPassword(s32 unused_state)
 {
     char* strs[2] = { "TRY AGAIN?", "EXIT" };
@@ -3047,9 +2953,13 @@ s32 screenWrongPassword(s32 unused_state)
             PutDrawEnv(&env);
             fontPrintCenteredXY(0, 159, 95, wrong);
             lo = fonts;
-            pf = (choice == 0) ? fonts + 1 : lo;
+            pf = lo;
+            if (choice == 0)
+                pf = fonts + 1;
             fontPrintCenteredXY(*pf, 159, 133, strs[0]);
-            pf2 = (choice == 1) ? fonts + 1 : lo;
+            pf2 = lo;
+            if (choice == 1)
+                pf2 = fonts + 1;
             fontPrintCenteredXY(*pf2, 159, 153, strs[1]);
             fontPrintXY(5, 107, 183, gPassword);
             PutDrawEnv(&gScreenDrawEnv);
@@ -3065,9 +2975,24 @@ out:
     fontSetDefaultColor(fonts[1]);
     return ret;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenWrongPassword);
-#endif
+
+static char* screenPasswords[ACCESS_CODE_MAX] = {
+    "     ",
+    "@<=@@",
+    ">==@<",
+    "><=@=",
+    ">=<<<",
+    "=<>@>",
+    "=<=@=",
+    "< =@@",
+    "=<> @",
+    "<><<@",
+    "=>=<@",
+    "<>@=<",
+    ">>@<<",
+    "=<@==",
+    "@@<> ",
+};
 
 char* screenPasswordForLevel(s32 level)
 {
@@ -3107,26 +3032,28 @@ char* screenPasswordFromAccessCode(s32 code)
     return screenPasswords[code];
 }
 
-#ifdef NON_MATCHING
+static s32 gCursorOn = 0;
+static s32 gCursorCount = 0;
+static RECT gCursorRect = { 0, 0, 14, 6 };
+
+static inline void screenSaveCursorImage(s32 x, s32 y)
+{
+    gCursorRect.x = x + 320;
+    gCursorRect.y = y;
+    StoreImage(&gCursorRect, gCursorImageBuf);
+}
+
 void screenBlinkCursor(s32 font)
 {
     s32 x;
     s32 y;
-    s32 cx;
-    s32 cy;
 
-    gCursorCount = (s32)((u32)gCursorCount + 1u);
+    gCursorCount++;
     if (gCursorCount >= 20) {
         gCursorOn = gCursorOn == 0;
         if (gCursorOn != 0) {
             fontGetCursor(&x, &y);
-            do {
-                cx = x;
-                cy = y;
-            } while (0);
-            gCursorRect.x = (s32)((u32)cx + 320u);
-            gCursorRect.y = cy;
-            StoreImage(&gCursorRect, gCursorImageBuf);
+            screenSaveCursorImage(x, y);
             fontPrint(font, "_");
             fontSetCursor(x, y);
         } else {
@@ -3136,57 +3063,39 @@ void screenBlinkCursor(s32 font)
         DrawSync(0);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenBlinkCursor);
-#endif
 
-#ifdef NON_MATCHING
 void screenEraseCursor(void)
 {
     LoadImage(&gCursorRect, gCursorImageBuf);
     DrawSync(0);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenEraseCursor);
-#endif
 
-#ifdef NON_MATCHING
 void screenResetCursor(void)
 {
     gCursorOn = 0;
     gCursorCount = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenResetCursor);
-#endif
 
-#ifdef NON_MATCHING
 s32 screenWaitForContinue(s32 frames, s32 limit)
 {
-    s32 i;
-    s32 pad;
+    s32 i = 0;
+    s32 pad = 2 * (rtIsSplitScreenOn() != 0);
 
-    i = 0;
-    pad = 2 * (rtIsSplitScreenOn() != 0);
-    do {
-        do {
-            if (limit > 0) {
-                VSync(0);
-            }
-            i++;
-        } while (i < frames);
+    for (;;) {
+        if (limit > 0)
+            VSync(0);
+        i++;
+        if (i < frames)
+            continue;
         UpdCtlPad();
-        if (ctlpadAnySelect(pad)) {
+        if (ctlpadAnySelect(pad))
             return 1;
-        }
-    } while (limit < 0 || limit >= i);
+        if (limit >= 0 && limit < i)
+            break;
+    }
     return 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenWaitForContinue);
-#endif
 
-#ifdef NON_MATCHING
 void SetDefaultEndingParameters(void)
 {
     gEyePoint.vx = 40;
@@ -3203,11 +3112,7 @@ void SetDefaultEndingParameters(void)
     gDeltaTrans.vz = 0;
     gStartLocation = 240;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", SetDefaultEndingParameters);
-#endif
 
-#ifdef NON_MATCHING
 void SetOutlawEndingParameters(void)
 {
     gEyePoint.vx = 0;
@@ -3224,11 +3129,7 @@ void SetOutlawEndingParameters(void)
     gDeltaTrans.vz = 0;
     gStartLocation = -1280;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", SetOutlawEndingParameters);
-#endif
 
-#ifdef NON_MATCHING
 void SetRoadKillEndingParameters(void)
 {
     gEyePoint.vx = 0;
@@ -3245,11 +3146,7 @@ void SetRoadKillEndingParameters(void)
     gDeltaTrans.vz = 0;
     gStartLocation = -480;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", SetRoadKillEndingParameters);
-#endif
 
-#ifdef NON_MATCHING
 void screenCarEnding(s32 which)
 {
     CarStats e;
@@ -3308,11 +3205,7 @@ void screenCarEnding(s32 which)
         db[1].draw.isbg = saved;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenCarEnding);
-#endif
 
-#ifdef NON_MATCHING
 void screenCarEndingInit(ScreenCarEnding* e, s32 car, u_long* image)
 {
     e->cs = UAGetCs(car);
@@ -3334,9 +3227,6 @@ void screenCarEndingInit(ScreenCarEnding* e, s32 car, u_long* image)
         viewSetDeltaRot(&gEyeRot, 0);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenCarEndingInit);
-#endif
 
 void screenCarEndingReset(ScreenCarEnding* e)
 {
@@ -3353,7 +3243,6 @@ void screenCarEndingReset(ScreenCarEnding* e)
     ClearOTagR(((u_long*)e->cdb->small), 0x1000);
 }
 
-#ifdef NON_MATCHING
 void screenCarEndingDrawCar(ScreenCarEnding* e)
 {
     e->cs->rot.vx += gDeltaRot.vx;
@@ -3364,9 +3253,6 @@ void screenCarEndingDrawCar(ScreenCarEnding* e)
     viewProc(0);
     hierProcOne(e->cdb, e->cs);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenCarEndingDrawCar);
-#endif
 
 void screenCarEndingDisplayCar(ScreenCarEnding* e)
 {
@@ -3406,11 +3292,11 @@ void screenShowWarhawkDemo(void)
     screenPlayCinema(3);
 }
 
-#ifdef NON_MATCHING
 void screenScrollTextInit(
     ScrollText* st, char* textFile, char* textBuf, char* bgFile, u_long* imageBuf, s32 font)
 {
     char* p;
+    s32 height;
     s16 pad;
 
     pad = 2 * (rtIsSplitScreenOn() != 0);
@@ -3461,8 +3347,10 @@ void screenScrollTextInit(
     *p = 0;
     st->font = font;
     fontGetCharacterInfo(st->font, 'M', &st->charWidth, &st->spacing, &st->unk41C, &st->unk420);
-    st->bottom = st->numLines * st->spacing + (st->numLines - 1) * 10 + 241;
-    st->stopY = st->stopY * st->spacing + (st->stopY - 1) * 10 + 241;
+    height = st->numLines * st->spacing;
+    st->bottom = (st->numLines - 1) * 10 + height + 241;
+    height = st->stopY * st->spacing;
+    st->stopY = (st->stopY - 1) * 10 + height + 241;
     SetDefDrawEnv(&st->draw, 0, 0, 320, 240);
     PutDrawEnv(&st->draw);
     DrawSync(0);
@@ -3473,9 +3361,6 @@ void screenScrollTextInit(
     st->tick = 0;
     st->delay = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenScrollTextInit);
-#endif
 
 void screenScrollTextPrintOneLine(ScrollText* st)
 {
@@ -3570,39 +3455,15 @@ s32 screenScrollText(char* textFile, char* bgFile, s32 font)
     return 0;
 }
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBE14);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBE2C);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBE40);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBE54);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBE68);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBE7C);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBE94);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBEA4);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBEBC);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBED4);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBEEC);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBF04);
-
-#ifdef NON_MATCHING
 s32 screenPlayCarEnding(s32 carId)
 {
     char storyName[32];
+    ScrollText story;
     ScrollText credits;
+    ScrollText* text;
     ScreenCarEnding ending;
     s32 pad;
     s32 passwordChoice;
-    char* password;
     char* background;
     s32 signatureCountdown;
     s32 track;
@@ -3631,22 +3492,21 @@ s32 screenPlayCarEnding(s32 carId)
     switch (passwordChoice) {
     case 0:
         fontPrintCenteredXY(6, 159, 175, "Infinite Weapons");
-        password = screenPasswords[ACCESS_CODE_INFINITE_WEAPONS];
+        fontPrintCenteredXY(5, 159, 205, screenPasswords[ACCESS_CODE_INFINITE_WEAPONS]);
         break;
     case 1:
         fontPrintCenteredXY(6, 159, 175, "Minion and Friends");
-        password = screenPasswords[ACCESS_CODE_MINION];
+        fontPrintCenteredXY(5, 159, 205, screenPasswords[ACCESS_CODE_MINION]);
         break;
     case 2:
         fontPrintCenteredXY(6, 159, 175, "Arena with 5 Opponents");
-        password = screenPasswords[ACCESS_CODE_ARENA_5];
+        fontPrintCenteredXY(5, 159, 205, screenPasswords[ACCESS_CODE_ARENA_5]);
         break;
-    default:
+    case 3:
         fontPrintCenteredXY(6, 159, 175, "Helicopter View");
-        password = screenPasswords[ACCESS_CODE_HELICOPTER_VIEW];
+        fontPrintCenteredXY(5, 159, 205, screenPasswords[ACCESS_CODE_HELICOPTER_VIEW]);
         break;
     }
-    fontPrintCenteredXY(5, 159, 205, password);
     shellLoadCarsEndDatabase();
     while (ctlpadAnyKey(pad))
         UpdCtlPad();
@@ -3658,61 +3518,70 @@ s32 screenPlayCarEnding(s32 carId)
     shellStopCarEngineRev();
     sprintf(storyName, "UATEXT\\CAREND%02d.TXT", GetCarNumFromCarName(carId) + 1);
 
-    if (carId == UA_POLICE_CAR) {
-        background = "UASCREEN\\SCRNCOP.TIM";
-        signatureCountdown = 720;
-        SetOutlawEndingParameters();
-        track = DA_TRACK_DROP_DEAD;
-    } else if (carId == UA_MAD_MAX) {
+    switch (carId) {
+    case UA_MAD_MAX:
         background = "UASCREEN\\SCRNROAD.TIM";
         signatureCountdown = 60;
         SetRoadKillEndingParameters();
         track = DA_TRACK_TWISTED_THEME;
-    } else {
+        break;
+    case UA_POLICE_CAR:
+        background = "UASCREEN\\SCRNCOP.TIM";
+        signatureCountdown = 720;
+        SetOutlawEndingParameters();
+        track = DA_TRACK_DROP_DEAD;
+        break;
+    default:
         background = "UASCREEN\\SCRNLARO.TIM";
         signatureCountdown = 30;
         SetDefaultEndingParameters();
         track = DA_TRACK_NONE;
+        break;
     }
-    screenScrollTextInit(
-        &credits, "UATEXT\\CREDITS.TXT", TEXT_BUFFER, background, OPTIONS_IMAGE, 6);
+    text = &credits;
+    screenScrollTextInit(text, "UATEXT\\CREDITS.TXT", TEXT_BUFFER, background, OPTIONS_IMAGE, 6);
     screenCarEndingInit(&ending, carId, OPTIONS_IMAGE);
     done = 0;
     do {
         screenCarEndingReset(&ending);
         PutDrawEnv(&ending.cdb->draw);
         PutDispEnv(&ending.cdb->disp);
-        screenDisplayImage(ending.imageRight, credits.image, 0, 0);
-        if (!musicStarted) {
-            musicStarted = 1;
-            if (track != DA_TRACK_NONE)
-                soundStartPlayDA(track);
+        screenDisplayImage(ending.imageRight, text->image, 0, 0);
+        if (text->stopY <= 0 || text == &credits) {
+            if (!musicStarted) {
+                if (track != DA_TRACK_NONE)
+                    soundStartPlayDA(track);
+                musicStarted = 1;
+            }
+            screenCarEndingDrawCar(&ending);
+            screenCarEndingDisplayCar(&ending);
+            if (signatureCountdown == 0) {
+                shellPlayCarEngineRev();
+                uasoundPlayCarSignature(carId, 0, 0);
+                soundProcessIds();
+            }
+            --signatureCountdown;
         }
-        screenCarEndingDrawCar(&ending);
-        screenCarEndingDisplayCar(&ending);
-        if (signatureCountdown == 0) {
-            shellPlayCarEngineRev();
-            uasoundPlayCarSignature(carId, 0, 0);
-            soundProcessIds();
-        }
-        --signatureCountdown;
-        screenScrollTextOneScreenFull(&credits);
-        screenScrollTextUpdate(&credits);
-        if (screenScrollTextProcessButtonPress(&credits)) {
+        screenScrollTextOneScreenFull(text);
+        screenScrollTextUpdate(text);
+        if (screenScrollTextProcessButtonPress(text)) {
             interrupted = 1;
             done = 1;
         }
-        if (credits.bottom == 0)
-            done = 1;
+        if (text->bottom == 0) {
+            if (text == &story) {
+                text = &credits;
+                text->speed = story.speed;
+            } else {
+                done = 1;
+            }
+        }
     } while (!done);
-    screenDisplayImage(0, credits.image, 0, 0);
-    screenDisplayImage(1, credits.image, 0, 0);
+    screenDisplayImage(0, text->image, 0, 0);
+    screenDisplayImage(1, text->image, 0, 0);
     screenCarEndingCleanup(&ending);
     return interrupted;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenPlayCarEnding);
-#endif
 
 void screenDisplaySonyLegalScreen(void)
 {
@@ -3732,9 +3601,6 @@ void screenDisplayDeveloperScreen(void)
     VSync(140);
 }
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBF48);
-
-#ifdef NON_MATCHING
 void screenShowAccessCodes(void)
 {
     s32 pad;
@@ -3759,29 +3625,16 @@ void screenShowAccessCodes(void)
     screenWaitForContinue(60, 300);
     screenDisplayToDisplay(0, 1);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenShowAccessCodes);
-#endif
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBF54);
-
-#ifdef NON_MATCHING
 s32 screenDisplayHistory(void)
 {
     return screenScrollText("UATEXT\\HISTORY.TXT", "UASCREEN\\SCRNCALY.TIM", 6);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenDisplayHistory);
-#endif
 
-#ifdef NON_MATCHING
 s32 screenDisplayCredits(void)
 {
     return screenScrollText("UATEXT\\CREDITS.TXT", "UASCREEN\\SCRNROAD.TIM", 6);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenDisplayCredits);
-#endif
 
 void screenShowAccessCodeForLevel(s32 level, s32 x, s32 y)
 {
@@ -3816,9 +3669,6 @@ void screenShowAccessCodeForLevel(s32 level, s32 x, s32 y)
     }
 }
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/SCREEN", D_800FBF74);
-
-#ifdef NON_MATCHING
 void screenWonSpecialLevel(void)
 {
     screenGrayedScreen();
@@ -3833,9 +3683,6 @@ void screenWonSpecialLevel(void)
         uasoundPlayMenuSelectFlush();
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/SCREEN", screenWonSpecialLevel);
-#endif
 
 s32 screenGetWhichPad(void)
 {
