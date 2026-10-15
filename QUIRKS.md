@@ -90,3 +90,10 @@ Here is a table showing the general behavior:
 | `char buf[30] = "ab";`                                     | Copies 3 bytes, then calls `memset(buf + 3, 0, 27)` |
 | `int a[20] = {v};` (any non-constant element)              | Calls `memset(a, 0, 80)` on the whole array, then stores the elements |
 | `int a[20] = {0};`, `{1}`, `Big b = {{0}};` (all constant) | No `memset`; a copy loop from `.rodata` |
+
+## PsyQ compiler stack size
+
+Large functions can exhaust PsyQ's default 256 KiB DPMI stack, causing `Abort!`
+or invalid memory accesses in `daze`, as observed when compiling `TRIGPTS.c`.
+Pass `--env 'GO32=dpmistack 1048576'` to `daze` to use a 1 MiB stack.
+This is already configured in `tools/build_system/env.py`.

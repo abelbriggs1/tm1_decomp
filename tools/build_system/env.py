@@ -224,9 +224,10 @@ class EnvironmentToolchain:
         # KVM is used if available. The Unicorn fallback stops after a fixed
         # number of instructions, which is too low for our larger TUs.
         dos_runner = (
-            "DAZE_UNICORN_INSTRUCTION_LIMIT=50000000 "
+            "DAZE_UNICORN_INSTRUCTION_LIMIT=1000000000 "
             f"{directories.tools / 'daze/daze'} "
             "--backend auto "
+            "--env 'GO32=dpmistack 1048576' "
             f"--mount-ro {directories.tools / 'psyq3.6'} --mount {directories.root}"
         )
 
