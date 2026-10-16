@@ -10,6 +10,8 @@
 
 #define NUM_FONTS 7
 #define NUM_FONTINFO_FIELDS 77
+#define STANDARD_WIDTH(font) (gFontInfo[(font)][47].width)
+#define STANDARD_HEIGHT(font) (gFontInfo[(font)][43].height)
 #define GET_GLYPH_METRICS(font_id, glyph_index, out_width, out_height, out_y_offset)               \
     do {                                                                                           \
         *(out_width) = gFontInfo[(font_id)][(glyph_index)].width;                                  \
@@ -322,11 +324,6 @@ static inline int getFontInfoIndex(char c1)
     }
 }
 
-static inline void advanceFontLine(int font)
-{
-    gFontCursorY += gFontInfo[font][43].height;
-}
-
 void fontPrintXY(int font, u32 x, u32 y, char* string)
 {
     gFontCursorX = x;
@@ -371,7 +368,7 @@ int fontStringWidth(int font, char* string)
         case '\r':
             break;
         case ' ':
-            width += gFontInfo[font][47].width + gFontSpacing[font];
+            width += STANDARD_WIDTH(font) + gFontSpacing[font];
             break;
         case '\b':
             width -= 1;
@@ -413,13 +410,13 @@ int fontPrint(int font, char* string)
             switch (cur_char) {
             case '\n':
                 gFontCursorX = 0;
-                advanceFontLine(font);
+                gFontCursorY += STANDARD_HEIGHT(font);
                 break;
             case '\r':
-                advanceFontLine(font);
+                gFontCursorY += STANDARD_HEIGHT(font);
                 break;
             case ' ':
-                gFontCursorX += gFontInfo[font][47].width + gFontSpacing[font];
+                gFontCursorX += STANDARD_WIDTH(font) + gFontSpacing[font];
                 break;
             case '\b':
                 gFontCursorX += -1;
@@ -473,13 +470,13 @@ void fontSpritePrintCenteredXY(
         switch (cur_char) {
         case '\n':
             gFontCursorX = 0;
-            gFontCursorY += gFontInfo[font][43].height;
+            gFontCursorY += STANDARD_HEIGHT(font);
             break;
         case '\r':
-            gFontCursorY += gFontInfo[font][43].height;
+            gFontCursorY += STANDARD_HEIGHT(font);
             break;
         case ' ':
-            gFontCursorX += gFontInfo[font][47].width + gFontSpacing[font];
+            gFontCursorX += STANDARD_WIDTH(font) + gFontSpacing[font];
             break;
         case '\b':
             gFontCursorX -= 1;
@@ -512,13 +509,13 @@ int fontSpritePrint(int font, u32* drawMode, u32* sprites, char* string, void* o
             switch (cur_char) {
             case '\n':
                 gFontCursorX = 0;
-                advanceFontLine(font);
+                gFontCursorY += STANDARD_HEIGHT(font);
                 break;
             case '\r':
-                advanceFontLine(font);
+                gFontCursorY += STANDARD_HEIGHT(font);
                 break;
             case ' ':
-                gFontCursorX += gFontInfo[font][47].width + gFontSpacing[font];
+                gFontCursorX += STANDARD_WIDTH(font) + gFontSpacing[font];
                 break;
             case '\b':
                 gFontCursorX -= 1;
@@ -566,12 +563,12 @@ void fontGetCharacterInfo(
     switch (character) {
     case '\n':
         *width = 0;
-        *height = gFontInfo[font][0x2B].height;
+        *height = STANDARD_HEIGHT(font);
         *yOffset = 0;
         break;
     case '\r':
         *width = 0;
-        *height = gFontInfo[font][0x2B].height;
+        *height = STANDARD_HEIGHT(font);
         *yOffset = 0;
         break;
     case '\b':
@@ -580,7 +577,7 @@ void fontGetCharacterInfo(
         *yOffset = 0;
         break;
     case ' ':
-        *width = gFontInfo[font][0x2F].width;
+        *width = STANDARD_WIDTH(font);
         *height = 0;
         *yOffset = 0;
         break;
