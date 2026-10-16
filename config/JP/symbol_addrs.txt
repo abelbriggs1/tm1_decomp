@@ -2852,7 +2852,7 @@ _svm_okof1                               = 0x801f8510;
 _svm_okof2                               = 0x801f8518;
 
 // Screen card layout tables.
-screenCardCenterX = 0x80170F44; // size:0x70
-screenCardCenterY = 0x80170FB4; // size:0x70
-screenCardHalfWidth = 0x80171024; // size:0x10
-screenCardHalfHeight = 0x80171034; // size:0x10
+screenCardCenterX                        = 0x80170F44; // size:0x70
+screenCardCenterY                        = 0x80170FB4; // size:0x70
+screenCardHalfWidth                      = 0x80171024; // size:0x10
+screenCardHalfHeight                     = 0x80171034; // size:0x10
