@@ -16,7 +16,8 @@ typedef struct ScreenCarEnding {
     /* 0x12C */ Cs* cs;
     /* 0x130 */ Db* db;
     /* 0x134 */ Db* cdb;
-} ScreenCarEnding; /* 0x138 */
+    /* 0x138 */ u8 unused[8];
+} ScreenCarEnding; /* 0x140 */
 
 typedef struct ScrollText {
     /* 0x000 */ char* lines[256];
@@ -92,7 +93,7 @@ void screenResetCards(s32 which);
 void screenDrawCard(s32 card, s32 instant, s32 skipMoving);
 void screenLoadCarPictures(s16 numCars, s32* carNames);
 s16 screenGetNumCards(void);
-s16 screenGetLevelNumCards(s32 level);
+s32 screenGetLevelNumCards(s32 level);
 void screenLoadCardsForBattleOptions(s32 twoPlayer, s32 car0, s32 car1);
 void screenDrawCardsForBattleOptions(s32 twoPlayer);
 void screenDumpScreenToRam(s32 rightHalf, u_long* dest);

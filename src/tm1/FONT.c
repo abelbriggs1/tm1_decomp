@@ -2,9 +2,22 @@
 
 #include "common.h"
 #include <LIBGPU.H>
+#include <LIBGS.H>
+
+#include "tm1/FILEIO.H"
+#include "tm1/GRUTILS.H"
+#include "tm1/RT.H"
 
 #define NUM_FONTS 7
 #define NUM_FONTINFO_FIELDS 77
+#define STANDARD_WIDTH(font) (gFontInfo[(font)][47].width)
+#define STANDARD_HEIGHT(font) (gFontInfo[(font)][43].height)
+#define GET_GLYPH_METRICS(font_id, glyph_index, out_width, out_height, out_y_offset)               \
+    do {                                                                                           \
+        *(out_width) = gFontInfo[(font_id)][(glyph_index)].width;                                  \
+        *(out_height) = gFontInfo[(font_id)][(glyph_index)].height;                                \
+        *(out_y_offset) = gFontInfo[(font_id)][(glyph_index)].yOffset;                             \
+    } while (0)
 
 typedef struct {
     u8 u;
@@ -18,6 +31,13 @@ typedef struct {
     u32 x;
     u32 y;
 } Point;
+
+typedef struct {
+    char* name;
+    s32 loaded;
+    s32 tpage;
+    s32 clut;
+} FontTexture;
 
 static Point gFontVramCoords[NUM_FONTS] = {
     { 0, 32 },
@@ -348,7 +368,7 @@ int fontStringWidth(int font, char* string)
         case '\r':
             break;
         case ' ':
-            width += gFontInfo[font][47].width + gFontSpacing[font];
+            width += STANDARD_WIDTH(font) + gFontSpacing[font];
             break;
         case '\b':
             width -= 1;
@@ -372,78 +392,158 @@ void fontPrintCenteredXY(int font, u32 base_x, u32 y, char* string)
     fontPrint(font, string);
 }
 
-INCLUDE_ASM("asm/nonmatchings/tm1/FONT", fontPrint);
-// int fontPrint(int font, char* string)
-// {
-//     char cur_char;
-//     int useful_char;
-//     int num_printed;
-//     SPRT* char_template;
-//     FontInfoField** font_info;
+int fontPrint(int font, char* string)
+{
+    char cur_char;
+    int useful_char;
+    int num_printed;
+    SPRT* char_template;
 
-//     DrawSync(0);
-//     DrawPrim(&gFontDrawMode[font]);
+    DrawSync(0);
+    DrawPrim(&gFontDrawMode[font]);
 
-//     cur_char = *string;
-//     num_printed = 0;
+    cur_char = *string;
+    num_printed = 0;
 
-//     if (cur_char != '\0') {
-//         while (cur_char != '\0') {
-//             font_info = &gFontInfo[font];
+    if (cur_char != '\0') {
+        while (cur_char != '\0') {
+            switch (cur_char) {
+            case '\n':
+                gFontCursorX = 0;
+                gFontCursorY += STANDARD_HEIGHT(font);
+                break;
+            case '\r':
+                gFontCursorY += STANDARD_HEIGHT(font);
+                break;
+            case ' ':
+                gFontCursorX += STANDARD_WIDTH(font) + gFontSpacing[font];
+                break;
+            case '\b':
+                gFontCursorX += -1;
+                break;
+            default:
+                useful_char = getFontInfoIndex(cur_char);
+                DrawSync(0);
+                char_template = &gCharacterTemplate[font];
 
-//             switch (cur_char) {
-//             case '\n':
-//                 // Reset the cursor to the next line.
-//                 gFontCursorY += (*font_info)[43].height;
-//                 gFontCursorX = 0;
-//                 break;
-//             case '\r':
-//                 gFontCursorY += (*font_info)[43].height;
-//                 break;
-//             case ' ':
-//                 gFontCursorX += (*font_info)[47].width + gFontSpacing[font];
-//                 break;
-//             case '\b':
-//                 gFontCursorX += -1;
-//                 break;
-//             default:
-//                 useful_char = getFontInfoIndex(cur_char);
-//                 DrawSync(0);
-//                 char_template = &gCharacterTemplate[font];
+                char_template->u0 = gFontInfo[font][useful_char].u + gFontVramCoords[font].x;
+                char_template->v0 = gFontInfo[font][useful_char].v + gFontVramCoords[font].y;
+                char_template->w = gFontInfo[font][useful_char].width;
+                char_template->h = gFontInfo[font][useful_char].height;
+                char_template->x0 = gFontCursorX;
+                char_template->y0 = (gFontCursorY - gFontInfo[font][useful_char].height)
+                    + gFontInfo[font][useful_char].yOffset;
+                DrawPrim(char_template);
 
-//                 char_template->u0 = (*font_info)[useful_char].u + gFontVramCoords[font].x;
-//                 char_template->v0 = (*font_info)[useful_char].v + gFontVramCoords[font].y;
-//                 char_template->w = (*font_info)[useful_char].width;
-//                 char_template->h = (*font_info)[useful_char].height;
-//                 char_template->x0 = gFontCursorX;
-//                 char_template->y0 = (gFontCursorY - (*font_info)[useful_char].height)
-//                     + (*font_info)[useful_char].yOffset;
-//                 DrawPrim(char_template);
+                gFontCursorX += gFontInfo[font][useful_char].width + gFontSpacing[font];
+                break;
+            }
 
-//                 gFontCursorX += (*font_info)[useful_char].width + gFontSpacing[font];
-//                 break;
-//             }
+            string = string + 1;
+            cur_char = *string;
+            num_printed += 1;
+        }
+    }
 
-//             string = string + 1;
-//             cur_char = *string;
-//             num_printed += 1;
-//         }
-//     }
+    DrawSync(0);
+    return num_printed;
+}
 
-//     DrawSync(0);
-//     return num_printed;
-// }
-
-void fontSpritePrintXY(int font, u32 x, u32 y, u32* unk4, u32* unk5, char* string, void* unk7)
+void fontSpritePrintXY(
+    int font, u32 x, u32 y, DR_MODE* drawMode, SPRT* sprites, char* string, void* ot)
 {
     gFontCursorX = x;
     gFontCursorY = y;
-    fontSpritePrint(font, unk4, unk5, string, unk7);
+    fontSpritePrint(font, drawMode, sprites, string, ot);
 }
 
-INCLUDE_ASM("asm/nonmatchings/tm1/FONT", fontSpritePrintCenteredXY);
+void fontSpritePrintCenteredXY(
+    int font, u32 base_x, u32 y, DR_MODE* drawMode, SPRT* sprites, char* string, void* ot)
+{
+    char cur_char;
+    char* p;
 
-INCLUDE_ASM("asm/nonmatchings/tm1/FONT", fontSpritePrint);
+    gFontCursorX = 0;
+    gFontCursorY = 0;
+    cur_char = *string;
+    p = string;
+    while (cur_char != '\0') {
+        switch (cur_char) {
+        case '\n':
+            gFontCursorX = 0;
+            gFontCursorY += STANDARD_HEIGHT(font);
+            break;
+        case '\r':
+            gFontCursorY += STANDARD_HEIGHT(font);
+            break;
+        case ' ':
+            gFontCursorX += STANDARD_WIDTH(font) + gFontSpacing[font];
+            break;
+        case '\b':
+            gFontCursorX -= 1;
+            break;
+        default:
+            gFontCursorX += gFontInfo[font][getFontInfoIndex(cur_char)].width + gFontSpacing[font];
+            break;
+        }
+        p++;
+        cur_char = *p;
+    }
+    gFontCursorX = base_x - ((s32)gFontCursorX >> 1);
+    gFontCursorY = y;
+    fontSpritePrint(font, drawMode, sprites, string, ot);
+}
+
+int fontSpritePrint(int font, DR_MODE* drawMode, SPRT* sprites, char* string, void* ot)
+{
+    char cur_char;
+    int useful_char;
+    int num_printed;
+    SPRT* sprite;
+
+    /* With -fvolatile, struct assignments emit memcpy calls instead of inline copies. */
+    __builtin_memcpy(drawMode, &gFontDrawMode[font], sizeof(DR_MODE));
+    cur_char = *string;
+    num_printed = 0;
+    if (cur_char != '\0') {
+        while (cur_char != '\0') {
+            sprite = &sprites[num_printed];
+            switch (cur_char) {
+            case '\n':
+                gFontCursorX = 0;
+                gFontCursorY += STANDARD_HEIGHT(font);
+                break;
+            case '\r':
+                gFontCursorY += STANDARD_HEIGHT(font);
+                break;
+            case ' ':
+                gFontCursorX += STANDARD_WIDTH(font) + gFontSpacing[font];
+                break;
+            case '\b':
+                gFontCursorX -= 1;
+                break;
+            default:
+                useful_char = getFontInfoIndex(cur_char);
+                __builtin_memcpy(sprite, &gCharacterTemplate[font], sizeof(SPRT));
+                sprite->u0 = gFontInfo[font][useful_char].u + gFontVramCoords[font].x;
+                sprite->v0 = gFontInfo[font][useful_char].v + gFontVramCoords[font].y;
+                sprite->w = gFontInfo[font][useful_char].width;
+                sprite->h = gFontInfo[font][useful_char].height;
+                sprite->x0 = gFontCursorX;
+                sprite->y0 = (gFontCursorY - gFontInfo[font][useful_char].height)
+                    + gFontInfo[font][useful_char].yOffset;
+                AddPrim(ot, sprite);
+                gFontCursorX += gFontInfo[font][useful_char].width + gFontSpacing[font];
+                break;
+            }
+            string++;
+            cur_char = *string;
+            num_printed++;
+        }
+    }
+    AddPrim(ot, drawMode);
+    return num_printed;
+}
 
 void fontGetCursor(u32* x, u32* y)
 {
@@ -457,110 +557,137 @@ void fontSetCursor(u32 x, u32 y)
     gFontCursorY = y;
 }
 
-INCLUDE_ASM("asm/nonmatchings/tm1/FONT", fontGetCharacterInfo);
-// void fontGetCharacterInfo(
-//     int font, char character, u32* width, u32* height, s32* out5, s32* spacing)
-// {
-//     int c2;
+void fontGetCharacterInfo(
+    int font, char character, u32* width, u32* height, s32* yOffset, s32* spacing)
+{
+    *spacing = gFontSpacing[font];
 
-//     *spacing = gFontSpacing[font];
+    switch (character) {
+    case '\n':
+        *width = 0;
+        *height = STANDARD_HEIGHT(font);
+        *yOffset = 0;
+        break;
+    case '\r':
+        *width = 0;
+        *height = STANDARD_HEIGHT(font);
+        *yOffset = 0;
+        break;
+    case '\b':
+        *width = -1;
+        *height = 0;
+        *yOffset = 0;
+        break;
+    case ' ':
+        *width = STANDARD_WIDTH(font);
+        *height = 0;
+        *yOffset = 0;
+        break;
+    default: {
+        int index = getFontInfoIndex(character);
+        GET_GLYPH_METRICS(font, index, width, height, yOffset);
+        break;
+    }
+    }
+}
 
-//     switch (character) {
-//     case '\n':
-//         *width = 0;
-//         *height = gFontInfo[font][0x2B].height;
-//         *out5 = 0;
-//         break;
-//     case '\r':
-//         *width = 0;
-//         *height = gFontInfo[font][0x2B].height;
-//         *out5 = 0;
-//         break;
-//     case '\b':
-//         *width = -1;
-//         *height = 0;
-//         *out5 = 0;
-//         break;
-//     case ' ':
-//         *width = gFontInfo[font][0x2F].width;
-//         *height = 0;
-//         *out5 = 0;
-//         break;
-//     default:
-//         c2 = getFontInfoIndex(character);
-//         // TODO: Possible a fake match, regalloc is very slightly off without this.
-//         // Permuter could not find any other reasonable solutions.
-//         // This could be a macro of some kind, but it's hard to tell because there isn't
-//         // anywhere else in the code that reads all 3 values into variables like this.
-//         do {
-//             *width = gFontInfo[font][c2].width;
-//             *height = gFontInfo[font][c2].height;
-//             *out5 = gFontInfo[font][c2].yOffset;
-//         } while (0);
-//         break;
-//     }
-// }
+void fontInit(void)
+{
+    s32 i;
+    RECT rect;
+    GsIMAGE image;
+    FontTexture textures[2] = {
+        { "UATIM\\UAFONT1.TIM", 0, -1, -1 },
+        { "TIM\\CPFONT.TIM", 0, -1, -1 },
+    };
+    FontTexture* fonts[NUM_FONTS] = {
+        &textures[0],
+        &textures[0],
+        &textures[1],
+        &textures[1],
+        &textures[0],
+        &textures[0],
+        &textures[0],
+    };
 
-INCLUDE_ASM("asm/nonmatchings/tm1/FONT", fontInit);
+    gFontCursorX = 0;
+    gFontCursorY = 0;
+    gFontInfo[0] = fontInfo1;
+    gFontSpacing[0] = -1;
+    gFontInfo[1] = fontInfo1;
+    gFontSpacing[1] = -1;
+    gFontInfo[4] = fontInfo3;
+    gFontSpacing[4] = 3;
+    gFontInfo[5] = fontInfo1;
+    gFontSpacing[5] = 7;
+    gFontInfo[6] = fontInfo2;
+    gFontSpacing[6] = -1;
+    gFontInfo[3] = fontInfo4;
+    gFontSpacing[3] = 0;
+    gFontInfo[2] = fontInfo4;
+    gFontSpacing[2] = 0;
 
-#ifdef NON_MATCHING
+    for (i = 0; i < NUM_FONTS; i++) {
+        if (!fonts[i]->loaded) {
+            fileioLoadFileIntoRam(rtGetDoubleBufferArea(), fonts[i]->name);
+            GsGetTimInfo((u_long*)(rtGetDoubleBufferArea() + 4), &image);
+            rect.x = gFontVramCoords[i].x + 960;
+            rect.y = gFontVramCoords[i].y + 256;
+            rect.w = image.pw;
+            rect.h = image.ph;
+            LoadImage(&rect, image.pixel);
+            fonts[i]->tpage = GetTPage(image.pmode, 0, rect.x, rect.y);
+            if (image.clut != NULL) {
+                fonts[i]->clut = Load4BitClut((u32*)image.clut, 960, 511 - i);
+            }
+            fonts[i]->loaded = 1;
+        }
+        setSprt(&gCharacterTemplate[i]);
+        if (fonts[i]->clut != -1) {
+            gCharacterTemplate[i].clut = fonts[i]->clut;
+        } else {
+            gCharacterTemplate[i].clut = 0;
+        }
+        fontSetDefaultColor(i);
+        SetShadeTex(&gCharacterTemplate[i], 0);
+        setUV0(&gCharacterTemplate[i], 0, 0);
+        SetDrawMode(&gFontDrawMode[i], 0, 0, fonts[i]->tpage, NULL);
+        DrawSync(0);
+    }
+}
+
 void fontSetColor(int font, u8 red, u8 green, u8 blue)
 {
-    SPRT* fontData = &gCharacterTemplate[font];
-    fontData->r0 = red;
-    fontData->g0 = green;
-    fontData->b0 = blue;
+    setRGB0(&gCharacterTemplate[font], red, green, blue);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/FONT", fontSetColor);
-#endif // NON_MATCHING
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/FONT", D_800FA99C);
+void fontSetDefaultColor(int font)
+{
+    SPRT* sprite = &gCharacterTemplate[font];
 
-INCLUDE_RODATA("asm/nonmatchings/tm1/FONT", D_800FA9B0);
-
-INCLUDE_RODATA("asm/nonmatchings/tm1/FONT", D_800FA9C0);
-
-INCLUDE_ASM("asm/nonmatchings/tm1/FONT", fontSetDefaultColor);
-// void fontSetDefaultColor(int font)
-// {
-//     switch (font) {
-//     case 0:
-//         gCharacterTemplate[font].r0 = 0x5D;
-//         gCharacterTemplate[font].g0 = 0x1E;
-//         gCharacterTemplate[font].b0 = 0x17;
-//         break;
-//     case 1:
-//         gCharacterTemplate[font].r0 = 0x73;
-//         gCharacterTemplate[font].g0 = 0x3D;
-//         gCharacterTemplate[font].b0 = 0x1B;
-//         break;
-//     case 2:
-//         gCharacterTemplate[font].r0 = 0x80;
-//         gCharacterTemplate[font].g0 = 0x80;
-//         gCharacterTemplate[font].b0 = 0x80;
-//         break;
-//     case 3:
-//         gCharacterTemplate[font].r0 = 0x73;
-//         gCharacterTemplate[font].g0 = 0x19;
-//         gCharacterTemplate[font].b0 = 0x08;
-//         break;
-//     case 4:
-//         gCharacterTemplate[font].r0 = 0x64;
-//         gCharacterTemplate[font].g0 = 0x00;
-//         gCharacterTemplate[font].b0 = 0x1E;
-//         break;
-//     case 5:
-//         gCharacterTemplate[font].r0 = 0x32;
-//         gCharacterTemplate[font].g0 = 0x32;
-//         gCharacterTemplate[font].b0 = 0x32;
-//         break;
-//     case 6:
-//         gCharacterTemplate[font].r0 = 0x73;
-//         gCharacterTemplate[font].g0 = 0x54;
-//         gCharacterTemplate[font].b0 = 0x23;
-//         break;
-//     default:
-//         return;
-//     }
-// }
+    switch (font) {
+    case 0:
+        setRGB0(sprite, 0x5D, 0x1E, 0x17); /* #5D1E17 — dark brick red */
+        break;
+    case 1:
+        setRGB0(sprite, 0x73, 0x3D, 0x1B); /* #733D1B — brown */
+        break;
+    case 3:
+        setRGB0(sprite, 0x73, 0x19, 0x08); /* #731908 — dark reddish brown */
+        break;
+    case 2:
+        setRGB0(sprite, 0x80, 0x80, 0x80); /* #808080 — gray */
+        break;
+    case 4:
+        setRGB0(sprite, 0x64, 0x00, 0x1E); /* #64001E — dark burgundy */
+        break;
+    case 6:
+        setRGB0(sprite, 0x73, 0x54, 0x23); /* #735423 — golden brown */
+        break;
+    case 5:
+        setRGB0(sprite, 0x32, 0x32, 0x32); /* #323232 — dark gray */
+        break;
+    default:
+        return;
+    }
+}

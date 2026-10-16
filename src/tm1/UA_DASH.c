@@ -248,7 +248,7 @@ void UAdashDrawInstruments(s32 player, Db* cdb)
         AddPrim(ot, g);
     }
     if (gMaxCarryCapacity != 0 && rtIsSplitScreenOn() == 0) {
-        fontSpritePrintCenteredXY(2, 0x9F, 0x9B, (u32*)&gMaxCarryDrawMode, (u32*)gMaxCarrySprites,
+        fontSpritePrintCenteredXY(2, 0x9F, 0x9B, &gMaxCarryDrawMode, gMaxCarrySprites,
             "Max Carrying Capacity", rtGetCdb()->small);
         gMaxCarryCapacity--;
     }
@@ -318,7 +318,7 @@ void UAdashDrawInstruments(s32 player, Db* cdb)
             if (hp > 0) {
                 fontSetColor(2, 0x24, 0x96, 0x24);
                 fontSpritePrintCenteredXY(
-                    2, 0x92, 0x21, (u32*)&drawMode, (u32*)sprites, uadashGetCarSign(name), ot);
+                    2, 0x92, 0x21, &drawMode, sprites, uadashGetCarSign(name), ot);
                 fontSetDefaultColor(2);
             }
             w = (hp * 0x56) / hpMax;
@@ -1231,7 +1231,7 @@ void uadashDrawSpeed(
             str[i] = r + '0';
         }
     }
-    fontSpritePrintXY(4, 0x66, 0xD6, (u32*)&drawMode, (u32*)digitSprites, str, ot);
+    fontSpritePrintXY(4, 0x66, 0xD6, &drawMode, digitSprites, str, ot);
 }
 #else
 INCLUDE_ASM("asm/nonmatchings/tm1/UA_DASH", uadashDrawSpeed);
@@ -1398,8 +1398,8 @@ void uadashListRemainingCars(u32* ot)
         while (i < GetNumAICars()) {
             car = GetAICarInfo(i);
             if (car != NULL && car->stats.unk40 > 0) {
-                fontSpritePrintXY(2, 0xDC, y, (u32*)((u8*)gListDrawMode + modeOfs),
-                    (u32*)((u8*)gListSprites + sprOfs), uadashGetCarSign(car->uaIndex), ot);
+                fontSpritePrintXY(2, 0xDC, y, (DR_MODE*)((u8*)gListDrawMode + modeOfs),
+                    (SPRT*)((u8*)gListSprites + sprOfs), uadashGetCarSign(car->uaIndex), ot);
             }
             sprOfs += sizeof(gListSprites[0]);
             y += 12;
