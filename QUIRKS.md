@@ -90,13 +90,3 @@ Here is a table showing the general behavior:
 | `char buf[30] = "ab";`                                     | Copies 3 bytes, then calls `memset(buf + 3, 0, 27)` |
 | `int a[20] = {v};` (any non-constant element)              | Calls `memset(a, 0, 80)` on the whole array, then stores the elements |
 | `int a[20] = {0};`, `{1}`, `Big b = {{0}};` (all constant) | No `memset`; a copy loop from `.rodata` |
-
-## Single-iteration loops affect register allocation
-
-PsyQ removes the jumps from `do { ... } while (0)`, but can retain its loop
-markers in RTL. These markers increase the weighted reference counts used
-for register allocation. In `fontGetCharacterInfo`, removing the loop swaps
-the registers for `font` and `yOffset` (`s3` and `s4`) without changing the
-control flow. A plain `{ ... }` block does not preserve the allocation.
-
-(This text was generated via LLM.)
