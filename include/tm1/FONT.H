@@ -2,15 +2,17 @@
 #define __TM1_FONT_H__
 
 #include "common.h"
+#include <LIBGPU.H>
 
 void fontPrintXY(int font, u32 x, u32 y, char* string);
 int fontStringWidth(int font, char* string);
 void fontPrintCenteredXY(int font, u32 base_x, u32 y, char* string);
 int fontPrint(int font, char* string);
-void fontSpritePrintXY(int font, u32 x, u32 y, u32* unk4, u32* unk5, char* string, void* unk7);
+void fontSpritePrintXY(
+    int font, u32 x, u32 y, DR_MODE* drawMode, SPRT* sprites, char* string, void* ot);
 void fontSpritePrintCenteredXY(
-    int font, u32 base_x, u32 y, u32* unk4, u32* unk5, char* string, void* unk7);
-int fontSpritePrint(int font, u32* unk2, u32* unk3, char* string, void* unk5);
+    int font, u32 base_x, u32 y, DR_MODE* drawMode, SPRT* sprites, char* string, void* ot);
+int fontSpritePrint(int font, DR_MODE* drawMode, SPRT* sprites, char* string, void* ot);
 void fontGetCursor(u32* x, u32* y);
 void fontSetCursor(u32 x, u32 y);
 void fontGetCharacterInfo(

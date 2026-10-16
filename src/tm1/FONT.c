@@ -449,7 +449,8 @@ int fontPrint(int font, char* string)
     return num_printed;
 }
 
-void fontSpritePrintXY(int font, u32 x, u32 y, u32* drawMode, u32* sprites, char* string, void* ot)
+void fontSpritePrintXY(
+    int font, u32 x, u32 y, DR_MODE* drawMode, SPRT* sprites, char* string, void* ot)
 {
     gFontCursorX = x;
     gFontCursorY = y;
@@ -457,7 +458,7 @@ void fontSpritePrintXY(int font, u32 x, u32 y, u32* drawMode, u32* sprites, char
 }
 
 void fontSpritePrintCenteredXY(
-    int font, u32 base_x, u32 y, u32* drawMode, u32* sprites, char* string, void* ot)
+    int font, u32 base_x, u32 y, DR_MODE* drawMode, SPRT* sprites, char* string, void* ot)
 {
     char cur_char;
     char* p;
@@ -493,19 +494,20 @@ void fontSpritePrintCenteredXY(
     fontSpritePrint(font, drawMode, sprites, string, ot);
 }
 
-int fontSpritePrint(int font, u32* drawMode, u32* sprites, char* string, void* ot)
+int fontSpritePrint(int font, DR_MODE* drawMode, SPRT* sprites, char* string, void* ot)
 {
     char cur_char;
     int useful_char;
     int num_printed;
     SPRT* sprite;
 
+    /* With -fvolatile, struct assignments emit memcpy calls instead of inline copies. */
     __builtin_memcpy(drawMode, &gFontDrawMode[font], sizeof(DR_MODE));
     cur_char = *string;
     num_printed = 0;
     if (cur_char != '\0') {
         while (cur_char != '\0') {
-            sprite = &((SPRT*)sprites)[num_printed];
+            sprite = &sprites[num_printed];
             switch (cur_char) {
             case '\n':
                 gFontCursorX = 0;
