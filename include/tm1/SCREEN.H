@@ -16,10 +16,8 @@ typedef struct ScreenCarEnding {
     /* 0x12C */ Cs* cs;
     /* 0x130 */ Db* db;
     /* 0x134 */ Db* cdb;
-    /* Adding this tail makes screenPlayCarEnding and the full ROM match.
-     * Keep disabled until the original structure size is independently verified. */
-    /* u8 experimentalTail[8]; */
-} ScreenCarEnding; /* 0x138 */
+    /* 0x138 */ u8 unused[8];
+} ScreenCarEnding; /* 0x140 */
 
 typedef struct ScrollText {
     /* 0x000 */ char* lines[256];
