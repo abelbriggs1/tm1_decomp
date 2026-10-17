@@ -1,4 +1,4 @@
-Daze version: 0.2.0
+Daze version: 0.3.0
 Unicorn revision: 8028ec436f2d9376525352dd38ed9ed6b9f6be10
 gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
 Copyright (C) 2023 Free Software Foundation, Inc.
