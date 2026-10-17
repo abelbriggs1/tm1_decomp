@@ -3,6 +3,7 @@
 #include "common.h"
 #include <LIBGPU.H>
 #include <LIBGS.H>
+#include <MEMORY.H>
 
 #include "tm1/FILEIO.H"
 #include "tm1/GRUTILS.H"
@@ -501,8 +502,7 @@ int fontSpritePrint(int font, DR_MODE* drawMode, SPRT* sprites, char* string, vo
     int num_printed;
     SPRT* sprite;
 
-    /* With -fvolatile, struct assignments emit memcpy calls instead of inline copies. */
-    __builtin_memcpy(drawMode, &gFontDrawMode[font], sizeof(DR_MODE));
+    memcpy(drawMode, &gFontDrawMode[font], sizeof(DR_MODE));
     cur_char = *string;
     num_printed = 0;
     if (cur_char != '\0') {
@@ -524,7 +524,7 @@ int fontSpritePrint(int font, DR_MODE* drawMode, SPRT* sprites, char* string, vo
                 break;
             default:
                 useful_char = getFontInfoIndex(cur_char);
-                __builtin_memcpy(sprite, &gCharacterTemplate[font], sizeof(SPRT));
+                memcpy(sprite, &gCharacterTemplate[font], sizeof(SPRT));
                 sprite->u0 = gFontInfo[font][useful_char].u + gFontVramCoords[font].x;
                 sprite->v0 = gFontInfo[font][useful_char].v + gFontVramCoords[font].y;
                 sprite->w = gFontInfo[font][useful_char].width;
