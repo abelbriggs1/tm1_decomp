@@ -11,7 +11,10 @@
 
 #define NUM_FONTS 7
 #define NUM_FONTINFO_FIELDS 77
+
+// Helper macro to get the character width used for whitespace.
 #define STANDARD_WIDTH(font) (gFontInfo[(font)][47].width)
+// Helper macro to get the character height used for whitespace.
 #define STANDARD_HEIGHT(font) (gFontInfo[(font)][43].height)
 #define GET_GLYPH_METRICS(font_id, glyph_index, out_width, out_height, out_y_offset)               \
     do {                                                                                           \
