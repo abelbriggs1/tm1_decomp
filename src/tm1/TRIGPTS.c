@@ -4,13 +4,10 @@
 
 s16 numTriggerPoints;
 
-#ifdef NON_MATCHING
 void InitLevel1TriggerPoints(void)
 {
     s16 i;
     s16 j;
-    s16 t;
-    s32 n;
 
     numTriggerPoints = 21;
     i = 0;
@@ -22,12 +19,7 @@ void InitLevel1TriggerPoints(void)
             tPoints[i].link[j] = 0;
             tPoints[i].dist[j] = 0x77;
         }
-        t = i + 1;
-        do {
-        } while (0);
-        n = numTriggerPoints;
-        i = t;
-    } while (t < n);
+    } while (++i < numTriggerPoints);
     triggerPtStartPts.n = 3;
     for (i = 0; i < 15; i++) {
         triggerPtStartPts.start[i] = i;
@@ -40,18 +32,10 @@ void InitLevel1TriggerPoints(void)
     triggerPtGroups.w[0] = 0x5DC0;
     triggerPtGroups.d[0] = 0x5DC0;
     for (i = 0; i < triggerPtGroups.count; i++) {
-        j = 0;
-        if (j < triggerPtGroups.count) {
-            do {
-                triggerPtGroups.a[i][j] = -1;
-                triggerPtGroups.b[i][j] = 0;
-                triggerPtGroups.minSpeed[i][j] = 0x3C;
-                t = j + 1;
-                n = triggerPtGroups.count;
-                do {
-                } while (0);
-                j = t;
-            } while (t < n);
+        for (j = 0; j < triggerPtGroups.count; j++) {
+            triggerPtGroups.a[i][j] = -1;
+            triggerPtGroups.b[i][j] = 0;
+            triggerPtGroups.minSpeed[i][j] = 0x3C;
         }
     }
     tPoints[0].x = 0xDC8;
@@ -191,17 +175,11 @@ void InitLevel1TriggerPoints(void)
     tPoints[20].link[1] = 0x12;
     tPoints[20].link[2] = 0x10;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/TRIGPTS", InitLevel1TriggerPoints);
-#endif
 
-#ifdef NON_MATCHING
 void InitLevel2TriggerPoints(void)
 {
     s16 i;
     s16 j;
-    s16 t;
-    s32 n;
 
     numTriggerPoints = 18;
     i = 0;
@@ -213,12 +191,7 @@ void InitLevel2TriggerPoints(void)
             tPoints[i].link[j] = 0;
             tPoints[i].dist[j] = 0xA0;
         }
-        t = i + 1;
-        do {
-        } while (0);
-        n = numTriggerPoints;
-        i = t;
-    } while (t < n);
+    } while (++i < numTriggerPoints);
     triggerPtStartPts.n = 3;
     for (i = 0; i < 15; i++) {
         triggerPtStartPts.start[i] = i;
@@ -231,18 +204,10 @@ void InitLevel2TriggerPoints(void)
     triggerPtGroups.w[0] = 0x2EE0;
     triggerPtGroups.d[0] = 0x3E80;
     for (i = 0; i < triggerPtGroups.count; i++) {
-        j = 0;
-        if (j < triggerPtGroups.count) {
-            do {
-                triggerPtGroups.a[i][j] = -1;
-                triggerPtGroups.b[i][j] = 0;
-                triggerPtGroups.minSpeed[i][j] = 0x3C;
-                t = j + 1;
-                n = triggerPtGroups.count;
-                do {
-                } while (0);
-                j = t;
-            } while (t < n);
+        for (j = 0; j < triggerPtGroups.count; j++) {
+            triggerPtGroups.a[i][j] = -1;
+            triggerPtGroups.b[i][j] = 0;
+            triggerPtGroups.minSpeed[i][j] = 0x3C;
         }
     }
     tPoints[0].x = -0x3840;
@@ -350,17 +315,11 @@ void InitLevel2TriggerPoints(void)
     tPoints[17].link[1] = 6;
     tPoints[17].link[2] = 0x10;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/TRIGPTS", InitLevel2TriggerPoints);
-#endif
 
-#ifdef NON_MATCHING
 void InitLevel3TriggerPoints(void)
 {
     s16 i;
     s16 j;
-    s16 t;
-    s32 n;
 
     numTriggerPoints = 50;
     i = 0;
@@ -372,12 +331,7 @@ void InitLevel3TriggerPoints(void)
             tPoints[i].link[j] = 0;
             tPoints[i].dist[j] = 0x78;
         }
-        t = i + 1;
-        do {
-        } while (0);
-        n = numTriggerPoints;
-        i = t;
-    } while (t < n);
+    } while (++i < numTriggerPoints);
     triggerPtStartPts.n = 5;
     for (i = 0; i < 15; i++) {
         triggerPtStartPts.start[i] = i;
@@ -390,18 +344,10 @@ void InitLevel3TriggerPoints(void)
     triggerPtGroups.w[0] = 0xBB80;
     triggerPtGroups.d[0] = 0x5DC0;
     for (i = 0; i < triggerPtGroups.count; i++) {
-        j = 0;
-        if (j < triggerPtGroups.count) {
-            do {
-                triggerPtGroups.a[i][j] = -1;
-                triggerPtGroups.b[i][j] = 0;
-                triggerPtGroups.minSpeed[i][j] = 0x3C;
-                t = j + 1;
-                n = triggerPtGroups.count;
-                do {
-                } while (0);
-                j = t;
-            } while (t < n);
+        for (j = 0; j < triggerPtGroups.count; j++) {
+            triggerPtGroups.a[i][j] = -1;
+            triggerPtGroups.b[i][j] = 0;
+            triggerPtGroups.minSpeed[i][j] = 0x3C;
         }
     }
     tPoints[0].x = 0x2580;
@@ -714,17 +660,11 @@ void InitLevel3TriggerPoints(void)
     tPoints[49].dist[0] = 0xA0;
     tPoints[49].dist[1] = 0xA0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/TRIGPTS", InitLevel3TriggerPoints);
-#endif
 
-#ifdef NON_MATCHING
 void InitLevel4TriggerPoints(void)
 {
     s16 i;
     s16 j;
-    s16 t;
-    s32 n;
 
     numTriggerPoints = 42;
     i = 0;
@@ -736,12 +676,7 @@ void InitLevel4TriggerPoints(void)
             tPoints[i].link[j] = 0;
             tPoints[i].dist[j] = 0xA0;
         }
-        t = i + 1;
-        do {
-        } while (0);
-        n = numTriggerPoints;
-        i = t;
-    } while (t < n);
+    } while (++i < numTriggerPoints);
     triggerPtStartPts.n = 6;
     for (i = 0; i < 15; i++) {
         triggerPtStartPts.start[i] = i;
@@ -754,18 +689,10 @@ void InitLevel4TriggerPoints(void)
     triggerPtGroups.w[0] = 0x5780;
     triggerPtGroups.d[0] = 0x3E80;
     for (i = 0; i < triggerPtGroups.count; i++) {
-        j = 0;
-        if (j < triggerPtGroups.count) {
-            do {
-                triggerPtGroups.a[i][j] = -1;
-                triggerPtGroups.b[i][j] = 0;
-                triggerPtGroups.minSpeed[i][j] = 0x3C;
-                t = j + 1;
-                n = triggerPtGroups.count;
-                do {
-                } while (0);
-                j = t;
-            } while (t < n);
+        for (j = 0; j < triggerPtGroups.count; j++) {
+            triggerPtGroups.a[i][j] = -1;
+            triggerPtGroups.b[i][j] = 0;
+            triggerPtGroups.minSpeed[i][j] = 0x3C;
         }
     }
     tPoints[0].x = 0x12C0;
@@ -1005,17 +932,11 @@ void InitLevel4TriggerPoints(void)
     tPoints[41].f1A = 1;
     tPoints[41].link[0] = 0x28;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/TRIGPTS", InitLevel4TriggerPoints);
-#endif
 
-#ifdef NON_MATCHING
 void InitLevel5TriggerPoints(void)
 {
     s16 i;
     s16 j;
-    s16 t;
-    s32 n;
 
     numTriggerPoints = 173;
     i = 0;
@@ -1027,12 +948,7 @@ void InitLevel5TriggerPoints(void)
             tPoints[i].link[j] = 0;
             tPoints[i].dist[j] = 0xA0;
         }
-        t = i + 1;
-        do {
-        } while (0);
-        n = numTriggerPoints;
-        i = t;
-    } while (t < n);
+    } while (++i < numTriggerPoints);
     triggerPtStartPts.n = 12;
     for (i = 0; i < 15; i++) {
         triggerPtStartPts.start[i] = i;
@@ -1040,18 +956,10 @@ void InitLevel5TriggerPoints(void)
     }
     triggerPtGroups.count = 12;
     for (i = 0; i < triggerPtGroups.count; i++) {
-        j = 0;
-        if (j < triggerPtGroups.count) {
-            do {
-                triggerPtGroups.a[i][j] = -1;
-                triggerPtGroups.b[i][j] = 0;
-                triggerPtGroups.minSpeed[i][j] = 0x3C;
-                t = j + 1;
-                n = triggerPtGroups.count;
-                do {
-                } while (0);
-                j = t;
-            } while (t < n);
+        for (j = 0; j < triggerPtGroups.count; j++) {
+            triggerPtGroups.a[i][j] = -1;
+            triggerPtGroups.b[i][j] = 0;
+            triggerPtGroups.minSpeed[i][j] = 0x3C;
         }
     }
     triggerPtGroups.pos[0].x = 0x26C0;
@@ -1308,11 +1216,7 @@ void InitLevel5TriggerPoints(void)
     }
     Init2ndPartOfLevel5TriggerPts();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/TRIGPTS", InitLevel5TriggerPoints);
-#endif
 
-#ifdef NON_MATCHING
 void Init2ndPartOfLevel5TriggerPts(void)
 {
     tPoints[0].x = 0x60;
@@ -1894,9 +1798,6 @@ void Init2ndPartOfLevel5TriggerPts(void)
     tPoints[99].link[1] = 0x62;
     Init3rdPartOfLevel5TriggerPts();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/TRIGPTS", Init2ndPartOfLevel5TriggerPts);
-#endif
 
 void Init3rdPartOfLevel5TriggerPts(void)
 {
@@ -2031,8 +1932,6 @@ void Init3rdPartOfLevel5TriggerPts(void)
     Init4thPartOfLevel5TriggerPts();
 }
 
-/* Compiling this function exceeds the instruction limit of `daze`'s Unicorn backend. */
-#ifdef NON_MATCHING
 void Init4thPartOfLevel5TriggerPts(void)
 {
     s16 i;
@@ -2353,17 +2252,11 @@ void Init4thPartOfLevel5TriggerPts(void)
     tPoints[172].link[0] = 0x7C;
     tPoints[172].link[1] = 0xAB;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/TRIGPTS", Init4thPartOfLevel5TriggerPts);
-#endif
 
-#ifdef NON_MATCHING
 void InitLevel6TriggerPoints(void)
 {
     s16 i;
     s16 j;
-    s16 t;
-    s32 n;
 
     numTriggerPoints = 49;
     i = 0;
@@ -2375,12 +2268,7 @@ void InitLevel6TriggerPoints(void)
             tPoints[i].link[j] = 0;
             tPoints[i].dist[j] = 0x79;
         }
-        t = i + 1;
-        do {
-        } while (0);
-        n = numTriggerPoints;
-        i = t;
-    } while (t < n);
+    } while (++i < numTriggerPoints);
     for (i = 0; i < 15; i++) {
         triggerPtStartPts.start[i] = i;
         triggerPtStartPts.grp[i] = 0;
@@ -2400,18 +2288,10 @@ void InitLevel6TriggerPoints(void)
     triggerPtStartPts.grp[5] = 0;
     triggerPtGroups.count = 14;
     for (i = 0; i < triggerPtGroups.count; i++) {
-        j = 0;
-        if (j < triggerPtGroups.count) {
-            do {
-                triggerPtGroups.a[i][j] = -1;
-                triggerPtGroups.b[i][j] = 0;
-                triggerPtGroups.minSpeed[i][j] = 0x3C;
-                t = j + 1;
-                n = triggerPtGroups.count;
-                do {
-                } while (0);
-                j = t;
-            } while (t < n);
+        for (j = 0; j < triggerPtGroups.count; j++) {
+            triggerPtGroups.a[i][j] = -1;
+            triggerPtGroups.b[i][j] = 0;
+            triggerPtGroups.minSpeed[i][j] = 0x3C;
         }
     }
     triggerPtGroups.pos[0].x = 0xA0;
@@ -2797,11 +2677,7 @@ void InitLevel6TriggerPoints(void)
 
     Init2ndPartOfLevel6TriggerPts();
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/TRIGPTS", InitLevel6TriggerPoints);
-#endif
 
-#ifdef NON_MATCHING
 void Init2ndPartOfLevel6TriggerPts(void)
 {
     tPoints[0].x = 0xA00;
@@ -3185,6 +3061,3 @@ void Init2ndPartOfLevel6TriggerPts(void)
     tPoints[48].dist[2] = 0x4F;
     tPoints[48].type = 0xC;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/TRIGPTS", Init2ndPartOfLevel6TriggerPts);
-#endif
