@@ -130,3 +130,177 @@ Assuming the behavior is uniform across the file,
 **it is incredibly likely that the developers compiled the TU with `-fbuiltin` instead.**
 This enables PsyQ to optimize some calls by replacing them with inlined
 `__builtin` equivalents.
+
+## `do { } while (0)` affects codegen
+
+`do while (0)` is a common method that developers used to create multi-line
+macros. Using `do while (0)` allows the caller to add `;` on the end, making
+the macro feel more like a proper function call syntactically. Additionally,
+the macro has its own scope, so it can freely declare private variables.
+
+Since `while (0)` ensures the block never loops, these two macros are
+_semantically_ equivalent:
+
+```c
+/* Version A */
+#define GET_SIZE(font, i, w, h)            \
+    {                                      \
+        *(w) = gGlyphs[(font)][(i)].width;  \
+        *(h) = gGlyphs[(font)][(i)].height; \
+    }
+
+/* Version B */
+#define GET_SIZE(font, i, w, h)            \
+    do {                                   \
+        *(w) = gGlyphs[(font)][(i)].width;  \
+        *(h) = gGlyphs[(font)][(i)].height; \
+    } while (0)
+```
+
+**However**, this can still change codegen because `do { } while (0)` technically
+constitutes a loop.
+
+### Register allocation / swaps
+
+In more complex functions with branches, the use of `do { } while (0)` can change
+register allocation. Given this example:
+
+```c
+typedef struct {
+    u8 width;
+    u8 height;
+} Glyph;
+
+extern Glyph* gGlyphs[];
+extern int lookup(int c);
+
+void getSize(int font, int c, u32* w, u32* h)
+{
+    if (c == ' ') {
+        *w = 4;
+    } else {
+        int i = lookup(c);
+        GET_SIZE(font, i, w, h);
+    }
+}
+```
+
+```
+ Version A ({ })              Version B (do { } while (0))
+ subu  $sp,$sp,32             subu  $sp,$sp,32
+ sw    $16,16($sp)        <   sw    $17,20($sp)
+ move  $16,$4             <   move  $17,$4            # font
+ move  $4,$5                  move  $4,$5
+ sw    $17,20($sp)        <   sw    $16,16($sp)
+ move  $17,$6             <   move  $16,$6            # w
+ sw    $18,24($sp)            sw    $18,24($sp)
+ move  $18,$7                 move  $18,$7            # h
+ li    $2,0x20                li    $2,0x20
+ bne   $4,$2,$L2              bne   $4,$2,$L2
+ sw    $31,28($sp)            sw    $31,28($sp)
+ li    $2,0x4                 li    $2,0x4
+ sw    $2,0($17)          <   sw    $2,0($16)         # *w = 4
+ j     $L3                    j     $L3
+$L2:                         $L2:
+ jal   lookup                 jal   lookup
+ la    $3,gGlyphs             la    $3,gGlyphs
+ sll   $4,$16,2           <   sll   $4,$17,2          # font * 4
+ addu  $4,$4,$3               addu  $4,$4,$3
+ lw    $3,0($4)               lw    $3,0($4)
+ sll   $2,$2,1                sll   $2,$2,1
+ addu  $3,$2,$3               addu  $3,$2,$3
+ lbu   $3,0($3)               lbu   $3,0($3)
+ andi  $3,$3,0xff             andi  $3,$3,0xff
+ sw    $3,0($17)          <   sw    $3,0($16)         # *w = width
+ lw    $3,0($4)               lw    $3,0($4)
+ addu  $2,$2,$3               addu  $2,$2,$3
+ lbu   $2,1($2)               lbu   $2,1($2)
+ andi  $2,$2,0xff             andi  $2,$2,0xff
+ sw    $2,0($18)              sw    $2,0($18)         # *h = height
+$L3:                         $L3:
+ ...epilogue identical...     ...epilogue identical...
+```
+
+We can see that the register allocation changed; two registers were
+swapped around.
+
+(Note that this example replaces `do while(0)` with a plain `{ }` block.
+While `{ }` blocks can also change codegen in some edge cases, in this example,
+the output is identical whether or not the block is removed entirely.)
+
+### Barriers
+
+The use of `do { } while (0)` can also lead to a "barrier" effect which prevents
+the compiler from reordering/optimizing memory accesses. For example:
+
+```c
+extern int gA, gB;
+extern int gX, gY;
+
+#define BARRIER do { } while (0)
+
+void copy2(void)
+{
+    gX = gA;
+    BARRIER; /* only in the barrier version */
+    gY = gB;
+}
+```
+
+```
+ No barrier  With barrier
+ lw $2,gA    lw $2,gA
+ lw #3,gB    #nop
+ sw #2,gX    sw $2,gX
+ sw #3,gY    lw $2,gB
+             #nop
+             sw $2,gY
+```
+
+We can see that the barrier prevents the compiler from optimizing the delay slots of the
+two `lw` instructions.
+
+The "barrier" namesake is a bit clearer if we add more variables.
+
+```c
+extern int gA, gB, gC, gD;
+extern int gX, gY, gZ, gW;
+
+#define BARRIER do { } while (0)
+
+void copy2(void)
+{
+    gX = gA;
+    gY = gB;
+    BARRIER;
+    gZ = gC;
+    gW = gD;
+}
+```
+
+```
+ No barrier	With barrier
+ lw $2,gA	lw $2,gA
+ lw $3,gB	lw $3,gB
+ lw $4,gC	sw $2,gX
+ lw $5,gD	sw $3,gY
+ sw $2,gX	lw $2,gC
+ sw $3,gY	lw $3,gD
+ sw $4,gZ	sw $2,gZ
+ sw $5,gW	sw $3,gW
+```
+
+When the barrier is absent, the loads are grouped together in order to efficiently
+ready the stores. When the barrier is present, the loads and stores are split based
+on which "side" of the function they're on.
+
+**Note that barriers are a last resort for matching code. Use them sparingly.**
+It is incredibly unlikely for the original developers to intentionally insert
+empty loops into their code.
+If struggling with register allocation or reordering, try to look for other possible
+culprits, such as temp variables and pointer aliasing optimizations.
+
+While developers didn't intentionally insert barriers, it is _possible_ that barriers
+exist in the original compiled code. Most commonly, they can be an artifact of
+stubbed debug macros whose contents were removed or disabled. Their presence is
+more likely in TUs with a lot of `printf()` output and debug strings.
