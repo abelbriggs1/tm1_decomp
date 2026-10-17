@@ -281,7 +281,9 @@ class EnvironmentToolchain:
             g_level={
                 "tm1/TIMER": 0,
             },
-            extra_flags={}
+            extra_flags={
+                "tm1/FONT": ["-fbuiltin"],
+            }
         )
 
 
