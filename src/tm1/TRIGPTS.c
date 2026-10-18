@@ -10,8 +10,7 @@ void InitLevel1TriggerPoints(void)
     s16 j;
 
     numTriggerPoints = 21;
-    i = 0;
-    do {
+    for (i = 0; i < numTriggerPoints; i++) {
         tPoints[i].f1A = 1;
         tPoints[i].type = 0;
         tPoints[i].f08 = 0;
@@ -19,7 +18,7 @@ void InitLevel1TriggerPoints(void)
             tPoints[i].link[j] = 0;
             tPoints[i].dist[j] = 0x77;
         }
-    } while (++i < numTriggerPoints);
+    }
     triggerPtStartPts.n = 3;
     for (i = 0; i < 15; i++) {
         triggerPtStartPts.start[i] = i;
@@ -182,8 +181,7 @@ void InitLevel2TriggerPoints(void)
     s16 j;
 
     numTriggerPoints = 18;
-    i = 0;
-    do {
+    for (i = 0; i < numTriggerPoints; i++) {
         tPoints[i].f1A = 1;
         tPoints[i].type = 0;
         tPoints[i].f08 = 0;
@@ -191,7 +189,7 @@ void InitLevel2TriggerPoints(void)
             tPoints[i].link[j] = 0;
             tPoints[i].dist[j] = 0xA0;
         }
-    } while (++i < numTriggerPoints);
+    }
     triggerPtStartPts.n = 3;
     for (i = 0; i < 15; i++) {
         triggerPtStartPts.start[i] = i;
@@ -322,8 +320,7 @@ void InitLevel3TriggerPoints(void)
     s16 j;
 
     numTriggerPoints = 50;
-    i = 0;
-    do {
+    for (i = 0; i < numTriggerPoints; i++) {
         tPoints[i].f1A = 1;
         tPoints[i].type = 0;
         tPoints[i].f08 = 0;
@@ -331,7 +328,7 @@ void InitLevel3TriggerPoints(void)
             tPoints[i].link[j] = 0;
             tPoints[i].dist[j] = 0x78;
         }
-    } while (++i < numTriggerPoints);
+    }
     triggerPtStartPts.n = 5;
     for (i = 0; i < 15; i++) {
         triggerPtStartPts.start[i] = i;
@@ -667,8 +664,7 @@ void InitLevel4TriggerPoints(void)
     s16 j;
 
     numTriggerPoints = 42;
-    i = 0;
-    do {
+    for (i = 0; i < numTriggerPoints; i++) {
         tPoints[i].f1A = 1;
         tPoints[i].type = 0;
         tPoints[i].f08 = 0;
@@ -676,7 +672,7 @@ void InitLevel4TriggerPoints(void)
             tPoints[i].link[j] = 0;
             tPoints[i].dist[j] = 0xA0;
         }
-    } while (++i < numTriggerPoints);
+    }
     triggerPtStartPts.n = 6;
     for (i = 0; i < 15; i++) {
         triggerPtStartPts.start[i] = i;
@@ -939,8 +935,7 @@ void InitLevel5TriggerPoints(void)
     s16 j;
 
     numTriggerPoints = 173;
-    i = 0;
-    do {
+    for (i = 0; i < numTriggerPoints; i++) {
         tPoints[i].f1A = 1;
         tPoints[i].type = 0;
         tPoints[i].f08 = 0;
@@ -948,7 +943,7 @@ void InitLevel5TriggerPoints(void)
             tPoints[i].link[j] = 0;
             tPoints[i].dist[j] = 0xA0;
         }
-    } while (++i < numTriggerPoints);
+    }
     triggerPtStartPts.n = 12;
     for (i = 0; i < 15; i++) {
         triggerPtStartPts.start[i] = i;
@@ -2259,8 +2254,7 @@ void InitLevel6TriggerPoints(void)
     s16 j;
 
     numTriggerPoints = 49;
-    i = 0;
-    do {
+    for (i = 0; i < numTriggerPoints; i++) {
         tPoints[i].f1A = 1;
         tPoints[i].type = 0;
         tPoints[i].f08 = 0;
@@ -2268,7 +2262,7 @@ void InitLevel6TriggerPoints(void)
             tPoints[i].link[j] = 0;
             tPoints[i].dist[j] = 0x79;
         }
-    } while (++i < numTriggerPoints);
+    }
     for (i = 0; i < 15; i++) {
         triggerPtStartPts.start[i] = i;
         triggerPtStartPts.grp[i] = 0;
