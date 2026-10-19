@@ -4,6 +4,9 @@
 
 s16 numTriggerPoints;
 
+// TODO: Clean up this file using macros; it's almost certain that
+// SingleTrac used them in order to set up the data.
+
 void InitLevel1TriggerPoints(void)
 {
     s16 i;
