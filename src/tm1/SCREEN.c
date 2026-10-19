@@ -1203,12 +1203,12 @@ s32 screenVehicleChoice(s32 players, u8 demo)
             }
             --shrinkFrames;
         }
-        __builtin_memcpy(&faces[player].poly, &Face[car], sizeof(POLY_FT4));
+        memcpy(&faces[player].poly, &Face[car], sizeof(POLY_FT4));
         screenDrawVehicleFace(faces, player, cdb);
 
         if (selected[(player ^ 1)] != -1 && selected[(player ^ 1)] < 12) {
             s32 other = player ^ 1;
-            __builtin_memcpy(&faces[other].poly, &Face[selected[player ^ 1]], sizeof(POLY_FT4));
+            memcpy(&faces[other].poly, &Face[selected[player ^ 1]], sizeof(POLY_FT4));
             screenDrawVehicleFace(faces, other, cdb);
         }
         UpdCtlPad();
