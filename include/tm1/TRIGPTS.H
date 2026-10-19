@@ -3,6 +3,9 @@
 
 #include "common.h"
 
+// TODO: Once we understand the trigger point system more, add
+// well-defined constants for the array sizes in these structs.
+
 typedef struct TriggerPt {
     /*0x00*/ s32 x;
     /*0x04*/ s32 z;
@@ -32,6 +35,7 @@ typedef struct TriggerPtGroups {
 typedef struct TriggerPtStartPts {
     /*0x00*/ s8 n;
     /*0x01*/ s8 pad;
+    // TODO: This is likely size `15`, and the last element is padding. Confirm.
     /*0x02*/ u8 grp[16];
     /*0x12*/ s16 start[15];
 } TriggerPtStartPts;
