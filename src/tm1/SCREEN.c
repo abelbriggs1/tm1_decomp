@@ -1141,32 +1141,31 @@ s32 screenVehicleChoice(s32 players, u8 demo)
             selectedFont = fontBase;
             if (menu == 0)
                 selectedFont = &fonts[1];
-            fontSpritePrintXY(*selectedFont, 110, 40, (u32*)&selectMode, (u32*)selectSprites,
-                menuLabels[0], ((u_long*)cdb->small) + 4095);
+            fontSpritePrintXY(*selectedFont, 110, 40, &selectMode, selectSprites, menuLabels[0],
+                ((u_long*)cdb->small) + 4095);
             selectedFont = fontBase;
             if (menu == 1)
                 selectedFont = &fonts[1];
-            fontSpritePrintXY(*selectedFont, 110, 60, (u32*)&infoMode, (u32*)infoSprites,
-                menuLabels[1], ((u_long*)cdb->small) + 4095);
+            fontSpritePrintXY(*selectedFont, 110, 60, &infoMode, infoSprites, menuLabels[1],
+                ((u_long*)cdb->small) + 4095);
             selectedFont = fontBase;
             if (menu == 2)
                 selectedFont = &fonts[1];
-            fontSpritePrintXY(*selectedFont, 110, 80, (u32*)&exitMode, (u32*)exitSprites,
-                menuLabels[2], ((u_long*)cdb->small) + 4095);
+            fontSpritePrintXY(*selectedFont, 110, 80, &exitMode, exitSprites, menuLabels[2],
+                ((u_long*)cdb->small) + 4095);
             if (!blink)
                 blink = 0xFF00;
             if (players >= 2) {
                 if (blink & 1)
-                    fontSpritePrintCenteredXY(2, playerX[player], 30, (u32*)&playerModes[player],
-                        (u32*)playerSprites[player], (u8*)playerLabels[player],
-                        ((u_long*)cdb->small) + 4095);
+                    fontSpritePrintCenteredXY(2, playerX[player], 30, &playerModes[player],
+                        playerSprites[player], playerLabels[player], ((u_long*)cdb->small) + 4095);
 
-                fontSpritePrintCenteredXY(2, playerX[(player ^ 1)], 30,
-                    (u32*)&playerModes[(player ^ 1)], (u32*)playerSprites[(player ^ 1)],
-                    (u8*)playerLabels[(player ^ 1)], ((u_long*)cdb->small) + 4095);
+                fontSpritePrintCenteredXY(2, playerX[(player ^ 1)], 30, &playerModes[(player ^ 1)],
+                    playerSprites[(player ^ 1)], playerLabels[(player ^ 1)],
+                    ((u_long*)cdb->small) + 4095);
             } else if (blink & 1) {
-                fontSpritePrintCenteredXY(2, playerX[0], 30, (u32*)&playerModes[0],
-                    (u32*)playerSprites[0], (u8*)playerLabels[0], ((u_long*)cdb->small) + 4095);
+                fontSpritePrintCenteredXY(2, playerX[0], 30, &playerModes[0], playerSprites[0],
+                    playerLabels[0], ((u_long*)cdb->small) + 4095);
             }
             blink >>= 1;
             if ((left || right) && menu == 0) {
@@ -1177,14 +1176,14 @@ s32 screenVehicleChoice(s32 players, u8 demo)
                 lf = 0;
             }
             fontSpritePrintXY(arrowFonts[lf], screenVehicleArrows[0].x, screenVehicleArrows[0].y,
-                (u32*)&arrowModes[0], (u32*)&arrowSprites[0], (u8*)screenVehicleArrows[0].label,
+                &arrowModes[0], &arrowSprites[0], screenVehicleArrows[0].label,
                 ((u_long*)cdb->small));
             fontSpritePrintXY(arrowFonts[rf], screenVehicleArrows[1].x, screenVehicleArrows[1].y,
-                (u32*)&arrowModes[1], (u32*)&arrowSprites[1], (u8*)screenVehicleArrows[1].label,
+                &arrowModes[1], &arrowSprites[1], screenVehicleArrows[1].label,
                 ((u_long*)cdb->small));
         }
-        fontSpritePrintCenteredXY(0, 159, 215, (u32*)&carNameMode, (u32*)carNameSprites[imageRight],
-            (u8*)uaGetCarNameString(screenGetCarsEnum(car)), ((u_long*)cdb->small));
+        fontSpritePrintCenteredXY(0, 159, 215, &carNameMode, carNameSprites[imageRight],
+            uaGetCarNameString(screenGetCarsEnum(car)), ((u_long*)cdb->small));
 
         if (shrinkFrames) {
             if (selected[(player ^ 1)] < 12) {
