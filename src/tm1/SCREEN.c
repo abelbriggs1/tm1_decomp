@@ -1951,14 +1951,13 @@ void screenLostALife(s32 unused_lives)
 
     n = 30;
     screenSetEnv();
-    i = 1;
     screenDumpScreenToRam(0, (u_long*)rtGetDoubleBufferArea());
     setPolyF4(&prim);
     SetSemiTrans(&prim, 1);
     setXY4(&prim, 0, 0, 320, 0, 0, 240, 320, 240);
     SetDefDrawEnv(&draw, 0, 0, 320, 240);
     draw.tpage = GetTPage(0, 0, 0, 0);
-    do {
+    for (i = 1; i <= n; ++i) {
         UpdCtlPad();
         if (ctlpadAnySelect(0)) {
             uasoundPlayMenuSelectFlush();
@@ -1973,7 +1972,7 @@ void screenLostALife(s32 unused_lives)
         VSync(0);
         DrawSync(0);
         screenDisplayToDisplay(0, 1);
-    } while (++i <= n);
+    }
     VSync(60);
 }
 
@@ -3062,7 +3061,7 @@ s32 screenWaitForContinue(s32 frames, s32 limit)
     s32 i = 0;
     s32 pad = 2 * (rtIsSplitScreenOn() != 0);
 
-    for (;;) {
+    while (1) {
         if (limit > 0)
             VSync(0);
         i++;
