@@ -15,6 +15,7 @@
 #include "tm1/DIFFICUL.H"
 #include "tm1/FILEIO.H"
 #include "tm1/FONT.H"
+#include "tm1/GPU.H"
 #include "tm1/HIER.H"
 #include "tm1/LEVELS.H"
 #include "tm1/LIGHT.H"
@@ -2486,18 +2487,6 @@ void screenDrawCard(s32 card, s32 instant, s32 skipMoving)
     DrawOTag(screen_ot + 1);
 }
 
-static inline void screenGetTexturePagePosition(POLY_FT4* card, s32* y, s32* x)
-{
-    *y = (card->tpage << 4) & 0x100;
-    *x = (card->tpage << 6) & 0x3FF;
-}
-
-static inline void screenGetClutPosition(POLY_FT4* card, s32* y, s32* x)
-{
-    *x = (card->clut & 0x3F) << 4;
-    *y = card->clut >> 6;
-}
-
 void screenLoadCarPictures(s16 numCars, s32* carNames)
 {
     RECT rect;
@@ -2512,7 +2501,7 @@ void screenLoadCarPictures(s16 numCars, s32* carNames)
     for (i = 0; i < numCars; i++) {
         fileioLoadFileIntoRam(buf, screenCarPictures[GetCarNumFromCarName(carNames[i])]);
         card = &gCards[i];
-        screenGetTexturePagePosition(card, &yoff, &xoff);
+        GET_TPAGE_POSITION(card->tpage, &xoff, &yoff);
         GsGetTimInfo((u_long*)(buf + 4), &tim);
         rect.x = (card->u2 >> 1) + xoff;
         rect.y = card->v2 + yoff;
@@ -2520,7 +2509,7 @@ void screenLoadCarPictures(s16 numCars, s32* carNames)
         rect.h = tim.ph;
         LoadImage(&rect, tim.pixel);
         if ((tim.pmode >> 3) & 1) {
-            screenGetClutPosition(card, &yoff, &xoff);
+            GET_CLUT_POSITION(card->clut, &xoff, &yoff);
             rect.x = xoff;
             rect.y = yoff;
             rect.w = tim.cw;
