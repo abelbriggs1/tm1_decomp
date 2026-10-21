@@ -115,13 +115,13 @@ void CarUpdate(PlayerCar* car)
         car->stats.unk34 = 0;
     }
     if (uaPlayerCheating()) {
-        if ((u8)ctlpadSpecial(2, car->playerIdx)) {
+        if (ctlpadSpecial(2, car->playerIdx)) {
             car->stats.cheatA = 1;
             car->stats.cheatTimer = 0;
-        } else if ((u8)ctlpadSpecial(4, car->playerIdx)) {
+        } else if (ctlpadSpecial(4, car->playerIdx)) {
             car->stats.cheatB = 1;
             car->stats.cheatTimer = 0;
-        } else if (!uaGetTwoPlayerMode() && (u8)ctlpadSpecial(2, 1)) {
+        } else if (!uaGetTwoPlayerMode() && ctlpadSpecial(2, 1)) {
             car->stats.cheatA = 1;
             car->stats.cheatTimer = 0;
         }
@@ -131,7 +131,7 @@ void CarUpdate(PlayerCar* car)
                 car->stats.cheatA = 0;
                 car->stats.cheatTimer = 0;
             }
-            if ((u8)ctlpadSpecial(3, car->playerIdx)) {
+            if (ctlpadSpecial(3, car->playerIdx)) {
                 if (car->stats.cheatAArmed) {
                     if (car->stats.unk4C) {
                         car->stats.unk4C = 0;
@@ -141,7 +141,7 @@ void CarUpdate(PlayerCar* car)
                     car->stats.cheatAArmed = 0;
                     car->stats.cheatTimer = 0;
                 }
-            } else if (!uaGetTwoPlayerMode() && (u8)ctlpadSpecial(3, 1)) {
+            } else if (!uaGetTwoPlayerMode() && ctlpadSpecial(3, 1)) {
                 if (car->stats.cheatAArmed) {
                     if (uaDrivingAICars()) {
                         uaDriveAICars(0);
@@ -151,7 +151,7 @@ void CarUpdate(PlayerCar* car)
                     car->stats.cheatAArmed = 0;
                     car->stats.cheatTimer = 0;
                 }
-            } else if ((u8)ctlpadSpecial(4, car->playerIdx)) {
+            } else if (ctlpadSpecial(4, car->playerIdx)) {
                 if (car->stats.cheatAArmed) {
                     if (*(s32*)&car->stats.lostTimer) {
                         *(s32*)&car->stats.lostTimer = 0;
@@ -162,7 +162,7 @@ void CarUpdate(PlayerCar* car)
                 }
                 car->stats.cheatAArmed = 0;
                 car->stats.cheatTimer = 0;
-            } else if ((u8)ctlpadSpecial(6, car->playerIdx)) {
+            } else if (ctlpadSpecial(6, car->playerIdx)) {
                 if (car->stats.cheatAArmed) {
                     if (car->weap.reset) {
                         car->weap.reset = 0;
@@ -182,7 +182,7 @@ void CarUpdate(PlayerCar* car)
                 car->stats.cheatB = 0;
                 car->stats.cheatTimer = 0;
             }
-            if ((u8)ctlpadSpecial(5, car->playerIdx)) {
+            if (ctlpadSpecial(5, car->playerIdx)) {
                 if (car->stats.cheatBArmed) {
                     if (car->stats.unk104 >= 101) {
                         car->stats.unk104 = 50;
@@ -202,7 +202,7 @@ void CarUpdate(PlayerCar* car)
         car->stats.cheatTimer++;
         if ((s16)car->stats.cheatTimer >= 31) {
             car->unk9A = 0;
-        } else if ((u8)ctlpadSpecial(4, car->playerIdx)) {
+        } else if (ctlpadSpecial(4, car->playerIdx)) {
             car->unk9B = 0;
         }
     }
