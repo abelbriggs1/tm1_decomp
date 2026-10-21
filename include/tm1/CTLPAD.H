@@ -16,7 +16,7 @@ void UpdCtlPad(void);
 u32 GetPadStatus(s16 which);
 void SetPadStatus(s16 which, u32 value);
 u8 GetCtlPad(s16 button, s16 which);
-s32 ctlpadSpecial(s32 button, s16 which);
+u8 ctlpadSpecial(s32 button, s16 which);
 u8 ctlpadAnyKey(s32 which);
 u8 ctlpadAnyUp(s32 which);
 u8 ctlpadAnyDown(s32 which);

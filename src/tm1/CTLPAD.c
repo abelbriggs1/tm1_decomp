@@ -110,7 +110,7 @@ u8 GetCtlPad(s16 button, s16 which)
     return down;
 }
 
-s32 ctlpadSpecial(s32 button, s16 which)
+u8 ctlpadSpecial(s32 button, s16 which)
 {
     s32 match;
     u32 v;
