@@ -46,7 +46,7 @@ s16 GetClosestTriggerPt(Car* car, u8 isPlayer)
         }
         dx = m->pos.vx - tPoints[i].x;
         dz = m->pos.vy - tPoints[i].z;
-        distance = ABS(dx) + ABS(dz);
+        distance = abs(dx) + abs(dz);
         if (distance < bestDist) {
             best = i;
             bestDist = distance;
@@ -128,7 +128,7 @@ void CalcTireCoordinates(Car* car, u8 isPlayer)
     g1 = GetGroupTestPointIsIn(tires[1].unk38, tires[1].unk3C, m->pos.vz);
     g2 = GetGroupTestPointIsIn(tires[2].unk38, tires[2].unk3C, m->pos.vz);
     g3 = GetGroupTestPointIsIn(tires[3].unk38, tires[3].unk3C, m->pos.vz);
-    stepLimit = st->unk5C + __builtin_abs(m->vel.vy / 32);
+    stepLimit = st->unk5C + abs(m->vel.vy / 32);
 
     if (tires[0].unk10 != g0) {
         previousGroup = tires[0].unk10;
@@ -348,7 +348,7 @@ void CheckBridges(Car* car, u8 isPlayer)
     }
     d = m->vel.vy / 32;
     if (flags[10] == 0) {
-        h = st->unk5C + ABS(d);
+        h = st->unk5C + abs(d);
     } else {
         h = 0xA0;
     }
@@ -465,7 +465,7 @@ void CheckBridges(Car* car, u8 isPlayer)
 
     if ((isPlayer && flags[23] == 0 && flags[11] == 0) || (!isPlayer && flags[23] == 0)) {
         if (isPlayer) {
-            ok = !(__builtin_abs(m->vel.vy) < st->unkAC && padFlag);
+            ok = !(abs(m->vel.vy) < st->unkAC && padFlag);
         } else {
             ok = flags[0] != 0;
         }
@@ -490,7 +490,7 @@ void CheckBridges(Car* car, u8 isPlayer)
         }
     }
     if (isPlayer) {
-        if (st->unkAC < __builtin_abs(m->vel.vy)) {
+        if (st->unkAC < abs(m->vel.vy)) {
             if (m->rot.vy >= 171) {
                 if (m->vel.vy <= 0) {
                     if (m->rotDelta.vz < st->unkEC) {
@@ -1258,7 +1258,7 @@ void UpdateTirePositions(Car* car, u8 isPlayer)
     }
     m->pos.vz = (tires[0].unk40 + tires[1].unk40 + tires[2].unk40 + tires[3].unk40) / 4;
     width = st->unk74;
-    ang = __builtin_abs(m->rot.vy);
+    ang = abs(m->rot.vy);
     t = width / 2 + 8;
     BoundAngle(&ang);
     if (ang < 1024) {
@@ -1276,7 +1276,7 @@ void UpdateTirePositions(Car* car, u8 isPlayer)
             if (spd >= 1601) {
                 ang2 = 2048 - (GetPlayerInfo(ai->unk0E)->motion.rot.vz - ai->unk30);
                 BoundAngle(&ang2);
-                if (__builtin_abs(ang2) >= 513) {
+                if (abs(ang2) >= 513) {
                     spd = 8000;
                 }
             }
@@ -1311,7 +1311,7 @@ void PutAICarBackOnRoof(AICar* car)
     }
     dx = car->motion.pos.vx - tPoints[tp].x;
     dz = car->motion.pos.vy - tPoints[tp].z;
-    if (ABS(dx) < 240 && ABS(dz) < 240) {
+    if (abs(dx) < 240 && abs(dz) < 240) {
         car->stats.triggerPt = tp;
         InitTriggerPoint(car);
         car->stats.unk38 = 1;
@@ -1368,14 +1368,14 @@ void UpdateRollingCar(Car* car, u8 isPlayer)
         }
     }
     if (m->rotDelta.vy > 0) {
-        r += __builtin_abs(rsin(m->rot.vy)) * r / 4096;
+        r += abs(rsin(m->rot.vy)) * r / 4096;
         m->rot.vy = m->rot.vy + r;
     } else {
-        r += __builtin_abs(rsin(m->rot.vy)) * r / 4096;
+        r += abs(rsin(m->rot.vy)) * r / 4096;
         m->rot.vy = m->rot.vy - r;
     }
-    if (__builtin_abs(m->vel.vy) < 32 * (950 * GetFieldsLastFrame() / 100)) {
-        if (__builtin_abs(m->rot.vy) < __builtin_abs(3 * r)) {
+    if (abs(m->vel.vy) < 32 * (950 * GetFieldsLastFrame() / 100)) {
+        if (abs(m->rot.vy) < abs(3 * r)) {
             flags[23] = 0;
             m->rotDelta.vy = 0;
             m->rot.vy = 0;
@@ -1540,7 +1540,7 @@ void UpdateCarOnSlickSpot(Car* car, u8 isPlayer)
     }
     v = m->vel.vy;
     lim = st->unkA4;
-    v = ABS(v);
+    v = abs(v);
     if (lim < v) {
         SetFullCarDrift(m);
         return;
