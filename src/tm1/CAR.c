@@ -100,7 +100,7 @@ void CarUpdate(PlayerCar* car)
     if ((s16)idx == (s16)GetPlayerTheCameraFollows() || rtIsSplitScreenOn()) {
         CarViewUpdate(car);
     }
-    if ((s16)GetFieldsLastFrame() * 760 / 100 * 32 < car->motion.vel.vy) {
+    if (GetFieldsLastFrame() * 760 / 100 * 32 < car->motion.vel.vy) {
         rot = abs(car->motion.rotDelta.vz);
         if (CalcMaxRotBeforeDrift(car, 1) < rot && !car->flags[0x0D]) {
             car->flags[0x02] = 1;
@@ -244,10 +244,10 @@ void CarUpdateDeltas(Car* car, u8 isPlayer)
         input[3] = 0;
     }
     if (input[3] || input[2]) {
-        if (abs(m->vel.vy) > (s16)GetFieldsLastFrame() * 1520 / 100 * 32)
+        if (abs(m->vel.vy) > GetFieldsLastFrame() * 1520 / 100 * 32)
             amount = st->unkCC;
         else {
-            threshold = (s32)((u32)(((s16)GetFieldsLastFrame() * 1520) / 100) << 5);
+            threshold = (s32)((u32)((GetFieldsLastFrame() * 1520) / 100) << 5);
             amount = st->unkD0 - ((m->vel.vy * (st->unkD0 - st->unkCC)) / threshold);
         }
         if ((input[3] && (s16)m->unk00 <= 0) || (input[2] && (s16)m->unk00 >= 0))
@@ -340,7 +340,7 @@ void CarUpdateDeltas(Car* car, u8 isPlayer)
         if (st->unkF8 > 0) {
             maxSpeed = (st->unkA8 * 3) / 2;
             acceleration = st->unkA4 * 4;
-            st->unkF8 = st->unkF8 - ((s16)GetFieldsLastFrame());
+            st->unkF8 = st->unkF8 - (GetFieldsLastFrame());
             if (isPlayer)
                 uasoundPlayTurboBoost(0, 0);
         } else {
@@ -854,7 +854,7 @@ void BringBackDriftingCar(Car* car, u8 isPlayer)
     ang = m->rot.vz - m->rot2.vz;
     BoundAngle(&ang);
     if (abs(ang) >= 1366) {
-        if ((s16)GetFieldsLastFrame() * 380 / 100 * 32 < m->vel.vy) {
+        if (GetFieldsLastFrame() * 380 / 100 * 32 < m->vel.vy) {
             return;
         }
     }
@@ -863,17 +863,17 @@ void BringBackDriftingCar(Car* car, u8 isPlayer)
         if (sk[3]) {
             turn = 0;
         } else if (sk[2]) {
-            turn = (s16)GetFieldsLastFrame() * 5;
+            turn = GetFieldsLastFrame() * 5;
         } else {
-            turn = (s16)GetFieldsLastFrame() * 2;
+            turn = GetFieldsLastFrame() * 2;
         }
     } else {
         if (sk[3]) {
-            turn = (s16)GetFieldsLastFrame() * 5;
+            turn = GetFieldsLastFrame() * 5;
         } else if (sk[2]) {
             turn = 0;
         } else {
-            turn = (s16)GetFieldsLastFrame() * 2;
+            turn = GetFieldsLastFrame() * 2;
         }
     }
 
@@ -881,9 +881,9 @@ void BringBackDriftingCar(Car* car, u8 isPlayer)
         if (m->vel.vy > st->unkB0) {
             extra = 0;
         } else if (st->unkB0 / 2 < m->vel.vy) {
-            extra = (s16)GetFieldsLastFrame() * 2;
+            extra = GetFieldsLastFrame() * 2;
         } else {
-            extra = (s16)GetFieldsLastFrame() * 5;
+            extra = GetFieldsLastFrame() * 5;
         }
     } else {
         extra = 0;
@@ -1289,7 +1289,7 @@ void CalcHitDynamics(Car* car, HdCsHit* hit, u8 isPlayer)
         col->unk3 = 0;
         mag = abs(m->vel.vy);
         hitCs = 0;
-        if ((s16)GetFieldsLastFrame() * 570 / 100 * 32 < mag) {
+        if (GetFieldsLastFrame() * 570 / 100 * 32 < mag) {
             dmg = abs(rsin(bounce / 4) * abs(m->vel.vy)) * 10 / st->unkA8 / 4096;
             if (dmg > 0) {
                 if (dmg - 3 > 0 && isPlayer) {
@@ -1423,7 +1423,7 @@ void CalcHitDynamics(Car* car, HdCsHit* hit, u8 isPlayer)
         m->pos.vx += out.vx;
         m->pos.vy += out.vy;
         m->pos.vz += out.vz;
-        if ((s16)GetFieldsLastFrame() * 380 / 100 * 32 < m->vel.vy) {
+        if (GetFieldsLastFrame() * 380 / 100 * 32 < m->vel.vy) {
             do_simple_spark(&spark);
             if (hit->unk04) {
                 do_puff(&spark);
@@ -1552,20 +1552,20 @@ void DoCsHitCalculations(
 
     if (isPlayer || otherIsPlayer) {
         s32 damage;
-        if (abs(m->vel.vy) > (s16)GetFieldsLastFrame() * 570 / 100 * 32
-            || abs(om->vel.vy) > (s16)GetFieldsLastFrame() * 570 / 100 * 32) {
+        if (abs(m->vel.vy) > GetFieldsLastFrame() * 570 / 100 * 32
+            || abs(om->vel.vy) > GetFieldsLastFrame() * 570 / 100 * 32) {
             if (st->unk108 > ost->unk108) {
                 if (!f[27]) {
                     carTakeHit(uaGetCarMatID(idx, isPlayer), 1, (s32)&m->unkA8, 1);
                 }
-                if (abs(m->vel.vy) > ((s16)GetFieldsLastFrame() * 570 / 100 * 32) && !of[27]) {
+                if (abs(m->vel.vy) > (GetFieldsLastFrame() * 570 / 100 * 32) && !of[27]) {
                     damage = 12 * m->vel.vy / st->unkA8;
                     if (damage > 0) {
                         carTakeHit(uaGetCarMatID(oidx, otherIsPlayer), damage, (s32)&m->unkA8, 1);
                     }
                 }
             } else if (st->unk108 < ost->unk108) {
-                if (abs(om->vel.vy) > ((s16)GetFieldsLastFrame() * 570 / 100 * 32) && !f[27]) {
+                if (abs(om->vel.vy) > (GetFieldsLastFrame() * 570 / 100 * 32) && !f[27]) {
                     damage = 12 * om->vel.vy / ost->unkA8;
                     if (damage > 0) {
                         carTakeHit(uaGetCarMatID(idx, isPlayer), 11, (s32)&om->unkA8, 1);
@@ -1575,13 +1575,13 @@ void DoCsHitCalculations(
                     carTakeHit(uaGetCarMatID(oidx, otherIsPlayer), 1, (s32)&om->unkA8, 1);
                 }
             } else {
-                if (abs(om->vel.vy) > ((s16)GetFieldsLastFrame() * 570 / 100 * 32) && !f[27]) {
+                if (abs(om->vel.vy) > (GetFieldsLastFrame() * 570 / 100 * 32) && !f[27]) {
                     damage = 6 * om->vel.vy / ost->unkA8;
                     if (damage > 0) {
                         carTakeHit(uaGetCarMatID(idx, isPlayer), damage, (s32)&om->unkA8, 1);
                     }
                 }
-                if (abs(m->vel.vy) > ((s16)GetFieldsLastFrame() * 570 / 100 * 32) && !of[27]) {
+                if (abs(m->vel.vy) > (GetFieldsLastFrame() * 570 / 100 * 32) && !of[27]) {
                     damage = 6 * m->vel.vy / st->unkA8;
                     if (damage > 0) {
                         carTakeHit(uaGetCarMatID(oidx, otherIsPlayer), damage, (s32)&m->unkA8, 1);
@@ -1945,13 +1945,13 @@ void DoCsHitCalculations(
         }
 
         if (m->vel.vy > 0) {
-            m->vel.vy = abs(m->vel.vy) < (s16)GetFieldsLastFrame() * 1140 / 100 * 32
-                ? (s16)GetFieldsLastFrame() * 1140 / 100 * 32
+            m->vel.vy = abs(m->vel.vy) < GetFieldsLastFrame() * 1140 / 100 * 32
+                ? GetFieldsLastFrame() * 1140 / 100 * 32
                 : abs(m->vel.vy);
         } else {
-            m->vel.vy = abs(m->vel.vy) < -((s16)GetFieldsLastFrame() * 1140 / 100 * 32)
+            m->vel.vy = abs(m->vel.vy) < -(GetFieldsLastFrame() * 1140 / 100 * 32)
                 ? abs(m->vel.vy)
-                : -((s16)GetFieldsLastFrame() * 1140 / 100 * 32);
+                : -(GetFieldsLastFrame() * 1140 / 100 * 32);
         }
     }
 
@@ -2027,7 +2027,7 @@ void RicochetOffObject(Car* car, u8 isPlayer, u8 doHit, s32 delta, s16 mode)
     f[1] = 1;
     SetCollisionBounce(car, isPlayer, delta);
 
-    if (isPlayer && f[6] && m->vel.vy < (s16)GetFieldsLastFrame() * 570 / 100 * 32
+    if (isPlayer && f[6] && m->vel.vy < GetFieldsLastFrame() * 570 / 100 * 32
         && ((u16)mode < 2 || (s16)mode == 4)) {
         c->unk2 = 1;
     } else {
@@ -2091,7 +2091,7 @@ void RicochetOffObject(Car* car, u8 isPlayer, u8 doHit, s32 delta, s16 mode)
     sub = 0;
     if (m->vel.vy < 0) {
         sub = m->vel.vy * 3 / 4;
-    } else if (m->vel.vy >= (s16)GetFieldsLastFrame() * 570 / 100 * 32) {
+    } else if (m->vel.vy >= GetFieldsLastFrame() * 570 / 100 * 32) {
         if (abs(delta) < 512) {
             sub = m->vel.vy / 4;
         } else if (abs(delta) < 1024) {
@@ -2441,12 +2441,12 @@ void carTakeHit(s16 id, s32 amount, s32 a, u8 flag)
     u8 enabled;
 
     if (amount >= 3) {
-        rate = 16 / (s16)GetFieldsLastFrame();
+        rate = 16 / GetFieldsLastFrame();
     } else {
-        rate = 6 / (s16)GetFieldsLastFrame();
+        rate = 6 / GetFieldsLastFrame();
     }
 
-    if ((u8)flag) {
+    if (flag) {
         rgb[0] = 0xFF;
         rgb[1] = 0xFF;
         rgb[2] = 0xFF;
