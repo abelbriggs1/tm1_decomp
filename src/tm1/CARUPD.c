@@ -20,18 +20,17 @@
 
 static s32 potHoleTics = 0;
 
-#ifdef NON_MATCHING
 s16 GetClosestTriggerPt(Car* car, u8 isPlayer)
 {
-    s16 group;
+    s32 group;
     s16 i;
     s16 best;
     s32 bestDist;
     s32 dx;
     s32 dz;
+    s32 distance;
     CarMotion* m;
 
-    best = 0;
     if (isPlayer) {
         group = PLAYER_CAR(car)->unkC0;
         m = &PLAYER_CAR(car)->motion;
@@ -39,6 +38,7 @@ s16 GetClosestTriggerPt(Car* car, u8 isPlayer)
         group = AI_CAR(car)->unk176;
         m = &AI_CAR(car)->motion;
     }
+    best = 0;
     bestDist = 0x7FFFFFFF;
     for (i = 0; i < numTriggerPoints; i++) {
         if (tPoints[i].type != group && group < 11) {
@@ -46,25 +46,15 @@ s16 GetClosestTriggerPt(Car* car, u8 isPlayer)
         }
         dx = m->pos.vx - tPoints[i].x;
         dz = m->pos.vy - tPoints[i].z;
-        if (dx < 0) {
-            dx = -dx;
-        }
-        if (dz < 0) {
-            dz = -dz;
-        }
-        dx += dz;
-        if (dx < bestDist) {
+        distance = ABS(dx) + ABS(dz);
+        if (distance < bestDist) {
             best = i;
-            bestDist = dx;
+            bestDist = distance;
         }
     }
     return best;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", GetClosestTriggerPt);
-#endif
 
-#ifdef NON_MATCHING
 void CalcTireCoordinates(Car* car, u8 isPlayer)
 {
     CarMotion* m;
@@ -74,11 +64,11 @@ void CalcTireCoordinates(Car* car, u8 isPlayer)
     s16 g1;
     s16 g2;
     s16 g3;
-    s32 lim;
-    s32 v;
-    s32 y;
-    s32 dy;
-    s32 dd;
+    s32 stepLimit;
+    s32 previousHeight;
+    s32 value;
+    s32 tireOffset;
+    s32 previousGroup;
     VECTOR vin;
     VECTOR vout;
 
@@ -133,143 +123,152 @@ void CalcTireCoordinates(Car* car, u8 isPlayer)
     tires[3].unk3C += vout.vy;
     tires[3].unk40 += vout.vz;
 
-    g0 = GetGroupTestPointIsIn(tires[0].unk38, tires[0].unk3C, m->pos.vz);
+    value = tires[0].unk38;
+    g0 = GetGroupTestPointIsIn(value, tires[0].unk3C, m->pos.vz);
     g1 = GetGroupTestPointIsIn(tires[1].unk38, tires[1].unk3C, m->pos.vz);
     g2 = GetGroupTestPointIsIn(tires[2].unk38, tires[2].unk3C, m->pos.vz);
     g3 = GetGroupTestPointIsIn(tires[3].unk38, tires[3].unk3C, m->pos.vz);
-    v = m->vel.vy / 32;
-    if (v < 0) {
-        v = -m->vel.vy / 32;
-    }
-    lim = st->unk5C + v;
+    stepLimit = st->unk5C + __builtin_abs(m->vel.vy / 32);
 
     if (tires[0].unk10 != g0) {
-        y = triggerPtGroups.pos[g0].y;
-        dy = tires[0].unk40 - y;
-        dd = y - triggerPtGroups.pos[tires[0].unk10].y;
-        if (dd > 0) {
-            if ((-lim < dy || tires[1].unk10 == g0 || tires[2].unk10 == g0 || tires[3].unk10 == g0)
+        previousGroup = tires[0].unk10;
+        value = triggerPtGroups.pos[g0].y;
+        previousHeight = triggerPtGroups.pos[previousGroup].y;
+        tireOffset = tires[0].unk40 - value;
+        value -= previousHeight;
+        if (value > 0) {
+            if ((-stepLimit < tireOffset || tires[1].unk10 == g0 || tires[2].unk10 == g0
+                    || tires[3].unk10 == g0)
                 && m->vel.vy != 0) {
                 tires[0].unk10 = g0;
                 if (tires[0].unk0 == 0) {
                     tires[0].unk0 = 1;
-                    if (tires[0].unk08 >= numCheckBridges) {
-                        tires[0].unk08--;
-                    } else {
+                    if (tires[0].unk08 < numCheckBridges) {
                         tires[0].unk08++;
+                    } else {
+                        tires[0].unk08--;
                     }
                 }
                 tires[0].unk26 = 0;
-                tires[0].unk16 = dy;
+                tires[0].unk16 = tireOffset;
                 tires[0].unk24 = triggerPtGroups.pos[g0].y;
             }
+        } else if (value < 0) {
+            tires[0].unk10 = g0;
+            tires[0].unk0 = 1;
+            tires[0].unk14 = 0;
+            tires[0].unk26 = 0;
+            tires[0].unk16 = tireOffset;
+            tires[0].unk24 = triggerPtGroups.pos[g0].y;
+            tires[0].unk3 = 1;
         } else {
             tires[0].unk10 = g0;
-            if (dd < 0) {
-                tires[0].unk0 = 1;
-                tires[0].unk14 = 0;
-                tires[0].unk26 = 0;
-                tires[0].unk16 = dy;
-                tires[0].unk24 = triggerPtGroups.pos[g0].y;
-                tires[0].unk3 = 1;
-            }
         }
     }
     if (tires[1].unk10 != g1) {
-        y = triggerPtGroups.pos[g1].y;
-        dy = tires[1].unk40 - y;
-        dd = y - triggerPtGroups.pos[tires[1].unk10].y;
-        if (dd > 0) {
-            if ((-lim < dy || tires[0].unk10 == g1 || tires[2].unk10 == g1 || tires[3].unk10 == g1)
+        previousGroup = tires[1].unk10;
+        value = triggerPtGroups.pos[g1].y;
+        previousHeight = triggerPtGroups.pos[previousGroup].y;
+        tireOffset = tires[1].unk40 - value;
+        value -= previousHeight;
+        if (value > 0) {
+            if ((-stepLimit < tireOffset || tires[0].unk10 == g1 || tires[2].unk10 == g1
+                    || tires[3].unk10 == g1)
                 && m->vel.vy != 0) {
                 tires[1].unk10 = g1;
                 if (tires[1].unk0 == 0) {
                     tires[1].unk0 = 1;
-                    if (tires[1].unk08 >= numCheckBridges) {
-                        tires[1].unk08--;
-                    } else {
+                    if (tires[1].unk08 < numCheckBridges) {
                         tires[1].unk08++;
+                    } else {
+                        tires[1].unk08--;
                     }
                 }
                 tires[1].unk26 = 0;
-                tires[1].unk16 = dy;
+                tires[1].unk16 = tireOffset;
                 tires[1].unk24 = triggerPtGroups.pos[g1].y;
             }
+        } else if (value < 0) {
+            tires[1].unk10 = g1;
+            tires[1].unk0 = 1;
+            tires[1].unk14 = 0;
+            tires[1].unk26 = 0;
+            tires[1].unk16 = tireOffset;
+            tires[1].unk24 = triggerPtGroups.pos[g1].y;
+            tires[1].unk3 = 1;
         } else {
             tires[1].unk10 = g1;
-            if (dd < 0) {
-                tires[1].unk0 = 1;
-                tires[1].unk14 = 0;
-                tires[1].unk26 = 0;
-                tires[1].unk16 = dy;
-                tires[1].unk24 = triggerPtGroups.pos[g1].y;
-                tires[1].unk3 = 1;
-            }
         }
     }
     if (tires[2].unk10 != g2) {
-        y = triggerPtGroups.pos[g2].y;
-        dy = tires[2].unk40 - y;
-        dd = y - triggerPtGroups.pos[tires[2].unk10].y;
-        if (dd > 0) {
-            if ((-lim < dy || tires[0].unk10 == g2 || tires[1].unk10 == g2 || tires[3].unk10 == g2)
+        previousGroup = tires[2].unk10;
+        value = triggerPtGroups.pos[g2].y;
+        previousHeight = triggerPtGroups.pos[previousGroup].y;
+        tireOffset = tires[2].unk40 - value;
+        value -= previousHeight;
+        if (value > 0) {
+            if ((-stepLimit < tireOffset || tires[0].unk10 == g2 || tires[1].unk10 == g2
+                    || tires[3].unk10 == g2)
                 && m->vel.vy != 0) {
                 tires[2].unk10 = g2;
                 if (tires[2].unk0 == 0) {
                     tires[2].unk0 = 1;
-                    if (tires[2].unk08 >= numCheckBridges) {
-                        tires[2].unk08--;
-                    } else {
+                    if (tires[2].unk08 < numCheckBridges) {
                         tires[2].unk08++;
+                    } else {
+                        tires[2].unk08--;
                     }
                 }
                 tires[2].unk26 = 0;
-                tires[2].unk16 = dy;
+                tires[2].unk16 = tireOffset;
                 tires[2].unk24 = triggerPtGroups.pos[g2].y;
             }
+        } else if (value < 0) {
+            tires[2].unk10 = g2;
+            tires[2].unk0 = 1;
+            tires[2].unk14 = 0;
+            tires[2].unk26 = 0;
+            tires[2].unk16 = tireOffset;
+            tires[2].unk24 = triggerPtGroups.pos[g2].y;
+            tires[2].unk3 = 1;
         } else {
             tires[2].unk10 = g2;
-            if (dd < 0) {
-                tires[2].unk0 = 1;
-                tires[2].unk14 = 0;
-                tires[2].unk26 = 0;
-                tires[2].unk16 = dy;
-                tires[2].unk24 = triggerPtGroups.pos[g2].y;
-                tires[2].unk3 = 1;
-            }
         }
     }
     if (tires[3].unk10 != g3) {
-        y = triggerPtGroups.pos[g3].y;
-        dy = tires[3].unk40 - y;
-        dd = y - triggerPtGroups.pos[tires[3].unk10].y;
-        if (dd > 0) {
-            if (-lim < dy || tires[0].unk10 == g3 || tires[1].unk10 == g3 || tires[2].unk10 == g3) {
+        previousGroup = tires[3].unk10;
+        value = triggerPtGroups.pos[g3].y;
+        previousHeight = triggerPtGroups.pos[previousGroup].y;
+        tireOffset = tires[3].unk40 - value;
+        value -= previousHeight;
+        if (value > 0) {
+            if (-stepLimit < tireOffset || tires[0].unk10 == g3 || tires[1].unk10 == g3
+                || tires[2].unk10 == g3) {
                 if (m->vel.vy != 0) {
                     tires[3].unk10 = g3;
                     if (tires[3].unk0 == 0) {
                         tires[3].unk0 = 1;
-                        if (tires[3].unk08 >= numCheckBridges) {
-                            tires[3].unk08--;
-                        } else {
+                        if (tires[3].unk08 < numCheckBridges) {
                             tires[3].unk08++;
+                        } else {
+                            tires[3].unk08--;
                         }
                     }
                     tires[3].unk26 = 0;
-                    tires[3].unk16 = dy;
+                    tires[3].unk16 = tireOffset;
                     tires[3].unk24 = triggerPtGroups.pos[g3].y;
                 }
             }
+        } else if (value < 0) {
+            tires[3].unk10 = g3;
+            tires[3].unk0 = 1;
+            tires[3].unk14 = 0;
+            tires[3].unk26 = 0;
+            tires[3].unk16 = tireOffset;
+            tires[3].unk24 = triggerPtGroups.pos[g3].y;
+            tires[3].unk3 = 1;
         } else {
             tires[3].unk10 = g3;
-            if (dd < 0) {
-                tires[3].unk0 = 1;
-                tires[3].unk14 = 0;
-                tires[3].unk26 = 0;
-                tires[3].unk16 = dy;
-                tires[3].unk24 = triggerPtGroups.pos[g3].y;
-                tires[3].unk3 = 1;
-            }
         }
     }
     if (isPlayer) {
@@ -280,11 +279,7 @@ void CalcTireCoordinates(Car* car, u8 isPlayer)
         AI_CAR(car)->unk176 = g0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", CalcTireCoordinates);
-#endif
 
-#ifdef NON_MATCHING
 s16 GetGroupTestPointIsIn(s32 x, s32 z, s32 y)
 {
     s16 group;
@@ -307,21 +302,18 @@ s16 GetGroupTestPointIsIn(s32 x, s32 z, s32 y)
             if (triggerPtGroups.pos[i].z + triggerPtGroups.d[i] < z) {
                 continue;
             }
-            group = i;
             if (triggerPtGroups.pos[i].y < y + 80) {
-                return group;
+                group = i;
+                break;
             }
+            group = i;
         }
     } else {
         group = 0;
     }
     return group;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", GetGroupTestPointIsIn);
-#endif
 
-#ifdef NON_MATCHING
 void CheckBridges(Car* car, u8 isPlayer)
 {
     CarMotion* m;
@@ -330,15 +322,12 @@ void CheckBridges(Car* car, u8 isPlayer)
     CarTire* tires;
     u8 padFlag;
     CarCollision* collision;
+    s32 bearing;
     s32 d;
     s32 h;
-    s32 v;
     u8 ok;
     u8 any3;
     u8 any0;
-    s32 hit;
-    s16 other;
-    s16 mine;
 
     if (isPlayer) {
         m = &PLAYER_CAR(car)->motion;
@@ -347,9 +336,11 @@ void CheckBridges(Car* car, u8 isPlayer)
         st = &PLAYER_CAR(car)->stats;
         flags = PLAYER_CAR(car)->flags;
         tires = PLAYER_CAR(car)->tires;
+        bearing = PLAYER_CAR(car)->bearing;
     } else {
         m = &AI_CAR(car)->motion;
         collision = &AI_CAR(car)->collision;
+        bearing = AI_CAR(car)->bearing;
         padFlag = 0;
         st = &AI_CAR(car)->stats;
         flags = AI_CAR(car)->flags;
@@ -472,43 +463,34 @@ void CheckBridges(Car* car, u8 isPlayer)
         }
     }
 
-    ok = 0;
-    if (isPlayer) {
-        if (flags[23] == 0 && flags[11] == 0) {
-            v = m->vel.vy;
-            if (v < 0) {
-                v = -v;
-            }
-            ok = (v >= st->unkAC) || (padFlag == 0);
+    if ((isPlayer && flags[23] == 0 && flags[11] == 0) || (!isPlayer && flags[23] == 0)) {
+        if (isPlayer) {
+            ok = !(__builtin_abs(m->vel.vy) < st->unkAC && padFlag);
+        } else {
+            ok = flags[0] != 0;
         }
-    } else if (flags[23] == 0) {
-        ok = flags[0] != 0;
-    }
-    if (ok) {
-        if (m->rot.vx >= 57) {
-            if (m->rot.vx >= 228) {
-                m->vel.vy = m->vel.vy + 3 * st->unkA0;
-            } else if (m->rot.vx >= 114) {
-                m->vel.vy = m->vel.vy + 2 * st->unkA0;
-            } else {
-                m->vel.vy = m->vel.vy + st->unkA0;
-            }
-        } else if (m->rot.vx < -56) {
-            if (m->rot.vx < -227) {
-                m->vel.vy = m->vel.vy - 3 * st->unkA0;
-            } else if (m->rot.vx < -113) {
-                m->vel.vy = m->vel.vy - 2 * st->unkA0;
-            } else {
-                m->vel.vy = m->vel.vy - st->unkA0;
+        if (ok) {
+            if (m->rot.vx >= 57) {
+                if (m->rot.vx >= 228) {
+                    m->vel.vy = m->vel.vy + 3 * st->unkA0;
+                } else if (m->rot.vx >= 114) {
+                    m->vel.vy = m->vel.vy + 2 * st->unkA0;
+                } else {
+                    m->vel.vy = m->vel.vy + st->unkA0;
+                }
+            } else if (m->rot.vx < -56) {
+                if (m->rot.vx < -227) {
+                    m->vel.vy = m->vel.vy - 3 * st->unkA0;
+                } else if (m->rot.vx < -113) {
+                    m->vel.vy = m->vel.vy - 2 * st->unkA0;
+                } else {
+                    m->vel.vy = m->vel.vy - st->unkA0;
+                }
             }
         }
     }
     if (isPlayer) {
-        v = m->vel.vy;
-        if (v < 0) {
-            v = -v;
-        }
-        if (st->unkAC < v) {
+        if (st->unkAC < __builtin_abs(m->vel.vy)) {
             if (m->rot.vy >= 171) {
                 if (m->vel.vy <= 0) {
                     if (m->rotDelta.vz < st->unkEC) {
@@ -538,12 +520,10 @@ void CheckBridges(Car* car, u8 isPlayer)
         SetFullCarDrift(m);
     }
     any0 = 0;
-    hit = 0;
     if (tires[0].unk0 != 0 || tires[1].unk0 != 0 || tires[2].unk0 != 0 || tires[3].unk0 != 0) {
         any0 = 1;
-        hit = 1;
     }
-    if (hit) {
+    if (any0) {
         if (flags[10] == 0) {
             collision->unk12 = 0xE;
         }
@@ -556,56 +536,64 @@ void CheckBridges(Car* car, u8 isPlayer)
         return;
     }
 
-    if (tires[0].unk6 != 0 && (tires[1].unk0 != 0 || tires[2].unk0 != 0 || tires[3].unk0 != 0)) {
-        mine = tires[0].unk08;
+    if (tires[0].unk6 != 0) {
         if (tires[1].unk0 != 0) {
-            other = tires[1].unk08;
+            if (tires[0].unk08 == tires[1].unk08) {
+                tires[0].unk0 = 1;
+            }
         } else if (tires[2].unk0 != 0) {
-            other = tires[2].unk08;
-        } else {
-            other = tires[3].unk08;
-        }
-        if (mine == other) {
-            tires[0].unk0 = 1;
+            if (tires[0].unk08 == tires[2].unk08) {
+                tires[0].unk0 = 1;
+            }
+        } else if (tires[3].unk0 != 0) {
+            if (tires[0].unk08 == tires[3].unk08) {
+                tires[0].unk0 = 1;
+            }
         }
     }
-    if (tires[1].unk6 != 0 && (tires[0].unk0 != 0 || tires[2].unk0 != 0 || tires[3].unk0 != 0)) {
-        mine = tires[1].unk08;
+    if (tires[1].unk6 != 0) {
         if (tires[0].unk0 != 0) {
-            other = tires[0].unk08;
+            if (tires[1].unk08 == tires[0].unk08) {
+                tires[1].unk0 = 1;
+            }
         } else if (tires[2].unk0 != 0) {
-            other = tires[2].unk08;
-        } else {
-            other = tires[3].unk08;
-        }
-        if (mine == other) {
-            tires[1].unk0 = 1;
-        }
-    }
-    if (tires[2].unk6 != 0 && (tires[0].unk0 != 0 || tires[1].unk0 != 0 || tires[3].unk0 != 0)) {
-        mine = tires[2].unk08;
-        if (tires[0].unk0 != 0) {
-            other = tires[0].unk08;
-        } else if (tires[1].unk0 != 0) {
-            other = tires[1].unk08;
-        } else {
-            other = tires[3].unk08;
-        }
-        if (mine == other) {
-            tires[2].unk0 = 1;
+            if (tires[1].unk08 == tires[2].unk08) {
+                tires[1].unk0 = 1;
+            }
+        } else if (tires[3].unk0 != 0) {
+            if (tires[1].unk08 == tires[3].unk08) {
+                tires[1].unk0 = 1;
+            }
         }
     }
-    if (tires[3].unk6 != 0 && (tires[0].unk0 != 0 || tires[1].unk0 != 0 || tires[2].unk0 != 0)) {
-        mine = tires[3].unk08;
+    if (tires[2].unk6 != 0) {
         if (tires[0].unk0 != 0) {
-            other = tires[0].unk08;
+            if (tires[2].unk08 == tires[0].unk08) {
+                tires[2].unk0 = 1;
+            }
         } else if (tires[1].unk0 != 0) {
-            other = tires[1].unk08;
-        } else {
-            other = tires[2].unk08;
+            if (tires[2].unk08 == tires[1].unk08) {
+                tires[2].unk0 = 1;
+            }
+        } else if (tires[3].unk0 != 0) {
+            if (tires[2].unk08 == tires[3].unk08) {
+                tires[2].unk0 = 1;
+            }
         }
-        if (mine == other) {
-            tires[3].unk0 = 1;
+    }
+    if (tires[3].unk6 != 0) {
+        if (tires[0].unk0 != 0) {
+            if (tires[3].unk08 == tires[0].unk08) {
+                tires[3].unk0 = 1;
+            }
+        } else if (tires[1].unk0 != 0) {
+            if (tires[3].unk08 == tires[1].unk08) {
+                tires[3].unk0 = 1;
+            }
+        } else if (tires[2].unk0 != 0) {
+            if (tires[3].unk08 == tires[2].unk08) {
+                tires[3].unk0 = 1;
+            }
         }
     }
     if (tires[0].unk0 != 0 && numCheckBridges < tires[0].unk08) {
@@ -653,11 +641,7 @@ void CheckBridges(Car* car, u8 isPlayer)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", CheckBridges);
-#endif
 
-#ifdef NON_MATCHING
 void CheckForBridge(CarTire* tire, u8 which, s32 h)
 {
     s16 i;
@@ -677,106 +661,89 @@ void CheckForBridge(CarTire* tire, u8 which, s32 h)
         tire->unk22 = tire->unk24;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", CheckForBridge);
-#endif
 
-#ifdef NON_MATCHING
 u8 GetBridgeGroundHeight(CarTire* tire, s16 idx, s32 h)
 {
     u8 r;
     s32 k;
-    s32 x0;
-    s32 z0;
+    s32 deltaHeight;
+    s32 extent;
+
     s16 i;
+    s32 current;
 
     r = 0;
-    if (idx < 0) {
-        return r;
-    }
-    if (numBridges < idx) {
-        return r;
-    }
-    x0 = bridges[idx].minX;
-    if (tire->unk38 >= x0) {
-        z0 = bridges[idx].minZ;
-        if (tire->unk3C >= z0 && x0 + bridges[idx].extentX >= tire->unk38
-            && z0 + bridges[idx].extentZ >= tire->unk3C) {
+    if (idx >= 0 && numBridges >= idx) {
+        if (tire->unk38 >= bridges[idx].minX && tire->unk3C >= bridges[idx].minZ
+            && bridges[idx].minX + bridges[idx].extentX >= tire->unk38
+            && bridges[idx].minZ + bridges[idx].extentZ >= tire->unk3C) {
             tire->unk22 = tire->unk24;
             k = bridges[idx].rampDir;
             if (k == 0) {
-                tire->unk22 = tire->unk22 + bridges[idx].y0
-                    + (bridges[idx].y1 - bridges[idx].y0) * (tire->unk3C - bridges[idx].minZ)
-                        / bridges[idx].extentZ;
+                extent = bridges[idx].extentZ;
+                deltaHeight = bridges[idx].y1 - bridges[idx].y0;
+                tire->unk22
+                    += bridges[idx].y0 + deltaHeight * (tire->unk3C - bridges[idx].minZ) / extent;
             } else if (k == 1) {
-                tire->unk22 = tire->unk22
-                    + (bridges[idx].y1
-                        + (bridges[idx].y0 - bridges[idx].y1)
-                            * (bridges[idx].minZ + bridges[idx].extentZ - tire->unk3C)
-                            / bridges[idx].extentZ);
+                extent = bridges[idx].extentZ;
+                deltaHeight = bridges[idx].y0 - bridges[idx].y1;
+                tire->unk22 += bridges[idx].y1
+                    + deltaHeight * (bridges[idx].minZ + extent - tire->unk3C) / extent;
             } else if (k == 2) {
-                tire->unk22 = tire->unk22 + bridges[idx].y0
-                    + (bridges[idx].y1 - bridges[idx].y0) * (tire->unk38 - bridges[idx].minX)
-                        / bridges[idx].extentX;
+                extent = bridges[idx].extentX;
+                deltaHeight = bridges[idx].y1 - bridges[idx].y0;
+                tire->unk22
+                    += bridges[idx].y0 + deltaHeight * (tire->unk38 - bridges[idx].minX) / extent;
             } else {
-                tire->unk22 = tire->unk22
-                    + (bridges[idx].y1
-                        + (bridges[idx].y0 - bridges[idx].y1)
-                            * (bridges[idx].minX + bridges[idx].extentX - tire->unk38)
-                            / bridges[idx].extentX);
+                extent = bridges[idx].extentX;
+                deltaHeight = bridges[idx].y0 - bridges[idx].y1;
+                tire->unk22 += bridges[idx].y1
+                    + deltaHeight * (bridges[idx].minX + extent - tire->unk38) / extent;
             }
             if (h < (s16)tire->unk22 - tire->unk40) {
                 tire->unk6 = 1;
                 tire->unk08 = idx;
                 tire->unk22 = tire->unk24;
-                return 0;
-            }
-            tire->unk08 = idx;
-            tire->unk6 = 0;
-            tire->unk0E = bridges[idx].unk08;
-            if (tire->unk0 == 0) {
-                if ((s16)tire->unk22 < (s16)tire->unk24) {
-                    tire->unk3 = 1;
+                r = 0;
+            } else {
+                tire->unk08 = idx;
+                tire->unk6 = 0;
+                tire->unk0E = bridges[idx].unk08;
+                if (tire->unk0 == 0) {
+                    if ((s16)tire->unk22 < (s16)tire->unk24) {
+                        tire->unk3 = 1;
+                    }
+                    tire->unk26 = 0;
                 }
-                tire->unk26 = 0;
+                tire->unk0 = 1;
+                r = 1;
             }
-            tire->unk0 = 1;
-            return 1;
-        }
-    }
-    if (tire->unk08 != idx) {
-        return r;
-    }
-    if (tire->unk0 == 0) {
-        if (tire->unk6 == 0) {
-            return r;
-        }
-        tire->unk6 = 0;
-        return r;
-    }
-    if (tire->unk3 == 0) {
-        tire->unk3 = 1;
-        tire->unk22 = tire->unk24;
-        tire->unk12 = 1;
-        if (tire->unk26 < 2) {
-            tire->unk14 = bridges[tire->unk08].unk0A;
-        }
-    }
-    i = 0;
-    while (bridges[idx].obj[i] != -1) {
-        r = GetBridgeGroundHeight(tire, bridges[idx].obj[i], h);
-        i++;
-        if (i >= 4) {
-            return r;
+        } else {
+            current = tire->unk08;
+            if (current == idx) {
+                if (tire->unk0 != 0) {
+                    if (tire->unk3 == 0) {
+                        tire->unk3 = 1;
+                        tire->unk22 = tire->unk24;
+                        tire->unk12 = 1;
+                        if (tire->unk26 < 2) {
+                            tire->unk14 = bridges[current].unk0A;
+                        }
+                    }
+                    for (i = 0; i < 4; i++) {
+                        if (bridges[idx].obj[i] == -1)
+                            break;
+                        r = GetBridgeGroundHeight(tire, bridges[idx].obj[i], h);
+                    }
+                } else if (tire->unk6 != 0) {
+                    tire->unk6 = 0;
+                }
+            }
         }
     }
     return r;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", GetBridgeGroundHeight);
-#endif
 
-#ifdef NON_MATCHING
 void GetBridgeTireHeight(CarTire* tire, s32 h)
 {
     s32 d;
@@ -828,9 +795,6 @@ void GetBridgeTireHeight(CarTire* tire, s32 h)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", GetBridgeTireHeight);
-#endif
 
 void CheckPotHoles(Car* car, u8 isPlayer)
 {
@@ -862,7 +826,6 @@ void CheckPotHoles(Car* car, u8 isPlayer)
     flags[12] = tires[0].unk1 || tires[1].unk1 || tires[2].unk1 || tires[3].unk1;
 }
 
-#ifdef NON_MATCHING
 void CheckForPotHole(CarTire* tire, CarCollision* collision)
 {
     s16 i;
@@ -885,8 +848,8 @@ void CheckForPotHole(CarTire* tire, CarCollision* collision)
         if (tire->unk1 == 0) {
             collision->unk12 = 0x1D;
         }
-        found = 1;
         tire->unk1 = 1;
+        found = 1;
         tire->unk0A = i;
         break;
     }
@@ -904,9 +867,6 @@ void CheckForPotHole(CarTire* tire, CarCollision* collision)
     }
     tire->unk1 = found;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", CheckForPotHole);
-#endif
 
 void CheckCurbs(Car* car, u8 isPlayer)
 {
@@ -938,7 +898,6 @@ void CheckCurbs(Car* car, u8 isPlayer)
     flags[14] = tires[0].unk2 || tires[1].unk2 || tires[2].unk2 || tires[3].unk2;
 }
 
-#ifdef NON_MATCHING
 void CheckForCurb(CarTire* tire, CarCollision* collision)
 {
     s16 i;
@@ -961,8 +920,8 @@ void CheckForCurb(CarTire* tire, CarCollision* collision)
         if (tire->unk2 == 0) {
             collision->unk12 = 0x11;
         }
-        found = 1;
         tire->unk2 = 1;
+        found = 1;
         tire->unk0C = i;
         break;
     }
@@ -976,9 +935,6 @@ void CheckForCurb(CarTire* tire, CarCollision* collision)
     }
     tire->unk2 = found;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", CheckForCurb);
-#endif
 
 void CheckSlickSpots(Car* car, u8 isPlayer)
 {
@@ -1171,7 +1127,6 @@ void CheckHealthStands(Car* car, u8 isPlayer)
     }
 }
 
-#ifdef NON_MATCHING
 void UpdateTirePositions(Car* car, u8 isPlayer)
 {
     CarMotion* m;
@@ -1188,11 +1143,11 @@ void UpdateTirePositions(Car* car, u8 isPlayer)
     s32 d0;
     s32 d1;
     s32 t;
-    s32 k;
     s32 p;
-    s32 q;
     s32 ang;
     s32 ang2;
+    s32 roll;
+    s32 width;
 
     if (isPlayer) {
         m = &PLAYER_CAR(car)->motion;
@@ -1233,20 +1188,18 @@ void UpdateTirePositions(Car* car, u8 isPlayer)
     if (tires[3].unk0 == 0) {
         tires[3].unk40 += tires[3].unk1A;
     }
-    if (tires[0].unk40 >= tires[1].unk40) {
-        hi = tires[0].unk40;
-    } else {
+    if (tires[0].unk40 < tires[1].unk40) {
         hi = tires[1].unk40;
-    }
-    if (tires[2].unk40 >= tires[3].unk40) {
-        lo = tires[2].unk40;
     } else {
-        lo = tires[3].unk40;
+        hi = tires[0].unk40;
     }
+    p = tires[2].unk40 < tires[3].unk40 ? tires[3].unk40 : tires[2].unk40;
+    lo = p;
     if (hi >= lo) {
         lo = hi;
     }
-    lim = lo - 3 * st->unk78 / 4;
+    lim = 3 * st->unk78 / 4;
+    lim = lo - lim;
     if (tires[0].unk40 < lim) {
         tires[0].unk40 = lim;
     }
@@ -1259,23 +1212,24 @@ void UpdateTirePositions(Car* car, u8 isPlayer)
     if (tires[3].unk40 < lim) {
         tires[3].unk40 = lim;
     }
+    roll = ((tires[1].unk40 - tires[0].unk40) + (tires[3].unk40 - tires[2].unk40)) / 2;
     if (flags[23] != 0) {
         UpdateRollingCar(car, isPlayer);
     } else if (flags[0] == 0) {
-        m->rot.vy = ratan2(
-            (tires[1].unk40 - tires[0].unk40 + tires[3].unk40 - tires[2].unk40) / 2, st->unk74);
+        m->rot.vy = ratan2(roll, st->unk74);
         if (m->rot.vy >= 854) {
             m->rot.vy = 853;
         } else if (m->rot.vy < -853) {
             m->rot.vy = -853;
         }
         d0 = 0;
-        d1 = 0;
         if (tires[0].unk0 != tires[1].unk0 && tires[2].unk0 != tires[3].unk0) {
             d0 = (s16)tires[0].unk14 / GetFieldsLastFrame();
             d1 = (s16)tires[1].unk14 / GetFieldsLastFrame();
+        } else {
+            d1 = 0;
         }
-        if (d0 + st->unk5C < d1 && st->unkC0 < m->vel.vy) {
+        if (d0 + st->unk5C < d1 && m->vel.vy > st->unkC0) {
             flags[23] = 1;
             m->unk02 = m->rot2.vz;
             m->rotDelta.vy = 1;
@@ -1287,11 +1241,11 @@ void UpdateTirePositions(Car* car, u8 isPlayer)
             m->unk04 = m->rot2.vz - 1024;
         }
     }
-    if (flags[0] == 0 || flags[10] != 0) {
-        m->rot.vx = -ratan2(
-            (tires[0].unk40 - tires[2].unk40 + tires[1].unk40 - tires[3].unk40) / 2, st->unk78);
-    } else {
+    if (flags[0] != 0 && flags[10] == 0) {
         m->rot.vx = SmoothAngleValue(m->rot.vx, 0, 98);
+    } else {
+        m->rot.vx = -ratan2(
+            ((tires[0].unk40 - tires[2].unk40) + (tires[1].unk40 - tires[3].unk40)) / 2, st->unk78);
     }
     if (m->rot.vx >= 513) {
         m->rot.vx = 512;
@@ -1303,55 +1257,47 @@ void UpdateTirePositions(Car* car, u8 isPlayer)
         m->rot.vy += bounce->unk34;
     }
     m->pos.vz = (tires[0].unk40 + tires[1].unk40 + tires[2].unk40 + tires[3].unk40) / 4;
-    t = st->unk74;
-    k = m->rot.vy;
-    if (k < 0) {
-        k = -k;
-    }
-    ang = k;
-    t = t / 2 + 8;
+    width = st->unk74;
+    ang = __builtin_abs(m->rot.vy);
+    t = width / 2 + 8;
     BoundAngle(&ang);
-    if (ang >= 1024) {
-        q = t * (ang - 1024);
-        ang -= 1024;
-        p = t - q / 1024;
-        q = st->unk70 * ang / 1024;
+    if (ang < 1024) {
+        hi = t * ang / 1024;
+        hi += st->unk6C - st->unk6C * ang / 1024;
     } else {
-        p = t * ang / 1024;
-        q = st->unk6C - st->unk6C * ang / 1024;
+        p = t * (ang - 1024);
+        ang -= 1024;
+        hi = t - p / 1024;
+        hi += st->unk70 * ang / 1024;
     }
-    m->pos.vz += p + q;
+    m->pos.vz += hi;
     if (shellGetCurrentLevel() == LEVEL6_ROOFTOPS && st->unk40 > 0 && m->pos.vz < 160) {
         if (isPlayer == 0 && ai != 0) {
             if (spd >= 1601) {
                 ang2 = 2048 - (GetPlayerInfo(ai->unk0E)->motion.rot.vz - ai->unk30);
                 BoundAngle(&ang2);
-                k = ang2;
-                if (k < 0) {
-                    k = -k;
-                }
-                if (k >= 513) {
+                if (__builtin_abs(ang2) >= 513) {
                     spd = 8000;
                 }
             }
         }
         if ((spd >= 6401 || uaIndex == UA_BOSS_CAR) && ai != 0) {
-            if (ai->unk16F != 0) {
-                PutAICarBackOnRoof(ai);
-            } else {
+            if (ai->unk16F == 0) {
                 ai->stats.unk40 -= 20;
-                ai->unk16F = ai->stats.unk40 > 0;
+                if (ai->stats.unk40 <= 0) {
+                    ai->unk16F = 0;
+                } else {
+                    ai->unk16F = 1;
+                }
+            } else {
+                PutAICarBackOnRoof(ai);
             }
         } else {
             st->unk40 = -1;
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", UpdateTirePositions);
-#endif
 
-#ifdef NON_MATCHING
 void PutAICarBackOnRoof(AICar* car)
 {
     s32 dx;
@@ -1365,13 +1311,7 @@ void PutAICarBackOnRoof(AICar* car)
     }
     dx = car->motion.pos.vx - tPoints[tp].x;
     dz = car->motion.pos.vy - tPoints[tp].z;
-    if (dx < 0) {
-        dx = -dx;
-    }
-    if (dz < 0) {
-        dz = -dz;
-    }
-    if (dx < 240 && dz < 240) {
+    if (ABS(dx) < 240 && ABS(dz) < 240) {
         car->stats.triggerPt = tp;
         InitTriggerPoint(car);
         car->stats.unk38 = 1;
@@ -1384,11 +1324,7 @@ void PutAICarBackOnRoof(AICar* car)
         car->motion.rotDelta.vz = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", PutAICarBackOnRoof);
-#endif
 
-#ifdef NON_MATCHING
 void UpdateRollingCar(Car* car, u8 isPlayer)
 {
     CarMotion* m;
@@ -1397,8 +1333,6 @@ void UpdateRollingCar(Car* car, u8 isPlayer)
     u8* flags;
     s32 lim;
     s32 r;
-    s32 d;
-    s32 v;
     s32 w;
 
     if (isPlayer) {
@@ -1417,7 +1351,7 @@ void UpdateRollingCar(Car* car, u8 isPlayer)
     } else {
         lim = m->vel.vy;
     }
-    r = 91 * m->vel.vy * GetFieldsLastFrame() / lim;
+    r = m->vel.vy * (91 * GetFieldsLastFrame()) / lim;
     if (r < 0) {
         if (-45 * GetFieldsLastFrame() < r) {
             r = -45 * GetFieldsLastFrame();
@@ -1434,28 +1368,14 @@ void UpdateRollingCar(Car* car, u8 isPlayer)
         }
     }
     if (m->rotDelta.vy > 0) {
-        v = ABS(rsin(m->rot.vy));
-        d = r + v * r / 4096;
-        m->rot.vy = m->rot.vy + d;
+        r += __builtin_abs(rsin(m->rot.vy)) * r / 4096;
+        m->rot.vy = m->rot.vy + r;
     } else {
-        v = ABS(rsin(m->rot.vy));
-        d = r + v * r / 4096;
-        m->rot.vy = m->rot.vy - d;
+        r += __builtin_abs(rsin(m->rot.vy)) * r / 4096;
+        m->rot.vy = m->rot.vy - r;
     }
-    v = m->vel.vy;
-    if (v < 0) {
-        v = -v;
-    }
-    if (v < 32 * (950 * GetFieldsLastFrame() / 100)) {
-        v = m->rot.vy;
-        w = 3 * d;
-        if (w < 0) {
-            w = -w;
-        }
-        if (v < 0) {
-            v = -v;
-        }
-        if (v < w) {
+    if (__builtin_abs(m->vel.vy) < 32 * (950 * GetFieldsLastFrame() / 100)) {
+        if (__builtin_abs(m->rot.vy) < __builtin_abs(3 * r)) {
             flags[23] = 0;
             m->rotDelta.vy = 0;
             m->rot.vy = 0;
@@ -1479,9 +1399,6 @@ void UpdateRollingCar(Car* car, u8 isPlayer)
         m->rot.vz = SmoothAngleValue(m->rot.vz, m->unk04, 95);
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", UpdateRollingCar);
-#endif
 
 void InitTireInfo(CarTire* tires)
 {
@@ -1633,38 +1550,26 @@ void UpdateCarOnSlickSpot(Car* car, u8 isPlayer)
     }
 }
 
-#ifdef NON_MATCHING
 s32 GetMinSpeedNeeded(s16 group, s16 idx)
 {
-    s16 speed;
+    s32 speed;
     s32 fields;
 
-    speed = triggerPtGroups.minSpeed[group][idx];
+    speed = (s16)triggerPtGroups.minSpeed[group][idx];
     fields = GetFieldsLastFrame() * 19;
     return ((speed * fields) / 100) << 5;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", GetMinSpeedNeeded);
-#endif
 
-#ifdef NON_MATCHING
 s16 GetNumBridges(void)
 {
     return numBridges;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", GetNumBridges);
-#endif
 
-#ifdef NON_MATCHING
 s16 MakeFakePotHole(void)
 {
     numCheckPotHoles = numPotHoles + 1;
     return numPotHoles;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", MakeFakePotHole);
-#endif
 
 void UpdateNumPotHoles(void)
 {
@@ -1682,14 +1587,13 @@ TriggerPtStartPts* GetTriggerPtStartPts(void)
     return &triggerPtStartPts;
 }
 
-#ifdef NON_MATCHING
 void CalcDistFromRoadCenter(AICar* car, s32* out, u8 which)
 {
     s32 a;
-    u8 b;
+    s32 b;
     u8 c;
-    s16 h1;
-    s16 h2;
+    s32 h1;
+    s32 h2;
     s32 p1;
     s32 p2;
     s32 q1;
@@ -1718,7 +1622,7 @@ void CalcDistFromRoadCenter(AICar* car, s32* out, u8 which)
         q1 = car->unk1DC;
         q2 = car->unk1E0;
     }
-    if (a) {
+    if ((u8)a) {
         if (h2 != 0) {
             out[0] = (car->motion.pos.vx - p1) - (h1 * (car->motion.pos.vy - p2)) / h2;
         } else {
@@ -1742,7 +1646,7 @@ void CalcDistFromRoadCenter(AICar* car, s32* out, u8 which)
         } else {
             out[1] = 0;
         }
-    } else if (b) {
+    } else if ((u8)b) {
         out[0] = car->motion.pos.vx - q1;
         out[1] = 0;
     } else {
@@ -1750,11 +1654,7 @@ void CalcDistFromRoadCenter(AICar* car, s32* out, u8 which)
         out[1] = car->motion.pos.vy - q2;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", CalcDistFromRoadCenter);
-#endif
 
-#ifdef NON_MATCHING
 void CheckMonsterSmash(Car* car, u8 isPlayer)
 {
     u8* flags;
@@ -1840,15 +1740,20 @@ void CheckMonsterSmash(Car* car, u8 isPlayer)
             tires[3].unk20 = 0;
         }
     }
-    if (cs != 0 && uaIsCarCS(cs, &otherIsPlayer, &idx)) {
-        if (otherIsPlayer) {
-            player = GetPlayerInfo(idx);
-            otherFlags = player->flags;
-            otherStats = &player->stats;
+    if (cs != 0) {
+        if (uaIsCarCS(cs, &otherIsPlayer, &idx)) {
+            if (otherIsPlayer) {
+                player = GetPlayerInfo(idx);
+                otherFlags = player->flags;
+                otherStats = &player->stats;
+            } else {
+                ai = GetAICarInfo(idx);
+                otherFlags = ai->flags;
+                otherStats = &ai->stats;
+            }
         } else {
-            ai = GetAICarInfo(idx);
-            otherFlags = ai->flags;
-            otherStats = &ai->stats;
+            otherFlags = 0;
+            otherStats = 0;
         }
     } else {
         otherFlags = 0;
@@ -1879,7 +1784,7 @@ void CheckMonsterSmash(Car* car, u8 isPlayer)
         }
         if (otherFlags != 0 && otherStats->unk4C != 0 && (GetFrameCount() & 3) == 0
             && otherStats->unk40 > 0) {
-            otherStats->unk40--;
+            otherStats->unk40 -= 1;
         }
     }
     if (flags[27] == 0) {
@@ -1892,18 +1797,15 @@ void CheckMonsterSmash(Car* car, u8 isPlayer)
         }
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", CheckMonsterSmash);
-#endif
 
-#ifdef NON_MATCHING
 void InitTriggerPoint(AICar* car)
 {
     s16 i;
     s16 next;
+    s32 choice;
 
-    GetNextTriggerPoint(
-        car, tPoints[car->stats.triggerPt].link[rand() % tPoints[car->stats.triggerPt].f1A]);
+    choice = rand() % tPoints[car->stats.triggerPt].f1A;
+    GetNextTriggerPoint(car, tPoints[car->stats.triggerPt].link[choice]);
     AICarInitTransition(car);
     CalcTurnStart(car, 0);
     UpdateCurrentTriggerPt(car);
@@ -1934,15 +1836,11 @@ void InitTriggerPoint(AICar* car)
     car->motion.rot.vz = car->unk1BC;
     InitTireGroup(car->tires, tPoints[car->stats.triggerPt].type);
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", InitTriggerPoint);
-#endif
 
-#ifdef NON_MATCHING
 void UpdateCurrentTriggerPt(AICar* car)
 {
-    s16 dx;
-    s16 dz;
+    s32 dx;
+    s32 dz;
     u8 both;
 
     car->unk170 = car->unk172;
@@ -1991,17 +1889,12 @@ void UpdateCurrentTriggerPt(AICar* car)
     car->unk174 = car->unk170;
     car->unk17E = 0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", UpdateCurrentTriggerPt);
-#endif
 
-#ifdef NON_MATCHING
 void CalcTurnStart(AICar* car, u8 which)
 {
     s32 v;
-    s32 s;
-    s16 dx;
-    s16 dz;
+    s32 dx;
+    s32 dz;
     u8 both;
 
     if (which) {
@@ -2062,15 +1955,15 @@ void CalcTurnStart(AICar* car, u8 which)
         if (car->unk1B0 < 160) {
             car->unk1B0 = 160;
         }
-        s = GetAICarStrength();
-        if (s != 100) {
-            if (s < 101) {
-                if (s == 60) {
-                    car->unk1B0 = 2 * car->unk1B0 / 3;
-                }
-            } else if (s == 120) {
-                car->unk1B0 = 6 * car->unk1B0 / 5;
-            }
+        switch (GetAICarStrength()) {
+        case 60:
+            car->unk1B0 = 2 * car->unk1B0 / 3;
+            break;
+        case 100:
+            break;
+        case 120:
+            car->unk1B0 = 6 * car->unk1B0 / 5;
+            break;
         }
     } else {
         car->unk1B0 = 10 * car->stats.unk24 / 7;
@@ -2106,17 +1999,14 @@ void CalcTurnStart(AICar* car, u8 which)
     }
     car->unk1B4 = car->unk1B0;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", CalcTurnStart);
-#endif
 
-#ifdef NON_MATCHING
 void GetNextTriggerPoint(AICar* car, s16 pt)
 {
-    s32 r;
-    s32 dx;
-    s32 dz;
+    s16 r;
+    VECTOR delta;
     s32 a;
+    s16 next;
+    s16 distance;
     s16 out[4];
 
     if (pt != -1) {
@@ -2133,17 +2023,19 @@ void GetNextTriggerPoint(AICar* car, s16 pt)
             car->unk174 = tPoints[car->unk172].link[(s16)r];
             car->unk18C = tPoints[car->unk172].dist[(s16)r];
         } else {
-            car->unk174 = GetClosestTriggerPointFromCurrPt(car, &tPoints[car->unk172], out);
-            car->unk18C = out[0];
+            next = GetClosestTriggerPointFromCurrPt(car, &tPoints[car->unk172], out);
+            distance = out[0];
+            car->unk174 = next;
+            car->unk18C = distance;
         }
     }
-    dx = tPoints[car->unk174].x - tPoints[car->unk172].x;
-    dz = tPoints[car->unk174].z - tPoints[car->unk172].z;
-    car->unk1FC = SquareRoot0(dx * dx + dz * dz);
-    if (dz == 0) {
-        dz = 1;
+    delta.vx = tPoints[car->unk174].x - tPoints[car->unk172].x;
+    delta.vy = tPoints[car->unk174].z - tPoints[car->unk172].z;
+    car->unk1FC = SquareRoot0(delta.vx * delta.vx + delta.vy * delta.vy);
+    if (delta.vy == 0) {
+        delta.vy = 1;
     }
-    car->unk1C0 = ratan2(dx, dz);
+    car->unk1C0 = ratan2(delta.vx, delta.vy);
     BoundAngle(&car->unk1C0);
     if (car->unk16B != 0) {
         car->unk1A8 = tPoints[car->unk174].x + car->unk184;
@@ -2167,11 +2059,7 @@ void GetNextTriggerPoint(AICar* car, s16 pt)
         car->unk16C = 0;
     }
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", GetNextTriggerPoint);
-#endif
 
-#ifdef NON_MATCHING
 s16 GetClosestTriggerPointFromCurrPt(AICar* car, TriggerPt* tp, s16* out)
 {
     s16 la;
@@ -2186,9 +2074,8 @@ s16 GetClosestTriggerPointFromCurrPt(AICar* car, TriggerPt* tp, s16* out)
     la = GetLookAheadPos(car, lap);
     bestPt = tp->link[0];
     *out = tp->dist[0];
-    if (car->unk01 != 1) {
-        best = 0x7FFFFFFF;
-    } else {
+    best = 0x7FFFFFFF;
+    if (car->unk01 == 1) {
         best = 0;
     }
     for (i = 0; i < tp->f1A; i++) {
@@ -2200,23 +2087,18 @@ s16 GetClosestTriggerPointFromCurrPt(AICar* car, TriggerPt* tp, s16* out)
             + (lap[1] - tPoints[pt].z) * (lap[1] - tPoints[pt].z));
         dist = tp->dist[i];
         if (car->unk01 == 1) {
-            if (best >= d) {
-                continue;
-            }
-            if (pt == car->unk170 && car->unk17C >= 3) {
-                continue;
+            if (d > best && (pt != car->unk170 || car->unk17C < 3)) {
+                bestPt = pt;
+                best = d;
+                *out = dist;
             }
         } else {
-            if (d >= best) {
-                continue;
-            }
-            if (pt == car->unk170 && (dist < 121 || car->unk17C >= 3)) {
-                continue;
+            if (d < best && (pt != car->unk170 || (dist >= 121 && car->unk17C < 3))) {
+                bestPt = pt;
+                best = d;
+                *out = dist;
             }
         }
-        bestPt = pt;
-        best = d;
-        *out = dist;
     }
     if (bestPt == car->unk170) {
         car->unk17C++;
@@ -2225,16 +2107,14 @@ s16 GetClosestTriggerPointFromCurrPt(AICar* car, TriggerPt* tp, s16* out)
     }
     return bestPt;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", GetClosestTriggerPointFromCurrPt);
-#endif
 
-#ifdef NON_MATCHING
 s16 GetLookAheadPos(AICar* car, s32* out)
 {
     PlayerCar* player;
-    s32 grp;
-    s32 type;
+    s16 grp;
+    s16 current;
+    s8 mode;
+    s16 type;
     s16 ret;
     s16 tp;
     s16 tgt;
@@ -2247,33 +2127,36 @@ s16 GetLookAheadPos(AICar* car, s32* out)
     VECTOR vout;
 
     player = GetPlayerInfo(car->unk0E);
+    current = car->unk172;
     grp = player->unkC0;
-    ret = tPoints[car->unk172].type;
-    type = tPoints[car->unk172].type;
+    ret = type = tPoints[current].type;
     tp = triggerPtGroups.a[type][grp];
     tgt = triggerPtGroups.b[type][grp];
-    if (grp != type && triggerPtGroups.a[type][grp] >= 0) {
-        car->unk4C = 1;
-    } else {
+    if (grp == type || tp < 0) {
         car->unk4C = 0;
+    } else {
+        car->unk4C = 1;
     }
     if (car->unk4C != 0) {
-        if (car->unk01 != 0) {
-            tp = *(s16*)&player->flags[0x1E];
-            ret = -1;
-        } else if (tp == car->unk172) {
-            link = tPoints[tp].link[0];
-            for (i = car->unk01; i < tPoints[tp].f1A; i++) {
-                t = tPoints[tp].link[i];
-                if (tPoints[t].type == tgt) {
-                    link = t;
-                    ret = tgt;
-                    if (GetFrameCount() & 1) {
-                        break;
+        mode = car->unk01;
+        if (mode == 0) {
+            if (tp == car->unk172) {
+                link = tPoints[tp].link[0];
+                for (i = mode; i < tPoints[tp].f1A; i++) {
+                    t = tPoints[tp].link[i];
+                    if (tPoints[t].type == tgt) {
+                        link = t;
+                        ret = tgt;
+                        if (GetFrameCount() & 1) {
+                            break;
+                        }
                     }
                 }
+                tp = link;
             }
-            tp = link;
+        } else {
+            tp = *(s16*)&player->flags[0x1E];
+            ret = -1;
         }
         out[0] = tPoints[tp].x;
         out[1] = tPoints[tp].z;
@@ -2285,12 +2168,13 @@ s16 GetLookAheadPos(AICar* car, s32* out)
         if (car->unk01 == 0) {
             if (player->motion.vel.vy != 0) {
                 a = car->stats.unk10C * player->motion.vel.vy;
-                if (player->motion.vel.vy >= player->stats.unkA8) {
-                    b = player->motion.vel.vy;
-                } else {
+                if (player->motion.vel.vy < player->stats.unkA8) {
                     b = player->stats.unkA8;
+                } else {
+                    b = player->motion.vel.vy;
                 }
-                vin.vy = a / b;
+                a /= b;
+                vin.vy = a;
             } else {
                 vin.vy = 240;
             }
@@ -2303,6 +2187,3 @@ s16 GetLookAheadPos(AICar* car, s32* out)
     }
     return ret;
 }
-#else
-INCLUDE_ASM("asm/nonmatchings/tm1/CARUPD", GetLookAheadPos);
-#endif
