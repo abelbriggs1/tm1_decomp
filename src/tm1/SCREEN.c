@@ -60,6 +60,11 @@ typedef struct ScreenVehicleFace {
 
 extern void SetBlockFill(BLK_FILL* p);
 
+/**
+ * Note that the variable layout in this TU is jumbled
+ * because of the heavy use of function-local data/strings.
+ */
+
 static s32 gTitleChoice;
 static s32 gOptionsChoice;
 static s32 gMainOptionsChoice;
@@ -3385,15 +3390,13 @@ void screenScrollTextOneScreenFull(ScrollText* st)
 {
     st->y = st->y0;
     st->line = 0;
-    goto test;
-    do {
+    while (st->line < st->numLines) {
         if (st->y >= 0 && st->spacing + 240 >= st->y) {
             screenScrollTextPrintOneLine(st);
         }
         st->line++;
         st->y += st->spacing;
-    test:;
-    } while (st->line < st->numLines);
+    }
 }
 
 s32 screenScrollText(char* textFile, char* bgFile, s32 font)
@@ -3513,7 +3516,7 @@ s32 screenPlayCarEnding(s32 carId)
     screenScrollTextInit(text, "UATEXT\\CREDITS.TXT", TEXT_BUFFER, background, image, 6);
     screenCarEndingInit(&ending, carId, image);
     done = 0;
-    do {
+    while (!done) {
         screenCarEndingReset(&ending);
         PutDrawEnv(&ending.cdb->draw);
         PutDispEnv(&ending.cdb->disp);
@@ -3547,7 +3550,7 @@ s32 screenPlayCarEnding(s32 carId)
                 done = 1;
             }
         }
-    } while (!done);
+    }
     screenDisplayImage(0, text->image, 0, 0);
     screenDisplayImage(1, text->image, 0, 0);
     screenCarEndingCleanup(&ending);
