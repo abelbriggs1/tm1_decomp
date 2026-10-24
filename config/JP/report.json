@@ -1,15 +1,15 @@
 {
   "measures": {
-    "fuzzy_match_percent": 42.56381,
+    "fuzzy_match_percent": 50.935375,
     "total_code": "470784",
-    "matched_code": "200220",
-    "matched_code_percent": 42.52906,
+    "matched_code": "239632",
+    "matched_code_percent": 50.900627,
     "total_data": "612120",
     "matched_data": "95420",
     "matched_data_percent": 15.588448,
     "total_functions": 1983,
-    "matched_functions": 798,
-    "matched_functions_percent": 40.242058,
+    "matched_functions": 841,
+    "matched_functions_percent": 42.41049,
     "total_units": 64
   },
   "units": [
@@ -4031,16 +4031,16 @@
     {
       "name": "tm1/CARUPD",
       "measures": {
-        "fuzzy_match_percent": 11.126479,
+        "fuzzy_match_percent": 100.0,
         "total_code": "26028",
-        "matched_code": "2896",
-        "matched_code_percent": 11.126479,
+        "matched_code": "26028",
+        "matched_code_percent": 100.0,
         "total_data": "24",
         "matched_data": "4",
         "matched_data_percent": 16.666668,
         "total_functions": 32,
-        "matched_functions": 9,
-        "matched_functions_percent": 28.125,
+        "matched_functions": 32,
+        "matched_functions_percent": 100.0,
         "total_units": 1
       },
       "sections": [
@@ -4068,7 +4068,7 @@
         {
           "name": ".text",
           "size": "26028",
-          "fuzzy_match_percent": 11.126479,
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         }
       ],
@@ -4076,42 +4076,49 @@
         {
           "name": "GetClosestTriggerPt",
           "size": "252",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "0"
         },
         {
           "name": "CalcTireCoordinates",
           "size": "2768",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "252"
         },
         {
           "name": "GetGroupTestPointIsIn",
           "size": "300",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3020"
         },
         {
           "name": "CheckBridges",
           "size": "4356",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3320"
         },
         {
           "name": "CheckForBridge",
           "size": "204",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7676"
         },
         {
           "name": "GetBridgeGroundHeight",
           "size": "1304",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7880"
         },
         {
           "name": "GetBridgeTireHeight",
           "size": "660",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "9184"
         },
@@ -4125,6 +4132,7 @@
         {
           "name": "CheckForPotHole",
           "size": "552",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10096"
         },
@@ -4138,6 +4146,7 @@
         {
           "name": "CheckForCurb",
           "size": "336",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10900"
         },
@@ -4158,18 +4167,21 @@
         {
           "name": "UpdateTirePositions",
           "size": "2248",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "12748"
         },
         {
           "name": "PutAICarBackOnRoof",
           "size": "300",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "14996"
         },
         {
           "name": "UpdateRollingCar",
           "size": "1228",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "15296"
         },
@@ -4197,18 +4209,21 @@
         {
           "name": "GetMinSpeedNeeded",
           "size": "160",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17284"
         },
         {
           "name": "GetNumBridges",
           "size": "16",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17444"
         },
         {
           "name": "MakeFakePotHole",
           "size": "36",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17460"
         },
@@ -4229,48 +4244,56 @@
         {
           "name": "CalcDistFromRoadCenter",
           "size": "448",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17616"
         },
         {
           "name": "CheckMonsterSmash",
           "size": "1536",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18064"
         },
         {
           "name": "InitTriggerPoint",
           "size": "804",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "19600"
         },
         {
           "name": "UpdateCurrentTriggerPt",
           "size": "852",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "20404"
         },
         {
           "name": "CalcTurnStart",
           "size": "1904",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "21256"
         },
         {
           "name": "GetNextTriggerPoint",
           "size": "1356",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "23160"
         },
         {
           "name": "GetClosestTriggerPointFromCurrPt",
           "size": "644",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "24516"
         },
         {
           "name": "GetLookAheadPos",
           "size": "868",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "25160"
         }
@@ -5041,16 +5064,16 @@
     {
       "name": "tm1/INTERACT",
       "measures": {
-        "fuzzy_match_percent": 16.444262,
+        "fuzzy_match_percent": 100.0,
         "total_code": "19484",
-        "matched_code": "3204",
-        "matched_code_percent": 16.444262,
+        "matched_code": "19484",
+        "matched_code_percent": 100.0,
         "total_data": "3348",
         "matched_data": "2092",
         "matched_data_percent": 62.48506,
         "total_functions": 42,
-        "matched_functions": 22,
-        "matched_functions_percent": 52.380955,
+        "matched_functions": 42,
+        "matched_functions_percent": 100.0,
         "total_units": 1
       },
       "sections": [
@@ -5086,7 +5109,7 @@
         {
           "name": ".text",
           "size": "19484",
-          "fuzzy_match_percent": 16.444262,
+          "fuzzy_match_percent": 100.0,
           "metadata": {}
         }
       ],
@@ -5108,6 +5131,7 @@
         {
           "name": "UpdateWeapons",
           "size": "348",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "280"
         },
@@ -5121,30 +5145,35 @@
         {
           "name": "UpdateAIWeaponPadStatus",
           "size": "548",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1028"
         },
         {
           "name": "UpdateGuns",
           "size": "1208",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "1576"
         },
         {
           "name": "UpdateNonGuns",
           "size": "504",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "2784"
         },
         {
           "name": "FireMissiles",
           "size": "700",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3288"
         },
         {
           "name": "FireSpecials",
           "size": "3008",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "3988"
         },
@@ -5165,24 +5194,28 @@
         {
           "name": "fire_taser",
           "size": "1188",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "7096"
         },
         {
           "name": "draw_tasers",
           "size": "1896",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "8284"
         },
         {
           "name": "LaunchDrops",
           "size": "492",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10180"
         },
         {
           "name": "carAddWeapTex",
           "size": "152",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10672"
         },
@@ -5203,36 +5236,42 @@
         {
           "name": "carDropWeapon",
           "size": "424",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "10936"
         },
         {
           "name": "check_dropweap_impact",
           "size": "612",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11360"
         },
         {
           "name": "drawOil",
           "size": "680",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "11972"
         },
         {
           "name": "displayDropWeapons",
           "size": "1120",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "12652"
         },
         {
           "name": "carLockon",
           "size": "724",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "13772"
         },
         {
           "name": "carLockon2",
           "size": "720",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "14496"
         },
@@ -5267,6 +5306,7 @@
         {
           "name": "displayFlamethrowers",
           "size": "1292",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "15932"
         },
@@ -5294,6 +5334,7 @@
         {
           "name": "regeneratePickupWeapons",
           "size": "188",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "17424"
         },
@@ -5349,12 +5390,14 @@
         {
           "name": "set_health_stand",
           "size": "104",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "18996"
         },
         {
           "name": "regen_healthstands",
           "size": "372",
+          "fuzzy_match_percent": 100.0,
           "metadata": {},
           "address": "19100"
         },
@@ -15631,16 +15674,16 @@
       "id": "tm1",
       "name": "tm1",
       "measures": {
-        "fuzzy_match_percent": 55.887524,
+        "fuzzy_match_percent": 66.87964,
         "total_code": "358548",
-        "matched_code": "200220",
-        "matched_code_percent": 55.841892,
+        "matched_code": "239632",
+        "matched_code_percent": 66.83401,
         "total_data": "471688",
         "matched_data": "95420",
         "matched_data_percent": 20.229473,
         "total_functions": 1009,
-        "matched_functions": 798,
-        "matched_functions_percent": 79.0882,
+        "matched_functions": 841,
+        "matched_functions_percent": 83.34985,
         "total_units": 59
       }
     }

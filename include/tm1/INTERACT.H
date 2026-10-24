@@ -45,7 +45,7 @@ s32 getSpecialWeaponCost(s32 id);
 void UpdateWeapons(Car* car, u8 isPlayer);
 void UpdatePlayerWeaponPadStatus(PlayerCar* car);
 void UpdateAIWeaponPadStatus(AICar* car);
-u16 UpdateGuns(Car* car, u8 isPlayer);
+void UpdateGuns(Car* car, u8 isPlayer);
 void UpdateNonGuns(Car* car, u8 isPlayer);
 void FireMissiles(Car* car, u8 isPlayer);
 void FireSpecials(Car* car, u8 isPlayer);
