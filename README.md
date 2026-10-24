@@ -1,12 +1,11 @@
-# `tm_decomp`
+# Twisted Metal Re-Arc Project
 
-![build](https://img.shields.io/github/actions/workflow/status/abelbriggs1/tm1_decomp/build.yaml?branch=master&label=build)
-![code](https://decomp.dev/abelbriggs1/tm1_decomp/jp.svg?mode=shield&category=tm1&label=code&measure=matched_code_percent)
-![functions](https://decomp.dev/abelbriggs1/tm1_decomp/jp.svg?mode=shield&category=tm1&label=functions&measure=matched_functions)
-![data](https://decomp.dev/abelbriggs1/tm1_decomp/jp.svg?mode=shield&category=tm1&label=data&measure=matched_data_percent)
+![build](https://img.shields.io/github/actions/workflow/status/OpenTrac/tm1_Re-Arc/build.yaml?branch=master&label=build)
 
-This repository contains a (WIP) matching decompilation of the 1995 Playstation
-game `Twisted Metal (NTSC-J) (SIPS-60007)`.
+This repository is a Re-Arc (Reverse Engineering, Archaeology, and Reconstruction of Code)
+project for the 1995 Playstation game `Twisted Metal (NTSC-J) (SIPS-60007)`.
+It uses matching decompilation techniques to ensure that the reconstructed source
+produces exactly identical machine code and behavior versus the original.
 
 ```diff
 - WARNING! -
@@ -42,14 +41,10 @@ for our repository's standards and requirements.
 ## Contributing
 
 If you'd like to contribute to the project, please join us in the
-`#twisted-metal-psx` channel on the [PS1/PS2 Decompilation Discord server](https://discord.gg/VwCPdfbxgm).
-Communication is key for decomp projects.
+`#twisted-metal-psx` channel on the [PS1/PS2 Re-Arc Discord server](https://discord.gg/VwCPdfbxgm).
+Communication is key.
 
 ## Requirements
-
-### Windows
-
-Windows is currently unsupported, but will be supported in the future.
 
 ### Linux/WSL
 
@@ -144,8 +139,8 @@ This project contains code generated with the assistance of agentic LLMs (AI).
 
 ## Acknowledgements
 
-This project is critically reliant on tools from dedicated members of the decomp community.
-Without them, this work would be impossible.
+This project is critically reliant on tools from dedicated members of the console
+reversing community. Without them, this work would be impossible.
 Special thanks go to the teams and individuals behind:
 
 - `decomp.wiki`
