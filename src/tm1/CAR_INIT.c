@@ -419,7 +419,7 @@ void CarInitDeltas(CarStats* stats, s32 uaIndex)
     stats->unk1C = 0;
     stats->blasts = 0;
     stats->unk22 = 0;
-    *(s32*)&stats->lostTimer = 0;
+    stats->lostTimer = 0;
     stats->unk16 = 0;
     stats->unk03 = 0;
     if (stats->unk00 == 0) {

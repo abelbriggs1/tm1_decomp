@@ -6,12 +6,19 @@
 
 #define TARGET_UPDATE_RATE 60
 #define RCNT2_MAX_VALUE 0xFFFF /* Reset RCNT2 every 65535 ticks. */
+// Number of RCNT2 ticks per frame in a 60 FPS game.
 #define RCNT2_TICKS_PER_FRAME 70618
 #define RCNT2_TICKS_PER_HALF_FRAME 35309
 #define RCNT2_TICKS_TO_USECS(ticks) ((ticks * 236) / 1000)
 #define CALCULATE_FIELDS_LAST_FRAME(frameTime)                                                     \
     (((frameTime) + RCNT2_TICKS_PER_HALF_FRAME) / RCNT2_TICKS_PER_FRAME)
 
+/**
+ * Number of steps to update the physics/simulation by on this frame.
+ * The game tries to run the physics simulation at 60 ticks per second.
+ * However, since the PSX can't handle that, the game will batch updates
+ * as needed depending on the framerate.
+ */
 s16 gFieldsLastFrame = 2;
 /* Current target number of updates per second. */
 s16 gUpdateRate = 20;

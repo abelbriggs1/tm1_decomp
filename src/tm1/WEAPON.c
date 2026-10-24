@@ -1684,7 +1684,7 @@ s32 bulDispatchDamage(s32 id, s32 a, s32 b, s32 damage, VECTOR3* dir, s32 owner)
             ped_takehit(id - 150, (s32)dir);
             return 1;
         }
-        carTakeHit((s16)id, damage, (s32)dir, 0);
+        carTakeHit((s16)id, damage, dir, 0);
         return 1;
     }
     switch (a) {

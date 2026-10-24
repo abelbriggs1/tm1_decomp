@@ -1173,7 +1173,7 @@ void draw_tasers(RenderCtx* ctx, s32 view)
             taser[i].life = taser[i].life - 1;
             if (taser[i].target >= 0) {
                 if (taser[i].life == 0) {
-                    carTakeHit((s16)taser[i].target, D_8018C034, 0, 0);
+                    carTakeHit((s16)taser[i].target, D_8018C034, NULL, 0);
                 }
             }
             for (j = 0; j < 15; j++) {

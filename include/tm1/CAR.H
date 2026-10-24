@@ -59,7 +59,7 @@
 #define DIRECTION_RIGHT 3
 
 typedef struct CarMotion {
-    /*0x00*/ u16 unk00;
+    /*0x00*/ s16 unk00;
     /*0x02*/ u16 unk02;
     /*0x04*/ s16 unk04;
     /*0x06*/ u8 pad06[0x2];
@@ -73,9 +73,7 @@ typedef struct CarMotion {
     /*0x70*/ MATRIX mat;
     /*0x90*/ VECTOR3 lastPos;
     /*0x9C*/ VECTOR3 lastRot;
-    /*0xA8*/ s32 unkA8;
-    /*0xAC*/ s32 unkAC;
-    /*0xB0*/ s32 unkB0;
+    /*0xA8*/ VECTOR3 unkA8;
     /*0xB4*/ MATRIX lastMat;
     /*0xD4*/ s32 unkD4;
 } CarMotion; /* 0xD8 */
@@ -86,12 +84,12 @@ typedef struct CarCollision {
     /*0x02*/ u8 unk2;
     /*0x03*/ u8 unk3;
     /*0x04*/ u16 unk4;
-    /*0x06*/ u16 count;
+    /*0x06*/ s16 count;
     /*0x08*/ s16 unk8;
     /*0x0A*/ s16 unkA;
     /*0x0C*/ s16 unkC;
     /*0x0E*/ s16 unkE;
-    /*0x10*/ u16 unk10;
+    /*0x10*/ s16 unk10;
     /*0x12*/ s16 unk12;
     /*0x14*/ u16 unk14;
     /*0x16*/ u16 unk16;
@@ -107,7 +105,7 @@ typedef struct CarTire {
     /*0x006*/ u8 unk6;
     /*0x007*/ u8 pad07;
     /*0x008*/ s16 unk08;
-    /*0x00A*/ u16 unk0A;
+    /*0x00A*/ s16 unk0A;
     /*0x00C*/ s16 unk0C;
     /*0x00E*/ s16 unk0E;
     /*0x010*/ s16 unk10;
@@ -120,7 +118,7 @@ typedef struct CarTire {
     /*0x01E*/ u16 unk1E;
     /*0x020*/ s16 unk20;
     /*0x022*/ u16 unk22;
-    /*0x024*/ u16 unk24;
+    /*0x024*/ s16 unk24;
     /*0x026*/ s16 unk26;
     /*0x028*/ s32 unk28;
     /*0x02C*/ VECTOR3 unk2C;
@@ -142,18 +140,18 @@ typedef struct CarStats {
     /*0x009*/ u8 cheatAArmed;
     /*0x00A*/ u8 cheatB;
     /*0x00B*/ u8 cheatBArmed;
-    /*0x00C*/ u16 cheatTimer;
+    /*0x00C*/ s16 cheatTimer;
     /*0x00E*/ u16 colorId;
-    /*0x010*/ u16 updateRate;
-    /*0x012*/ u16 blasts;
-    /*0x014*/ u16 unk14;
+    /*0x010*/ s16 updateRate;
+    /*0x012*/ s16 blasts;
+    /*0x014*/ s16 unk14;
     /*0x016*/ u16 unk16;
     /*0x018*/ s16 unk18;
-    /*0x01A*/ u16 spikeTimer;
+    /*0x01A*/ s16 spikeTimer;
     /*0x01C*/ s16 unk1C;
     /*0x01E*/ u16 unk1E;
-    /*0x020*/ u16 deathTimer;
-    /*0x022*/ u16 unk22;
+    /*0x020*/ s16 deathTimer;
+    /*0x022*/ s16 unk22;
     /*0x024*/ s16 unk24;
     /*0x026*/ u8 pad01a[0x4];
     /*0x02A*/ s16 unk2A;
@@ -165,8 +163,7 @@ typedef struct CarStats {
     /*0x03C*/ s32 unk3C;
     /*0x040*/ s32 unk40;
     /*0x044*/ s32 unk44;
-    /*0x048*/ u16 lostTimer;
-    /*0x04A*/ u16 unk4A;
+    /*0x048*/ s32 lostTimer;
     /*0x04C*/ s32 unk4C;
     /*0x050*/ s32 unk50;
     /*0x054*/ s32 healthRate;
@@ -286,7 +283,7 @@ typedef struct CarWeap {
     /*0x42*/ u8 unk42;
     /*0x43*/ u8 pad43;
     /*0x44*/ u16 unk44;
-    /*0x46*/ u16 unk46;
+    /*0x46*/ s16 unk46;
     /*0x48*/ u8 unk48;
     /*0x49*/ u8 reset;
     /*0x4A*/ u8 pad4A[0x2];
@@ -312,7 +309,7 @@ typedef struct CarAttack {
 typedef struct PlayerCar {
     /*0x000*/ u8 pad00;
     /*0x001*/ s8 standId;
-    /*0x002*/ u16 playerIdx;
+    /*0x002*/ s16 playerIdx;
     /*0x004*/ SVECTOR dRot;
     /*0x00C*/ VECTOR3 dTrans;
     /*0x018*/ SVECTOR vrRot[6];
@@ -347,7 +344,7 @@ typedef struct AICar {
     /*0x003*/ u8 pad03;
     /*0x004*/ s8 unk04;
     /*0x005*/ u8 pad05;
-    /*0x006*/ u16 playerIdx;
+    /*0x006*/ s16 playerIdx;
     /*0x008*/ s16 routeVal;
     /*0x00A*/ s16 unk0A;
     /*0x00C*/ s16 unk0C;
@@ -492,7 +489,7 @@ void CarViewUpdate(PlayerCar* car);
 void SetBounce(Car* car, s32 level, s32 a, s32 b, u8 isPlayer);
 void CarInitBounceDeltas(Car* car, u8 isPlayer);
 void UpdateBounce(Car* car, u8 isPlayer);
-void carTakeHit(s16 id, s32 amount, s32 a, u8 flag);
+void carTakeHit(s16 id, s32 amount, VECTOR3* a, u8 flag);
 void InitCatapult(Car* car, u8 isPlayer);
 void CheckCatapults(Car* car, u8 isPlayer);
 void UpdateCatapultedTire(CarTire* t);

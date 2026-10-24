@@ -110,6 +110,8 @@
 #define UA_UNK_431 431
 #define UA_PICKUP_SPECIAL 450
 
+#define UA_UNK_500 500
+
 // Destroyable targets.
 #define UA_UNK_600 600
 #define UA_UNK_601 601
@@ -168,6 +170,7 @@
 #define UA_UNK_782 782
 
 #define UA_UNK_770 770
+#define UA_UNK_800 800
 #define UA_TV 810
 #define UA_UNK_902 902
 #define UA_HEALTH_STAND 920
@@ -189,6 +192,7 @@
 #define UA_UNK_1017 1017
 #define UA_FALLING_BOX 1018
 #define UA_BREAKING_WINDOW 1019
+#define UA_UNK_1021 1021
 
 // Cockpit and HUD.
 #define UA_DASHBOARD 1240
@@ -200,6 +204,8 @@
 #define UA_ARROW_DOWN 1292
 #define UA_ARROW_LEFT 1293
 #define UA_CAR_OCCUPANTS 1300
+
+#define UA_UNK_1400 1400
 
 #define UA_IS_PICKUP(type) ((type) >= UA_PICKUP_FIRE_MISSILE && (type) <= UA_PICKUP_SPECIAL)
 #define UA_IS_PERSON(type) ((type) >= UA_BAZ_COP && (type) <= UA_UNK_782)

@@ -30,25 +30,25 @@
 
 void CarUpdate(PlayerCar* car)
 {
-    u16 idx;
-    u16 rate;
+    s16 idx;
+    s16 rate;
     s32 speed;
     s32 rot;
 
     idx = car->playerIdx;
     RecomputeCarDeltas(&car->stats);
     rate = GetUpdateRate();
-    if ((s16)car->stats.updateRate != (s16)rate) {
-        car->motion.vel.vy = car->motion.vel.vy * (s16)car->stats.updateRate / (s16)rate;
-        car->motion.rotDelta.vz = car->motion.rotDelta.vz * (s16)car->stats.updateRate / (s16)rate;
+    if (car->stats.updateRate != rate) {
+        car->motion.vel.vy = car->motion.vel.vy * car->stats.updateRate / rate;
+        car->motion.rotDelta.vz = car->motion.rotDelta.vz * car->stats.updateRate / rate;
         car->stats.updateRate = rate;
     }
     car->collision.unk12 = 0;
     car->flags[0x09] = 0;
     *(s16*)&car->flags[0x1E] = GetClosestTriggerPt(car, 1);
     if (car->flags[0x10]) {
-        *(u16*)&car->stats.unk18 -= GetFieldsLastFrame();
-        if ((s32)((u32) * (u16*)&car->stats.unk18 << 16) <= 0) {
+        car->stats.unk18 -= GetFieldsLastFrame();
+        if (car->stats.unk18 << 16 <= 0) {
             car->flags[0x10] = 0;
             UAeffectClearFreezeLight(GetPlayerCs3D(car->playerIdx));
         }
@@ -97,7 +97,7 @@ void CarUpdate(PlayerCar* car)
         CheckHitDetection(car, 1);
     }
     UpdateWeapons(car, 1);
-    if ((s16)idx == (s16)GetPlayerTheCameraFollows() || rtIsSplitScreenOn()) {
+    if (idx == GetPlayerTheCameraFollows() || rtIsSplitScreenOn()) {
         CarViewUpdate(car);
     }
     if (GetFieldsLastFrame() * 760 / 100 * 32 < car->motion.vel.vy) {
@@ -127,7 +127,7 @@ void CarUpdate(PlayerCar* car)
         }
         if (car->stats.cheatA) {
             car->stats.cheatTimer++;
-            if ((s16)car->stats.cheatTimer >= 31) {
+            if (car->stats.cheatTimer >= 31) {
                 car->stats.cheatA = 0;
                 car->stats.cheatTimer = 0;
             }
@@ -153,10 +153,10 @@ void CarUpdate(PlayerCar* car)
                 }
             } else if (ctlpadSpecial(4, car->playerIdx)) {
                 if (car->stats.cheatAArmed) {
-                    if (*(s32*)&car->stats.lostTimer) {
-                        *(s32*)&car->stats.lostTimer = 0;
+                    if (car->stats.lostTimer) {
+                        car->stats.lostTimer = 0;
                     } else {
-                        *(s32*)&car->stats.lostTimer = 1;
+                        car->stats.lostTimer = 1;
                         car->flags[0x1A] = 1;
                     }
                 }
@@ -178,7 +178,7 @@ void CarUpdate(PlayerCar* car)
         }
         if (car->stats.cheatB) {
             car->stats.cheatTimer++;
-            if ((s16)car->stats.cheatTimer >= 31) {
+            if (car->stats.cheatTimer >= 31) {
                 car->stats.cheatB = 0;
                 car->stats.cheatTimer = 0;
             }
@@ -200,7 +200,7 @@ void CarUpdate(PlayerCar* car)
         }
     } else if (car->unk9A) {
         car->stats.cheatTimer++;
-        if ((s16)car->stats.cheatTimer >= 31) {
+        if (car->stats.cheatTimer >= 31) {
             car->unk9A = 0;
         } else if (ctlpadSpecial(4, car->playerIdx)) {
             car->unk9B = 0;
@@ -247,31 +247,31 @@ void CarUpdateDeltas(Car* car, u8 isPlayer)
         if (abs(m->vel.vy) > GetFieldsLastFrame() * 1520 / 100 * 32)
             amount = st->unkCC;
         else {
-            threshold = (s32)((u32)((GetFieldsLastFrame() * 1520) / 100) << 5);
+            threshold = (((GetFieldsLastFrame() * 1520) / 100) << 5);
             amount = st->unkD0 - ((m->vel.vy * (st->unkD0 - st->unkCC)) / threshold);
         }
-        if ((input[3] && (s16)m->unk00 <= 0) || (input[2] && (s16)m->unk00 >= 0))
+        if ((input[3] && m->unk00 <= 0) || (input[2] && m->unk00 >= 0))
             amount = amount * 2;
         if (input[6] || input[7])
             amount = amount * st->unkE8;
         if (input[3]) {
-            m->unk00 = (u16)((u32)m->unk00 + (u32)amount);
-            if (maxTurn < (s16)m->unk00)
+            m->unk00 = m->unk00 + amount;
+            if (maxTurn < m->unk00)
                 m->unk00 = maxTurn;
         } else {
-            m->unk00 = (u16)((u32)m->unk00 - (u32)amount);
-            if ((s16)m->unk00 < -maxTurn)
+            m->unk00 = m->unk00 - amount;
+            if (m->unk00 < -maxTurn)
                 m->unk00 = -maxTurn;
         }
     } else if (m->unk00) {
-        if (abs((s16)m->unk00) < st->unkD0)
+        if (abs(m->unk00) < st->unkD0)
             m->unk00 = 0;
         else if (flags[11])
-            m->unk00 -= (s16)m->unk00 / 16;
+            m->unk00 -= m->unk00 / 16;
         else
-            m->unk00 = (s16)m->unk00 / 2;
+            m->unk00 = m->unk00 / 2;
     }
-    m->rotDelta.vz = ((m->vel.vy / 32) * ((s16)m->unk00)) / st->unk7C;
+    m->rotDelta.vz = ((m->vel.vy / 32) * (m->unk00)) / st->unk7C;
     if (flags[16]) {
         input[5] = 1;
         input[4] = 0;
@@ -311,16 +311,16 @@ void CarUpdateDeltas(Car* car, u8 isPlayer)
                 st->unk14 = 0;
             }
         } else {
-            st->unk14 = (u16)(st->unk14 + GetFieldsLastFrame());
+            st->unk14 = st->unk14 + GetFieldsLastFrame();
             m->vel.vy = 0;
-            if ((s16)st->unk14 >= 22)
+            if (st->unk14 >= 22)
                 flags[5] = 0;
         }
     }
     if (input[8] && flags[16]) {
         if (st->unkF8 >= 91)
             goto consume_turbo;
-        if ((s16)weap->unk46 > 0) {
+        if (weap->unk46 > 0) {
             --weap->unk46;
             st->unkF8 += 180;
         consume_turbo:
@@ -333,7 +333,7 @@ void CarUpdateDeltas(Car* car, u8 isPlayer)
     }
     if (input[8]) {
         input[4] = 1;
-        if (st->unkF8 <= 0 && (s16)weap->unk46 > 0) {
+        if (st->unkF8 <= 0 && weap->unk46 > 0) {
             --weap->unk46;
             st->unkF8 = 180;
         }
@@ -424,7 +424,7 @@ void CarUpdateDeltas(Car* car, u8 isPlayer)
 
 void CarUpdateControlPad(PlayerCar* car)
 {
-    u16 idx;
+    s16 idx;
     u8 turbo;
     u8 a;
     u8 b;
@@ -436,37 +436,37 @@ void CarUpdateControlPad(PlayerCar* car)
         turbo = car->tires[3].unk3 != 0;
     }
 
-    car->skid[0x0D] = GetCtlPad((s8)car->skid[0x26], (s16)idx);
-    car->skid[0x0E] = GetCtlPad((s8)car->skid[0x27], (s16)idx);
+    car->skid[0x0D] = GetCtlPad((s8)car->skid[0x26], idx);
+    car->skid[0x0E] = GetCtlPad((s8)car->skid[0x27], idx);
 
     v = 0;
     if (car->skid[0x0D]) {
-        v = GetCtlPad((s8)car->skid[0x18], (s16)idx) != 0;
+        v = GetCtlPad((s8)car->skid[0x18], idx) != 0;
     }
     car->skid[0x11] = v;
     v = 0;
     if (car->skid[0x0D]) {
-        v = GetCtlPad((s8)car->skid[0x1A], (s16)idx) != 0;
+        v = GetCtlPad((s8)car->skid[0x1A], idx) != 0;
     }
     car->skid[0x12] = v;
     v = 0;
     if (car->skid[0x0D]) {
-        v = GetCtlPad((s8)car->skid[0x1C], (s16)idx) != 0;
+        v = GetCtlPad((s8)car->skid[0x1C], idx) != 0;
     }
     car->skid[0x13] = v;
     v = 0;
     if (car->skid[0x0D]) {
-        v = GetCtlPad((s8)car->skid[0x1B], (s16)idx) != 0;
+        v = GetCtlPad((s8)car->skid[0x1B], idx) != 0;
     }
     car->skid[0x14] = v;
     v = 0;
     if (car->skid[0x0D]) {
-        v = GetCtlPad((s8)car->skid[0x28], (s16)idx) != 0;
+        v = GetCtlPad((s8)car->skid[0x28], idx) != 0;
     }
     car->skid[0x17] = v;
 
-    car->skid[0x03] = GetCtlPad((s8)car->skid[0x1C], (s16)idx);
-    car->skid[0x02] = GetCtlPad((s8)car->skid[0x1B], (s16)idx);
+    car->skid[0x03] = GetCtlPad((s8)car->skid[0x1C], idx);
+    car->skid[0x02] = GetCtlPad((s8)car->skid[0x1B], idx);
 
     if (car->tires[0].unk3) {
         if (car->tires[1].unk3) {
@@ -484,23 +484,23 @@ void CarUpdateControlPad(PlayerCar* car)
     }
 
     a = 0;
-    if (GetCtlPad((s8)car->skid[0x1F], (s16)idx)) {
+    if (GetCtlPad((s8)car->skid[0x1F], idx)) {
         a = car->skid[0x03] != 0;
     }
     car->skid[0x06] = a;
     a = 0;
-    if (GetCtlPad((s8)car->skid[0x20], (s16)idx)) {
+    if (GetCtlPad((s8)car->skid[0x20], idx)) {
         a = car->skid[0x02] != 0;
     }
     car->skid[0x07] = a;
     a = 0;
-    if (GetCtlPad((s8)car->skid[0x21], (s16)idx)) {
+    if (GetCtlPad((s8)car->skid[0x21], idx)) {
         a = turbo ^ 1;
     }
     car->skid[0x08] = a;
 
     a = 0;
-    if (GetCtlPad((s8)car->skid[0x19], (s16)idx) || GetCtlPad((s8)car->skid[0x1A], (s16)idx)) {
+    if (GetCtlPad((s8)car->skid[0x19], idx) || GetCtlPad((s8)car->skid[0x1A], idx)) {
         if (!car->skid[0x0D] && !car->skid[0x0E]) {
             a = 1;
         }
@@ -508,7 +508,7 @@ void CarUpdateControlPad(PlayerCar* car)
     car->skid[0x01] = a;
 
     b = 0;
-    if ((GetCtlPad((s8)car->skid[0x1D], (s16)idx) || GetCtlPad((s8)car->skid[0x18], (s16)idx)
+    if ((GetCtlPad((s8)car->skid[0x1D], idx) || GetCtlPad((s8)car->skid[0x18], idx)
             || car->skid[0x01])
         && !car->skid[0x0D] && !car->skid[0x0E]) {
         b = 1;
@@ -521,10 +521,10 @@ void CarUpdateControlPad(PlayerCar* car)
     }
     car->skid[0x04] = v;
 
-    car->skid[0x09] = GetCtlPad((s8)car->skid[0x22], (s16)idx);
-    car->skid[0x0A] = GetCtlPad((s8)car->skid[0x23], (s16)idx);
-    car->skid[0x0B] = GetCtlPad((s8)car->skid[0x24], (s16)idx);
-    car->skid[0x0C] = GetCtlPad((s8)car->skid[0x25], (s16)idx);
+    car->skid[0x09] = GetCtlPad((s8)car->skid[0x22], idx);
+    car->skid[0x0A] = GetCtlPad((s8)car->skid[0x23], idx);
+    car->skid[0x0B] = GetCtlPad((s8)car->skid[0x24], idx);
+    car->skid[0x0C] = GetCtlPad((s8)car->skid[0x25], idx);
 
     v = 0;
     if (car->skid[0x03] || car->skid[0x02]) {
@@ -779,7 +779,7 @@ void SlowDownNonDriftingCar(Car* car, u8 isPlayer)
 
     if (abs(m->vel.vy) > st->unkB0) {
         d = d - (d - st->unkEC) * abs(m->vel.vy) / hi;
-        if (d < abs((s16)m->unk00)) {
+        if (d < abs(m->unk00)) {
             if (m->vel.vy > 0) {
                 m->vel.vy = m->vel.vy - st->unkBC;
             } else if (m->vel.vy < 0) {
@@ -1046,7 +1046,7 @@ void CheckHitDetection(Car* car, u8 isPlayer)
     s32 bearing;
     s32 speed;
     s32 height;
-    u32 type;
+    s16 type;
 
     if (isPlayer) {
         flags = PLAYER_CAR(car)->flags;
@@ -1054,7 +1054,7 @@ void CheckHitDetection(Car* car, u8 isPlayer)
         col = &PLAYER_CAR(car)->collision;
         m = &PLAYER_CAR(car)->motion;
         t = PLAYER_CAR(car)->tires;
-        cs = GetPlayerCs3D((s16)PLAYER_CAR(car)->playerIdx);
+        cs = GetPlayerCs3D(PLAYER_CAR(car)->playerIdx);
         bearing = PLAYER_CAR(car)->bearing;
     } else {
         flags = AI_CAR(car)->flags;
@@ -1062,7 +1062,7 @@ void CheckHitDetection(Car* car, u8 isPlayer)
         st = &AI_CAR(car)->stats;
         m = &AI_CAR(car)->motion;
         t = AI_CAR(car)->tires;
-        cs = GetAICs3D((s16)AI_CAR(car)->playerIdx);
+        cs = GetAICs3D(AI_CAR(car)->playerIdx);
         bearing = AI_CAR(car)->bearing;
     }
     cs->rot.vx = m->rot.vx;
@@ -1086,19 +1086,19 @@ void CheckHitDetection(Car* car, u8 isPlayer)
     hit.hit = 0;
     HdCsTest(cs, &hit, 1, &m->lastMat, &m->lastPos.vx);
     if (hit.hit) {
-        if (!isPlayer && flags[29] && (s16)st->unk22 >= 13)
+        if (!isPlayer && flags[29] && st->unk22 >= 13)
             hit.hit = 0;
-        type = (u16)hit.tag0;
+        type = hit.tag0;
         if (UA_IS_PICKUP(type)) {
-            carGetPickup(car, isPlayer, (s16)type, hit.tag1);
+            carGetPickup(car, isPlayer, type, hit.tag1);
             hit.hit = 0;
-        } else if ((s16)type == UA_BARRICADE) {
+        } else if (type == UA_BARRICADE) {
             UAeffectBarricade(UA_BARRICADE, hit.tag1, bearing);
             col->unk12 = abs(m->vel.vy) * 3 * 33
                 / (abs(m->vel.vy) < st->unkA8 ? st->unkA8 : abs(m->vel.vy));
             hit.hit = 0;
-        } else if (UA_IS_PERSON(type) || (s16)type == UA_UNK_1001) {
-            bulDispatchDamage(hit.obj->unkC0, (s16)type, hit.tag1, 10, &m->rot, 0);
+        } else if (UA_IS_PERSON(type) || type == UA_UNK_1001) {
+            bulDispatchDamage(hit.obj->unkC0, type, hit.tag1, 10, &m->rot, 0);
             t[0].unk0A = MakeFakePotHole();
             t[1].unk0A = t[0].unk0A;
             t[2].unk0A = t[0].unk0A;
@@ -1107,7 +1107,7 @@ void CheckHitDetection(Car* car, u8 isPlayer)
             t[1].unk1 = 1;
             t[2].unk1 = 1;
             t[3].unk1 = 1;
-            hole = GetPotHoleDat((s16)t[0].unk0A);
+            hole = GetPotHoleDat(t[0].unk0A);
             if (abs(m->rot.vz) < 512) {
                 hole->x = t[0].unk38 - 16;
                 hole->z = t[0].unk3C - 16;
@@ -1131,14 +1131,14 @@ void CheckHitDetection(Car* car, u8 isPlayer)
             }
             hole->c = 40;
             hit.hit = 0;
-        } else if ((s16)type == 1400) {
+        } else if (type == UA_UNK_1400) {
             t[0].unk14 = -20;
             t[1].unk14 = -20;
             t[2].unk14 = -20;
             t[3].unk14 = -20;
             hit.hit = 0;
             m->vel.vy = 0;
-        } else if ((s16)type == 500) {
+        } else if (type == UA_UNK_500) {
             height = 160;
             if (!flags[10]) {
                 speed = m->vel.vy / 32;
@@ -1172,10 +1172,10 @@ void CheckHitDetection(Car* car, u8 isPlayer)
             }
             if (t[0].unk0 || t[1].unk0 || t[2].unk0 || t[3].unk0)
                 hit.hit = 0;
-        } else if ((s16)type == 1021) {
+        } else if (type == UA_UNK_1021) {
             if (!isPlayer && !AI_CAR(car)->unk16E && !flags[0]) {
-                if (AI_CAR(car)->unk34 < 800 && AI_CAR(car)->uaIndex != UA_BOSS_CAR) {
-                    if ((s16)col->unkE < 100 || flags[13] || flags[15])
+                if (AI_CAR(car)->unk34 < UA_UNK_800 && AI_CAR(car)->uaIndex != UA_BOSS_CAR) {
+                    if (col->unkE < 100 || flags[13] || flags[15])
                         hit.hit = 0;
                 }
             } else
@@ -1193,28 +1193,27 @@ void CheckHitDetection(Car* car, u8 isPlayer)
             col->unk0 = 0;
     } else {
         col->unk16++;
-        if ((s16)col->count <= 0)
+        if (col->count <= 0)
             col->unk14 = 0;
     }
     if (col->count) {
         if (isPlayer && flags[6]) {
-            if ((s16)col->count < 120)
+            if (col->count < 120)
                 InitNoCollision(col);
             else
                 m->rotDelta.vz = 0;
         }
         if (UpdateCollisionAngle(m, col)) {
 
-            col->count = (u16)(col->count - GetFieldsLastFrame());
-            if ((s16)col->count <= 0 || abs(m->vel.vy) < st->unkA4
-                || abs((s16)col->unk8 - m->rot.vz) < 56)
+            col->count = col->count - GetFieldsLastFrame();
+            if (col->count <= 0 || abs(m->vel.vy) < st->unkA4 || abs(col->unk8 - m->rot.vz) < 56)
                 InitNoCollision(col);
         } else {
             InitNoCollision(col);
         }
     }
-    if ((s16)col->unkE < 151)
-        col->unkE = (u16)((u16)col->unkE + GetFieldsLastFrame());
+    if (col->unkE < 151)
+        col->unkE = col->unkE + GetFieldsLastFrame();
 }
 
 void CalcHitDynamics(Car* car, HdCsHit* hit, u8 isPlayer)
@@ -1222,7 +1221,7 @@ void CalcHitDynamics(Car* car, HdCsHit* hit, u8 isPlayer)
     CarStats* st;
     CarMotion* m;
     CarTire* tires;
-    u16 idx;
+    s16 idx;
     s32 mag;
     s32 dmg;
     s32 num;
@@ -1258,22 +1257,22 @@ void CalcHitDynamics(Car* car, HdCsHit* hit, u8 isPlayer)
 
     if (hit->unk04) {
         if (m->vel.vy >= 0) {
-            ang = m->unkB0;
+            ang = m->unkA8.vz;
         } else {
-            ang = m->unkB0 + 2048;
+            ang = m->unkA8.vz + 2048;
         }
     } else {
-        if (hit->normal[1] == 0) {
-            hit->normal[1] = 1;
+        if (hit->normal.vy == 0) {
+            hit->normal.vy = 1;
         }
-        ang = ratan2(hit->normal[0], hit->normal[1]);
+        ang = ratan2(hit->normal.vx, hit->normal.vy);
     }
     BoundAngle(&ang);
     if (m->vel.vy >= 0) {
-        rel = m->unkB0 - ang;
+        rel = m->unkA8.vz - ang;
     } else {
         s32 reverseAngle = ang - 2048;
-        rel = m->unkB0 - reverseAngle;
+        rel = m->unkA8.vz - reverseAngle;
     }
     BoundAngle(&rel);
     bounce = 2048 - rel * 2;
@@ -1282,8 +1281,8 @@ void CalcHitDynamics(Car* car, HdCsHit* hit, u8 isPlayer)
     if (hit->obj != 0 && hit->obj->unkC0 < 100 && hit->obj->unkC0 != 8) {
         hitCs = CheckCSHit(car, isPlayer, hit->obj, bounce, hit->histIdx);
         col->unk3 = 1;
-        m->unkB0 = m->rot2.vz;
-        ang = m->unkB0;
+        m->unkA8.vz = m->rot2.vz;
+        ang = m->unkA8.vz;
         BoundAngle(&ang);
     } else {
         col->unk3 = 0;
@@ -1293,8 +1292,7 @@ void CalcHitDynamics(Car* car, HdCsHit* hit, u8 isPlayer)
             dmg = abs(rsin(bounce / 4) * abs(m->vel.vy)) * 10 / st->unkA8 / 4096;
             if (dmg > 0) {
                 if (dmg - 3 > 0 && isPlayer) {
-                    carTakeHit(
-                        (s16)uaGetCarMatID((s16)idx, isPlayer), dmg - 3, (s32)hit->normal, 1);
+                    carTakeHit(uaGetCarMatID(idx, isPlayer), dmg - 3, &hit->normal, 1);
                 }
                 scaledDamage = dmg * st->unk104 / 33;
                 bulDispatchDamage(hit->obj->unkC0, hit->tag0, hit->tag1, scaledDamage, &m->rot, 0);
@@ -1315,10 +1313,10 @@ void CalcHitDynamics(Car* car, HdCsHit* hit, u8 isPlayer)
                     if (tires[3].unk26 < 2) {
                         tires[3].unk14 = 0;
                     }
-                    tires[0].unk14 = (s16)tires[0].unk14 / 2;
-                    tires[1].unk14 = (s16)tires[1].unk14 / 2;
-                    tires[2].unk14 = (s16)tires[2].unk14 / 2;
-                    tires[3].unk14 = (s16)tires[3].unk14 / 2;
+                    tires[0].unk14 = tires[0].unk14 / 2;
+                    tires[1].unk14 = tires[1].unk14 / 2;
+                    tires[2].unk14 = tires[2].unk14 / 2;
+                    tires[3].unk14 = tires[3].unk14 / 2;
                 }
             }
         }
@@ -1460,10 +1458,10 @@ u8 CheckCSHit(Car* car, u8 isPlayer, Cs* obj, s32 a, s32 b)
         } else {
             info = GetAICarInfo(idx);
         }
-        DoCsHitCalculations(car, isPlayer, info, otherIsPlayer, a, (s16)bb);
+        DoCsHitCalculations(car, isPlayer, info, otherIsPlayer, a, bb);
         ret = 0;
     } else {
-        RicochetOffObject(car, isPlayer, 0, a, (s16)b);
+        RicochetOffObject(car, isPlayer, 0, a, b);
         ret = 0;
     }
     return ret;
@@ -1481,7 +1479,7 @@ void DoCsHitCalculations(
     u8 driftMe;
     u8 driftOther;
     u16 idx;
-    u16 oidx;
+    s16 oidx;
     CarCollision* col;
     CarCollision* ocol;
     u8* of;
@@ -1533,7 +1531,7 @@ void DoCsHitCalculations(
     } else if (otherIsPlayer && !f[0]) {
         f[24] = 1;
     }
-    if ((u16)mode < 2 || (s16)mode == 4)
+    if ((u16)mode < 2 || mode == 4)
         front = 1;
     else
         front = 0;
@@ -1543,7 +1541,7 @@ void DoCsHitCalculations(
             return;
         }
         if ((front && m->vel.vy > 0) || (back && m->vel.vy < 0)) {
-            InitMonsterSmash(car, isPlayer, other, otherIsPlayer, (s16)mode);
+            InitMonsterSmash(car, isPlayer, other, otherIsPlayer, mode);
             return;
         }
     } else if (of[28]) {
@@ -1556,35 +1554,35 @@ void DoCsHitCalculations(
             || abs(om->vel.vy) > GetFieldsLastFrame() * 570 / 100 * 32) {
             if (st->unk108 > ost->unk108) {
                 if (!f[27]) {
-                    carTakeHit(uaGetCarMatID(idx, isPlayer), 1, (s32)&m->unkA8, 1);
+                    carTakeHit(uaGetCarMatID(idx, isPlayer), 1, &m->unkA8, 1);
                 }
                 if (abs(m->vel.vy) > (GetFieldsLastFrame() * 570 / 100 * 32) && !of[27]) {
                     damage = 12 * m->vel.vy / st->unkA8;
                     if (damage > 0) {
-                        carTakeHit(uaGetCarMatID(oidx, otherIsPlayer), damage, (s32)&m->unkA8, 1);
+                        carTakeHit(uaGetCarMatID(oidx, otherIsPlayer), damage, &m->unkA8, 1);
                     }
                 }
             } else if (st->unk108 < ost->unk108) {
                 if (abs(om->vel.vy) > (GetFieldsLastFrame() * 570 / 100 * 32) && !f[27]) {
                     damage = 12 * om->vel.vy / ost->unkA8;
                     if (damage > 0) {
-                        carTakeHit(uaGetCarMatID(idx, isPlayer), 11, (s32)&om->unkA8, 1);
+                        carTakeHit(uaGetCarMatID(idx, isPlayer), 11, &om->unkA8, 1);
                     }
                 }
                 if (!of[27]) {
-                    carTakeHit(uaGetCarMatID(oidx, otherIsPlayer), 1, (s32)&om->unkA8, 1);
+                    carTakeHit(uaGetCarMatID(oidx, otherIsPlayer), 1, &om->unkA8, 1);
                 }
             } else {
                 if (abs(om->vel.vy) > (GetFieldsLastFrame() * 570 / 100 * 32) && !f[27]) {
                     damage = 6 * om->vel.vy / ost->unkA8;
                     if (damage > 0) {
-                        carTakeHit(uaGetCarMatID(idx, isPlayer), damage, (s32)&om->unkA8, 1);
+                        carTakeHit(uaGetCarMatID(idx, isPlayer), damage, &om->unkA8, 1);
                     }
                 }
                 if (abs(m->vel.vy) > (GetFieldsLastFrame() * 570 / 100 * 32) && !of[27]) {
                     damage = 6 * m->vel.vy / st->unkA8;
                     if (damage > 0) {
-                        carTakeHit(uaGetCarMatID(oidx, otherIsPlayer), damage, (s32)&m->unkA8, 1);
+                        carTakeHit(uaGetCarMatID(oidx, otherIsPlayer), damage, &m->unkA8, 1);
                     }
                 }
             }
@@ -1595,11 +1593,11 @@ void DoCsHitCalculations(
         s32 heading;
         s32 otherHeading;
         if (st->unkA4 < abs(m->vel.vy))
-            heading = m->unkB0;
+            heading = m->unkA8.vz;
         else
             heading = m->rot.vz;
         if (ost->unkA4 < abs(om->vel.vy))
-            otherHeading = om->unkB0;
+            otherHeading = om->unkA8.vz;
         else
             otherHeading = om->rot.vz;
         relativeAngle = heading - otherHeading;
@@ -1674,7 +1672,7 @@ void DoCsHitCalculations(
                 if (speedB < 0)
                     speedB = -speedB;
                 if (2 * speedB < speedA) {
-                    om->rot2.vz = m->unkB0 - bounceAngle;
+                    om->rot2.vz = m->unkA8.vz - bounceAngle;
                     if (m->vel.vy < 0) {
                         om->rot2.vz -= 2048;
                         if (angleDifference < 1024) {
@@ -1694,7 +1692,7 @@ void DoCsHitCalculations(
                     if (speedB < 0)
                         speedB = -speedB;
                     if (2 * speedB < speedA) {
-                        m->rot2.vz = om->unkB0 - otherBounceAngle;
+                        m->rot2.vz = om->unkA8.vz - otherBounceAngle;
                         if (om->vel.vy < 0) {
                             m->rot2.vz -= 2048;
                             if (angleDifference < 1024) {
@@ -1750,7 +1748,7 @@ void DoCsHitCalculations(
                 m->vel.vy -= impulse;
                 om->rot2.vz = om->rot.vz;
                 om->vel.vy -= otherImpulse;
-                if ((s16)mode == 1 || (s16)mode == 3) {
+                if (mode == 1 || mode == 3) {
                     bounceAngle = -170;
                     otherBounceAngle = 170;
                 } else {
@@ -1857,7 +1855,7 @@ void DoCsHitCalculations(
                     om->vel.vy -= otherImpulse;
                 }
 
-                if ((s16)mode == 1) {
+                if (mode == 1) {
                     bounceAngle += 170;
                     otherBounceAngle -= 170;
                 } else {
@@ -1896,13 +1894,13 @@ void DoCsHitCalculations(
         }
         om->unk04 = driftAngle;
     }
-    if ((s16)col->unkE < 150 && (s16)col->unk10 == (s16)oidx) {
+    if (col->unkE < 150 && col->unk10 == oidx) {
         spark.vx = (m->pos.vx + om->pos.vx) / 2;
         spark.vy = (m->pos.vy + om->pos.vy) / 2;
         spark.vz = (m->pos.vz + om->pos.vz) / 2;
         do_simple_spark(&spark);
         m->rot2.vz = m->rot.vz;
-        switch ((s16)mode) {
+        switch (mode) {
         case 0:
             bounceAngle = (m->vel.vy == 0) ? 0x238 : 0;
             m->rot2.vz += 512;
@@ -1965,9 +1963,9 @@ void DoCsHitCalculations(
     if (om->vel.vy > ost->unkA8) {
         om->vel.vy = ost->unkA8;
     }
-    RicochetOffObject(car, isPlayer, 1, bounceAngle, (s16)mode);
+    RicochetOffObject(car, isPlayer, 1, bounceAngle, mode);
     ocol->unk0 = 1;
-    RicochetOffObject(other, otherIsPlayer, 1, otherBounceAngle, (s16)mode);
+    RicochetOffObject(other, otherIsPlayer, 1, otherBounceAngle, mode);
     RotateCarsAwayFromCollision(m, om);
 }
 
@@ -2028,13 +2026,13 @@ void RicochetOffObject(Car* car, u8 isPlayer, u8 doHit, s32 delta, s16 mode)
     SetCollisionBounce(car, isPlayer, delta);
 
     if (isPlayer && f[6] && m->vel.vy < GetFieldsLastFrame() * 570 / 100 * 32
-        && ((u16)mode < 2 || (s16)mode == 4)) {
+        && ((u16)mode < 2 || mode == 4)) {
         c->unk2 = 1;
     } else {
         c->unk2 = 0;
     }
 
-    if ((u16)mode < 2 || (s16)mode == 4 || skid[1]) {
+    if ((u16)mode < 2 || mode == 4 || skid[1]) {
         if (c->unk2 || abs(delta) < 682) {
             m->rot2.vz -= delta / 3;
             c->unk8 = m->rot2.vz;
@@ -2131,7 +2129,7 @@ void InitNoCollision(CarCollision* c)
 
 void SetCollisCount(CarCollision* c)
 {
-    if ((s32)((u32)c->count << 16) <= 0) {
+    if (c->count <= 0) {
         c->count = 150;
     }
 }
@@ -2147,9 +2145,9 @@ void CarViewUpdate(PlayerCar* car)
     s32 dz;
 
     if (car->stats.unk3C) {
-        uaDrawCar((s16)car->playerIdx, 1);
+        uaDrawCar(car->playerIdx, 1);
     } else {
-        uaDontDrawCar((s16)car->playerIdx, 1);
+        uaDontDrawCar(car->playerIdx, 1);
     }
     if ((u32)car->unkF4 < VR_MODE_HELICOPTER) {
         GetUpdateRate();
@@ -2162,7 +2160,7 @@ void CarViewUpdate(PlayerCar* car)
                 car->dRot.vy = SmoothValue(car->dRot.vy, car->vrRot[0].vy, 0x5A);
                 car->dRot.vz = SmoothValue(car->dRot.vz, car->vrRot[0].vz, 0x5A);
             } else {
-                uaDontDrawCar((s16)car->playerIdx, 1);
+                uaDontDrawCar(car->playerIdx, 1);
                 car->dTrans.vx = car->vrPos[0].vx;
                 car->dTrans.vy = car->vrPos[0].vy;
                 car->dTrans.vz = car->vrPos[0].vz;
@@ -2171,7 +2169,7 @@ void CarViewUpdate(PlayerCar* car)
                 car->dRot.vz = car->vrRot[0].vz;
                 if (car->stats.unk3C) {
                     UAdashSetDashboardDrawFlag(1);
-                    uaDontDrawCar((s16)car->playerIdx, 1);
+                    uaDontDrawCar(car->playerIdx, 1);
                 }
             }
         } else if (car->unkF4 == VR_MODE_UNK_2) {
@@ -2219,12 +2217,12 @@ void CarViewUpdate(PlayerCar* car)
             }
             car->dTrans.vx = SmoothValue(car->dTrans.vx, tilt, 0x5A);
         }
-        viewSetDeltaRot(&car->dRot, (s16)car->playerIdx);
-        viewSetDeltaTrans(&car->dTrans, (s16)car->playerIdx);
+        viewSetDeltaRot(&car->dRot, car->playerIdx);
+        viewSetDeltaTrans(&car->dTrans, car->playerIdx);
         return;
     }
     if (car->unkF4 == VR_MODE_HELICOPTER) {
-        cs = UAGetCameraCS((s16)car->playerIdx);
+        cs = UAGetCameraCS(car->playerIdx);
         v.vx = 0;
         v.vy = 100;
         v.vz = 0;
@@ -2238,7 +2236,7 @@ void CarViewUpdate(PlayerCar* car)
         car->dRot.vx = -ratan2(dz, SquareRoot0(dx * dx + dy * dy));
         car->dRot.vy = 0;
         car->dRot.vz = ratan2(dx, dy);
-        viewSetDeltaRot(&car->dRot, (s16)car->playerIdx);
+        viewSetDeltaRot(&car->dRot, car->playerIdx);
     }
 }
 
@@ -2307,7 +2305,7 @@ void SetBounce(Car* car, s32 level, s32 a, s32 b, u8 isPlayer)
     } else {
         bp->unk1C = 0;
     }
-    bp->unk12 = ang - rand() % (ang >> 1);
+    bp->unk12 = ang - RANDINT(ang >> 1);
     CarInitBounceDeltas(car, isPlayer);
 }
 
@@ -2325,16 +2323,16 @@ void CarInitBounceDeltas(Car* car, u8 isPlayer)
     }
 
     if (m->vel.vy / 32) {
-        bp->unk14 = bp->unk12 - rand() % (bp->unk12 / 2);
+        bp->unk14 = bp->unk12 - RANDINT(bp->unk12 / 2);
         if (bp->unk18 > 0) {
-            bp->unk24 = bp->unk18 - rand() % (bp->unk18 / 2);
+            bp->unk24 = bp->unk18 - RANDINT(bp->unk18 / 2);
         } else if (bp->unk18 < 0) {
-            bp->unk24 = bp->unk18 + rand() % (bp->unk18 / 2);
+            bp->unk24 = bp->unk18 + RANDINT(bp->unk18 / 2);
         }
         if (bp->unk1C > 0) {
-            bp->unk28 = bp->unk1C - rand() % (bp->unk1C / 2);
+            bp->unk28 = bp->unk1C - RANDINT(bp->unk1C / 2);
         } else if (bp->unk1C < 0) {
-            bp->unk28 = bp->unk1C + rand() % (bp->unk1C / 2);
+            bp->unk28 = bp->unk1C + RANDINT(bp->unk1C / 2);
         }
     } else {
         bp->unk04 = 0;
@@ -2386,7 +2384,7 @@ void UpdateBounce(Car* car, u8 isPlayer)
             }
         }
     }
-    bp->unk34 = SmoothValue(bp->unk34, (s16)v, 90);
+    bp->unk34 = SmoothValue(bp->unk34, v, 90);
 
     if (isPlayer && PLAYER_CAR(car)->unkF4 == VR_MODE_UNK_1) {
         bp->unk16 = SmoothValue(bp->unk16, PLAYER_CAR(car)->speedDelta, 90);
@@ -2417,7 +2415,7 @@ void UpdateBounce(Car* car, u8 isPlayer)
     }
 }
 
-void carTakeHit(s16 id, s32 amount, s32 a, u8 flag)
+void carTakeHit(s16 id, s32 amount, VECTOR3* a, u8 flag)
 {
     u8 rgb[3];
     u8 isPlayer;
@@ -2456,7 +2454,7 @@ void carTakeHit(s16 id, s32 amount, s32 a, u8 flag)
         rgb[2] = 0;
     }
 
-    if ((u8)uaIsCarMatID((s16)id, (s8*)&isPlayer, &idx)) {
+    if ((u8)uaIsCarMatID(id, (s8*)&isPlayer, &idx)) {
         if (isPlayer) {
             info = GetPlayerInfo(idx);
             canHit = 1;
@@ -2465,7 +2463,7 @@ void carTakeHit(s16 id, s32 amount, s32 a, u8 flag)
             f = car->flags;
             mode = car->unkF4;
             wp = &car->weap;
-            cs = GetPlayerCs3D((s16)idx);
+            cs = GetPlayerCs3D(idx);
             enabled = 1;
             ua = car->uaIndex;
         } else {
@@ -2492,7 +2490,7 @@ void carTakeHit(s16 id, s32 amount, s32 a, u8 flag)
                 if (amount >= 8 && (rand() & 7) < amount - 7 && !f[0x1C]) {
                     InitBombDamage(info, isPlayer, 1, flag);
                 }
-                if (*(s32*)&st->lostTimer) {
+                if (st->lostTimer) {
                     amount = amount / 2;
                 }
                 n = rand();
@@ -2503,16 +2501,16 @@ void carTakeHit(s16 id, s32 amount, s32 a, u8 flag)
                     if (isPlayer) {
                         dif = uaGetDifficulty();
                         if (dif == DIFFICULTY_EASY) {
-                            amount = (s32)((u32)amount * 2u) / 3;
+                            amount = (amount * 2) / 3;
                         }
                         if (dif == DIFFICULTY_HARD) {
-                            amount = (s32)((u32)amount * 4u) / 3;
+                            amount = (amount * 4) / 3;
                         }
                         if (amount <= 0) {
                             amount = 1;
                         }
                     }
-                    st->unk40 = (s32)((u32)st->unk40 - (u32)amount);
+                    st->unk40 = st->unk40 - amount;
                 }
                 if (f[0x10] && amount >= 6 && !f[0]) {
                     st->unk18 = 0;
@@ -2854,7 +2852,7 @@ void CheckSpikeDamage(Car* car, u8 isPlayer)
 
     if (f[0x11] && s->spikeTimer) {
         s->spikeTimer -= GetFieldsLastFrame();
-        if ((s16)s->spikeTimer <= 0) {
+        if (s->spikeTimer <= 0) {
             f[0x11] = 0;
             s->spikeTimer = 0;
             s->unkFC = s->unk100;
@@ -2871,7 +2869,7 @@ void InitMonsterSmash(Car* carA, u8 isPlayerA, Car* carB, u8 isPlayerB, s16 unus
     u8* fb;
     CarStats* sb;
     CarMotion* mb;
-    u16 idx;
+    s16 idx;
     s32 uaIdx;
     Cs* cs;
     s32 dmg;
@@ -2913,12 +2911,12 @@ void InitMonsterSmash(Car* carA, u8 isPlayerA, Car* carB, u8 isPlayerB, s16 unus
     uasoundPlayCarSpecialWeaponLaunchOrInflight(SOUND_SPECIAL_MONSTER_TRUCK, 0, 0);
     wa->ammo[WEAPON_SPECIAL] = wa->ammo[WEAPON_SPECIAL] - getSpecialWeaponCost(UA_MONSTER_TRUCK);
     if (isPlayerB) {
-        cs = GetPlayerCs3D((s16)idx);
+        cs = GetPlayerCs3D(idx);
     } else {
-        cs = GetAICs3D((s16)idx);
+        cs = GetAICs3D(idx);
     }
     dmg = (s16)cs->unkC0;
-    carTakeHit(dmg, carweapGetMonsterDamage(), 0, 0);
+    carTakeHit(dmg, carweapGetMonsterDamage(), NULL, 0);
     fb[16] = 1;
     sb->unk18 = 60;
     mb->vel.vy = 0;
@@ -2957,7 +2955,7 @@ void SetCarVRMode(PlayerCar* car, u32 mode)
             pos.vx = 0;
             pos.vy = 0;
             pos.vz = 0;
-            UASetCameraPosition((s16)car->playerIdx, (VECTOR3*)&pos, &rot);
+            UASetCameraPosition(car->playerIdx, (VECTOR3*)&pos, &rot);
             moved = 1;
         } else {
             moved = 0;
@@ -2979,9 +2977,9 @@ void SetCarVRMode(PlayerCar* car, u32 mode)
         break;
     case 1:
         if (car->stats.unk3C) {
-            uaDrawCar((s16)car->playerIdx, 1);
+            uaDrawCar(car->playerIdx, 1);
         } else {
-            uaDontDrawCar((s16)car->playerIdx, 1);
+            uaDontDrawCar(car->playerIdx, 1);
         }
         UAdashSetDashboardDrawFlag(0);
         if (moved) {
@@ -2995,9 +2993,9 @@ void SetCarVRMode(PlayerCar* car, u32 mode)
         break;
     case 2:
         if (car->stats.unk3C) {
-            uaDrawCar((s16)car->playerIdx, 1);
+            uaDrawCar(car->playerIdx, 1);
         } else {
-            uaDontDrawCar((s16)car->playerIdx, 1);
+            uaDontDrawCar(car->playerIdx, 1);
         }
         UAdashSetDashboardDrawFlag(0);
         if (moved) {
@@ -3011,9 +3009,9 @@ void SetCarVRMode(PlayerCar* car, u32 mode)
         break;
     case 3:
         if (car->stats.unk3C) {
-            uaDrawCar((s16)car->playerIdx, 1);
+            uaDrawCar(car->playerIdx, 1);
         } else {
-            uaDontDrawCar((s16)car->playerIdx, 1);
+            uaDontDrawCar(car->playerIdx, 1);
         }
         UAdashSetDashboardDrawFlag(0);
         car->dTrans.vx = 0;
@@ -3029,13 +3027,13 @@ void SetCarVRMode(PlayerCar* car, u32 mode)
         base.vx = car->motion.pos.vx + off.vx;
         base.vy = car->motion.pos.vy + off.vy;
         base.vz = car->motion.pos.vz + off.vz;
-        UASetCameraPosition((s16)car->playerIdx, (VECTOR3*)&base, &car->vrRot[3]);
+        UASetCameraPosition(car->playerIdx, (VECTOR3*)&base, &car->vrRot[3]);
         break;
     case 4:
         if (car->stats.unk3C) {
-            uaDrawCar((s16)car->playerIdx, 1);
+            uaDrawCar(car->playerIdx, 1);
         } else {
-            uaDontDrawCar((s16)car->playerIdx, 1);
+            uaDontDrawCar(car->playerIdx, 1);
         }
         UAdashSetDashboardDrawFlag(0);
         car->dTrans.vx = 0;
@@ -3048,13 +3046,13 @@ void SetCarVRMode(PlayerCar* car, u32 mode)
     default:
         car->dTrans = car->vrPos[0];
         car->dRot = car->vrRot[0];
-        uaDontDrawCar((s16)car->playerIdx, 1);
+        uaDontDrawCar(car->playerIdx, 1);
         UAdashSetDashboardDrawFlag(1);
         break;
     }
 
-    viewSetDeltaTrans(&car->dTrans, (s16)car->playerIdx);
-    viewSetDeltaRot(&car->dRot, (s16)car->playerIdx);
+    viewSetDeltaTrans(&car->dTrans, car->playerIdx);
+    viewSetDeltaRot(&car->dRot, car->playerIdx);
     car->unkF4 = mode;
 }
 
@@ -3082,9 +3080,9 @@ void UpdateCarDeath(Car* car, u8 isPlayer)
         t = AI_CAR(car)->tires;
     }
 
-    if ((s16)st->deathTimer > 0) {
+    if (st->deathTimer > 0) {
         st->deathTimer -= GetFieldsLastFrame();
-        value = (s16)((s16)st->deathTimer % 40);
+        value = (st->deathTimer % 40);
         if (value == 1) {
             pos.vx = m->pos.vx;
             pos.vy = m->pos.vy;
@@ -3118,7 +3116,7 @@ void UpdateCarDeath(Car* car, u8 isPlayer)
                 pos.vx = m->pos.vx;
                 pos.vy = m->pos.vy;
                 pos.vz = m->pos.vz;
-                pos.vz = (s16)t->unk24;
+                pos.vz = t->unk24;
                 do_flames(&pos);
                 f[20] = 0;
             }
@@ -3127,8 +3125,8 @@ void UpdateCarDeath(Car* car, u8 isPlayer)
             if (shellGetCurrentLevel() == LEVEL6_ROOFTOPS && m->pos.vz < 400) {
                 limit = 7;
             }
-            if ((s16)st->blasts < limit) {
-                if ((s16)st->blasts < limit) {
+            if (st->blasts < limit) {
+                if (st->blasts < limit) {
                     period = 4;
                 } else {
                     period = 12;
@@ -3137,23 +3135,28 @@ void UpdateCarDeath(Car* car, u8 isPlayer)
                     st->blasts++;
                     f[26] = 1;
                     if (limit == 7) {
-                        off.vx = (rand() & 0x3F) - 32;
-                        off.vy = (rand() & 0x3F) - 32;
-                        off.vz = (rand() & 0xF) - 8;
+                        off.vx = RANDINT_POW2(64) - 32;
+                        off.vy = RANDINT_POW2(64) - 32;
+                        off.vz = RANDINT_POW2(16) - 8;
                         pos.vx = m->pos.vx;
                         pos.vy = m->pos.vy;
                         pos.vz = m->pos.vz;
                         pos.vx = pos.vx + off.vx;
                         pos.vy = pos.vy + off.vy;
                         pos.vz = pos.vz + off.vz;
-                        if (!(rand() & 1)) {
+                        if (!RANDINT_POW2(2)) {
                             do_mondo_explosion(&pos);
                         } else {
                             do_bigger_explosion(&pos);
                         }
                     } else {
-                        off.vx = (rand() & 0x7F) - 64;
-                        off.vy = (rand() & 0x7F) - 64;
+                        off.vx = RANDINT_POW2(128) - 64;
+                        off.vy = RANDINT_POW2(128) - 64;
+                        // Possible bug in the original code here.
+                        // The other offsets are evenly distributed in `[-64, 64)`,
+                        // while this `vz` offset can only be either `-16` or `16`, with
+                        // `16` being extremely rare.
+                        // The fix would be to use `& 0x1F` instead.
                         off.vz = (rand() & 0x20) - 16;
                         pos.vx = m->pos.vx;
                         pos.vy = m->pos.vy;
@@ -3164,7 +3167,7 @@ void UpdateCarDeath(Car* car, u8 isPlayer)
                         pos.vx = m->pos.vx;
                         pos.vy = m->pos.vy;
                         pos.vz = m->pos.vz;
-                        if (rand() & 1) {
+                        if (RANDINT_POW2(2)) {
                             do_big_explosion(&pos);
                         } else {
                             do_bigger_explosion(&pos);
