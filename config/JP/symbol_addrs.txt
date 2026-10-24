@@ -2063,7 +2063,7 @@ fontInfo2                                = 0x801709b8; // size:464
 fontInfo3                                = 0x80170b88; // size:60
 fontInfo4                                = 0x80170bc4; // size:464
 
-weaponPickupAmount                       = 0x80170db4; // size:0x38
+weaponPickupAmount                       = 0x80170db4; // size:0x50
 starMatrix                               = 0x80170e04; // size:0x20
 
 screenCarPictures                        = 0x80170e24; // size:0x30
