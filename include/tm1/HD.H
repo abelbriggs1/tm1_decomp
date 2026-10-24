@@ -149,7 +149,7 @@ typedef struct HdCsHit {
     /* 0x0C */ s16 tag1;
     /* 0x0E */ s16 unk0E;
     /* 0x10 */ s32 depth;
-    /* 0x14 */ s32 normal[3];
+    /* 0x14 */ VECTOR3 normal;
     /* 0x20 */ Cs* obj;
 } HdCsHit; /* 0x24 */
 
