@@ -284,6 +284,7 @@ class EnvironmentToolchain:
             },
             extra_flags={
                 "tm1/CAR": ["-fbuiltin"],
+                "tm1/CARUPD": ["-fbuiltin"],
                 "tm1/FONT": ["-fbuiltin"],
                 "tm1/SCREEN": ["-fbuiltin"],
             }
